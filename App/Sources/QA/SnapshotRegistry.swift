@@ -23,6 +23,9 @@ enum QuizCardSnapshots {
             state("q0_new_unanswered", DesignSamples.although, answer: nil),
             state("q1_new_correct", DesignSamples.although, answer: DesignSamples.althoughCorrect),
             state("q2_new_wrong", DesignSamples.although, answer: DesignSamples.althoughWrong),
+            state("q3_new_dunno", DesignSamples.although, answer: DesignSamples.althoughDontKnow),
+            state("q4_review_unanswered", DesignSamples.enoughReview, answer: nil),
+            state("q5_review_correct_learned", DesignSamples.enoughReview, answer: DesignSamples.enoughReviewPassed),
         ]
     }
 

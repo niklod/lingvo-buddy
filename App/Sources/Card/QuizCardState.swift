@@ -68,7 +68,8 @@ extension QuizCardState {
         let pair = "\(card.prompt) — \(answer.result.correctAnswer)"
         switch answer.result.outcome {
         case .correct:
-            return answer.result.becameLearned
+            // A passed review also confirms the word as learned (design state q5).
+            return answer.result.isLearned
                 ? String(localized: "✓ Correct — word learned!")
                 : String(localized: "✓ Correct")
         case .wrong:
