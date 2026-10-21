@@ -63,10 +63,6 @@ public struct Card: Sendable, Equatable {
     }
 }
 
-public enum NoCardReason: Sendable, Equatable {
-    case noWordsAvailable
-}
-
 public enum CardDecision: Sendable, Equatable {
     case card(Card)
     case noCard(NoCardReason)
@@ -74,13 +70,6 @@ public enum CardDecision: Sendable, Equatable {
     public var card: Card? {
         if case .card(let card) = self { card } else { nil }
     }
-}
-
-/// Environment signals the app reads from macOS and passes in, so the core
-/// never calls system APIs. Quiet hours, Focus, full screen and pause arrive
-/// with the timed-cards slice.
-public struct CardContext: Sendable, Equatable {
-    public init() {}
 }
 
 public struct AnswerResult: Sendable, Equatable {
