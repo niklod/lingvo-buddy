@@ -54,6 +54,16 @@ public struct UserDatabase: Sendable {
                 CREATE INDEX answers_answered_at ON answers(answered_at);
                 """)
         }
+        migrator.registerMigration("v2-learning-rules") { db in
+            try db.execute(sql: """
+                ALTER TABLE word_progress ADD COLUMN en_ru_correct BOOLEAN NOT NULL DEFAULT 0;
+                ALTER TABLE word_progress ADD COLUMN ru_en_correct BOOLEAN NOT NULL DEFAULT 0;
+                ALTER TABLE word_progress ADD COLUMN last_counted_correct_at DATETIME;
+                ALTER TABLE word_progress ADD COLUMN review_stage INTEGER NOT NULL DEFAULT 0;
+                ALTER TABLE word_progress ADD COLUMN due_at DATETIME;
+                ALTER TABLE answers ADD COLUMN kind TEXT;
+                """)
+        }
         return migrator
     }
 }

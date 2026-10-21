@@ -4,6 +4,9 @@ import Testing
 
 enum Fixture {
     static let start = Date(timeIntervalSince1970: 1_792_000_000)
+    static let minute: TimeInterval = 60
+    static let hour: TimeInterval = 60 * minute
+    static let day: TimeInterval = 24 * hour
 
     static func sampleDictionaryData() throws -> Data {
         let url = try #require(
@@ -18,14 +21,17 @@ enum Fixture {
 
     static func tutor(
         userDatabase: UserDatabase? = nil,
+        dictionary: DictionaryStore? = nil,
         clock: TestClock = TestClock(start),
-        seed: UInt64 = 1
+        seed: UInt64 = 1,
+        settings: LearningSettings = LearningSettings()
     ) throws -> Tutor {
         Tutor(
-            dictionary: try dictionary(),
+            dictionary: try dictionary ?? Self.dictionary(),
             userDatabase: try userDatabase ?? UserDatabase.inMemory(),
             clock: clock,
-            random: SeededRandomSource(seed: seed)
+            random: SeededRandomSource(seed: seed),
+            settings: settings
         )
     }
 

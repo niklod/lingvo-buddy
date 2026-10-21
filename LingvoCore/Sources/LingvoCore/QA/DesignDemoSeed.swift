@@ -33,17 +33,28 @@ public enum DesignDemoSeed {
                 AnswerRecord(
                     headword: sample.headword,
                     direction: .enToRu,
+                    kind: .new,
                     result: sample.lastResult,
                     answeredAt: answeredAt
                 ),
-                updating: WordProgress(
-                    headword: sample.headword,
-                    status: .learning,
-                    mastery: sample.mastery,
-                    lastResult: sample.lastResult,
-                    lastAnsweredAt: answeredAt
-                )
+                updating: progress(for: sample, answeredAt: answeredAt)
             )
         }
+    }
+
+    /// Design rows show mastery that the rules did not produce (a wrong last
+    /// answer with dots), so the state is written as is, not replayed.
+    private static func progress(for sample: Sample, answeredAt: Date) -> WordProgress {
+        let correct = sample.lastResult == .correct
+        return WordProgress(
+            headword: sample.headword,
+            status: .learning,
+            mastery: sample.mastery,
+            lastResult: sample.lastResult,
+            lastAnsweredAt: answeredAt,
+            enToRuCorrect: sample.mastery > 0,
+            lastCountedCorrectAt: correct ? answeredAt : nil,
+            dueAt: correct ? answeredAt.addingTimeInterval(WordProgress.countedCorrectGap) : answeredAt
+        )
     }
 }
