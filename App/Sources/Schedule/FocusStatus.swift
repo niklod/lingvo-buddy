@@ -42,6 +42,34 @@ final class SystemFocusStatus: FocusStatusReading {
             logger.info("Focus status authorization answered: \(status.rawValue)")
         }
     }
+}
+
+extension SystemFocusStatus: FocusAccessRequesting {
+    var access: FocusAccess {
+        guard isAvailable else { return .unavailable }
+        return Self.access(for: INFocusStatusCenter.default.authorizationStatus)
+    }
+
+    func requestAccess(_ answered: @escaping @MainActor (FocusAccess) -> Void) {
+        guard access == .notAsked else {
+            answered(access)
+            return
+        }
+        let logger = logger
+        INFocusStatusCenter.default.requestAuthorization { status in
+            logger.notice("Focus status authorization answered: \(status.rawValue)")
+            Task { @MainActor in answered(Self.access(for: status)) }
+        }
+    }
+
+    private static func access(for status: INFocusStatusAuthorizationStatus) -> FocusAccess {
+        switch status {
+        case .authorized: .allowed
+        case .denied, .restricted: .denied
+        case .notDetermined: .notAsked
+        @unknown default: .denied
+        }
+    }
 
     private static func hasEntitlement() -> Bool {
         guard let task = SecTaskCreateFromSelf(nil) else { return false }

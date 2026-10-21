@@ -20,6 +20,8 @@ struct LaunchOptions: Equatable {
     var cardInterval: TimeInterval?
     /// `--quiet-hours <HH:MM-HH:MM|off>`: replaces the default 23:00–09:00 for this run.
     var quietHours: QuietHoursOverride?
+    /// `--skip-onboarding`: do not show first-run onboarding in this run (QA on fresh databases).
+    var skipOnboarding = false
 
     static func parse(_ arguments: [String]) throws -> LaunchOptions {
         var options = LaunchOptions()
@@ -28,6 +30,7 @@ struct LaunchOptions: Equatable {
             switch argument {
             case "--user-db": options.userDatabase = try value(for: argument, from: &remaining)
             case "--seed-demo": options.seedDemo = true
+            case "--skip-onboarding": options.skipOnboarding = true
             case "--snapshot": options.snapshotDirectory = try value(for: argument, from: &remaining)
             case "--snapshot-filter": options.snapshotFilter = try value(for: argument, from: &remaining)
             case "--open":
@@ -69,6 +72,8 @@ enum OpenableView: String, CaseIterable {
     case settings
     case about
     case quickAdd = "quick-add"
+    /// Shows onboarding again, even when it is already done.
+    case onboarding
 }
 
 /// The value of `--quiet-hours`.

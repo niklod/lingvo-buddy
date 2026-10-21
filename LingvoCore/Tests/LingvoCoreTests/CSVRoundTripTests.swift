@@ -119,4 +119,24 @@ struct CSVRoundTripTests {
         #expect(try target.tutor.quickAddPreview("kubernetes")?.standing == .mine)
         #expect(try target.nextCard().correctAnswer == "кубернетес")
     }
+
+    @Test("words learned in the onboarding level check stay at the 60-day review step")
+    func levelCheckWordsRoundTrip() throws {
+        let source = try freshLearner()
+        let outcome = try source.tutor.applyLevelCheck([LevelCheckAnswer(headword: "know", knows: true)])
+        let target = try roundTrip(source)
+
+        target.clock.advance(by: 8 * Fixture.day)
+        let afterAWeek = try target.nextCard()
+        target.clock.advance(by: 53 * Fixture.day)
+        let afterTwoMonths = try target.nextCard()
+
+        #expect(outcome.learnedCount == 2)
+        #expect(try target.tutor.exportCSV() == source.tutor.exportCSV())
+        #expect(try target.tutor.stats().tierProgress.learned == 2)
+        #expect(try target.tutor.quickAddPreview("know")?.standing == .learned)
+        #expect(afterAWeek.kind == .new)
+        #expect(!["they", "know"].contains(afterAWeek.headword))
+        #expect(afterTwoMonths.kind == .review)
+    }
 }

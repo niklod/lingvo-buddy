@@ -14,6 +14,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var csvTransfer: CSVTransferController?
     /// AppKit keeps only a weak reference to `servicesProvider`.
     private var services: ServiceProvider?
+    private var onboarding: OnboardingWindowController?
+    private var showOnboarding: (() -> Void)?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.appearance = NSAppearance(named: .darkAqua)
@@ -35,9 +37,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let settings = SettingsModel(store: tutor, errors: errors)
         let csvTransfer = CSVTransferController(store: tutor, errors: errors)
         self.csvTransfer = csvTransfer
+        let launchAtLogin = SystemLaunchAtLogin()
         settingsWindow = SettingsWindowController(
             model: settings,
-            launchAtLogin: SystemLaunchAtLogin(),
+            launchAtLogin: launchAtLogin,
             about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
             errors: errors,
             transfer: csvTransfer.actions
@@ -87,8 +90,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
         )
         registerServices(quickAdd: quickAdd, tray: tray)
-        focus.requestAccessIfNeeded()
+        showOnboarding = { [weak self] in
+            self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
+        }
         coordinator.start()
+        if try !options.skipOnboarding && tutor.needsOnboarding() {
+            // The Focus prompt is one of the onboarding steps; it must not pop up before it.
+            // Shown after launch finishes: macOS refuses activation earlier.
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.openDelay) { [weak self] in
+                self?.showOnboarding?()
+            }
+        } else {
+            focus.requestAccessIfNeeded()
+        }
         if let view = options.openView {
             // The status item gets its place in the menu bar only after launch
             // finishes; opening earlier would anchor the card to a zero frame.
@@ -138,7 +152,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             openSettings(tab: .general)
         case .about:
             openSettings(tab: .about)
+        case .onboarding:
+            showOnboarding?()
         }
+    }
+
+    private func presentOnboarding(
+        tutor: Tutor,
+        settings: SettingsModel,
+        focus: SystemFocusStatus,
+        launchAtLogin: SystemLaunchAtLogin
+    ) {
+        if let onboarding {
+            onboarding.show()
+            return
+        }
+        let controller = OnboardingWindowController(
+            model: OnboardingModel(store: tutor, errors: errors),
+            settings: settings,
+            focus: focus,
+            launchAtLogin: launchAtLogin,
+            errors: errors,
+            onFinish: { [weak self] in
+                // Released on the next turn: the controller is still on the call stack here.
+                DispatchQueue.main.async { self?.onboarding = nil }
+            }
+        )
+        onboarding = controller
+        controller.show()
     }
 
     /// The single entry point to Settings: tray item "Settings… ⌘,", the ⌘, key, `--open settings`.

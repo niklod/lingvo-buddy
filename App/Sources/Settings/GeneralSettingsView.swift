@@ -150,44 +150,11 @@ private struct LearningSection: View {
 private struct SystemSection: View {
     let launchAtLogin: any LaunchAtLoginControlling
     let errors: ErrorPresenter?
-    @State private var state: LaunchAtLoginState = .off
 
     var body: some View {
         SettingsSection(title: String(localized: "System")) {
-            SettingsRow(label: String(localized: "Launch at login"), hint: hint) {
-                HStack(spacing: 8) {
-                    if state == .needsApproval {
-                        Button(String(localized: "Open Login Items…")) { launchAtLogin.openSystemSettings() }
-                            .controlSize(.small)
-                    }
-                    Toggle("", isOn: isOn).labelsHidden().toggleStyle(.switch).controlSize(.small)
-                }
-            }
+            LaunchAtLoginRow(launchAtLogin: launchAtLogin, errors: errors)
         }
-        .onAppear { state = launchAtLogin.state }
-        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            state = launchAtLogin.state
-        }
-    }
-
-    private var hint: String? {
-        state == .needsApproval
-            ? String(localized: "Allow LingvoBuddy in System Settings > General > Login Items.")
-            : nil
-    }
-
-    private var isOn: Binding<Bool> {
-        Binding(
-            get: { state != .off },
-            set: { enabled in
-                do {
-                    try launchAtLogin.setEnabled(enabled)
-                } catch {
-                    errors?.show(error)
-                }
-                state = launchAtLogin.state
-            }
-        )
     }
 }
 
