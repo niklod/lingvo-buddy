@@ -1,0 +1,45 @@
+import Foundation
+
+extension Tutor {
+    /// `nil` for blank text.
+    public func quickAddPreview(_ text: String) throws -> QuickAddPreview? {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return nil }
+        let lookup = try lookup(query)
+        let headword = try lookup?.entry.headword ?? userDatabase.myWord(ignoringCase: query)?.headword ?? query
+        return QuickAddPreview(headword: headword, lookup: lookup, standing: try standing(of: headword))
+    }
+
+    /// Adds the word to My words. A queued dictionary word keeps its rank and
+    /// takes the learner's translation and example; a word already in My words,
+    /// learning or learned is left as it is (spec "Duplicate rules").
+    public func addMyWord(_ word: NewMyWord) throws -> AddWordOutcome {
+        let word = try word.validated()
+        guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
+        guard preview.canAdd else { return .alreadyAdded(preview.standing) }
+        try userDatabase.insert(MyWord(
+            headword: preview.headword,
+            translation: word.translation,
+            example: word.example,
+            addedAt: clock.now()
+        ))
+        return .added(headword: preview.headword)
+    }
+
+    /// My words as card data, oldest first.
+    func myWordEntries() throws -> [DictionaryEntry] {
+        try userDatabase.myWords().map { word in
+            word.cardEntry(from: try dictionary.entry(headword: word.headword))
+        }
+    }
+
+    private func standing(of headword: String) throws -> WordStanding {
+        if let progress = try userDatabase.progress(for: headword) {
+            switch progress.status {
+            case .learning: return .learning(mastery: progress.mastery)
+            case .learned: return .learned
+            }
+        }
+        return try userDatabase.myWord(headword: headword) == nil ? .notAdded : .mine
+    }
+}

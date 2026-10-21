@@ -21,8 +21,7 @@ extension Tutor {
             reviewsLeftToday: words.reviewsDue,
             tierProgress: try tierProgress(),
             learningCount: words.learning,
-            // Quick add (#19) brings the learner's own words; until then there are none.
-            myWordsCount: 0
+            myWordsCount: try userDatabase.myWordsCount()
         )
     }
 

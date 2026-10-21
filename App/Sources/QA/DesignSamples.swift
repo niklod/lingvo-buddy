@@ -69,6 +69,29 @@ enum DesignSamples {
         mastery: 0
     )
 
+    /// A word the learner added with quick add, before its first counted answer.
+    static let suggestMine = Card(
+        headword: "suggest",
+        prompt: "suggest",
+        direction: .enToRu,
+        kind: .mine,
+        source: .mine,
+        ipa: "/səˈdʒest/",
+        partOfSpeech: .verb,
+        options: ["требовать", "отказывать", "предлагать", "объяснять"],
+        correctIndex: 2,
+        example: "I suggest we start again tomorrow.",
+        mastery: 0
+    )
+
+    static let suggestMineWrong = QuizCardState.Answer(
+        pickedIndex: 0,
+        result: AnswerResult(
+            outcome: .wrong, correctIndex: 2, correctAnswer: "предлагать",
+            becameLearned: false, isLearned: false, mastery: 0
+        )
+    )
+
     /// Answers on the `although` card, which stays in learning.
     private static func result(_ outcome: AnswerOutcome, correctAnswer: String, mastery: Int) -> AnswerResult {
         AnswerResult(

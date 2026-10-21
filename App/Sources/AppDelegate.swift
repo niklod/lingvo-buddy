@@ -10,6 +10,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var coordinator: CardCoordinator?
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
+    private var quickAdd: QuickAddController?
+    /// AppKit keeps only a weak reference to `servicesProvider`.
+    private var services: ServiceProvider?
     private var onboarding: OnboardingWindowController?
     private var showOnboarding: (() -> Void)?
 
@@ -53,7 +56,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             scheduleSettings: try AppEnvironment.scheduleSettings(options: options, settings: settings.settings),
             errors: errors
         )
-        let tray = TrayMenuController(tutor: tutor, commands: trayCommands(for: coordinator), errors: errors)
+        let quickAdd = QuickAddController(tutor: tutor)
+        let tray = TrayMenuController(
+            tutor: tutor,
+            commands: trayCommands(for: coordinator, quickAdd: quickAdd),
+            errors: errors
+        )
         let statusItem = StatusItemController(actions: StatusItemActions(
             primaryClick: { [weak coordinator, weak tray] in
                 guard coordinator?.reopenWaitingCard() == true else { return false }
@@ -66,10 +74,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.coordinator = coordinator
         self.statusItem = statusItem
         self.tray = tray
-        HotKeys.register { [weak coordinator, weak tray] in
-            tray?.close()
-            coordinator?.showWordNow()
-        }
+        self.quickAdd = quickAdd
+        HotKeys.register(
+            showWordNow: { [weak coordinator, weak tray] in
+                tray?.close()
+                coordinator?.showWordNow()
+            },
+            quickAdd: { [weak quickAdd, weak tray] in
+                tray?.close()
+                quickAdd?.open()
+            }
+        )
+        registerServices(quickAdd: quickAdd, tray: tray)
         showOnboarding = { [weak self] in
             self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
         }
@@ -87,13 +103,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             // The status item gets its place in the menu bar only after launch
             // finishes; opening earlier would anchor the card to a zero frame.
             DispatchQueue.main.asyncAfter(deadline: .now() + Self.openDelay) { [weak self] in
-                self?.open(view)
+                self?.open(view, options: options)
             }
         }
     }
 
+    private func registerServices(quickAdd: QuickAddController, tray: TrayMenuController) {
+        let services = ServiceProvider { [weak quickAdd, weak tray] word, example in
+            tray?.close()
+            quickAdd?.open(prefill: word, example: example)
+        }
+        NSApp.servicesProvider = services
+        // Picks up the Services item of a freshly built or moved app.
+        NSUpdateDynamicServices()
+        self.services = services
+    }
+
     /// Settings (#22) and the Dictionary window set their entry points here.
-    private func trayCommands(for coordinator: CardCoordinator) -> TrayCommands {
+    private func trayCommands(for coordinator: CardCoordinator, quickAdd: QuickAddController) -> TrayCommands {
         TrayCommands(
             showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
             schedule: { [weak coordinator] in
@@ -103,17 +130,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             changeInterval: { [weak coordinator] interval in coordinator?.changeInterval(interval) },
             pause: { [weak coordinator] option in coordinator?.pause(option) },
             resume: { [weak coordinator] in coordinator?.resume() },
+            quickAdd: { [weak quickAdd] text in quickAdd?.open(prefill: text) },
             openDictionary: nil,
             openSettings: { [weak self] in self?.openSettings() }
         )
     }
 
-    private func open(_ view: OpenableView) {
+    private func open(_ view: OpenableView, options: LaunchOptions) {
         switch view {
         case .card:
             coordinator?.showWordNow()
         case .tray:
             tray?.open(under: statusItem?.anchor)
+        case .quickAdd:
+            quickAdd?.open(prefill: options.prefill)
         case .settings:
             openSettings(tab: .general)
         case .about:

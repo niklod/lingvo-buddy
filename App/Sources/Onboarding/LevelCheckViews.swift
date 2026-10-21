@@ -72,7 +72,7 @@ struct LevelWordView: View {
     }
 
     private var subtitle: String {
-        let partOfSpeech = QuizCardState.label(for: word.partOfSpeech)
+        let partOfSpeech = word.partOfSpeech.label
         guard let ipa = word.ipa else { return partOfSpeech }
         return "\(ipa) · \(partOfSpeech)"
     }

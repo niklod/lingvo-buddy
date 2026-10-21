@@ -14,6 +14,8 @@ struct LaunchOptions: Equatable {
     var snapshotFilter: String?
     /// `--open <view>`: open a view right after launch.
     var openView: OpenableView?
+    /// `--prefill <text>`: the word `--open quick-add` starts with.
+    var prefill: String?
     /// `--interval-seconds <n>`: the card interval in seconds instead of 15 min (QA only).
     var cardInterval: TimeInterval?
     /// `--quiet-hours <HH:MM-HH:MM|off>`: replaces the default 23:00–09:00 for this run.
@@ -37,6 +39,7 @@ struct LaunchOptions: Equatable {
                     throw LaunchOptionsError.unknownView(name)
                 }
                 options.openView = view
+            case "--prefill": options.prefill = try value(for: argument, from: &remaining)
             case "--interval-seconds":
                 let text = try value(for: argument, from: &remaining)
                 guard let seconds = TimeInterval(text), seconds > 0 else {
@@ -68,6 +71,7 @@ enum OpenableView: String, CaseIterable {
     case tray
     case settings
     case about
+    case quickAdd = "quick-add"
     /// Shows onboarding again, even when it is already done.
     case onboarding
 }

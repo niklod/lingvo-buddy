@@ -58,7 +58,7 @@ extension QuizCardState {
     }
 
     var subtitle: String {
-        let partOfSpeech = Self.label(for: card.partOfSpeech)
+        let partOfSpeech = card.partOfSpeech.label
         let hint = card.direction == .ruToEn ? " · " + String(localized: "choose the English word") : ""
         guard let ipa = card.ipa, card.direction == .enToRu else { return partOfSpeech + hint }
         return "\(ipa) · \(partOfSpeech)"
@@ -84,21 +84,5 @@ extension QuizCardState {
 
     var masteryLabel: String {
         String(localized: "Mastery \(mastery)/4")
-    }
-
-    static func label(for partOfSpeech: PartOfSpeech) -> String {
-        switch partOfSpeech {
-        case .noun: String(localized: "noun")
-        case .verb: String(localized: "verb")
-        case .adjective: String(localized: "adjective")
-        case .adverb: String(localized: "adverb")
-        case .pronoun: String(localized: "pronoun")
-        case .preposition: String(localized: "preposition")
-        case .conjunction: String(localized: "conjunction")
-        case .determiner: String(localized: "determiner")
-        case .numeral: String(localized: "numeral")
-        case .interjection: String(localized: "interjection")
-        case .other: String(localized: "other")
-        }
     }
 }
