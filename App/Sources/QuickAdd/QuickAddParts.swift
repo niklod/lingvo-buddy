@@ -19,18 +19,21 @@ struct TranslationPill: View {
     var isCustom = false
     let action: () -> Void
 
+    /// A tap gesture, not a Button: a Button would take keyboard focus away from
+    /// the text fields, and Enter must always add the word.
     var body: some View {
-        Button(action: action) {
-            Text(verbatim: isSelected && !isCustom ? "\(title) ✓" : title)
-                .font(.system(size: Theme.FontSize.body))
-                .foregroundStyle(foreground)
-                .padding(.horizontal, 12)
-                .frame(height: QuickAddTheme.pillHeight)
-                .background(Capsule().fill(isSelected ? QuickAddTheme.selectedFill : .clear))
-                .overlay(border)
-                .contentShape(Capsule())
-        }
-        .buttonStyle(.plain)
+        Text(verbatim: isSelected && !isCustom ? "\(title) ✓" : title)
+            .font(.system(size: Theme.FontSize.body))
+            .foregroundStyle(foreground)
+            .padding(.horizontal, 12)
+            .frame(height: QuickAddTheme.pillHeight)
+            .background(Capsule().fill(isSelected ? QuickAddTheme.selectedFill : .clear))
+            .overlay(border)
+            .contentShape(Capsule())
+            .fixedSize()
+            .onTapGesture(perform: action)
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 
     private var foreground: Color {
@@ -38,11 +41,18 @@ struct TranslationPill: View {
         return isCustom ? Theme.Palette.textSecondary : Theme.Palette.textBody
     }
 
-    private var border: some View {
-        Capsule().strokeBorder(
-            isSelected ? Theme.Palette.accent : Theme.Palette.border,
-            style: StrokeStyle(lineWidth: 1, dash: isCustom ? [4, 3] : [])
-        )
+    private var borderColor: Color {
+        isSelected ? Theme.Palette.accent : Theme.Palette.border
+    }
+
+    /// An empty dash array draws stray vertical lines on the capsule ends, so
+    /// solid borders use the plain stroke.
+    @ViewBuilder private var border: some View {
+        if isCustom {
+            Capsule().strokeBorder(borderColor, style: StrokeStyle(lineWidth: 1, dash: [4, 3]))
+        } else {
+            Capsule().strokeBorder(borderColor, lineWidth: 1)
+        }
     }
 }
 
@@ -57,7 +67,7 @@ struct QuickAddField: View {
             Text(verbatim: placeholder)
         }
         .textFieldStyle(.plain)
-        .font(.system(size: Theme.FontSize.body).italic(italic))
+        .font(italic ? .system(size: Theme.FontSize.body).italic() : .system(size: Theme.FontSize.body))
         .foregroundStyle(Theme.Palette.textBody)
         .padding(.horizontal, 10)
         .frame(height: QuickAddTheme.fieldHeight)

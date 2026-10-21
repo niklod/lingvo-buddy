@@ -38,8 +38,12 @@ enum TrayMenuSnapshots {
             canOpenDictionary: true,
             canOpenSettings: true
         )
-        return SnapshotState(name: name) {
-            AnyView(TrayMenuView(state: tray, highlighted: highlighted))
+        // The inline TextField is AppKit-backed: ImageRenderer would draw a placeholder.
+        return SnapshotState(name: name, usesWindow: true) {
+            AnyView(
+                TrayMenuView(state: tray, highlighted: highlighted) { TrayAddWordField { _ in } }
+                    .background(Theme.Palette.desktop)
+            )
         }
     }
 }

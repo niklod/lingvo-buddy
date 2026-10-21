@@ -15,9 +15,6 @@ final class QuickAddController {
     private var model: QuickAddModel?
     private var outsideClickMonitor: Any?
 
-    /// Called after a word was added, so the tray stats stay fresh.
-    var onAdded: (String) -> Void = { _ in }
-
     init(tutor: Tutor) {
         self.tutor = tutor
     }
@@ -73,7 +70,6 @@ final class QuickAddController {
             case .added(let headword):
                 logger.notice("added my word \(headword, privacy: .private)")
                 close()
-                onAdded(headword)
             case .alreadyAdded(let standing):
                 model.show(.standing(standing))
             }
