@@ -13,7 +13,7 @@ struct TrayCommands {
     var resume: () -> Void = {}
     /// Opens quick add prefilled with the inline field's text.
     var quickAdd: (String) -> Void = { _ in }
-    /// `nil` until the Dictionary window slice lands; the item is then greyed out.
+    /// `nil` greys the item out.
     var openDictionary: (() -> Void)?
     /// `nil` until the Settings slice lands; the item is then greyed out.
     var openSettings: (() -> Void)?

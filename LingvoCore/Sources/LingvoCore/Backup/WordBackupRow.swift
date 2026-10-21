@@ -6,6 +6,8 @@ struct WordBackupRow: Sendable, Equatable {
     let headword: String
     let myWord: MyWord?
     let progress: WordProgress?
+    /// A translation the learner set for a dictionary word in the Dictionary window.
+    var ownTranslation: String?
 }
 
 /// The CSV columns, in export order.
@@ -23,6 +25,8 @@ enum WordBackupColumn: String, CaseIterable, Sendable {
     case lastResult = "last_result"
     case lastAnsweredAt = "last_answered_at"
     case lastCountedCorrectAt = "last_counted_correct_at"
+    /// Last, so files from before the Dictionary window keep their column order.
+    case ownTranslation = "own_translation"
 
     static let myWordColumns: [WordBackupColumn] = [.translation, .example, .addedAt]
     static let progressColumns: [WordBackupColumn] = [
@@ -52,6 +56,7 @@ extension WordBackupRow {
         case .lastResult: progress?.lastResult?.rawValue ?? ""
         case .lastAnsweredAt: Self.text(progress?.lastAnsweredAt)
         case .lastCountedCorrectAt: Self.text(progress?.lastCountedCorrectAt)
+        case .ownTranslation: ownTranslation ?? ""
         }
     }
 

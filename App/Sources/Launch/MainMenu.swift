@@ -2,21 +2,24 @@ import AppKit
 
 /// A menu-bar app shows no main menu, but AppKit still matches key
 /// equivalents against it while one of our windows is key: this is what makes
-/// ⌘, ⌘W ⌘Q and copy/paste work in the Settings window.
+/// ⌘D ⌘, ⌘W ⌘Q and copy/paste work in the Settings and Dictionary windows.
 @MainActor
 enum MainMenu {
-    static func make(settingsTarget: AnyObject, settingsAction: Selector) -> NSMenu {
+    static func make(target: AnyObject, settingsAction: Selector, dictionaryAction: Selector) -> NSMenu {
         let main = NSMenu()
-        main.addItem(submenu(appMenu(settingsTarget: settingsTarget, settingsAction: settingsAction)))
+        main.addItem(submenu(appMenu(target: target, settingsAction: settingsAction, dictionaryAction: dictionaryAction)))
         main.addItem(submenu(editMenu()))
         main.addItem(submenu(windowMenu()))
         return main
     }
 
-    private static func appMenu(settingsTarget: AnyObject, settingsAction: Selector) -> NSMenu {
+    private static func appMenu(target: AnyObject, settingsAction: Selector, dictionaryAction: Selector) -> NSMenu {
         let menu = NSMenu(title: "LingvoBuddy")
+        let dictionary = NSMenuItem(title: String(localized: "Open Dictionary…"), action: dictionaryAction, keyEquivalent: "d")
+        dictionary.target = target
+        menu.addItem(dictionary)
         let settings = NSMenuItem(title: String(localized: "Settings…"), action: settingsAction, keyEquivalent: ",")
-        settings.target = settingsTarget
+        settings.target = target
         menu.addItem(settings)
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(

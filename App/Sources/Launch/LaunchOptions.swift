@@ -74,6 +74,7 @@ enum OpenableView: String, CaseIterable {
     case quickAdd = "quick-add"
     /// Shows onboarding again, even when it is already done.
     case onboarding
+    case dictionary
 }
 
 /// The value of `--quiet-hours`.

@@ -35,17 +35,7 @@ struct MyWord: Sendable, Equatable, Codable, FetchableRecord, PersistableRecord 
                 translations: [.russian: [translation]]
             )
         }
-        let others = (dictionaryEntry.translations[.russian] ?? []).filter { $0 != translation }
-        return DictionaryEntry(
-            headword: dictionaryEntry.headword,
-            rank: dictionaryEntry.rank,
-            partOfSpeech: dictionaryEntry.partOfSpeech,
-            ipa: dictionaryEntry.ipa,
-            example: example ?? dictionaryEntry.example,
-            synonymGroup: dictionaryEntry.synonymGroup,
-            tier: dictionaryEntry.tier,
-            translations: [.russian: [translation] + others]
-        )
+        return dictionaryEntry.withPrimaryTranslation(translation, example: example)
     }
 }
 
