@@ -3,3 +3,14 @@
 # lingvo buddy
 
 Created in [T3 Code](https://t3.codes).
+
+## Build
+
+Needs Xcode 16.3+ and XcodeGen (`brew install xcodegen`).
+
+- `make test` runs the LingvoCore tests.
+- `make app` builds the dictionary, generates the Xcode project and builds the app.
+- `make run ARGS="--user-db demo --seed-demo --open card"` starts the menu-bar app.
+- `make snapshots` renders the designed view states to `build/snapshots/*.png`.
+
+QA launch arguments: `--user-db <name|path>`, `--seed-demo`, `--open card`, `--snapshot <dir>`, `--snapshot-filter <text>`.
