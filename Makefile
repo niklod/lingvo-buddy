@@ -6,21 +6,33 @@ CONFIG       ?= Debug
 APP          := $(DERIVED_DIR)/Build/Products/$(CONFIG)/LingvoBuddy.app
 APP_BINARY   := $(APP)/Contents/MacOS/LingvoBuddy
 SHELL        := /bin/bash
+PYTHON       ?= python3
 
-# The sample dictionary stays bundled until the real Top-1000 data replaces it.
-DICT_SOURCES ?= $(CORE_DIR)/Tests/LingvoCoreTests/Fixtures/sample-dictionary.json
+# The bundled dictionary is built from data/batches (all 20 batches, ranks 1-10000).
+# The 40-word sample in LingvoCore's test fixtures is only a test fixture now.
+DICT_TOOLS   := tools/dictionary
 DICT_OUT     := App/Resources/dictionary.sqlite
 
 # Extra launch arguments for `make run`, for example ARGS="--user-db demo --seed-demo --open card".
 ARGS ?=
 
-.PHONY: test dictionary project app run snapshots clean
+.PHONY: test test-core test-dictionary dictionary project app run snapshots clean
 
-test:
+test: test-core test-dictionary
+
+test-core:
 	swift test --package-path $(CORE_DIR)
 
+# Dictionary tooling tests, the data gate (every rank of the word list has a valid entry),
+# and a read of the built file through LingvoCore, as the app reads it.
+test-dictionary:
+	$(PYTHON) -m unittest discover -s $(DICT_TOOLS)/tests -t $(DICT_TOOLS)
+	$(PYTHON) $(DICT_TOOLS)/validate.py --full
+	$(PYTHON) $(DICT_TOOLS)/build_dictionary.py --full --out $(BUILD_DIR)/dictionary/dictionary.sqlite
+	swift run --package-path $(CORE_DIR) lingvo-dict check $(BUILD_DIR)/dictionary/dictionary.sqlite
+
 dictionary:
-	swift run --package-path $(CORE_DIR) lingvo-dict build --out $(DICT_OUT) $(DICT_SOURCES)
+	$(PYTHON) $(DICT_TOOLS)/build_dictionary.py --full --out $(DICT_OUT)
 
 project:
 	xcodegen generate --quiet

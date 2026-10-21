@@ -14,7 +14,8 @@ struct SnapshotState {
 @MainActor
 enum SnapshotRegistry {
     static var all: [SnapshotState] {
-        QuizCardSnapshots.states + StatusIconSnapshots.states + SettingsSnapshots.states
+        QuizCardSnapshots.states + StatusIconSnapshots.states + TrayMenuSnapshots.states
+            + SettingsSnapshots.states
     }
 }
 
@@ -28,6 +29,7 @@ enum QuizCardSnapshots {
             state("q3_new_dunno", DesignSamples.although, answer: DesignSamples.althoughDontKnow),
             state("q4_review_unanswered", DesignSamples.enoughReview, answer: nil),
             state("q5_review_correct_learned", DesignSamples.enoughReview, answer: DesignSamples.enoughReviewPassed),
+            state("q8_top2000_lookup_word", DesignSamples.eventuallyTop2000, answer: nil),
         ]
     }
 

@@ -1,0 +1,6337 @@
+{
+  "batch": "batch-02",
+  "entries": [
+    {
+      "rank": 501,
+      "headword": "further",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "дальше",
+        "далее"
+      ],
+      "ipa": "/ˈfɜːðə/",
+      "example": "Let's walk a little further down the road.",
+      "synonym_group": "further"
+    },
+    {
+      "rank": 502,
+      "headword": "character",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "персонаж",
+        "характер"
+      ],
+      "ipa": "/ˈkærəktə/",
+      "example": "My favourite character in the book is the old dog.",
+      "synonym_group": "character"
+    },
+    {
+      "rank": 503,
+      "headword": "goal",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "цель"
+      ],
+      "ipa": "/ɡəʊl/",
+      "example": "My goal is to learn English this year.",
+      "synonym_group": "goal"
+    },
+    {
+      "rank": 504,
+      "headword": "park",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "парк"
+      ],
+      "ipa": "/pɑːk/",
+      "example": "We play football in the park on Sundays.",
+      "synonym_group": "park"
+    },
+    {
+      "rank": 505,
+      "headword": "among",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "среди"
+      ],
+      "ipa": "/əˈmʌŋ/",
+      "example": "The little house stands among tall trees.",
+      "synonym_group": "among"
+    },
+    {
+      "rank": 506,
+      "headword": "myself",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "себя",
+        "сам"
+      ],
+      "ipa": "/maɪˈself/",
+      "example": "I made this cake myself.",
+      "synonym_group": "myself"
+    },
+    {
+      "rank": 507,
+      "headword": "yourself",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "себя",
+        "сам"
+      ],
+      "ipa": "/jɔːˈself/",
+      "example": "Please help yourself to some tea.",
+      "synonym_group": "myself"
+    },
+    {
+      "rank": 508,
+      "headword": "clear",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "ясный",
+        "понятный"
+      ],
+      "ipa": "/klɪə/",
+      "example": "The teacher gave us a clear answer.",
+      "synonym_group": "clear"
+    },
+    {
+      "rank": 509,
+      "headword": "college",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "колледж"
+      ],
+      "ipa": "/ˈkɒlɪdʒ/",
+      "example": "My sister goes to college in the city.",
+      "synonym_group": "college"
+    },
+    {
+      "rank": 510,
+      "headword": "wear",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "носить"
+      ],
+      "ipa": "/weə/",
+      "example": "She likes to wear a red hat.",
+      "synonym_group": "wear"
+    },
+    {
+      "rank": 511,
+      "headword": "serve",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "подавать",
+        "обслуживать"
+      ],
+      "ipa": "/sɜːv/",
+      "example": "They serve breakfast from seven to ten.",
+      "synonym_group": "serve"
+    },
+    {
+      "rank": 512,
+      "headword": "sale",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "продажа"
+      ],
+      "ipa": "/seɪl/",
+      "example": "This old house is for sale.",
+      "synonym_group": "sale"
+    },
+    {
+      "rank": 513,
+      "headword": "reach",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "достигать",
+        "добираться"
+      ],
+      "ipa": "/riːtʃ/",
+      "example": "We will reach the village before dark.",
+      "synonym_group": "reach"
+    },
+    {
+      "rank": 514,
+      "headword": "value",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ценность",
+        "стоимость"
+      ],
+      "ipa": "/ˈvæljuː/",
+      "example": "Good friends have great value in life.",
+      "synonym_group": "value"
+    },
+    {
+      "rank": 515,
+      "headword": "fast",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "быстрый"
+      ],
+      "ipa": "/fɑːst/",
+      "example": "He has a very fast car.",
+      "synonym_group": "fast"
+    },
+    {
+      "rank": 516,
+      "headword": "media",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "средства массовой информации",
+        "медиа"
+      ],
+      "ipa": "/ˈmiːdiə/",
+      "example": "The story was in all the media today.",
+      "synonym_group": "media"
+    },
+    {
+      "rank": 517,
+      "headword": "cut",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "резать",
+        "отрезать"
+      ],
+      "ipa": "/kʌt/",
+      "example": "Please cut the bread into thin pieces.",
+      "synonym_group": "cut"
+    },
+    {
+      "rank": 518,
+      "headword": "figure",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "цифра",
+        "число"
+      ],
+      "ipa": "/ˈfɪɡə/",
+      "example": "Can you check this figure for me?",
+      "synonym_group": "figure"
+    },
+    {
+      "rank": 519,
+      "headword": "although",
+      "tier": "quiz",
+      "pos": "conjunction",
+      "translations": [
+        "хотя"
+      ],
+      "ipa": "/ɔːlˈðəʊ/",
+      "example": "Although it was cold, we went outside.",
+      "synonym_group": "though"
+    },
+    {
+      "rank": 520,
+      "headword": "fun",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "веселье",
+        "удовольствие"
+      ],
+      "ipa": "/fʌn/",
+      "example": "We had a lot of fun at the party.",
+      "synonym_group": "fun"
+    },
+    {
+      "rank": 521,
+      "headword": "living",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "заработок",
+        "средства к существованию"
+      ],
+      "ipa": "/ˈlɪvɪŋ/",
+      "example": "He makes a living as a taxi driver.",
+      "synonym_group": "living"
+    },
+    {
+      "rank": 522,
+      "headword": "trade",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "торговля"
+      ],
+      "ipa": "/treɪd/",
+      "example": "Trade between the two towns grew fast.",
+      "synonym_group": "trade"
+    },
+    {
+      "rank": 523,
+      "headword": "complete",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "полный",
+        "завершённый"
+      ],
+      "ipa": "/kəmˈpliːt/",
+      "example": "I have the complete set of these books.",
+      "synonym_group": "full"
+    },
+    {
+      "rank": 524,
+      "headword": "policy",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "политика",
+        "правила"
+      ],
+      "ipa": "/ˈpɒləsi/",
+      "example": "The shop has a clear return policy.",
+      "synonym_group": "policy"
+    },
+    {
+      "rank": 525,
+      "headword": "product",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "продукт",
+        "товар"
+      ],
+      "ipa": "/ˈprɒdʌkt/",
+      "example": "This product is very popular with children.",
+      "synonym_group": "product"
+    },
+    {
+      "rank": 526,
+      "headword": "develop",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "развивать"
+      ],
+      "ipa": "/dɪˈveləp/",
+      "example": "Reading helps children develop their language.",
+      "synonym_group": "develop"
+    },
+    {
+      "rank": 527,
+      "headword": "town",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "город",
+        "городок"
+      ],
+      "ipa": "/taʊn/",
+      "example": "I grew up in a small town.",
+      "synonym_group": "city"
+    },
+    {
+      "rank": 528,
+      "headword": "fine",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "прекрасный",
+        "отличный"
+      ],
+      "ipa": "/faɪn/",
+      "example": "It is a fine day for a walk.",
+      "synonym_group": "fine"
+    },
+    {
+      "rank": 529,
+      "headword": "involve",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "вовлекать",
+        "включать в себя",
+        "подразумевать"
+      ],
+      "ipa": "/ɪnˈvɒlv/",
+      "example": "We want to involve all the children in the game.",
+      "synonym_group": "involve"
+    },
+    {
+      "rank": 530,
+      "headword": "front",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "передняя часть",
+        "перед"
+      ],
+      "ipa": "/frʌnt/",
+      "example": "Please sit at the front of the bus.",
+      "synonym_group": "front"
+    },
+    {
+      "rank": 531,
+      "headword": "march",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "март"
+      ],
+      "ipa": "/mɑːtʃ/",
+      "example": "My birthday is in March.",
+      "synonym_group": "march"
+    },
+    {
+      "rank": 532,
+      "headword": "enjoy",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "наслаждаться",
+        "получать удовольствие"
+      ],
+      "ipa": "/ɪnˈdʒɔɪ/",
+      "example": "I enjoy long walks by the sea.",
+      "synonym_group": "enjoy"
+    },
+    {
+      "rank": 533,
+      "headword": "match",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "матч"
+      ],
+      "ipa": "/mætʃ/",
+      "example": "We watched the football match on TV.",
+      "synonym_group": "match"
+    },
+    {
+      "rank": 534,
+      "headword": "finish",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "заканчивать",
+        "завершать"
+      ],
+      "ipa": "/ˈfɪnɪʃ/",
+      "example": "I need to finish my homework first.",
+      "synonym_group": "finish"
+    },
+    {
+      "rank": 535,
+      "headword": "six",
+      "tier": "quiz",
+      "pos": "numeral",
+      "translations": [
+        "шесть"
+      ],
+      "ipa": "/sɪks/",
+      "example": "We have six eggs in the box.",
+      "synonym_group": "six"
+    },
+    {
+      "rank": 536,
+      "headword": "west",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "запад"
+      ],
+      "ipa": "/west/",
+      "example": "The sun goes down in the west.",
+      "synonym_group": "west"
+    },
+    {
+      "rank": 537,
+      "headword": "review",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "обзор",
+        "отзыв",
+        "рецензия"
+      ],
+      "ipa": "/rɪˈvjuː/",
+      "example": "I read a good review of the new film.",
+      "synonym_group": "review"
+    },
+    {
+      "rank": 538,
+      "headword": "mother",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мать",
+        "мама"
+      ],
+      "ipa": "/ˈmʌðə/",
+      "example": "My mother works in a hospital.",
+      "synonym_group": "mother"
+    },
+    {
+      "rank": 539,
+      "headword": "behind",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "за",
+        "позади"
+      ],
+      "ipa": "/bɪˈhaɪnd/",
+      "example": "The cat is hiding behind the sofa.",
+      "synonym_group": "behind"
+    },
+    {
+      "rank": 540,
+      "headword": "political",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "политический"
+      ],
+      "ipa": "/pəˈlɪtɪkl/",
+      "example": "He does not like political talk at dinner.",
+      "synonym_group": "political"
+    },
+    {
+      "rank": 541,
+      "headword": "quite",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "довольно",
+        "вполне"
+      ],
+      "ipa": "/kwaɪt/",
+      "example": "The test was quite easy.",
+      "synonym_group": "pretty"
+    },
+    {
+      "rank": 542,
+      "headword": "father",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "отец",
+        "папа"
+      ],
+      "ipa": "/ˈfɑːðə/",
+      "example": "My father likes to cook on Sundays.",
+      "synonym_group": "father"
+    },
+    {
+      "rank": 543,
+      "headword": "carry",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "нести",
+        "носить"
+      ],
+      "ipa": "/ˈkæri/",
+      "example": "Can you carry this bag for me?",
+      "synonym_group": "carry"
+    },
+    {
+      "rank": 544,
+      "headword": "drop",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ронять",
+        "бросать"
+      ],
+      "ipa": "/drɒp/",
+      "example": "Do not drop the glass on the floor.",
+      "synonym_group": "drop"
+    },
+    {
+      "rank": 545,
+      "headword": "join",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "присоединяться",
+        "вступать"
+      ],
+      "ipa": "/dʒɔɪn/",
+      "example": "Would you like to join our team?",
+      "synonym_group": "join"
+    },
+    {
+      "rank": 546,
+      "headword": "link",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ссылка",
+        "связь"
+      ],
+      "ipa": "/lɪŋk/",
+      "example": "Click the link to open the page.",
+      "synonym_group": "link"
+    },
+    {
+      "rank": 547,
+      "headword": "forget",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "забывать"
+      ],
+      "ipa": "/fəˈɡet/",
+      "example": "Do not forget your keys.",
+      "synonym_group": "forget"
+    },
+    {
+      "rank": 548,
+      "headword": "limit",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "предел",
+        "ограничение",
+        "лимит"
+      ],
+      "ipa": "/ˈlɪmɪt/",
+      "example": "There is a speed limit on this road.",
+      "synonym_group": "limit"
+    },
+    {
+      "rank": 549,
+      "headword": "wish",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "желать"
+      ],
+      "ipa": "/wɪʃ/",
+      "example": "I wish you a happy birthday.",
+      "synonym_group": "wish"
+    },
+    {
+      "rank": 550,
+      "headword": "fan",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "болельщик",
+        "поклонник",
+        "фанат"
+      ],
+      "ipa": "/fæn/",
+      "example": "He is a big fan of this football team.",
+      "synonym_group": "fan"
+    },
+    {
+      "rank": 551,
+      "headword": "ready",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "готовый"
+      ],
+      "ipa": "/ˈredi/",
+      "example": "Dinner is ready, come and eat!",
+      "synonym_group": "ready"
+    },
+    {
+      "rank": 552,
+      "headword": "space",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пространство",
+        "место"
+      ],
+      "ipa": "/speɪs/",
+      "example": "There is no space for a bed in this room.",
+      "synonym_group": "space"
+    },
+    {
+      "rank": 553,
+      "headword": "club",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "клуб"
+      ],
+      "ipa": "/klʌb/",
+      "example": "She joined a chess club at school.",
+      "synonym_group": "club"
+    },
+    {
+      "rank": 554,
+      "headword": "education",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "образование"
+      ],
+      "ipa": "/ˌedʒuˈkeɪʃn/",
+      "example": "A good education opens many doors.",
+      "synonym_group": "education"
+    },
+    {
+      "rank": 555,
+      "headword": "former",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "бывший",
+        "прежний"
+      ],
+      "ipa": "/ˈfɔːmə/",
+      "example": "He is a former teacher at my school.",
+      "synonym_group": "former"
+    },
+    {
+      "rank": 556,
+      "headword": "according",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "согласно",
+        "по словам"
+      ],
+      "ipa": "/əˈkɔːdɪŋ/",
+      "example": "According to the map, the lake is near.",
+      "synonym_group": "according"
+    },
+    {
+      "rank": 557,
+      "headword": "available",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "доступный",
+        "имеющийся"
+      ],
+      "ipa": "/əˈveɪləbl/",
+      "example": "The book is available in the library.",
+      "synonym_group": "available"
+    },
+    {
+      "rank": 558,
+      "headword": "sometimes",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "иногда"
+      ],
+      "ipa": "/ˈsʌmtaɪmz/",
+      "example": "Sometimes I walk to work.",
+      "synonym_group": "sometimes"
+    },
+    {
+      "rank": 559,
+      "headword": "current",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "текущий",
+        "нынешний"
+      ],
+      "ipa": "/ˈkʌrənt/",
+      "example": "What is your current address?",
+      "synonym_group": "current"
+    },
+    {
+      "rank": 560,
+      "headword": "visit",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "посещать",
+        "навещать"
+      ],
+      "ipa": "/ˈvɪzɪt/",
+      "example": "We visit our grandmother every Sunday.",
+      "synonym_group": "visit"
+    },
+    {
+      "rank": 561,
+      "headword": "relationship",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "отношения",
+        "связь"
+      ],
+      "ipa": "/rɪˈleɪʃnʃɪp/",
+      "example": "They have a good relationship with their neighbours.",
+      "synonym_group": "relationship"
+    },
+    {
+      "rank": 562,
+      "headword": "tax",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "налог"
+      ],
+      "ipa": "/tæks/",
+      "example": "We pay tax on everything we buy.",
+      "synonym_group": "tax"
+    },
+    {
+      "rank": 563,
+      "headword": "dog",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "собака",
+        "пёс"
+      ],
+      "ipa": "/dɒɡ/",
+      "example": "Our dog loves to play in the garden.",
+      "synonym_group": "dog"
+    },
+    {
+      "rank": 564,
+      "headword": "feeling",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "чувство",
+        "ощущение"
+      ],
+      "ipa": "/ˈfiːlɪŋ/",
+      "example": "I have a feeling that it will rain.",
+      "synonym_group": "feeling"
+    },
+    {
+      "rank": 565,
+      "headword": "couple",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пара"
+      ],
+      "ipa": "/ˈkʌpl/",
+      "example": "A young couple lives next door.",
+      "synonym_group": "couple"
+    },
+    {
+      "rank": 566,
+      "headword": "rest",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "отдых",
+        "покой"
+      ],
+      "ipa": "/rest/",
+      "example": "You need some rest after work.",
+      "synonym_group": "rest"
+    },
+    {
+      "rank": 567,
+      "headword": "official",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "официальный"
+      ],
+      "ipa": "/əˈfɪʃl/",
+      "example": "This is the official website of the school.",
+      "synonym_group": "official"
+    },
+    {
+      "rank": 568,
+      "headword": "department",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "отдел",
+        "департамент"
+      ],
+      "ipa": "/dɪˈpɑːtmənt/",
+      "example": "She works in the sales department.",
+      "synonym_group": "department"
+    },
+    {
+      "rank": 569,
+      "headword": "effect",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "эффект",
+        "влияние",
+        "действие"
+      ],
+      "ipa": "/ɪˈfekt/",
+      "example": "The medicine had a quick effect.",
+      "synonym_group": "effect"
+    },
+    {
+      "rank": 570,
+      "headword": "color",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "цвет"
+      ],
+      "ipa": "/ˈkʌlə/",
+      "example": "What color is your new car?",
+      "synonym_group": "color"
+    },
+    {
+      "rank": 571,
+      "headword": "mark",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "отметка",
+        "знак"
+      ],
+      "ipa": "/mɑːk/",
+      "example": "Put a mark next to the right answer.",
+      "synonym_group": "mark"
+    },
+    {
+      "rank": 572,
+      "headword": "period",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "период",
+        "срок"
+      ],
+      "ipa": "/ˈpɪəriəd/",
+      "example": "It was a hard period in my life.",
+      "synonym_group": "period"
+    },
+    {
+      "rank": 573,
+      "headword": "choose",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "выбирать"
+      ],
+      "ipa": "/tʃuːz/",
+      "example": "You can choose any cake you like.",
+      "synonym_group": "pick"
+    },
+    {
+      "rank": 574,
+      "headword": "wife",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "жена"
+      ],
+      "ipa": "/waɪf/",
+      "example": "His wife is a doctor.",
+      "synonym_group": "wife"
+    },
+    {
+      "rank": 575,
+      "headword": "bill",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "счёт"
+      ],
+      "ipa": "/bɪl/",
+      "example": "Can we have the bill, please?",
+      "synonym_group": "account"
+    },
+    {
+      "rank": 576,
+      "headword": "industry",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "промышленность",
+        "отрасль",
+        "индустрия"
+      ],
+      "ipa": "/ˈɪndəstri/",
+      "example": "The car industry is big in this town.",
+      "synonym_group": "industry"
+    },
+    {
+      "rank": 577,
+      "headword": "agree",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "соглашаться"
+      ],
+      "ipa": "/əˈɡriː/",
+      "example": "I agree with you.",
+      "synonym_group": "agree"
+    },
+    {
+      "rank": 578,
+      "headword": "brother",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "брат"
+      ],
+      "ipa": "/ˈbrʌðə/",
+      "example": "My brother is two years older than me.",
+      "synonym_group": "brother"
+    },
+    {
+      "rank": 579,
+      "headword": "officer",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "офицер",
+        "сотрудник"
+      ],
+      "ipa": "/ˈɒfɪsə/",
+      "example": "The police officer helped the lost child.",
+      "synonym_group": "officer"
+    },
+    {
+      "rank": 580,
+      "headword": "listen",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "слушать"
+      ],
+      "ipa": "/ˈlɪsn/",
+      "example": "I like to listen to music at night.",
+      "synonym_group": "listen"
+    },
+    {
+      "rank": 581,
+      "headword": "self",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "личность",
+        "собственное я"
+      ],
+      "ipa": "/self/",
+      "example": "She shows her true self only to close friends.",
+      "synonym_group": "self"
+    },
+    {
+      "rank": 582,
+      "headword": "race",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "гонка",
+        "забег"
+      ],
+      "ipa": "/reɪs/",
+      "example": "He won the race at school.",
+      "synonym_group": "race"
+    },
+    {
+      "rank": 583,
+      "headword": "describe",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "описывать"
+      ],
+      "ipa": "/dɪˈskraɪb/",
+      "example": "Can you describe the man you saw?",
+      "synonym_group": "describe"
+    },
+    {
+      "rank": 584,
+      "headword": "produce",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "производить",
+        "выпускать"
+      ],
+      "ipa": "/prəˈdjuːs/",
+      "example": "This farm produces milk and cheese.",
+      "synonym_group": "produce"
+    },
+    {
+      "rank": 585,
+      "headword": "across",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "через",
+        "поперёк"
+      ],
+      "ipa": "/əˈkrɒs/",
+      "example": "We walked across the bridge.",
+      "synonym_group": "through"
+    },
+    {
+      "rank": 586,
+      "headword": "himself",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "себя",
+        "сам"
+      ],
+      "ipa": "/hɪmˈself/",
+      "example": "He cut himself while cooking.",
+      "synonym_group": "myself"
+    },
+    {
+      "rank": 587,
+      "headword": "outside",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "снаружи",
+        "на улице"
+      ],
+      "ipa": "/ˌaʊtˈsaɪd/",
+      "example": "The children are playing outside.",
+      "synonym_group": "outside"
+    },
+    {
+      "rank": 588,
+      "headword": "catch",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ловить"
+      ],
+      "ipa": "/kætʃ/",
+      "example": "Can you catch the ball?",
+      "synonym_group": "catch"
+    },
+    {
+      "rank": 589,
+      "headword": "main",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "главный",
+        "основной"
+      ],
+      "ipa": "/meɪn/",
+      "example": "This is the main street of the town.",
+      "synonym_group": "major"
+    },
+    {
+      "rank": 590,
+      "headword": "focus",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "сосредотачиваться"
+      ],
+      "ipa": "/ˈfəʊkəs/",
+      "example": "I cannot focus when the TV is on.",
+      "synonym_group": "focus"
+    },
+    {
+      "rank": 591,
+      "headword": "summer",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "лето"
+      ],
+      "ipa": "/ˈsʌmə/",
+      "example": "We go to the sea every summer.",
+      "synonym_group": "summer"
+    },
+    {
+      "rank": 592,
+      "headword": "decision",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "решение"
+      ],
+      "ipa": "/dɪˈsɪʒn/",
+      "example": "It was a hard decision to make.",
+      "synonym_group": "decision"
+    },
+    {
+      "rank": 593,
+      "headword": "security",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "безопасность",
+        "охрана"
+      ],
+      "ipa": "/sɪˈkjʊərəti/",
+      "example": "Security at the airport was very good.",
+      "synonym_group": "security"
+    },
+    {
+      "rank": 594,
+      "headword": "page",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "страница"
+      ],
+      "ipa": "/peɪdʒ/",
+      "example": "Open your books at page ten.",
+      "synonym_group": "page"
+    },
+    {
+      "rank": 595,
+      "headword": "ground",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "земля",
+        "почва"
+      ],
+      "ipa": "/ɡraʊnd/",
+      "example": "The ball fell to the ground.",
+      "synonym_group": "land"
+    },
+    {
+      "rank": 596,
+      "headword": "article",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "статья"
+      ],
+      "ipa": "/ˈɑːtɪkl/",
+      "example": "I read an interesting article about birds.",
+      "synonym_group": "article"
+    },
+    {
+      "rank": 597,
+      "headword": "instead",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "вместо этого",
+        "взамен"
+      ],
+      "ipa": "/ɪnˈsted/",
+      "example": "We had no tea, so we drank milk instead.",
+      "synonym_group": "instead"
+    },
+    {
+      "rank": 598,
+      "headword": "foot",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ступня",
+        "нога"
+      ],
+      "ipa": "/fʊt/",
+      "example": "My left foot hurts after the long walk.",
+      "synonym_group": "foot"
+    },
+    {
+      "rank": 599,
+      "headword": "king",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "король"
+      ],
+      "ipa": "/kɪŋ/",
+      "example": "The king lived in a big castle.",
+      "synonym_group": "king"
+    },
+    {
+      "rank": 600,
+      "headword": "property",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "собственность",
+        "имущество"
+      ],
+      "ipa": "/ˈprɒpəti/",
+      "example": "This land is private property.",
+      "synonym_group": "property"
+    },
+    {
+      "rank": 601,
+      "headword": "press",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "нажимать",
+        "давить"
+      ],
+      "ipa": "/pres/",
+      "example": "Press the green button to start.",
+      "synonym_group": "press"
+    },
+    {
+      "rank": 602,
+      "headword": "energy",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "энергия",
+        "сила"
+      ],
+      "ipa": "/ˈenədʒi/",
+      "example": "I have no energy after a long day.",
+      "synonym_group": "energy"
+    },
+    {
+      "rank": 603,
+      "headword": "role",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "роль"
+      ],
+      "ipa": "/rəʊl/",
+      "example": "She plays the main role in the film.",
+      "synonym_group": "role"
+    },
+    {
+      "rank": 604,
+      "headword": "county",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "округ",
+        "графство"
+      ],
+      "ipa": "/ˈkaʊnti/",
+      "example": "They live in a quiet county in the south.",
+      "synonym_group": "county"
+    },
+    {
+      "rank": 605,
+      "headword": "condition",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "состояние",
+        "условие"
+      ],
+      "ipa": "/kənˈdɪʃn/",
+      "example": "The car is in good condition.",
+      "synonym_group": "condition"
+    },
+    {
+      "rank": 606,
+      "headword": "September",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сентябрь"
+      ],
+      "ipa": "/sepˈtembə/",
+      "example": "School starts in September.",
+      "synonym_group": "September"
+    },
+    {
+      "rank": 607,
+      "headword": "round",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "круглый"
+      ],
+      "ipa": "/raʊnd/",
+      "example": "We have a round table in the kitchen.",
+      "synonym_group": "round"
+    },
+    {
+      "rank": 608,
+      "headword": "common",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "распространённый",
+        "обычный",
+        "общий"
+      ],
+      "ipa": "/ˈkɒmən/",
+      "example": "This is a common name in our country.",
+      "synonym_group": "common"
+    },
+    {
+      "rank": 609,
+      "headword": "total",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "итоговый",
+        "общий"
+      ],
+      "ipa": "/ˈtəʊtl/",
+      "example": "The total cost of the trip was high.",
+      "synonym_group": "total"
+    },
+    {
+      "rank": 610,
+      "headword": "size",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "размер"
+      ],
+      "ipa": "/saɪz/",
+      "example": "What size are these shoes?",
+      "synonym_group": "size"
+    },
+    {
+      "rank": 611,
+      "headword": "sense",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "чувство",
+        "смысл",
+        "ощущение"
+      ],
+      "ipa": "/sens/",
+      "example": "She has a great sense of humour.",
+      "synonym_group": "feeling"
+    },
+    {
+      "rank": 612,
+      "headword": "director",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "директор",
+        "режиссёр"
+      ],
+      "ipa": "/dəˈrektə/",
+      "example": "The director of the school is very kind.",
+      "synonym_group": "director"
+    },
+    {
+      "rank": 613,
+      "headword": "sex",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пол"
+      ],
+      "ipa": "/seks/",
+      "example": "Please write your age and sex on the form.",
+      "synonym_group": "sex"
+    },
+    {
+      "rank": 614,
+      "headword": "sleep",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "спать"
+      ],
+      "ipa": "/sliːp/",
+      "example": "I sleep eight hours every night.",
+      "synonym_group": "sleep"
+    },
+    {
+      "rank": 615,
+      "headword": "comment",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "комментарий",
+        "замечание"
+      ],
+      "ipa": "/ˈkɒment/",
+      "example": "Thank you for your kind comment.",
+      "synonym_group": "comment"
+    },
+    {
+      "rank": 616,
+      "headword": "card",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "карта",
+        "карточка",
+        "открытка"
+      ],
+      "ipa": "/kɑːd/",
+      "example": "Can I pay by card?",
+      "synonym_group": "card"
+    },
+    {
+      "rank": 617,
+      "headword": "organization",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "организация"
+      ],
+      "ipa": "/ˌɔːɡənaɪˈzeɪʃn/",
+      "example": "She works for a large organization.",
+      "synonym_group": "organization"
+    },
+    {
+      "rank": 618,
+      "headword": "standard",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "стандарт",
+        "уровень"
+      ],
+      "ipa": "/ˈstændəd/",
+      "example": "The food here is of a high standard.",
+      "synonym_group": "standard"
+    },
+    {
+      "rank": 619,
+      "headword": "practice",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "практика",
+        "тренировка"
+      ],
+      "ipa": "/ˈpræktɪs/",
+      "example": "Football practice starts at five.",
+      "synonym_group": "practice"
+    },
+    {
+      "rank": 620,
+      "headword": "store",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "магазин"
+      ],
+      "ipa": "/stɔː/",
+      "example": "I need to go to the store for milk.",
+      "synonym_group": "store"
+    },
+    {
+      "rank": 621,
+      "headword": "drink",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "пить"
+      ],
+      "ipa": "/drɪŋk/",
+      "example": "I drink coffee every morning.",
+      "synonym_group": "drink"
+    },
+    {
+      "rank": 622,
+      "headword": "relate",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "относиться",
+        "быть связанным"
+      ],
+      "ipa": "/rɪˈleɪt/",
+      "example": "These questions relate to your work.",
+      "synonym_group": "relate"
+    },
+    {
+      "rank": 623,
+      "headword": "beautiful",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "красивый",
+        "прекрасный"
+      ],
+      "ipa": "/ˈbjuːtɪfl/",
+      "example": "What a beautiful garden you have!",
+      "synonym_group": "beautiful"
+    },
+    {
+      "rank": 624,
+      "headword": "hate",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ненавидеть"
+      ],
+      "ipa": "/heɪt/",
+      "example": "I hate getting up early.",
+      "synonym_group": "hate"
+    },
+    {
+      "rank": 625,
+      "headword": "election",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "выборы"
+      ],
+      "ipa": "/ɪˈlekʃn/",
+      "example": "Our class had an election for team leader.",
+      "synonym_group": "election"
+    },
+    {
+      "rank": 626,
+      "headword": "amount",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "количество",
+        "сумма"
+      ],
+      "ipa": "/əˈmaʊnt/",
+      "example": "He drinks a large amount of water.",
+      "synonym_group": "amount"
+    },
+    {
+      "rank": 627,
+      "headword": "travel",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "путешествовать",
+        "ездить"
+      ],
+      "ipa": "/ˈtrævl/",
+      "example": "We love to travel by train.",
+      "synonym_group": "travel"
+    },
+    {
+      "rank": 628,
+      "headword": "individual",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "индивидуальный",
+        "отдельный",
+        "личный"
+      ],
+      "ipa": "/ˌɪndɪˈvɪdʒuəl/",
+      "example": "Each child gets individual help.",
+      "synonym_group": "individual"
+    },
+    {
+      "rank": 629,
+      "headword": "performance",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "выступление",
+        "исполнение"
+      ],
+      "ipa": "/pəˈfɔːməns/",
+      "example": "Her performance in the show was great.",
+      "synonym_group": "performance"
+    },
+    {
+      "rank": 630,
+      "headword": "ship",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "корабль",
+        "судно"
+      ],
+      "ipa": "/ʃɪp/",
+      "example": "The ship left the port at noon.",
+      "synonym_group": "ship"
+    },
+    {
+      "rank": 631,
+      "headword": "title",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "название",
+        "заголовок"
+      ],
+      "ipa": "/ˈtaɪtl/",
+      "example": "What is the title of the song?",
+      "synonym_group": "title"
+    },
+    {
+      "rank": 632,
+      "headword": "range",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "диапазон",
+        "ряд"
+      ],
+      "ipa": "/reɪndʒ/",
+      "example": "The age range of the group is ten to twelve.",
+      "synonym_group": "range"
+    },
+    {
+      "rank": 633,
+      "headword": "stage",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "этап",
+        "стадия",
+        "сцена"
+      ],
+      "ipa": "/steɪdʒ/",
+      "example": "The first stage of the work is done.",
+      "synonym_group": "stage"
+    },
+    {
+      "rank": 634,
+      "headword": "mine",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "мой"
+      ],
+      "ipa": "/maɪn/",
+      "example": "This book is mine.",
+      "synonym_group": "my"
+    },
+    {
+      "rank": 635,
+      "headword": "church",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "церковь"
+      ],
+      "ipa": "/tʃɜːtʃ/",
+      "example": "There is an old church in the village.",
+      "synonym_group": "church"
+    },
+    {
+      "rank": 636,
+      "headword": "guess",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "угадывать",
+        "догадываться"
+      ],
+      "ipa": "/ɡes/",
+      "example": "Can you guess my age?",
+      "synonym_group": "guess"
+    },
+    {
+      "rank": 637,
+      "headword": "piece",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "кусок",
+        "часть",
+        "штука"
+      ],
+      "ipa": "/piːs/",
+      "example": "Can I have a piece of cake?",
+      "synonym_group": "piece"
+    },
+    {
+      "rank": 638,
+      "headword": "raise",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "поднимать",
+        "повышать"
+      ],
+      "ipa": "/reɪz/",
+      "example": "Raise your hand if you know the answer.",
+      "synonym_group": "raise"
+    },
+    {
+      "rank": 639,
+      "headword": "trust",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "доверять"
+      ],
+      "ipa": "/trʌst/",
+      "example": "I trust my best friend.",
+      "synonym_group": "trust"
+    },
+    {
+      "rank": 640,
+      "headword": "cool",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "прохладный",
+        "классный"
+      ],
+      "ipa": "/kuːl/",
+      "example": "It is cool in the evening here.",
+      "synonym_group": "cool"
+    },
+    {
+      "rank": 641,
+      "headword": "especially",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "особенно"
+      ],
+      "ipa": "/ɪˈspeʃəli/",
+      "example": "I love fruit, especially apples.",
+      "synonym_group": "especially"
+    },
+    {
+      "rank": 642,
+      "headword": "June",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "июнь"
+      ],
+      "ipa": "/dʒuːn/",
+      "example": "We go on holiday in June.",
+      "synonym_group": "June"
+    },
+    {
+      "rank": 643,
+      "headword": "similar",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "похожий",
+        "подобный"
+      ],
+      "ipa": "/ˈsɪmələ/",
+      "example": "Your bag is similar to mine.",
+      "synonym_group": "similar"
+    },
+    {
+      "rank": 644,
+      "headword": "average",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "средний"
+      ],
+      "ipa": "/ˈævərɪdʒ/",
+      "example": "He is of average height.",
+      "synonym_group": "average"
+    },
+    {
+      "rank": 645,
+      "headword": "concern",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "беспокойство",
+        "забота"
+      ],
+      "ipa": "/kənˈsɜːn/",
+      "example": "Thank you for your concern.",
+      "synonym_group": "concern"
+    },
+    {
+      "rank": 646,
+      "headword": "perfect",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "идеальный",
+        "совершенный"
+      ],
+      "ipa": "/ˈpɜːfɪkt/",
+      "example": "It is a perfect day for the beach.",
+      "synonym_group": "perfect"
+    },
+    {
+      "rank": 647,
+      "headword": "photo",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "фотография",
+        "фото"
+      ],
+      "ipa": "/ˈfəʊtəʊ/",
+      "example": "Can you take a photo of us?",
+      "synonym_group": "photo"
+    },
+    {
+      "rank": 648,
+      "headword": "style",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "стиль"
+      ],
+      "ipa": "/staɪl/",
+      "example": "I like the style of your dress.",
+      "synonym_group": "style"
+    },
+    {
+      "rank": 649,
+      "headword": "score",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "балл",
+        "счёт",
+        "очки"
+      ],
+      "ipa": "/skɔː/",
+      "example": "She got the highest score in the class.",
+      "synonym_group": "score"
+    },
+    {
+      "rank": 650,
+      "headword": "arm",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "рука"
+      ],
+      "ipa": "/ɑːm/",
+      "example": "He broke his arm playing football.",
+      "synonym_group": "hand"
+    },
+    {
+      "rank": 651,
+      "headword": "society",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "общество"
+      ],
+      "ipa": "/səˈsaɪəti/",
+      "example": "Music is important in our society.",
+      "synonym_group": "society"
+    },
+    {
+      "rank": 652,
+      "headword": "track",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "дорожка",
+        "тропа"
+      ],
+      "ipa": "/træk/",
+      "example": "We walked along a narrow track in the forest.",
+      "synonym_group": "track"
+    },
+    {
+      "rank": 653,
+      "headword": "explain",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "объяснять"
+      ],
+      "ipa": "/ɪkˈspleɪn/",
+      "example": "Can you explain this word to me?",
+      "synonym_group": "explain"
+    },
+    {
+      "rank": 654,
+      "headword": "exist",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "существовать"
+      ],
+      "ipa": "/ɪɡˈzɪst/",
+      "example": "Do you think ghosts exist?",
+      "synonym_group": "exist"
+    },
+    {
+      "rank": 655,
+      "headword": "throw",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "бросать",
+        "кидать"
+      ],
+      "ipa": "/θrəʊ/",
+      "example": "Throw the ball to me!",
+      "synonym_group": "throw"
+    },
+    {
+      "rank": 656,
+      "headword": "military",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "военный"
+      ],
+      "ipa": "/ˈmɪlətri/",
+      "example": "My uncle wore a military uniform.",
+      "synonym_group": "military"
+    },
+    {
+      "rank": 657,
+      "headword": "personal",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "личный",
+        "персональный"
+      ],
+      "ipa": "/ˈpɜːsənl/",
+      "example": "This is my personal phone number.",
+      "synonym_group": "personal"
+    },
+    {
+      "rank": 658,
+      "headword": "above",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "над",
+        "выше"
+      ],
+      "ipa": "/əˈbʌv/",
+      "example": "There is a lamp above the table.",
+      "synonym_group": "over"
+    },
+    {
+      "rank": 659,
+      "headword": "likely",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "вероятный"
+      ],
+      "ipa": "/ˈlaɪkli/",
+      "example": "Rain is likely this afternoon.",
+      "synonym_group": "likely"
+    },
+    {
+      "rank": 660,
+      "headword": "TV",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "телевизор",
+        "телевидение"
+      ],
+      "ipa": "/ˌtiːˈviː/",
+      "example": "We watch TV after dinner.",
+      "synonym_group": "TV"
+    },
+    {
+      "rank": 661,
+      "headword": "paper",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "бумага"
+      ],
+      "ipa": "/ˈpeɪpə/",
+      "example": "Write your name on this paper.",
+      "synonym_group": "paper"
+    },
+    {
+      "rank": 662,
+      "headword": "key",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ключ"
+      ],
+      "ipa": "/kiː/",
+      "example": "I lost the key to my house.",
+      "synonym_group": "key"
+    },
+    {
+      "rank": 663,
+      "headword": "hot",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "горячий",
+        "жаркий"
+      ],
+      "ipa": "/hɒt/",
+      "example": "Be careful, the soup is hot.",
+      "synonym_group": "hot"
+    },
+    {
+      "rank": 664,
+      "headword": "operation",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "операция"
+      ],
+      "ipa": "/ˌɒpəˈreɪʃn/",
+      "example": "The doctor did the operation this morning.",
+      "synonym_group": "operation"
+    },
+    {
+      "rank": 665,
+      "headword": "publish",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "публиковать",
+        "издавать"
+      ],
+      "ipa": "/ˈpʌblɪʃ/",
+      "example": "They will publish her new book in May.",
+      "synonym_group": "publish"
+    },
+    {
+      "rank": 666,
+      "headword": "science",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "наука"
+      ],
+      "ipa": "/ˈsaɪəns/",
+      "example": "Science is my favourite subject at school.",
+      "synonym_group": "science"
+    },
+    {
+      "rank": 667,
+      "headword": "inside",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "внутри"
+      ],
+      "ipa": "/ˌɪnˈsaɪd/",
+      "example": "It is raining, so let's stay inside.",
+      "synonym_group": "inside"
+    },
+    {
+      "rank": 668,
+      "headword": "teach",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "преподавать",
+        "учить"
+      ],
+      "ipa": "/tiːtʃ/",
+      "example": "My mother teaches English at school.",
+      "synonym_group": "teach"
+    },
+    {
+      "rank": 669,
+      "headword": "sport",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "спорт"
+      ],
+      "ipa": "/spɔːt/",
+      "example": "Tennis is my favourite sport.",
+      "synonym_group": "sport"
+    },
+    {
+      "rank": 670,
+      "headword": "private",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "частный",
+        "личный"
+      ],
+      "ipa": "/ˈpraɪvət/",
+      "example": "This is a private beach.",
+      "synonym_group": "private"
+    },
+    {
+      "rank": 671,
+      "headword": "realize",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "осознавать",
+        "понимать"
+      ],
+      "ipa": "/ˈrɪəlaɪz/",
+      "example": "I did not realize it was so late.",
+      "synonym_group": "realize"
+    },
+    {
+      "rank": 672,
+      "headword": "April",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "апрель"
+      ],
+      "ipa": "/ˈeɪprəl/",
+      "example": "My birthday is in April.",
+      "synonym_group": "April"
+    },
+    {
+      "rank": 673,
+      "headword": "dead",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "мёртвый"
+      ],
+      "ipa": "/ded/",
+      "example": "The plant is dead because I forgot to water it.",
+      "synonym_group": "dead"
+    },
+    {
+      "rank": 674,
+      "headword": "English",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "английский язык",
+        "английский"
+      ],
+      "ipa": "/ˈɪŋɡlɪʃ/",
+      "example": "She speaks English very well.",
+      "synonym_group": "English"
+    },
+    {
+      "rank": 675,
+      "headword": "online",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "онлайн",
+        "в интернете"
+      ],
+      "ipa": "/ˌɒnˈlaɪn/",
+      "example": "I buy most of my books online.",
+      "synonym_group": "online"
+    },
+    {
+      "rank": 676,
+      "headword": "wall",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "стена"
+      ],
+      "ipa": "/wɔːl/",
+      "example": "There is a picture on the wall.",
+      "synonym_group": "wall"
+    },
+    {
+      "rank": 677,
+      "headword": "door",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "дверь"
+      ],
+      "ipa": "/dɔː/",
+      "example": "Please close the door.",
+      "synonym_group": "door"
+    },
+    {
+      "rank": 678,
+      "headword": "activity",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "занятие",
+        "деятельность",
+        "активность"
+      ],
+      "ipa": "/ækˈtɪvəti/",
+      "example": "Swimming is a good activity for children.",
+      "synonym_group": "activity"
+    },
+    {
+      "rank": 679,
+      "headword": "leader",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "лидер",
+        "руководитель"
+      ],
+      "ipa": "/ˈliːdə/",
+      "example": "She is the leader of our group.",
+      "synonym_group": "leader"
+    },
+    {
+      "rank": 680,
+      "headword": "enter",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "входить"
+      ],
+      "ipa": "/ˈentə/",
+      "example": "Please knock before you enter the room.",
+      "synonym_group": "enter"
+    },
+    {
+      "rank": 681,
+      "headword": "suggest",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "предлагать",
+        "советовать"
+      ],
+      "ipa": "/səˈdʒest/",
+      "example": "I suggest we go home now.",
+      "synonym_group": "offer"
+    },
+    {
+      "rank": 682,
+      "headword": "situation",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ситуация",
+        "положение"
+      ],
+      "ipa": "/ˌsɪtʃuˈeɪʃn/",
+      "example": "This is a difficult situation for everyone.",
+      "synonym_group": "situation"
+    },
+    {
+      "rank": 683,
+      "headword": "language",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "язык"
+      ],
+      "ipa": "/ˈlæŋɡwɪdʒ/",
+      "example": "How many languages do you speak?",
+      "synonym_group": "language"
+    },
+    {
+      "rank": 684,
+      "headword": "award",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "награда",
+        "премия"
+      ],
+      "ipa": "/əˈwɔːd/",
+      "example": "She won an award for her book.",
+      "synonym_group": "award"
+    },
+    {
+      "rank": 685,
+      "headword": "remain",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "оставаться"
+      ],
+      "ipa": "/rɪˈmeɪn/",
+      "example": "Please remain in your seats.",
+      "synonym_group": "stay"
+    },
+    {
+      "rank": 686,
+      "headword": "middle",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "середина"
+      ],
+      "ipa": "/ˈmɪdl/",
+      "example": "There is a table in the middle of the room.",
+      "synonym_group": "middle"
+    },
+    {
+      "rank": 687,
+      "headword": "stuff",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "вещи"
+      ],
+      "ipa": "/stʌf/",
+      "example": "Put your stuff in the car.",
+      "synonym_group": "thing"
+    },
+    {
+      "rank": 688,
+      "headword": "October",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "октябрь"
+      ],
+      "ipa": "/ɒkˈtəʊbə/",
+      "example": "The leaves fall in October.",
+      "synonym_group": "October"
+    },
+    {
+      "rank": 689,
+      "headword": "British",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "британский"
+      ],
+      "ipa": "/ˈbrɪtɪʃ/",
+      "example": "He has a British passport.",
+      "synonym_group": "British"
+    },
+    {
+      "rank": 690,
+      "headword": "sorry",
+      "tier": "quiz",
+      "pos": "interjection",
+      "translations": [
+        "извините",
+        "простите"
+      ],
+      "ipa": "/ˈsɒri/",
+      "example": "Sorry, I am late again.",
+      "synonym_group": "sorry"
+    },
+    {
+      "rank": 691,
+      "headword": "gold",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "золото"
+      ],
+      "ipa": "/ɡəʊld/",
+      "example": "Her ring is made of gold.",
+      "synonym_group": "gold"
+    },
+    {
+      "rank": 692,
+      "headword": "material",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "материал"
+      ],
+      "ipa": "/məˈtɪəriəl/",
+      "example": "This dress is made of soft material.",
+      "synonym_group": "material"
+    },
+    {
+      "rank": 693,
+      "headword": "box",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "коробка",
+        "ящик"
+      ],
+      "ipa": "/bɒks/",
+      "example": "Put the toys back in the box.",
+      "synonym_group": "box"
+    },
+    {
+      "rank": 694,
+      "headword": "choice",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "выбор"
+      ],
+      "ipa": "/tʃɔɪs/",
+      "example": "You have a choice of tea or coffee.",
+      "synonym_group": "choice"
+    },
+    {
+      "rank": 695,
+      "headword": "original",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "оригинальный",
+        "первоначальный",
+        "исходный"
+      ],
+      "ipa": "/əˈrɪdʒənl/",
+      "example": "This is the original copy of the letter.",
+      "synonym_group": "original"
+    },
+    {
+      "rank": 696,
+      "headword": "finally",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "наконец",
+        "в конце концов"
+      ],
+      "ipa": "/ˈfaɪnəli/",
+      "example": "We finally got home at midnight.",
+      "synonym_group": "finally"
+    },
+    {
+      "rank": 697,
+      "headword": "July",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "июль"
+      ],
+      "ipa": "/dʒuˈlaɪ/",
+      "example": "It is very hot here in July.",
+      "synonym_group": "July"
+    },
+    {
+      "rank": 698,
+      "headword": "unit",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "единица",
+        "блок"
+      ],
+      "ipa": "/ˈjuːnɪt/",
+      "example": "A metre is a unit of length.",
+      "synonym_group": "unit"
+    },
+    {
+      "rank": 699,
+      "headword": "attempt",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "попытка"
+      ],
+      "ipa": "/əˈtempt/",
+      "example": "He passed the test on his first attempt.",
+      "synonym_group": "attempt"
+    },
+    {
+      "rank": 700,
+      "headword": "voice",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "голос"
+      ],
+      "ipa": "/vɔɪs/",
+      "example": "She has a beautiful voice.",
+      "synonym_group": "voice"
+    },
+    {
+      "rank": 701,
+      "headword": "shop",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "магазин",
+        "лавка"
+      ],
+      "ipa": "/ʃɒp/",
+      "example": "There is a small shop on our street.",
+      "synonym_group": "store"
+    },
+    {
+      "rank": 702,
+      "headword": "plant",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "растение",
+        "завод"
+      ],
+      "ipa": "/plɑːnt/",
+      "example": "Water the plant once a week.",
+      "synonym_group": "plant"
+    },
+    {
+      "rank": 703,
+      "headword": "production",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "производство"
+      ],
+      "ipa": "/prəˈdʌkʃn/",
+      "example": "Car production went up this year.",
+      "synonym_group": "production"
+    },
+    {
+      "rank": 704,
+      "headword": "apply",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "подавать заявление",
+        "применять"
+      ],
+      "ipa": "/əˈplaɪ/",
+      "example": "She will apply for a new job.",
+      "synonym_group": "apply"
+    },
+    {
+      "rank": 705,
+      "headword": "worth",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "стоящий",
+        "достойный"
+      ],
+      "ipa": "/wɜːθ/",
+      "example": "This film is worth seeing.",
+      "synonym_group": "worth"
+    },
+    {
+      "rank": 706,
+      "headword": "pull",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "тянуть",
+        "тащить"
+      ],
+      "ipa": "/pʊl/",
+      "example": "Pull the door to open it.",
+      "synonym_group": "pull"
+    },
+    {
+      "rank": 707,
+      "headword": "favorite",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "любимый"
+      ],
+      "ipa": "/ˈfeɪvərɪt/",
+      "example": "Blue is my favorite color.",
+      "synonym_group": "favorite"
+    },
+    {
+      "rank": 708,
+      "headword": "loss",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "потеря",
+        "утрата",
+        "убыток"
+      ],
+      "ipa": "/lɒs/",
+      "example": "The loss of his dog made him sad.",
+      "synonym_group": "loss"
+    },
+    {
+      "rank": 709,
+      "headword": "alone",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "в одиночестве",
+        "один"
+      ],
+      "ipa": "/əˈləʊn/",
+      "example": "She lives alone in a big house.",
+      "synonym_group": "alone"
+    },
+    {
+      "rank": 710,
+      "headword": "certain",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "определённый",
+        "некоторый"
+      ],
+      "ipa": "/ˈsɜːtn/",
+      "example": "You can only park here at certain times.",
+      "synonym_group": "certain"
+    },
+    {
+      "rank": 711,
+      "headword": "east",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "восток"
+      ],
+      "ipa": "/iːst/",
+      "example": "The sun comes up in the east.",
+      "synonym_group": "east"
+    },
+    {
+      "rank": 712,
+      "headword": "fail",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "проваливать",
+        "терпеть неудачу"
+      ],
+      "ipa": "/feɪl/",
+      "example": "Many people fail the driving test the first time.",
+      "synonym_group": "fail"
+    },
+    {
+      "rank": 713,
+      "headword": "medical",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "медицинский"
+      ],
+      "ipa": "/ˈmedɪkl/",
+      "example": "He needs medical help.",
+      "synonym_group": "medical"
+    },
+    {
+      "rank": 714,
+      "headword": "themselves",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "себя",
+        "сами"
+      ],
+      "ipa": "/ðəmˈselvz/",
+      "example": "The children dressed themselves.",
+      "synonym_group": "myself"
+    },
+    {
+      "rank": 715,
+      "headword": "wonder",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "интересоваться",
+        "задаваться вопросом"
+      ],
+      "ipa": "/ˈwʌndə/",
+      "example": "I wonder what time it is.",
+      "synonym_group": "wonder"
+    },
+    {
+      "rank": 716,
+      "headword": "green",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "зелёный"
+      ],
+      "ipa": "/ɡriːn/",
+      "example": "The grass is very green after the rain.",
+      "synonym_group": "green"
+    },
+    {
+      "rank": 717,
+      "headword": "ball",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мяч",
+        "шар"
+      ],
+      "ipa": "/bɔːl/",
+      "example": "The dog is playing with a ball.",
+      "synonym_group": "ball"
+    },
+    {
+      "rank": 718,
+      "headword": "technology",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "технология",
+        "техника"
+      ],
+      "ipa": "/tekˈnɒlədʒi/",
+      "example": "New technology makes life easier.",
+      "synonym_group": "technology"
+    },
+    {
+      "rank": 719,
+      "headword": "image",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "изображение",
+        "образ"
+      ],
+      "ipa": "/ˈɪmɪdʒ/",
+      "example": "The image on the screen is not clear.",
+      "synonym_group": "picture"
+    },
+    {
+      "rank": 720,
+      "headword": "benefit",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "польза",
+        "выгода",
+        "преимущество"
+      ],
+      "ipa": "/ˈbenɪfɪt/",
+      "example": "Walking has many health benefits.",
+      "synonym_group": "benefit"
+    },
+    {
+      "rank": 721,
+      "headword": "league",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "лига"
+      ],
+      "ipa": "/liːɡ/",
+      "example": "Our team plays in the local league.",
+      "synonym_group": "league"
+    },
+    {
+      "rank": 722,
+      "headword": "network",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сеть"
+      ],
+      "ipa": "/ˈnetwɜːk/",
+      "example": "The city has a good bus network.",
+      "synonym_group": "network"
+    },
+    {
+      "rank": 723,
+      "headword": "cup",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "чашка",
+        "кубок"
+      ],
+      "ipa": "/kʌp/",
+      "example": "Would you like a cup of tea?",
+      "synonym_group": "cup"
+    },
+    {
+      "rank": 724,
+      "headword": "effort",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "усилие",
+        "старание"
+      ],
+      "ipa": "/ˈefət/",
+      "example": "She made a big effort to finish on time.",
+      "synonym_group": "effort"
+    },
+    {
+      "rank": 725,
+      "headword": "message",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сообщение",
+        "послание"
+      ],
+      "ipa": "/ˈmesɪdʒ/",
+      "example": "I sent you a message this morning.",
+      "synonym_group": "message"
+    },
+    {
+      "rank": 726,
+      "headword": "evidence",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "доказательство",
+        "свидетельство"
+      ],
+      "ipa": "/ˈevɪdəns/",
+      "example": "There is no evidence that this diet works.",
+      "synonym_group": "evidence"
+    },
+    {
+      "rank": 727,
+      "headword": "protect",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "защищать",
+        "охранять"
+      ],
+      "ipa": "/prəˈtekt/",
+      "example": "Sun cream protects your skin.",
+      "synonym_group": "protect"
+    },
+    {
+      "rank": 728,
+      "headword": "fly",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "летать",
+        "лететь"
+      ],
+      "ipa": "/flaɪ/",
+      "example": "Birds fly south in winter.",
+      "synonym_group": "fly"
+    },
+    {
+      "rank": 729,
+      "headword": "exactly",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "точно",
+        "именно"
+      ],
+      "ipa": "/ɪɡˈzæktli/",
+      "example": "That is exactly what I wanted.",
+      "synonym_group": "exactly"
+    },
+    {
+      "rank": 730,
+      "headword": "usually",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "обычно"
+      ],
+      "ipa": "/ˈjuːʒuəli/",
+      "example": "I usually get up at seven.",
+      "synonym_group": "usually"
+    },
+    {
+      "rank": 731,
+      "headword": "chief",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "начальник",
+        "шеф",
+        "глава"
+      ],
+      "ipa": "/tʃiːf/",
+      "example": "The chief of the fire station is very brave.",
+      "synonym_group": "chief"
+    },
+    {
+      "rank": 732,
+      "headword": "fund",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "фонд",
+        "средства"
+      ],
+      "ipa": "/fʌnd/",
+      "example": "The school has a fund for new books.",
+      "synonym_group": "fund"
+    },
+    {
+      "rank": 733,
+      "headword": "quality",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "качество"
+      ],
+      "ipa": "/ˈkwɒləti/",
+      "example": "These shoes are of good quality.",
+      "synonym_group": "quality"
+    },
+    {
+      "rank": 734,
+      "headword": "accept",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "принимать"
+      ],
+      "ipa": "/əkˈsept/",
+      "example": "Please accept this small gift.",
+      "synonym_group": "accept"
+    },
+    {
+      "rank": 735,
+      "headword": "risk",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "риск"
+      ],
+      "ipa": "/rɪsk/",
+      "example": "There is a risk of rain today.",
+      "synonym_group": "risk"
+    },
+    {
+      "rank": 736,
+      "headword": "patient",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пациент",
+        "больной"
+      ],
+      "ipa": "/ˈpeɪʃnt/",
+      "example": "The doctor has many patients today.",
+      "synonym_group": "patient"
+    },
+    {
+      "rank": 737,
+      "headword": "draw",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "рисовать"
+      ],
+      "ipa": "/drɔː/",
+      "example": "My son likes to draw animals.",
+      "synonym_group": "draw"
+    },
+    {
+      "rank": 738,
+      "headword": "rock",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "камень",
+        "скала"
+      ],
+      "ipa": "/rɒk/",
+      "example": "He sat on a big rock by the sea.",
+      "synonym_group": "rock"
+    },
+    {
+      "rank": 739,
+      "headword": "marry",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "жениться",
+        "выходить замуж"
+      ],
+      "ipa": "/ˈmæri/",
+      "example": "They will marry next summer.",
+      "synonym_group": "marry"
+    },
+    {
+      "rank": 740,
+      "headword": "worry",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "волноваться",
+        "беспокоиться"
+      ],
+      "ipa": "/ˈwʌri/",
+      "example": "Do not worry, everything will be fine.",
+      "synonym_group": "worry"
+    },
+    {
+      "rank": 741,
+      "headword": "gun",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пистолет",
+        "ружьё",
+        "оружие"
+      ],
+      "ipa": "/ɡʌn/",
+      "example": "The toy gun is made of plastic.",
+      "synonym_group": "gun"
+    },
+    {
+      "rank": 742,
+      "headword": "version",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "версия",
+        "вариант"
+      ],
+      "ipa": "/ˈvɜːʃn/",
+      "example": "I have the new version of the game.",
+      "synonym_group": "version"
+    },
+    {
+      "rank": 743,
+      "headword": "mom",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мама"
+      ],
+      "ipa": "/mɒm/",
+      "example": "My mom makes the best pancakes.",
+      "synonym_group": "mother"
+    },
+    {
+      "rank": 744,
+      "headword": "perform",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "выступать",
+        "исполнять",
+        "выполнять"
+      ],
+      "ipa": "/pəˈfɔːm/",
+      "example": "The band will perform in the park tonight.",
+      "synonym_group": "perform"
+    },
+    {
+      "rank": 745,
+      "headword": "mention",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "упоминать"
+      ],
+      "ipa": "/ˈmenʃn/",
+      "example": "Did she mention her new job?",
+      "synonym_group": "mention"
+    },
+    {
+      "rank": 746,
+      "headword": "nation",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "нация",
+        "народ"
+      ],
+      "ipa": "/ˈneɪʃn/",
+      "example": "The whole nation watched the game.",
+      "synonym_group": "nation"
+    },
+    {
+      "rank": 747,
+      "headword": "code",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "код"
+      ],
+      "ipa": "/kəʊd/",
+      "example": "Enter the code to open the door.",
+      "synonym_group": "code"
+    },
+    {
+      "rank": 748,
+      "headword": "mile",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "миля"
+      ],
+      "ipa": "/maɪl/",
+      "example": "We walked two miles to the beach.",
+      "synonym_group": "mile"
+    },
+    {
+      "rank": 749,
+      "headword": "website",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сайт",
+        "веб-сайт"
+      ],
+      "ipa": "/ˈwebsaɪt/",
+      "example": "You can find the menu on our website.",
+      "synonym_group": "site"
+    },
+    {
+      "rank": 750,
+      "headword": "station",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "станция",
+        "вокзал"
+      ],
+      "ipa": "/ˈsteɪʃn/",
+      "example": "I will meet you at the station.",
+      "synonym_group": "station"
+    },
+    {
+      "rank": 751,
+      "headword": "hospital",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "больница"
+      ],
+      "ipa": "/ˈhɒspɪtl/",
+      "example": "My aunt works at the hospital.",
+      "synonym_group": "hospital"
+    },
+    {
+      "rank": 752,
+      "headword": "sit",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "сидеть",
+        "садиться"
+      ],
+      "ipa": "/sɪt/",
+      "example": "Please sit next to me.",
+      "synonym_group": "sit"
+    },
+    {
+      "rank": 753,
+      "headword": "lord",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "господин",
+        "лорд",
+        "господь"
+      ],
+      "ipa": "/lɔːd/",
+      "example": "The lord lived in a large house on the hill.",
+      "synonym_group": "lord"
+    },
+    {
+      "rank": 754,
+      "headword": "ok",
+      "tier": "quiz",
+      "pos": "interjection",
+      "translations": [
+        "ладно",
+        "хорошо",
+        "окей"
+      ],
+      "ipa": "/ˌəʊˈkeɪ/",
+      "example": "Ok, I will call you later.",
+      "synonym_group": "ok"
+    },
+    {
+      "rank": 755,
+      "headword": "whatever",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "что угодно",
+        "всё что"
+      ],
+      "ipa": "/wɒtˈevə/",
+      "example": "You can eat whatever you like.",
+      "synonym_group": "whatever"
+    },
+    {
+      "rank": 756,
+      "headword": "deep",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "глубокий"
+      ],
+      "ipa": "/diːp/",
+      "example": "The lake is very deep.",
+      "synonym_group": "deep"
+    },
+    {
+      "rank": 757,
+      "headword": "challenge",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "вызов",
+        "испытание",
+        "трудность"
+      ],
+      "ipa": "/ˈtʃælɪndʒ/",
+      "example": "Learning a new language is a big challenge.",
+      "synonym_group": "challenge"
+    },
+    {
+      "rank": 758,
+      "headword": "treat",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "обращаться",
+        "лечить"
+      ],
+      "ipa": "/triːt/",
+      "example": "She treats her dog like a child.",
+      "synonym_group": "treat"
+    },
+    {
+      "rank": 759,
+      "headword": "union",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "союз",
+        "профсоюз"
+      ],
+      "ipa": "/ˈjuːniən/",
+      "example": "My father is a member of the union.",
+      "synonym_group": "union"
+    },
+    {
+      "rank": 760,
+      "headword": "letter",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "письмо",
+        "буква"
+      ],
+      "ipa": "/ˈletə/",
+      "example": "I wrote a letter to my grandmother.",
+      "synonym_group": "letter"
+    },
+    {
+      "rank": 761,
+      "headword": "dream",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мечта",
+        "сон"
+      ],
+      "ipa": "/driːm/",
+      "example": "Her dream is to become a pilot.",
+      "synonym_group": "dream"
+    },
+    {
+      "rank": 762,
+      "headword": "remove",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "удалять",
+        "убирать",
+        "снимать"
+      ],
+      "ipa": "/rɪˈmuːv/",
+      "example": "Please remove your shoes at the door.",
+      "synonym_group": "remove"
+    },
+    {
+      "rank": 763,
+      "headword": "block",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "квартал",
+        "блок"
+      ],
+      "ipa": "/blɒk/",
+      "example": "She lives two blocks from here.",
+      "synonym_group": "block"
+    },
+    {
+      "rank": 764,
+      "headword": "daughter",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "дочь",
+        "дочка"
+      ],
+      "ipa": "/ˈdɔːtə/",
+      "example": "Their daughter is five years old.",
+      "synonym_group": "daughter"
+    },
+    {
+      "rank": 765,
+      "headword": "forward",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "вперёд"
+      ],
+      "ipa": "/ˈfɔːwəd/",
+      "example": "Please move forward a little.",
+      "synonym_group": "forward"
+    },
+    {
+      "rank": 766,
+      "headword": "judge",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "судья"
+      ],
+      "ipa": "/dʒʌdʒ/",
+      "example": "The judge listened to both sides.",
+      "synonym_group": "judge"
+    },
+    {
+      "rank": 767,
+      "headword": "drug",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "лекарство",
+        "препарат",
+        "наркотик"
+      ],
+      "ipa": "/drʌɡ/",
+      "example": "This drug helps with bad headaches.",
+      "synonym_group": "drug"
+    },
+    {
+      "rank": 768,
+      "headword": "difference",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "разница",
+        "различие",
+        "отличие"
+      ],
+      "ipa": "/ˈdɪfrəns/",
+      "example": "Can you see the difference between these two pictures?",
+      "synonym_group": "difference"
+    },
+    {
+      "rank": 769,
+      "headword": "blue",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "синий",
+        "голубой"
+      ],
+      "ipa": "/bluː/",
+      "example": "The sky is blue today.",
+      "synonym_group": "blue"
+    },
+    {
+      "rank": 770,
+      "headword": "federal",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "федеральный"
+      ],
+      "ipa": "/ˈfedərəl/",
+      "example": "The post office is closed on federal holidays.",
+      "synonym_group": "federal"
+    },
+    {
+      "rank": 771,
+      "headword": "management",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "управление",
+        "руководство",
+        "менеджмент"
+      ],
+      "ipa": "/ˈmænɪdʒmənt/",
+      "example": "She studies hotel management.",
+      "synonym_group": "management"
+    },
+    {
+      "rank": 772,
+      "headword": "beat",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "обыгрывать",
+        "бить"
+      ],
+      "ipa": "/biːt/",
+      "example": "Our team beat them three to one.",
+      "synonym_group": "beat"
+    },
+    {
+      "rank": 773,
+      "headword": "contain",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "содержать"
+      ],
+      "ipa": "/kənˈteɪn/",
+      "example": "This box contains old photos.",
+      "synonym_group": "contain"
+    },
+    {
+      "rank": 774,
+      "headword": "oil",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "масло",
+        "нефть"
+      ],
+      "ipa": "/ɔɪl/",
+      "example": "Cook the fish in a little oil.",
+      "synonym_group": "oil"
+    },
+    {
+      "rank": 775,
+      "headword": "notice",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "замечать"
+      ],
+      "ipa": "/ˈnəʊtɪs/",
+      "example": "Did you notice her new haircut?",
+      "synonym_group": "notice"
+    },
+    {
+      "rank": 776,
+      "headword": "region",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "регион",
+        "область"
+      ],
+      "ipa": "/ˈriːdʒən/",
+      "example": "This region is famous for its cheese.",
+      "synonym_group": "region"
+    },
+    {
+      "rank": 777,
+      "headword": "animal",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "животное",
+        "зверь"
+      ],
+      "ipa": "/ˈænɪml/",
+      "example": "The cat is my favourite animal.",
+      "synonym_group": "animal"
+    },
+    {
+      "rank": 778,
+      "headword": "island",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "остров"
+      ],
+      "ipa": "/ˈaɪlənd/",
+      "example": "We spent a week on a small island.",
+      "synonym_group": "island"
+    },
+    {
+      "rank": 779,
+      "headword": "safe",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "безопасный"
+      ],
+      "ipa": "/seɪf/",
+      "example": "This park is safe for children.",
+      "synonym_group": "safe"
+    },
+    {
+      "rank": 780,
+      "headword": "direct",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "прямой"
+      ],
+      "ipa": "/dəˈrekt/",
+      "example": "Is there a direct train to the city?",
+      "synonym_group": "direct"
+    },
+    {
+      "rank": 781,
+      "headword": "lady",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "дама",
+        "леди"
+      ],
+      "ipa": "/ˈleɪdi/",
+      "example": "An old lady sat next to me on the bus.",
+      "synonym_group": "lady"
+    },
+    {
+      "rank": 782,
+      "headword": "coach",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "тренер"
+      ],
+      "ipa": "/kəʊtʃ/",
+      "example": "Our coach makes us run every day.",
+      "synonym_group": "coach"
+    },
+    {
+      "rank": 783,
+      "headword": "minister",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "министр"
+      ],
+      "ipa": "/ˈmɪnɪstə/",
+      "example": "The minister visited our school today.",
+      "synonym_group": "minister"
+    },
+    {
+      "rank": 784,
+      "headword": "table",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "стол",
+        "таблица"
+      ],
+      "ipa": "/ˈteɪbl/",
+      "example": "Put the plates on the table.",
+      "synonym_group": "table"
+    },
+    {
+      "rank": 785,
+      "headword": "bed",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "кровать",
+        "постель"
+      ],
+      "ipa": "/bed/",
+      "example": "I go to bed at ten.",
+      "synonym_group": "bed"
+    },
+    {
+      "rank": 786,
+      "headword": "approach",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "подход"
+      ],
+      "ipa": "/əˈprəʊtʃ/",
+      "example": "We need a new approach to this problem.",
+      "synonym_group": "approach"
+    },
+    {
+      "rank": 787,
+      "headword": "central",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "центральный"
+      ],
+      "ipa": "/ˈsentrəl/",
+      "example": "Our flat is in the central part of town.",
+      "synonym_group": "central"
+    },
+    {
+      "rank": 788,
+      "headword": "hey",
+      "tier": "quiz",
+      "pos": "interjection",
+      "translations": [
+        "эй",
+        "привет"
+      ],
+      "ipa": "/heɪ/",
+      "example": "Hey, wait for me!",
+      "synonym_group": "hey"
+    },
+    {
+      "rank": 789,
+      "headword": "upon",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "на",
+        "по"
+      ],
+      "ipa": "/əˈpɒn/",
+      "example": "Once upon a time, there was a little girl.",
+      "synonym_group": "on"
+    },
+    {
+      "rank": 790,
+      "headword": "various",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "различный",
+        "разнообразный"
+      ],
+      "ipa": "/ˈveəriəs/",
+      "example": "The shop sells various kinds of bread.",
+      "synonym_group": "different"
+    },
+    {
+      "rank": 791,
+      "headword": "text",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "текст"
+      ],
+      "ipa": "/tekst/",
+      "example": "Read the text and answer the questions.",
+      "synonym_group": "text"
+    },
+    {
+      "rank": 792,
+      "headword": "respect",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "уважение"
+      ],
+      "ipa": "/rɪˈspekt/",
+      "example": "Children should show respect to their teachers.",
+      "synonym_group": "respect"
+    },
+    {
+      "rank": 793,
+      "headword": "improve",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "улучшать"
+      ],
+      "ipa": "/ɪmˈpruːv/",
+      "example": "I want to improve my English.",
+      "synonym_group": "improve"
+    },
+    {
+      "rank": 794,
+      "headword": "scene",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сцена",
+        "эпизод"
+      ],
+      "ipa": "/siːn/",
+      "example": "The last scene of the film was very sad.",
+      "synonym_group": "scene"
+    },
+    {
+      "rank": 795,
+      "headword": "simple",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "простой"
+      ],
+      "ipa": "/ˈsɪmpl/",
+      "example": "The rules of the game are simple.",
+      "synonym_group": "easy"
+    },
+    {
+      "rank": 796,
+      "headword": "February",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "февраль"
+      ],
+      "ipa": "/ˈfebruəri/",
+      "example": "February is the shortest month.",
+      "synonym_group": "February"
+    },
+    {
+      "rank": 797,
+      "headword": "surprise",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сюрприз",
+        "удивление"
+      ],
+      "ipa": "/səˈpraɪz/",
+      "example": "We have a surprise for you!",
+      "synonym_group": "surprise"
+    },
+    {
+      "rank": 798,
+      "headword": "clean",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "чистый"
+      ],
+      "ipa": "/kliːn/",
+      "example": "My room is clean now.",
+      "synonym_group": "clean"
+    },
+    {
+      "rank": 799,
+      "headword": "teacher",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "учитель",
+        "преподаватель"
+      ],
+      "ipa": "/ˈtiːtʃə/",
+      "example": "Our teacher is very kind.",
+      "synonym_group": "teacher"
+    },
+    {
+      "rank": 800,
+      "headword": "search",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "искать"
+      ],
+      "ipa": "/sɜːtʃ/",
+      "example": "We searched the house for the keys.",
+      "synonym_group": "search"
+    },
+    {
+      "rank": 801,
+      "headword": "compare",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "сравнивать"
+      ],
+      "ipa": "/kəmˈpeə/",
+      "example": "Compare these two photos.",
+      "synonym_group": "compare"
+    },
+    {
+      "rank": 802,
+      "headword": "district",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "район",
+        "округ"
+      ],
+      "ipa": "/ˈdɪstrɪkt/",
+      "example": "We live in a quiet district of the city.",
+      "synonym_group": "area"
+    },
+    {
+      "rank": 803,
+      "headword": "cell",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "клетка",
+        "ячейка"
+      ],
+      "ipa": "/sel/",
+      "example": "Every living thing is made of cells.",
+      "synonym_group": "cell"
+    },
+    {
+      "rank": 804,
+      "headword": "reduce",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "уменьшать",
+        "снижать",
+        "сокращать"
+      ],
+      "ipa": "/rɪˈdjuːs/",
+      "example": "We need to reduce the noise.",
+      "synonym_group": "reduce"
+    },
+    {
+      "rank": 805,
+      "headword": "attention",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "внимание"
+      ],
+      "ipa": "/əˈtenʃn/",
+      "example": "Please pay attention to the teacher.",
+      "synonym_group": "attention"
+    },
+    {
+      "rank": 806,
+      "headword": "opportunity",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "возможность",
+        "шанс"
+      ],
+      "ipa": "/ˌɒpəˈtjuːnəti/",
+      "example": "This job is a great opportunity for me.",
+      "synonym_group": "chance"
+    },
+    {
+      "rank": 807,
+      "headword": "poor",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "бедный"
+      ],
+      "ipa": "/pɔː/",
+      "example": "They were very poor when they were young.",
+      "synonym_group": "poor"
+    },
+    {
+      "rank": 808,
+      "headword": "stick",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "приклеивать",
+        "прилипать",
+        "втыкать"
+      ],
+      "ipa": "/stɪk/",
+      "example": "Stick a stamp on the letter.",
+      "synonym_group": "stick"
+    },
+    {
+      "rank": 809,
+      "headword": "cross",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "пересекать",
+        "переходить"
+      ],
+      "ipa": "/krɒs/",
+      "example": "Look both ways before you cross the road.",
+      "synonym_group": "cross"
+    },
+    {
+      "rank": 810,
+      "headword": "football",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "футбол"
+      ],
+      "ipa": "/ˈfʊtbɔːl/",
+      "example": "The boys play football after school.",
+      "synonym_group": "football"
+    },
+    {
+      "rank": 811,
+      "headword": "natural",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "естественный",
+        "природный",
+        "натуральный"
+      ],
+      "ipa": "/ˈnætʃrəl/",
+      "example": "This juice is made from natural fruit.",
+      "synonym_group": "natural"
+    },
+    {
+      "rank": 812,
+      "headword": "professional",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "профессиональный"
+      ],
+      "ipa": "/prəˈfeʃənl/",
+      "example": "He is a professional photographer.",
+      "synonym_group": "professional"
+    },
+    {
+      "rank": 813,
+      "headword": "blood",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "кровь"
+      ],
+      "ipa": "/blʌd/",
+      "example": "The nurse took a small blood sample.",
+      "synonym_group": "blood"
+    },
+    {
+      "rank": 814,
+      "headword": "cannot",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "не мочь",
+        "не уметь"
+      ],
+      "ipa": "/ˈkænɒt/",
+      "example": "I cannot find my glasses.",
+      "synonym_group": "cannot"
+    },
+    {
+      "rank": 815,
+      "headword": "career",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "карьера"
+      ],
+      "ipa": "/kəˈrɪə/",
+      "example": "She wants a career in music.",
+      "synonym_group": "career"
+    },
+    {
+      "rank": 816,
+      "headword": "council",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "совет"
+      ],
+      "ipa": "/ˈkaʊnsl/",
+      "example": "The town council built a new park.",
+      "synonym_group": "council"
+    },
+    {
+      "rank": 817,
+      "headword": "dance",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "танцевать"
+      ],
+      "ipa": "/dɑːns/",
+      "example": "We like to dance at weddings.",
+      "synonym_group": "dance"
+    },
+    {
+      "rank": 818,
+      "headword": "touch",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "трогать",
+        "касаться"
+      ],
+      "ipa": "/tʌtʃ/",
+      "example": "Please do not touch the paintings.",
+      "synonym_group": "touch"
+    },
+    {
+      "rank": 819,
+      "headword": "European",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "европейский"
+      ],
+      "ipa": "/ˌjʊərəˈpiːən/",
+      "example": "Paris is a beautiful European city.",
+      "synonym_group": "European"
+    },
+    {
+      "rank": 820,
+      "headword": "staff",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "персонал",
+        "сотрудники",
+        "штат"
+      ],
+      "ipa": "/stɑːf/",
+      "example": "The hotel staff were very friendly.",
+      "synonym_group": "staff"
+    },
+    {
+      "rank": 821,
+      "headword": "hell",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ад"
+      ],
+      "ipa": "/hel/",
+      "example": "The traffic this morning was hell.",
+      "synonym_group": "hell"
+    },
+    {
+      "rank": 822,
+      "headword": "sort",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "вид",
+        "сорт",
+        "тип"
+      ],
+      "ipa": "/sɔːt/",
+      "example": "What sort of music do you like?",
+      "synonym_group": "kind"
+    },
+    {
+      "rank": 823,
+      "headword": "river",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "река"
+      ],
+      "ipa": "/ˈrɪvə/",
+      "example": "We swam in the river last summer.",
+      "synonym_group": "river"
+    },
+    {
+      "rank": 824,
+      "headword": "credit",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "кредит"
+      ],
+      "ipa": "/ˈkredɪt/",
+      "example": "I bought the car on credit.",
+      "synonym_group": "credit"
+    },
+    {
+      "rank": 825,
+      "headword": "gain",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "набирать",
+        "приобретать"
+      ],
+      "ipa": "/ɡeɪn/",
+      "example": "He gained a lot of weight this winter.",
+      "synonym_group": "gain"
+    },
+    {
+      "rank": 826,
+      "headword": "writing",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "писательство",
+        "письмо"
+      ],
+      "ipa": "/ˈraɪtɪŋ/",
+      "example": "Writing is her favourite hobby.",
+      "synonym_group": "writing"
+    },
+    {
+      "rank": 827,
+      "headword": "response",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ответ",
+        "реакция"
+      ],
+      "ipa": "/rɪˈspɒns/",
+      "example": "I am still waiting for a response to my email.",
+      "synonym_group": "answer"
+    },
+    {
+      "rank": 828,
+      "headword": "push",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "толкать",
+        "нажимать"
+      ],
+      "ipa": "/pʊʃ/",
+      "example": "Push the door to open it.",
+      "synonym_group": "push"
+    },
+    {
+      "rank": 829,
+      "headword": "manage",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "справляться",
+        "управлять"
+      ],
+      "ipa": "/ˈmænɪdʒ/",
+      "example": "Can you manage the bags on your own?",
+      "synonym_group": "manage"
+    },
+    {
+      "rank": 830,
+      "headword": "amazing",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "удивительный",
+        "потрясающий"
+      ],
+      "ipa": "/əˈmeɪzɪŋ/",
+      "example": "The view from the hill is amazing.",
+      "synonym_group": "amazing"
+    },
+    {
+      "rank": 831,
+      "headword": "August",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "август"
+      ],
+      "ipa": "/ˈɔːɡəst/",
+      "example": "We always go to the sea in August.",
+      "synonym_group": "August"
+    },
+    {
+      "rank": 832,
+      "headword": "economic",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "экономический"
+      ],
+      "ipa": "/ˌiːkəˈnɒmɪk/",
+      "example": "The town has grown for economic reasons.",
+      "synonym_group": "economic"
+    },
+    {
+      "rank": 833,
+      "headword": "itself",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "себя",
+        "сам"
+      ],
+      "ipa": "/ɪtˈself/",
+      "example": "The cat washed itself.",
+      "synonym_group": "myself"
+    },
+    {
+      "rank": 834,
+      "headword": "November",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ноябрь"
+      ],
+      "ipa": "/nəʊˈvembə/",
+      "example": "It often rains in November.",
+      "synonym_group": "November"
+    },
+    {
+      "rank": 835,
+      "headword": "serious",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "серьёзный"
+      ],
+      "ipa": "/ˈsɪəriəs/",
+      "example": "This is a serious problem.",
+      "synonym_group": "serious"
+    },
+    {
+      "rank": 836,
+      "headword": "century",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "век",
+        "столетие"
+      ],
+      "ipa": "/ˈsentʃəri/",
+      "example": "This house is from the last century.",
+      "synonym_group": "century"
+    },
+    {
+      "rank": 837,
+      "headword": "hair",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "волосы"
+      ],
+      "ipa": "/heə/",
+      "example": "She has long dark hair.",
+      "synonym_group": "hair"
+    },
+    {
+      "rank": 838,
+      "headword": "statement",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "заявление",
+        "утверждение"
+      ],
+      "ipa": "/ˈsteɪtmənt/",
+      "example": "The company made a short statement.",
+      "synonym_group": "statement"
+    },
+    {
+      "rank": 839,
+      "headword": "damage",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ущерб",
+        "повреждение"
+      ],
+      "ipa": "/ˈdæmɪdʒ/",
+      "example": "The storm did a lot of damage to the roof.",
+      "synonym_group": "damage"
+    },
+    {
+      "rank": 840,
+      "headword": "announce",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "объявлять",
+        "сообщать"
+      ],
+      "ipa": "/əˈnaʊns/",
+      "example": "They will announce the winner tonight.",
+      "synonym_group": "announce"
+    },
+    {
+      "rank": 841,
+      "headword": "ride",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ездить",
+        "кататься"
+      ],
+      "ipa": "/raɪd/",
+      "example": "Can you ride a bike?",
+      "synonym_group": "ride"
+    },
+    {
+      "rank": 842,
+      "headword": "defense",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "защита",
+        "оборона"
+      ],
+      "ipa": "/dɪˈfens/",
+      "example": "Our team has a strong defense.",
+      "synonym_group": "defense"
+    },
+    {
+      "rank": 843,
+      "headword": "contact",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "контакт",
+        "связь"
+      ],
+      "ipa": "/ˈkɒntækt/",
+      "example": "We stay in contact by phone.",
+      "synonym_group": "contact"
+    },
+    {
+      "rank": 844,
+      "headword": "represent",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "представлять"
+      ],
+      "ipa": "/ˌreprɪˈzent/",
+      "example": "She will represent our school at the game.",
+      "synonym_group": "represent"
+    },
+    {
+      "rank": 845,
+      "headword": "culture",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "культура"
+      ],
+      "ipa": "/ˈkʌltʃə/",
+      "example": "I want to learn about the local culture.",
+      "synonym_group": "culture"
+    },
+    {
+      "rank": 846,
+      "headword": "address",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "адрес"
+      ],
+      "ipa": "/əˈdres/",
+      "example": "What is your home address?",
+      "synonym_group": "address"
+    },
+    {
+      "rank": 847,
+      "headword": "contract",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "контракт",
+        "договор"
+      ],
+      "ipa": "/ˈkɒntrækt/",
+      "example": "He signed a new contract with the club.",
+      "synonym_group": "contract"
+    },
+    {
+      "rank": 848,
+      "headword": "establish",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "основывать",
+        "устанавливать",
+        "создавать"
+      ],
+      "ipa": "/ɪˈstæblɪʃ/",
+      "example": "They established the school in 1950.",
+      "synonym_group": "establish"
+    },
+    {
+      "rank": 849,
+      "headword": "female",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "женский"
+      ],
+      "ipa": "/ˈfiːmeɪl/",
+      "example": "Most of the female students play tennis.",
+      "synonym_group": "female"
+    },
+    {
+      "rank": 850,
+      "headword": "operate",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "управлять",
+        "работать"
+      ],
+      "ipa": "/ˈɒpəreɪt/",
+      "example": "Can you operate this machine?",
+      "synonym_group": "control"
+    },
+    {
+      "rank": 851,
+      "headword": "author",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "автор",
+        "писатель"
+      ],
+      "ipa": "/ˈɔːθə/",
+      "example": "Who is the author of this book?",
+      "synonym_group": "author"
+    },
+    {
+      "rank": 852,
+      "headword": "sea",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "море"
+      ],
+      "ipa": "/siː/",
+      "example": "We swim in the sea every day.",
+      "synonym_group": "sea"
+    },
+    {
+      "rank": 853,
+      "headword": "section",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "раздел",
+        "секция",
+        "часть"
+      ],
+      "ipa": "/ˈsekʃn/",
+      "example": "Read the first section of the book.",
+      "synonym_group": "section"
+    },
+    {
+      "rank": 854,
+      "headword": "access",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "доступ"
+      ],
+      "ipa": "/ˈækses/",
+      "example": "Do you have access to the internet here?",
+      "synonym_group": "access"
+    },
+    {
+      "rank": 855,
+      "headword": "subject",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "предмет",
+        "тема"
+      ],
+      "ipa": "/ˈsʌbdʒɪkt/",
+      "example": "Maths is my favourite subject.",
+      "synonym_group": "subject"
+    },
+    {
+      "rank": 856,
+      "headword": "bar",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "бар"
+      ],
+      "ipa": "/bɑː/",
+      "example": "We met at a small bar near the station.",
+      "synonym_group": "bar"
+    },
+    {
+      "rank": 857,
+      "headword": "shoot",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "стрелять",
+        "снимать"
+      ],
+      "ipa": "/ʃuːt/",
+      "example": "They shoot at targets at the sports club.",
+      "synonym_group": "shoot"
+    },
+    {
+      "rank": 858,
+      "headword": "seek",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "искать",
+        "стремиться"
+      ],
+      "ipa": "/siːk/",
+      "example": "Many people seek help from friends.",
+      "synonym_group": "search"
+    },
+    {
+      "rank": 859,
+      "headword": "born",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "рождённый",
+        "родившийся"
+      ],
+      "ipa": "/bɔːn/",
+      "example": "I was born in a small village.",
+      "synonym_group": "born"
+    },
+    {
+      "rank": 860,
+      "headword": "entire",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "целый",
+        "весь"
+      ],
+      "ipa": "/ɪnˈtaɪə/",
+      "example": "I spent the entire day at home.",
+      "synonym_group": "whole"
+    },
+    {
+      "rank": 861,
+      "headword": "French",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "французский"
+      ],
+      "ipa": "/frentʃ/",
+      "example": "I love French bread.",
+      "synonym_group": "French"
+    },
+    {
+      "rank": 862,
+      "headword": "January",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "январь"
+      ],
+      "ipa": "/ˈdʒænjuəri/",
+      "example": "January is a cold month.",
+      "synonym_group": "January"
+    },
+    {
+      "rank": 863,
+      "headword": "perhaps",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "возможно",
+        "может быть"
+      ],
+      "ipa": "/pəˈhæps/",
+      "example": "Perhaps it will rain tomorrow.",
+      "synonym_group": "maybe"
+    },
+    {
+      "rank": 864,
+      "headword": "army",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "армия"
+      ],
+      "ipa": "/ˈɑːmi/",
+      "example": "Her brother joined the army last year.",
+      "synonym_group": "army"
+    },
+    {
+      "rank": 865,
+      "headword": "campaign",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "кампания"
+      ],
+      "ipa": "/kæmˈpeɪn/",
+      "example": "The school started a campaign to save water.",
+      "synonym_group": "campaign"
+    },
+    {
+      "rank": 866,
+      "headword": "manager",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "менеджер",
+        "управляющий",
+        "руководитель"
+      ],
+      "ipa": "/ˈmænɪdʒə/",
+      "example": "I would like to speak to the manager.",
+      "synonym_group": "manager"
+    },
+    {
+      "rank": 867,
+      "headword": "detail",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "подробность",
+        "деталь"
+      ],
+      "ipa": "/ˈdiːteɪl/",
+      "example": "Tell me every detail of your trip.",
+      "synonym_group": "detail"
+    },
+    {
+      "rank": 868,
+      "headword": "fix",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "чинить",
+        "исправлять"
+      ],
+      "ipa": "/fɪks/",
+      "example": "Can you fix my bike?",
+      "synonym_group": "fix"
+    },
+    {
+      "rank": 869,
+      "headword": "dark",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "тёмный"
+      ],
+      "ipa": "/dɑːk/",
+      "example": "It gets dark early in winter.",
+      "synonym_group": "dark"
+    },
+    {
+      "rank": 870,
+      "headword": "fit",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "подходить",
+        "годиться"
+      ],
+      "ipa": "/fɪt/",
+      "example": "These shoes do not fit me.",
+      "synonym_group": "fit"
+    },
+    {
+      "rank": 871,
+      "headword": "prove",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "доказывать"
+      ],
+      "ipa": "/pruːv/",
+      "example": "Can you prove that you are right?",
+      "synonym_group": "prove"
+    },
+    {
+      "rank": 872,
+      "headword": "degree",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "степень",
+        "градус"
+      ],
+      "ipa": "/dɪˈɡriː/",
+      "example": "She has a degree in music.",
+      "synonym_group": "degree"
+    },
+    {
+      "rank": 873,
+      "headword": "tour",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "экскурсия",
+        "поездка",
+        "тур"
+      ],
+      "ipa": "/tʊə/",
+      "example": "We went on a tour of the old town.",
+      "synonym_group": "tour"
+    },
+    {
+      "rank": 874,
+      "headword": "seven",
+      "tier": "quiz",
+      "pos": "numeral",
+      "translations": [
+        "семь"
+      ],
+      "ipa": "/ˈsevn/",
+      "example": "There are seven days in a week.",
+      "synonym_group": "seven"
+    },
+    {
+      "rank": 875,
+      "headword": "demand",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "спрос",
+        "требование"
+      ],
+      "ipa": "/dɪˈmɑːnd/",
+      "example": "There is a big demand for new houses.",
+      "synonym_group": "demand"
+    },
+    {
+      "rank": 876,
+      "headword": "measure",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "измерять"
+      ],
+      "ipa": "/ˈmeʒə/",
+      "example": "Measure the room before you buy a carpet.",
+      "synonym_group": "measure"
+    },
+    {
+      "rank": 877,
+      "headword": "success",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "успех"
+      ],
+      "ipa": "/səkˈses/",
+      "example": "The party was a big success.",
+      "synonym_group": "success"
+    },
+    {
+      "rank": 878,
+      "headword": "album",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "альбом"
+      ],
+      "ipa": "/ˈælbəm/",
+      "example": "The band has a new album.",
+      "synonym_group": "album"
+    },
+    {
+      "rank": 879,
+      "headword": "crazy",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "сумасшедший",
+        "безумный"
+      ],
+      "ipa": "/ˈkreɪzi/",
+      "example": "That is a crazy idea!",
+      "synonym_group": "crazy"
+    },
+    {
+      "rank": 880,
+      "headword": "super",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "отличный",
+        "замечательный"
+      ],
+      "ipa": "/ˈsuːpə/",
+      "example": "We had a super time at the beach.",
+      "synonym_group": "great"
+    },
+    {
+      "rank": 881,
+      "headword": "episode",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "серия",
+        "эпизод"
+      ],
+      "ipa": "/ˈepɪsəʊd/",
+      "example": "I watched the last episode of the show.",
+      "synonym_group": "episode"
+    },
+    {
+      "rank": 882,
+      "headword": "currently",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "в настоящее время",
+        "сейчас"
+      ],
+      "ipa": "/ˈkʌrəntli/",
+      "example": "She is currently living in the city.",
+      "synonym_group": "now"
+    },
+    {
+      "rank": 883,
+      "headword": "financial",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "финансовый"
+      ],
+      "ipa": "/faɪˈnænʃl/",
+      "example": "He has some financial problems.",
+      "synonym_group": "financial"
+    },
+    {
+      "rank": 884,
+      "headword": "foreign",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "иностранный",
+        "зарубежный"
+      ],
+      "ipa": "/ˈfɒrən/",
+      "example": "Do you speak a foreign language?",
+      "synonym_group": "foreign"
+    },
+    {
+      "rank": 885,
+      "headword": "hurt",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "болеть",
+        "причинять боль"
+      ],
+      "ipa": "/hɜːt/",
+      "example": "My back hurts after work.",
+      "synonym_group": "hurt"
+    },
+    {
+      "rank": 886,
+      "headword": "legal",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "законный",
+        "юридический",
+        "правовой"
+      ],
+      "ipa": "/ˈliːɡl/",
+      "example": "Is it legal to park here?",
+      "synonym_group": "legal"
+    },
+    {
+      "rank": 887,
+      "headword": "simply",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "просто"
+      ],
+      "ipa": "/ˈsɪmpli/",
+      "example": "The teacher explained it simply.",
+      "synonym_group": "just"
+    },
+    {
+      "rank": 888,
+      "headword": "tree",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "дерево"
+      ],
+      "ipa": "/triː/",
+      "example": "There is a big tree in our garden.",
+      "synonym_group": "tree"
+    },
+    {
+      "rank": 889,
+      "headword": "ten",
+      "tier": "quiz",
+      "pos": "numeral",
+      "translations": [
+        "десять"
+      ],
+      "ipa": "/ten/",
+      "example": "I have ten books on my shelf.",
+      "synonym_group": "ten"
+    },
+    {
+      "rank": 890,
+      "headword": "roll",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "катиться",
+        "катить"
+      ],
+      "ipa": "/rəʊl/",
+      "example": "The ball rolled under the table.",
+      "synonym_group": "roll"
+    },
+    {
+      "rank": 891,
+      "headword": "suppose",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "полагать",
+        "предполагать"
+      ],
+      "ipa": "/səˈpəʊz/",
+      "example": "I suppose you are right.",
+      "synonym_group": "suppose"
+    },
+    {
+      "rank": 892,
+      "headword": "weight",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "вес"
+      ],
+      "ipa": "/weɪt/",
+      "example": "What is the weight of this bag?",
+      "synonym_group": "weight"
+    },
+    {
+      "rank": 893,
+      "headword": "supply",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "запас",
+        "поставка",
+        "снабжение"
+      ],
+      "ipa": "/səˈplaɪ/",
+      "example": "We have a good supply of food.",
+      "synonym_group": "supply"
+    },
+    {
+      "rank": 894,
+      "headword": "speed",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "скорость"
+      ],
+      "ipa": "/spiːd/",
+      "example": "The car was going at high speed.",
+      "synonym_group": "speed"
+    },
+    {
+      "rank": 895,
+      "headword": "daily",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "ежедневный"
+      ],
+      "ipa": "/ˈdeɪli/",
+      "example": "Reading the news is part of my daily life.",
+      "synonym_group": "daily"
+    },
+    {
+      "rank": 896,
+      "headword": "double",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "двойной"
+      ],
+      "ipa": "/ˈdʌbl/",
+      "example": "I would like a double room, please.",
+      "synonym_group": "double"
+    },
+    {
+      "rank": 897,
+      "headword": "population",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "население"
+      ],
+      "ipa": "/ˌpɒpjuˈleɪʃn/",
+      "example": "The population of our town is small.",
+      "synonym_group": "population"
+    },
+    {
+      "rank": 898,
+      "headword": "associate",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "связывать",
+        "ассоциировать"
+      ],
+      "ipa": "/əˈsəʊʃieɪt/",
+      "example": "I associate summer with ice cream.",
+      "synonym_group": "associate"
+    },
+    {
+      "rank": 899,
+      "headword": "December",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "декабрь"
+      ],
+      "ipa": "/dɪˈsembə/",
+      "example": "It often snows in December.",
+      "synonym_group": "December"
+    },
+    {
+      "rank": 900,
+      "headword": "difficult",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "трудный",
+        "сложный"
+      ],
+      "ipa": "/ˈdɪfɪkəlt/",
+      "example": "This question is too difficult for me.",
+      "synonym_group": "hard"
+    },
+    {
+      "rank": 901,
+      "headword": "modern",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "современный"
+      ],
+      "ipa": "/ˈmɒdn/",
+      "example": "They live in a modern flat.",
+      "synonym_group": "modern"
+    },
+    {
+      "rank": 902,
+      "headword": "popular",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "популярный"
+      ],
+      "ipa": "/ˈpɒpjələ/",
+      "example": "This song is very popular.",
+      "synonym_group": "popular"
+    },
+    {
+      "rank": 903,
+      "headword": "whose",
+      "tier": "quiz",
+      "pos": "pronoun",
+      "translations": [
+        "чей"
+      ],
+      "ipa": "/huːz/",
+      "example": "Whose bag is this?",
+      "synonym_group": "whose"
+    },
+    {
+      "rank": 904,
+      "headword": "spot",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "место",
+        "пятно"
+      ],
+      "ipa": "/spɒt/",
+      "example": "This is a nice spot for a picnic.",
+      "synonym_group": "place"
+    },
+    {
+      "rank": 905,
+      "headword": "truth",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "правда",
+        "истина"
+      ],
+      "ipa": "/truːθ/",
+      "example": "Please tell me the truth.",
+      "synonym_group": "truth"
+    },
+    {
+      "rank": 906,
+      "headword": "rise",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "подниматься",
+        "расти"
+      ],
+      "ipa": "/raɪz/",
+      "example": "The sun rises at six.",
+      "synonym_group": "rise"
+    },
+    {
+      "rank": 907,
+      "headword": "fear",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "страх"
+      ],
+      "ipa": "/fɪə/",
+      "example": "She has a fear of dogs.",
+      "synonym_group": "fear"
+    },
+    {
+      "rank": 908,
+      "headword": "prepare",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "готовить",
+        "подготавливать"
+      ],
+      "ipa": "/prɪˈpeə/",
+      "example": "I need to prepare for the test.",
+      "synonym_group": "prepare"
+    },
+    {
+      "rank": 909,
+      "headword": "count",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "считать"
+      ],
+      "ipa": "/kaʊnt/",
+      "example": "Can you count to ten?",
+      "synonym_group": "count"
+    },
+    {
+      "rank": 910,
+      "headword": "welcome",
+      "tier": "quiz",
+      "pos": "interjection",
+      "translations": [
+        "добро пожаловать"
+      ],
+      "ipa": "/ˈwelkəm/",
+      "example": "Welcome to our home!",
+      "synonym_group": "welcome"
+    },
+    {
+      "rank": 911,
+      "headword": "application",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "заявка",
+        "заявление",
+        "приложение"
+      ],
+      "ipa": "/ˌæplɪˈkeɪʃn/",
+      "example": "I sent my job application yesterday.",
+      "synonym_group": "application"
+    },
+    {
+      "rank": 912,
+      "headword": "earth",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "Земля",
+        "почва"
+      ],
+      "ipa": "/ɜːθ/",
+      "example": "The Earth goes around the sun.",
+      "synonym_group": "land"
+    },
+    {
+      "rank": 913,
+      "headword": "content",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "содержание",
+        "содержимое"
+      ],
+      "ipa": "/ˈkɒntent/",
+      "example": "I like the content of this magazine.",
+      "synonym_group": "content"
+    },
+    {
+      "rank": 914,
+      "headword": "sister",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сестра"
+      ],
+      "ipa": "/ˈsɪstə/",
+      "example": "My sister lives in the city.",
+      "synonym_group": "sister"
+    },
+    {
+      "rank": 915,
+      "headword": "worker",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "работник",
+        "рабочий"
+      ],
+      "ipa": "/ˈwɜːkə/",
+      "example": "The factory has two hundred workers.",
+      "synonym_group": "worker"
+    },
+    {
+      "rank": 916,
+      "headword": "file",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "файл",
+        "папка"
+      ],
+      "ipa": "/faɪl/",
+      "example": "Save the file on your computer.",
+      "synonym_group": "file"
+    },
+    {
+      "rank": 917,
+      "headword": "laugh",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "смеяться"
+      ],
+      "ipa": "/lɑːf/",
+      "example": "The children laugh at his jokes.",
+      "synonym_group": "laugh"
+    },
+    {
+      "rank": 918,
+      "headword": "movement",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "движение"
+      ],
+      "ipa": "/ˈmuːvmənt/",
+      "example": "The movement of the boat made me feel sick.",
+      "synonym_group": "movement"
+    },
+    {
+      "rank": 919,
+      "headword": "window",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "окно"
+      ],
+      "ipa": "/ˈwɪndəʊ/",
+      "example": "Please open the window.",
+      "synonym_group": "window"
+    },
+    {
+      "rank": 920,
+      "headword": "sir",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "сэр",
+        "господин"
+      ],
+      "ipa": "/sɜː/",
+      "example": "Can I help you, sir?",
+      "synonym_group": "sir"
+    },
+    {
+      "rank": 921,
+      "headword": "doctor",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "врач",
+        "доктор"
+      ],
+      "ipa": "/ˈdɒktə/",
+      "example": "You should see a doctor.",
+      "synonym_group": "doctor"
+    },
+    {
+      "rank": 922,
+      "headword": "internet",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "интернет"
+      ],
+      "ipa": "/ˈɪntənet/",
+      "example": "I read the news on the internet.",
+      "synonym_group": "internet"
+    },
+    {
+      "rank": 923,
+      "headword": "advance",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "продвижение",
+        "прогресс"
+      ],
+      "ipa": "/ədˈvɑːns/",
+      "example": "There has been a big advance in medicine.",
+      "synonym_group": "advance"
+    },
+    {
+      "rank": 924,
+      "headword": "huge",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "огромный"
+      ],
+      "ipa": "/hjuːdʒ/",
+      "example": "They live in a huge house.",
+      "synonym_group": "big"
+    },
+    {
+      "rank": 925,
+      "headword": "okay",
+      "tier": "quiz",
+      "pos": "interjection",
+      "translations": [
+        "ладно",
+        "хорошо",
+        "окей"
+      ],
+      "ipa": "/ˌəʊˈkeɪ/",
+      "example": "Okay, let's go home now.",
+      "synonym_group": "ok"
+    },
+    {
+      "rank": 926,
+      "headword": "towards",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "к",
+        "по направлению к"
+      ],
+      "ipa": "/təˈwɔːdz/",
+      "example": "She walked towards the door.",
+      "synonym_group": "towards"
+    },
+    {
+      "rank": 927,
+      "headword": "pain",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "боль"
+      ],
+      "ipa": "/peɪn/",
+      "example": "I have a pain in my back.",
+      "synonym_group": "pain"
+    },
+    {
+      "rank": 928,
+      "headword": "option",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "вариант",
+        "выбор"
+      ],
+      "ipa": "/ˈɒpʃn/",
+      "example": "We have two options for dinner.",
+      "synonym_group": "option"
+    },
+    {
+      "rank": 929,
+      "headword": "computer",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "компьютер"
+      ],
+      "ipa": "/kəmˈpjuːtə/",
+      "example": "I use my computer for work.",
+      "synonym_group": "computer"
+    },
+    {
+      "rank": 930,
+      "headword": "pressure",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "давление"
+      ],
+      "ipa": "/ˈpreʃə/",
+      "example": "Check the tyre pressure before the trip.",
+      "synonym_group": "pressure"
+    },
+    {
+      "rank": 931,
+      "headword": "treatment",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "лечение",
+        "обращение"
+      ],
+      "ipa": "/ˈtriːtmənt/",
+      "example": "The treatment helped him get better.",
+      "synonym_group": "treatment"
+    },
+    {
+      "rank": 932,
+      "headword": "master",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мастер",
+        "хозяин"
+      ],
+      "ipa": "/ˈmɑːstə/",
+      "example": "He is a master at fixing old cars.",
+      "synonym_group": "master"
+    },
+    {
+      "rank": 933,
+      "headword": "seat",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "место",
+        "сиденье"
+      ],
+      "ipa": "/siːt/",
+      "example": "Is this seat free?",
+      "synonym_group": "place"
+    },
+    {
+      "rank": 934,
+      "headword": "conference",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "конференция"
+      ],
+      "ipa": "/ˈkɒnfərəns/",
+      "example": "She went to a conference in the city.",
+      "synonym_group": "conference"
+    },
+    {
+      "rank": 935,
+      "headword": "arrive",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "прибывать",
+        "приезжать"
+      ],
+      "ipa": "/əˈraɪv/",
+      "example": "The train will arrive at noon.",
+      "synonym_group": "arrive"
+    },
+    {
+      "rank": 936,
+      "headword": "promise",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "обещать"
+      ],
+      "ipa": "/ˈprɒmɪs/",
+      "example": "I promise to call you tomorrow.",
+      "synonym_group": "promise"
+    },
+    {
+      "rank": 937,
+      "headword": "opinion",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мнение"
+      ],
+      "ipa": "/əˈpɪnjən/",
+      "example": "What is your opinion of the film?",
+      "synonym_group": "opinion"
+    },
+    {
+      "rank": 938,
+      "headword": "fish",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "рыба"
+      ],
+      "ipa": "/fɪʃ/",
+      "example": "We had fish for dinner.",
+      "synonym_group": "fish"
+    },
+    {
+      "rank": 939,
+      "headword": "brown",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "коричневый"
+      ],
+      "ipa": "/braʊn/",
+      "example": "She wore brown shoes.",
+      "synonym_group": "brown"
+    },
+    {
+      "rank": 940,
+      "headword": "association",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ассоциация",
+        "объединение"
+      ],
+      "ipa": "/əˌsəʊsiˈeɪʃn/",
+      "example": "He is a member of the tennis association.",
+      "synonym_group": "association"
+    },
+    {
+      "rank": 941,
+      "headword": "owner",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "владелец",
+        "хозяин"
+      ],
+      "ipa": "/ˈəʊnə/",
+      "example": "The owner of the shop is very kind.",
+      "synonym_group": "owner"
+    },
+    {
+      "rank": 942,
+      "headword": "labor",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "труд",
+        "рабочая сила"
+      ],
+      "ipa": "/ˈleɪbə/",
+      "example": "Farm labor is hard work.",
+      "synonym_group": "labor"
+    },
+    {
+      "rank": 943,
+      "headword": "user",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "пользователь"
+      ],
+      "ipa": "/ˈjuːzə/",
+      "example": "The app has many new users.",
+      "synonym_group": "user"
+    },
+    {
+      "rank": 944,
+      "headword": "below",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "ниже",
+        "под"
+      ],
+      "ipa": "/bɪˈləʊ/",
+      "example": "Write your name below the line.",
+      "synonym_group": "below"
+    },
+    {
+      "rank": 945,
+      "headword": "target",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "цель",
+        "мишень"
+      ],
+      "ipa": "/ˈtɑːɡɪt/",
+      "example": "Our target is to sell a hundred books.",
+      "synonym_group": "goal"
+    },
+    {
+      "rank": 946,
+      "headword": "funny",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "смешной",
+        "забавный"
+      ],
+      "ipa": "/ˈfʌni/",
+      "example": "He told a funny story.",
+      "synonym_group": "funny"
+    },
+    {
+      "rank": 947,
+      "headword": "mix",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "смешивать"
+      ],
+      "ipa": "/mɪks/",
+      "example": "Mix the flour and the eggs.",
+      "synonym_group": "mix"
+    },
+    {
+      "rank": 948,
+      "headword": "partner",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "партнёр",
+        "напарник"
+      ],
+      "ipa": "/ˈpɑːtnə/",
+      "example": "My tennis partner is very good.",
+      "synonym_group": "partner"
+    },
+    {
+      "rank": 949,
+      "headword": "cold",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "холодный"
+      ],
+      "ipa": "/kəʊld/",
+      "example": "The water in the lake is cold.",
+      "synonym_group": "cold"
+    },
+    {
+      "rank": 950,
+      "headword": "method",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "метод",
+        "способ"
+      ],
+      "ipa": "/ˈmeθəd/",
+      "example": "This is a good method for learning words.",
+      "synonym_group": "method"
+    },
+    {
+      "rank": 951,
+      "headword": "straight",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "прямо"
+      ],
+      "ipa": "/streɪt/",
+      "example": "Go straight and then turn left.",
+      "synonym_group": "straight"
+    },
+    {
+      "rank": 952,
+      "headword": "committee",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "комитет",
+        "комиссия"
+      ],
+      "ipa": "/kəˈmɪti/",
+      "example": "The committee meets every Monday.",
+      "synonym_group": "committee"
+    },
+    {
+      "rank": 953,
+      "headword": "wide",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "широкий"
+      ],
+      "ipa": "/waɪd/",
+      "example": "The river is very wide here.",
+      "synonym_group": "wide"
+    },
+    {
+      "rank": 954,
+      "headword": "specific",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "конкретный",
+        "особый"
+      ],
+      "ipa": "/spəˈsɪfɪk/",
+      "example": "Do you have a specific day in mind?",
+      "synonym_group": "specific"
+    },
+    {
+      "rank": 955,
+      "headword": "machine",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "механизм",
+        "аппарат",
+        "машина"
+      ],
+      "ipa": "/məˈʃiːn/",
+      "example": "The coffee machine is broken again.",
+      "synonym_group": "machine"
+    },
+    {
+      "rank": 956,
+      "headword": "stock",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "запас"
+      ],
+      "ipa": "/stɒk/",
+      "example": "The shop has a large stock of shoes.",
+      "synonym_group": "supply"
+    },
+    {
+      "rank": 957,
+      "headword": "percent",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "процент"
+      ],
+      "ipa": "/pəˈsent/",
+      "example": "Ten percent of the students walk to school.",
+      "synonym_group": "percent"
+    },
+    {
+      "rank": 958,
+      "headword": "recent",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "недавний",
+        "последний"
+      ],
+      "ipa": "/ˈriːsnt/",
+      "example": "Have you seen her recent photos?",
+      "synonym_group": "recent"
+    },
+    {
+      "rank": 959,
+      "headword": "artist",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "художник",
+        "артист"
+      ],
+      "ipa": "/ˈɑːtɪst/",
+      "example": "The artist painted a picture of the sea.",
+      "synonym_group": "artist"
+    },
+    {
+      "rank": 960,
+      "headword": "update",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "обновлять"
+      ],
+      "ipa": "/ˌʌpˈdeɪt/",
+      "example": "Please update the app on your phone.",
+      "synonym_group": "update"
+    },
+    {
+      "rank": 961,
+      "headword": "murder",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "убийство"
+      ],
+      "ipa": "/ˈmɜːdə/",
+      "example": "She likes to read murder stories.",
+      "synonym_group": "murder"
+    },
+    {
+      "rank": 962,
+      "headword": "bear",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "медведь"
+      ],
+      "ipa": "/beə/",
+      "example": "We saw a bear in the forest.",
+      "synonym_group": "bear"
+    },
+    {
+      "rank": 963,
+      "headword": "interview",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "собеседование",
+        "интервью"
+      ],
+      "ipa": "/ˈɪntəvjuː/",
+      "example": "I have a job interview tomorrow.",
+      "synonym_group": "interview"
+    },
+    {
+      "rank": 964,
+      "headword": "lack",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "нехватка",
+        "недостаток",
+        "отсутствие"
+      ],
+      "ipa": "/læk/",
+      "example": "I feel tired because of lack of sleep.",
+      "synonym_group": "lack"
+    },
+    {
+      "rank": 965,
+      "headword": "gas",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "газ",
+        "бензин"
+      ],
+      "ipa": "/ɡæs/",
+      "example": "We cook on a gas stove.",
+      "synonym_group": "gas"
+    },
+    {
+      "rank": 966,
+      "headword": "launch",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "запускать"
+      ],
+      "ipa": "/lɔːntʃ/",
+      "example": "They will launch a new phone next month.",
+      "synonym_group": "launch"
+    },
+    {
+      "rank": 967,
+      "headword": "shall",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "должен"
+      ],
+      "ipa": "/ʃæl/",
+      "example": "Shall we go for a walk?",
+      "synonym_group": "should"
+    },
+    {
+      "rank": 968,
+      "headword": "refer",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ссылаться",
+        "обращаться"
+      ],
+      "ipa": "/rɪˈfɜː/",
+      "example": "Please refer to the map on page two.",
+      "synonym_group": "refer"
+    },
+    {
+      "rank": 969,
+      "headword": "battle",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "битва",
+        "сражение",
+        "борьба"
+      ],
+      "ipa": "/ˈbætl/",
+      "example": "The two teams had a battle for first place.",
+      "synonym_group": "battle"
+    },
+    {
+      "rank": 970,
+      "headword": "strike",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "ударять",
+        "бить"
+      ],
+      "ipa": "/straɪk/",
+      "example": "Lightning can strike tall trees.",
+      "synonym_group": "hit"
+    },
+    {
+      "rank": 971,
+      "headword": "affect",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "влиять",
+        "воздействовать"
+      ],
+      "ipa": "/əˈfekt/",
+      "example": "Bad weather can affect your mood.",
+      "synonym_group": "affect"
+    },
+    {
+      "rank": 972,
+      "headword": "agency",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "агентство"
+      ],
+      "ipa": "/ˈeɪdʒənsi/",
+      "example": "She works for a travel agency.",
+      "synonym_group": "agency"
+    },
+    {
+      "rank": 973,
+      "headword": "purpose",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "цель",
+        "назначение"
+      ],
+      "ipa": "/ˈpɜːpəs/",
+      "example": "What is the purpose of your visit?",
+      "synonym_group": "goal"
+    },
+    {
+      "rank": 974,
+      "headword": "addition",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "добавление",
+        "дополнение"
+      ],
+      "ipa": "/əˈdɪʃn/",
+      "example": "This garden is a nice addition to the house.",
+      "synonym_group": "addition"
+    },
+    {
+      "rank": 975,
+      "headword": "host",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "хозяин",
+        "ведущий"
+      ],
+      "ipa": "/həʊst/",
+      "example": "Our host made a big dinner for us.",
+      "synonym_group": "host"
+    },
+    {
+      "rank": 976,
+      "headword": "band",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "группа",
+        "оркестр"
+      ],
+      "ipa": "/bænd/",
+      "example": "My brother plays guitar in a band.",
+      "synonym_group": "group"
+    },
+    {
+      "rank": 977,
+      "headword": "growth",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "рост"
+      ],
+      "ipa": "/ɡrəʊθ/",
+      "example": "The growth of the city has been fast.",
+      "synonym_group": "growth"
+    },
+    {
+      "rank": 978,
+      "headword": "ability",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "способность",
+        "умение"
+      ],
+      "ipa": "/əˈbɪləti/",
+      "example": "She has the ability to learn fast.",
+      "synonym_group": "ability"
+    },
+    {
+      "rank": 979,
+      "headword": "collection",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "коллекция",
+        "сбор"
+      ],
+      "ipa": "/kəˈlekʃn/",
+      "example": "He has a large collection of stamps.",
+      "synonym_group": "collection"
+    },
+    {
+      "rank": 980,
+      "headword": "authority",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "власть",
+        "полномочия"
+      ],
+      "ipa": "/ɔːˈθɒrəti/",
+      "example": "Teachers have authority in the classroom.",
+      "synonym_group": "authority"
+    },
+    {
+      "rank": 981,
+      "headword": "tonight",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "сегодня вечером"
+      ],
+      "ipa": "/təˈnaɪt/",
+      "example": "What are you doing tonight?",
+      "synonym_group": "tonight"
+    },
+    {
+      "rank": 982,
+      "headword": "structure",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "структура",
+        "строение",
+        "сооружение"
+      ],
+      "ipa": "/ˈstrʌktʃə/",
+      "example": "The structure of the house is strong.",
+      "synonym_group": "structure"
+    },
+    {
+      "rank": 983,
+      "headword": "quick",
+      "tier": "quiz",
+      "pos": "adjective",
+      "translations": [
+        "быстрый"
+      ],
+      "ipa": "/kwɪk/",
+      "example": "Can I ask a quick question?",
+      "synonym_group": "fast"
+    },
+    {
+      "rank": 984,
+      "headword": "grant",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "грант",
+        "субсидия"
+      ],
+      "ipa": "/ɡrɑːnt/",
+      "example": "She got a grant to study abroad.",
+      "synonym_group": "grant"
+    },
+    {
+      "rank": 985,
+      "headword": "resource",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "ресурс",
+        "источник"
+      ],
+      "ipa": "/rɪˈzɔːs/",
+      "example": "Water is an important resource.",
+      "synonym_group": "resource"
+    },
+    {
+      "rank": 986,
+      "headword": "except",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "кроме",
+        "за исключением"
+      ],
+      "ipa": "/ɪkˈsept/",
+      "example": "I eat everything except fish.",
+      "synonym_group": "except"
+    },
+    {
+      "rank": 987,
+      "headword": "capital",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "столица",
+        "капитал"
+      ],
+      "ipa": "/ˈkæpɪtl/",
+      "example": "Rome is the capital of Italy.",
+      "synonym_group": "capital"
+    },
+    {
+      "rank": 988,
+      "headword": "husband",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "муж"
+      ],
+      "ipa": "/ˈhʌzbənd/",
+      "example": "Her husband is a teacher.",
+      "synonym_group": "husband"
+    },
+    {
+      "rank": 989,
+      "headword": "honor",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "честь"
+      ],
+      "ipa": "/ˈɒnə/",
+      "example": "It is an honor to meet you.",
+      "synonym_group": "honor"
+    },
+    {
+      "rank": 990,
+      "headword": "hotel",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "гостиница",
+        "отель"
+      ],
+      "ipa": "/həʊˈtel/",
+      "example": "We stayed in a hotel by the sea.",
+      "synonym_group": "hotel"
+    },
+    {
+      "rank": 991,
+      "headword": "eight",
+      "tier": "quiz",
+      "pos": "numeral",
+      "translations": [
+        "восемь"
+      ],
+      "ipa": "/eɪt/",
+      "example": "The shop opens at eight.",
+      "synonym_group": "eight"
+    },
+    {
+      "rank": 992,
+      "headword": "spring",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "весна"
+      ],
+      "ipa": "/sprɪŋ/",
+      "example": "Flowers grow in spring.",
+      "synonym_group": "spring"
+    },
+    {
+      "rank": 993,
+      "headword": "tomorrow",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "завтра"
+      ],
+      "ipa": "/təˈmɒrəʊ/",
+      "example": "See you tomorrow!",
+      "synonym_group": "tomorrow"
+    },
+    {
+      "rank": 994,
+      "headword": "purchase",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "покупать",
+        "приобретать"
+      ],
+      "ipa": "/ˈpɜːtʃəs/",
+      "example": "You can purchase tickets online.",
+      "synonym_group": "buy"
+    },
+    {
+      "rank": 995,
+      "headword": "peace",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "мир",
+        "покой"
+      ],
+      "ipa": "/piːs/",
+      "example": "We want to live in peace.",
+      "synonym_group": "world"
+    },
+    {
+      "rank": 996,
+      "headword": "recently",
+      "tier": "quiz",
+      "pos": "adverb",
+      "translations": [
+        "недавно"
+      ],
+      "ipa": "/ˈriːsntli/",
+      "example": "I recently started a new job.",
+      "synonym_group": "recently"
+    },
+    {
+      "rank": 997,
+      "headword": "regard",
+      "tier": "quiz",
+      "pos": "verb",
+      "translations": [
+        "рассматривать",
+        "считать"
+      ],
+      "ipa": "/rɪˈɡɑːd/",
+      "example": "We regard this as a serious problem.",
+      "synonym_group": "consider"
+    },
+    {
+      "rank": 998,
+      "headword": "via",
+      "tier": "quiz",
+      "pos": "preposition",
+      "translations": [
+        "через"
+      ],
+      "ipa": "/ˈvaɪə/",
+      "example": "We flew to Rome via Paris.",
+      "synonym_group": "through"
+    },
+    {
+      "rank": 999,
+      "headword": "radio",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "радио"
+      ],
+      "ipa": "/ˈreɪdiəʊ/",
+      "example": "I listen to the radio in the car.",
+      "synonym_group": "radio"
+    },
+    {
+      "rank": 1000,
+      "headword": "crime",
+      "tier": "quiz",
+      "pos": "noun",
+      "translations": [
+        "преступление",
+        "преступность"
+      ],
+      "ipa": "/kraɪm/",
+      "example": "Crime in the city went down this year.",
+      "synonym_group": "crime"
+    }
+  ]
+}

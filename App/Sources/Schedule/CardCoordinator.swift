@@ -107,6 +107,11 @@ final class CardCoordinator {
 
     var pausedUntil: Date? { pauseStore.pausedUntil() }
 
+    /// What the tray menu shows: "Next in X min · every N min" or the pause end.
+    var trayInfo: TrayScheduleInfo {
+        TrayScheduleInfo(nextCardAt: schedule.nextCardAt, interval: schedule.settings.interval, pausedUntil: pausedUntil)
+    }
+
     /// Tray interval submenu: saved like a Settings change, then applied by `applyInterval`.
     func changeInterval(_ seconds: TimeInterval) {
         settings.update { $0.replacing(cardInterval: seconds) }

@@ -1,0 +1,51 @@
+# form<TAB>lemma: corrections where the lemmatizer picks a wrong lemma for the main meaning.
+# The left side is matched against a form and also against a lemma, so one line
+# folds every form of a lemma ("centre" also folds "centres").
+
+# Irregular past forms the lemmatizer keeps as nouns
+won	win
+felt	feel
+shook	shake
+
+# Broken lemmas that neither lemmatizer repairs
+develope	develop
+
+# Modal verbs are separate words for a learner, not forms of will/can/shall/may
+would	would
+could	could
+should	should
+might	might
+
+# Main meaning differs from the lemmatizer's choice
+according	according
+media	media
+closer	close
+acting	act
+serving	serve
+
+# British spellings fold into the more frequent American headword
+programme	program
+centre	center
+colour	color
+labour	labor
+favour	favor
+honour	honor
+behaviour	behavior
+defence	defense
+theatre	theater
+organisation	organization
+realise	realize
+recognise	recognize
+
+# Forms and lemmas the lemmatizers cut wrongly
+singe	sing
+pants	pants
+
+# More British spellings
+neighbourhood	neighborhood
+neighbour	neighbor
+favourite	favorite
+organise	organize
+analyse	analyze
+grey	gray
+metre	meter

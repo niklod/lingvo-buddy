@@ -107,12 +107,12 @@ public struct CardSchedule: Sendable, Equatable {
         return copy
     }
 
-    /// A new interval (Settings, tray submenu) restarts a running countdown now;
-    /// while a card is shown it applies from the moment the card closes.
+    /// A new interval: a running countdown restarts from `now`, so the next card
+    /// follows the new pace. A pause must be applied again afterwards.
     public func withSettings(_ settings: CardScheduleSettings, at now: Date) -> CardSchedule {
         var copy = self
         copy.settings = settings
-        if shownCard == nil {
+        if nextCardAt != nil {
             copy.nextCardAt = now.addingTimeInterval(settings.interval)
         }
         return copy

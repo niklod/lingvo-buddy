@@ -55,6 +55,19 @@ struct DictionaryContractTests {
         }
     }
 
+    @Test("a quiz exclusion of a word that is not in the dictionary is rejected")
+    func unknownQuizExclusionIsRejected() throws {
+        let json = Data("""
+        {"entries": [{"headword": "go", "rank": 1, "pos": "verb", "ipa": null, "example": null,
+          "synonym_group": null, "tier": "lookup", "translations": {"ru": ["идти"]}}],
+         "quiz_exclusions": ["dude"]}
+        """.utf8)
+
+        #expect(throws: LingvoCoreError.self) {
+            try DictionaryStore.inMemory(fromJSON: [json])
+        }
+    }
+
     @Test("an unknown part of speech is rejected")
     func unknownPartOfSpeechIsRejected() throws {
         let json = Data("""

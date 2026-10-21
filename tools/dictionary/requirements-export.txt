@@ -1,0 +1,4 @@
+# Only the word-list export needs these. The validator, the build and the tests use the standard library.
+wordfreq==3.1.1
+simplemma==2.0.0
+lemminflect==0.2.3
