@@ -43,7 +43,8 @@ extension QuizCardState {
     var sourceLabel: String {
         switch card.source {
         case .rank(let rank):
-            String(localized: "Top‑\(String(Self.tierCeiling(for: rank))) · #\(String(rank))")
+            // Ranks past Top‑2000 never become cards; the rank itself is a safe fallback.
+            String(localized: "Top‑\(String(card.source.topTier?.maxRank ?? rank)) · #\(String(rank))")
         case .mine:
             String(localized: "My words")
         }
@@ -83,11 +84,6 @@ extension QuizCardState {
 
     var masteryLabel: String {
         String(localized: "Mastery \(mastery)/4")
-    }
-
-    /// Ranks 1–1000 belong to Top‑1000, 1001–2000 to Top‑2000, and so on.
-    private static func tierCeiling(for rank: Int) -> Int {
-        max(1, (rank + 999) / 1000) * 1000
     }
 
     private static func label(for partOfSpeech: PartOfSpeech) -> String {

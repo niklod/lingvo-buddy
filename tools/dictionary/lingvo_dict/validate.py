@@ -5,13 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 from lingvo_dict.contract import BATCH_COUNT, BATCH_ID_PATTERN, QUIZ_MAX_RANK, batch_ranks
 from lingvo_dict.entry_rules import check_entry
-from lingvo_dict.paths import BATCHES_DIR, WORDLIST_FILE
+from lingvo_dict.exclusions import read_exclusions
+from lingvo_dict.paths import BATCHES_DIR, QUIZ_EXCLUSIONS_FILE, WORDLIST_FILE
 from lingvo_dict.wordlist_file import WordList, WordListError, read_word_list
 
 
@@ -36,6 +37,7 @@ class ValidationReport:
     errors: Tuple[str, ...]
     entries: Tuple[LoadedEntry, ...]
     batch_count: int
+    quiz_exclusions: Tuple[str, ...] = ()  # lookup-tier headwords that never become quiz cards
 
     @property
     def entry_count(self) -> int:
@@ -200,6 +202,9 @@ def batch_files(folder: Path) -> List[Path]:
 def add_selection_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--batches", type=Path, default=BATCHES_DIR, help="folder with batch-NN.json files")
     parser.add_argument("--word-list", type=Path, default=WORDLIST_FILE, help="ranked word list (TSV)")
+    parser.add_argument(
+        "--quiz-exclusions", type=Path, default=QUIZ_EXCLUSIONS_FILE, help="headwords that never become quiz cards"
+    )
     parser.add_argument("--allow-partial", action="store_true", help="accept batches that miss ranks")
     coverage = parser.add_mutually_exclusive_group()
     coverage.add_argument("--through", type=int, metavar="RANK", help="require every rank from 1 to RANK")
@@ -219,7 +224,9 @@ def load_and_validate(args: argparse.Namespace, files: Sequence[Path]) -> Tuple[
     paths = list(files) or batch_files(args.batches)
     if not paths:
         return word_list, ValidationReport(errors=(f"no batch-*.json files in {args.batches}",), entries=(), batch_count=0)
-    return word_list, validate_batches(paths, word_list, options_from(args))
+    report = validate_batches(paths, word_list, options_from(args))
+    exclusions, exclusion_errors = read_exclusions(args.quiz_exclusions, word_list)
+    return word_list, replace(report, errors=report.errors + tuple(exclusion_errors), quiz_exclusions=exclusions)
 
 
 def main(argv: List[str]) -> int:
@@ -237,5 +244,8 @@ def main(argv: List[str]) -> int:
             print(error, file=sys.stderr)
         print(f"FAILED: {plural(len(report.errors), 'error')}", file=sys.stderr)
         return 1
-    print(f"OK: {plural(report.entry_count, 'entry')} in {plural(report.batch_count, 'batch')}")
+    print(
+        f"OK: {plural(report.entry_count, 'entry')} in {plural(report.batch_count, 'batch')}, "
+        f"{plural(len(report.quiz_exclusions), 'quiz exclusion')}"
+    )
     return 0

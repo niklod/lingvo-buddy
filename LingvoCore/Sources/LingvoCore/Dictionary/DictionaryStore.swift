@@ -4,13 +4,25 @@ import GRDB
 /// Read-only access to a dictionary that follows the bundled contract.
 public struct DictionaryStore: Sendable {
     private let reader: any DatabaseReader
-    /// The quiz tier is small (1–2k rows) and never changes at runtime, so it is
-    /// loaded once; the picker and distractor rules then work without SQL.
+    /// Every word that can be a quiz card: ranks up to the last `TopTier`, quiz and
+    /// lookup tier alike, minus the quiz-exclusion list (names, fragments, vulgar
+    /// words). Small (2k rows) and never changes at runtime, so it is loaded once;
+    /// the picker and distractor rules then work without SQL.
     let quizEntries: [DictionaryEntry]
+    let tierGate: TierGate
 
     init(reader: any DatabaseReader) throws {
         self.reader = reader
-        self.quizEntries = try reader.read { db in try Self.fetchEntries(tier: .quiz, in: db) }
+        let entries = try reader.read { db in
+            try Self.checkSchemaVersion(in: db)
+            return try Self.fetchEntries(
+                where: "e.rank <= ? AND e.headword NOT IN (SELECT headword FROM quiz_exclusions)",
+                arguments: [TopTier.last.maxRank],
+                in: db
+            )
+        }
+        self.quizEntries = entries.filter { $0.primaryRussian != nil }
+        self.tierGate = TierGate(cardEntries: quizEntries)
     }
 
     /// Opens a dictionary file read-only, for example the one bundled with the app.
@@ -45,8 +57,25 @@ public struct DictionaryStore: Sendable {
         }
     }
 
-    private static func fetchEntries(tier: DictionaryTier, in db: Database) throws -> [DictionaryEntry] {
-        try fetchEntries(where: "e.tier = ?", arguments: [tier.rawValue], in: db)
+    /// Ignores case and surrounding spaces; an exact-case match wins ("US" over "us").
+    func lookupEntry(_ text: String) throws -> DictionaryEntry? {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return nil }
+        let matches = try reader.read { db in
+            try Self.fetchEntries(where: "e.headword = ? COLLATE NOCASE", arguments: [query], in: db)
+        }
+        return matches.first { $0.headword == query } ?? matches.first
+    }
+
+    /// A file built for an older contract lacks tables this code reads; fail with
+    /// a clear message instead of an SQL error on the first card.
+    private static func checkSchemaVersion(in db: Database) throws {
+        let version = try Int.fetchOne(db, sql: "PRAGMA user_version") ?? 0
+        guard version == DictionarySchema.schemaVersion else {
+            throw LingvoCoreError.invalidDictionary(
+                "dictionary schema version \(version), expected \(DictionarySchema.schemaVersion): rebuild it"
+            )
+        }
     }
 
     private static func fetchEntries(

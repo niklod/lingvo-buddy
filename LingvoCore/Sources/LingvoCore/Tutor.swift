@@ -3,9 +3,9 @@ import Synchronization
 
 /// The single entry point the app uses for learning logic and persistence.
 public final class Tutor: Sendable {
-    private let dictionary: DictionaryStore
-    private let userDatabase: UserDatabase
-    private let clock: any TutorClock
+    let dictionary: DictionaryStore
+    let userDatabase: UserDatabase
+    let clock: any TutorClock
     private let picker: WordPicker
     private let cards: CardFactory
     private let deferrals = Mutex(CardDeferrals())
@@ -61,8 +61,9 @@ public final class Tutor: Sendable {
     private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
         let progress = try userDatabase.allProgress()
         let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
-        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, heldBack: heldBack)
-            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now)
+        let tier = try openTier(progress: progress)
+        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier, heldBack: heldBack)
+            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier)
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }

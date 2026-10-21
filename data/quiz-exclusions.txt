@@ -1,0 +1,20 @@
+# Quiz exclusions: lookup-tier headwords (rank > 1000) that never become quiz cards
+# or distractors when the Top-2000 tier opens. They stay in the dictionary for
+# quick-add lookup, and their ranks do not move.
+# Reasons: a name, a fragment or clipping, slang, or a vulgar main sense.
+# Format: one headword per line; '#' starts a comment. Checked by validate.py.
+
+# Ranks 1001-2000
+jack            # name; the card sense ("jack" = car jack) is rare
+broke           # past tense of "break"
+pro             # clipping of "professional"; also the prefix "pro-"
+dude            # slang
+sitting         # -ing form of "sit"
+ex              # clipping of "ex-partner"; also the prefix "ex-"
+suck            # vulgar main sense
+remains         # plural / verb form of "remain"
+incorporated    # "Inc." in company names
+sub             # clipping (substitute, subway, submarine)
+vice            # mostly "vice president", the prefix "vice-"
+jersey          # name (New Jersey, Jersey)
+tech            # clipping of "technology"

@@ -21,11 +21,13 @@ struct WordPicker {
         return max(Int((1 / settings.reviewShare).rounded()) - 1, 0)
     }
 
-    /// `heldBack` words ("Later", "×") are left out as if they were not in the dictionary.
+    /// New words come only from the open `tier`. `heldBack` words ("Later", "×")
+    /// are left out as if they were not in the dictionary.
     func pick(
         progress: [String: WordProgress],
         recentKinds: [CardKind?],
         now: Date,
+        tier: TopTier,
         heldBack: Set<String> = []
     ) -> PickedWord? {
         let quizEntries = heldBack.isEmpty ? quizEntries : quizEntries.filter { !heldBack.contains($0.headword) }
@@ -44,7 +46,7 @@ struct WordPicker {
             return PickedWord(entry: due.0, kind: .new, progress: due.1)
         }
         if learning.count < settings.maxActiveNewWords,
-           let fresh = quizEntries.first(where: { progress[$0.headword] == nil }) {
+           let fresh = quizEntries.first(where: { $0.rank <= tier.maxRank && progress[$0.headword] == nil }) {
             return PickedWord(entry: fresh, kind: .new, progress: nil)
         }
         if let review = reviews.first {

@@ -127,11 +127,14 @@ class CommandLineTest(unittest.TestCase):
         lines = [f"{rank}\t{word}" for rank, word in enumerate(word_list.headwords, start=1)]
         self.word_list_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         self.word_list = word_list
+        self.exclusions_path = self.folder.write_exclusions()
 
     def run_cli(self, *args):
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
-            code = validate.main(["--word-list", str(self.word_list_path), *args])
+            code = validate.main(
+                ["--word-list", str(self.word_list_path), "--quiz-exclusions", str(self.exclusions_path), *args]
+            )
         return code, out.getvalue(), err.getvalue()
 
     def test_exit_code_is_zero_for_valid_batches(self):
@@ -158,6 +161,33 @@ class CommandLineTest(unittest.TestCase):
 
         self.assertEqual(code, 0)
         self.assertIn("OK: 1000 entries in 2 batches", out)
+
+    def test_quiz_exclusions_must_be_known_lookup_tier_headwords_listed_once(self):
+        path = self.folder.write(1, full_batch(self.word_list, 1))
+        lookup_word = self.word_list.headword_at(1200)
+        self.folder.write_exclusions(
+            "# names and fragments",
+            f"{lookup_word}  # a fragment",
+            f"{lookup_word}",
+            "nosuchword",
+            self.word_list.headword_at(3),
+        )
+
+        code, _, err = self.run_cli(str(path))
+
+        self.assertEqual(code, 1)
+        self.assertIn(f"quiz-exclusions.txt:3 '{lookup_word}': listed twice", err)
+        self.assertIn("quiz-exclusions.txt:4 'nosuchword': not a headword of the word list", err)
+        self.assertIn("quiz-exclusions.txt:5 'large': rank 3 is quiz tier", err)
+
+    def test_valid_quiz_exclusions_are_counted(self):
+        path = self.folder.write(1, full_batch(self.word_list, 1))
+        self.folder.write_exclusions(self.word_list.headword_at(1200), "", self.word_list.headword_at(1300))
+
+        code, out, err = self.run_cli(str(path))
+
+        self.assertEqual(code, 0, err)
+        self.assertIn("2 quiz exclusions", out)
 
 
 if __name__ == "__main__":
