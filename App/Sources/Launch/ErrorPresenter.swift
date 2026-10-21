@@ -6,12 +6,9 @@ import OSLog
 struct ErrorPresenter {
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "errors")
 
-    func show(_ error: Error) {
+    func show(_ error: Error, title: String = String(localized: "Something went wrong")) {
         logger.error("\(String(describing: error), privacy: .public)")
-        present(
-            title: String(localized: "Something went wrong"),
-            message: error.localizedDescription
-        )
+        present(title: title, message: error.localizedDescription)
     }
 
     func inform(_ message: String) {

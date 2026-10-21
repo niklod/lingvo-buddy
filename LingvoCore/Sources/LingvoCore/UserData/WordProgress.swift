@@ -1,12 +1,12 @@
 import Foundation
 import GRDB
 
-public enum WordStatus: String, Sendable, Codable {
+public enum WordStatus: String, Sendable, Codable, CaseIterable {
     case learning
     case learned
 }
 
-public enum AnswerOutcome: String, Sendable, Codable {
+public enum AnswerOutcome: String, Sendable, Codable, CaseIterable {
     case correct
     case wrong
     case dontKnow = "dont_know"

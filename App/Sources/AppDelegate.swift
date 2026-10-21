@@ -12,6 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var tray: TrayMenuController?
     private var quickAdd: QuickAddController?
     private var dictionaryWindow: DictionaryWindowController?
+    private var csvTransfer: CSVTransferController?
     /// AppKit keeps only a weak reference to `servicesProvider`.
     private var services: ServiceProvider?
     private var onboarding: OnboardingWindowController?
@@ -35,12 +36,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let services = try AppEnvironment.makeServices(options: options)
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
+        let csvTransfer = CSVTransferController(store: tutor, errors: errors)
+        self.csvTransfer = csvTransfer
         let launchAtLogin = SystemLaunchAtLogin()
         settingsWindow = SettingsWindowController(
             model: settings,
             launchAtLogin: launchAtLogin,
             about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
-            errors: errors
+            errors: errors,
+            transfer: csvTransfer.actions
         )
         NSApp.mainMenu = MainMenu.make(
             target: self,
