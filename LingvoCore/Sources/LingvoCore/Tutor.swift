@@ -81,7 +81,21 @@ public final class Tutor: Sendable {
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }
-        return .card(try cards.card(for: picked))
+        return .card(try cards.card(for: withOwnTranslation(picked)))
+    }
+
+    /// A translation edited in the Dictionary window replaces the dictionary's
+    /// first one; my words already carry theirs.
+    private func withOwnTranslation(_ picked: PickedWord) throws -> PickedWord {
+        guard !picked.isMine, let own = try userDatabase.translationOverride(for: picked.entry.headword) else {
+            return picked
+        }
+        return PickedWord(
+            entry: picked.entry.withPrimaryTranslation(own),
+            kind: picked.kind,
+            progress: picked.progress,
+            isMine: picked.isMine
+        )
     }
 
     public func answer(_ card: Card, choice: Int) throws -> AnswerResult {

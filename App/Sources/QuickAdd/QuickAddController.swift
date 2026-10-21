@@ -70,6 +70,7 @@ final class QuickAddController {
             case .added(let headword):
                 logger.notice("added my word \(headword, privacy: .private)")
                 close()
+                UserDataChanges.post()
             case .alreadyAdded(let standing):
                 model.show(.standing(standing))
             }

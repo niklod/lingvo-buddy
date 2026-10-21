@@ -9,6 +9,8 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
     case emptyWord
     case missingTranslation(String)
     case tooLong(Field, limit: Int)
+    /// Only my words can be deleted; dictionary words can be reset instead.
+    case notMyWord(String)
 
     /// Quick-add input fields, for `tooLong`.
     public enum Field: String, Sendable, Equatable {
@@ -33,6 +35,8 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
             "Type a translation for \"\(word)\"."
         case .tooLong(let field, let limit):
             "The \(field.rawValue) is too long: at most \(limit) characters."
+        case .notMyWord(let headword):
+            "\"\(headword)\" is a dictionary word, not one of your words: it cannot be deleted."
         }
     }
 }

@@ -29,6 +29,7 @@ final class CardSession {
         do {
             let result = try operation()
             state = QuizCardState(card: state.card, answer: .init(pickedIndex: pickedIndex, result: result))
+            UserDataChanges.post()
         } catch {
             onError(error)
         }
