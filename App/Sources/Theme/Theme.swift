@@ -22,6 +22,7 @@ enum Theme {
 
     enum Radius {
         static let card: CGFloat = 14
+        static let tray: CGFloat = 12
         static let option: CGFloat = 10
         static let button: CGFloat = 8
         static let smallButton: CGFloat = 7
@@ -31,9 +32,12 @@ enum Theme {
 
     enum FontSize {
         static let word: CGFloat = 34
+        static let stat: CGFloat = 18
         static let option: CGFloat = 15
+        static let title: CGFloat = 14
         static let body: CGFloat = 13
         static let caption: CGFloat = 12
+        static let small: CGFloat = 11
         static let keyBadge: CGFloat = 11
     }
 

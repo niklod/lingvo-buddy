@@ -12,7 +12,7 @@ struct SnapshotState {
 @MainActor
 enum SnapshotRegistry {
     static var all: [SnapshotState] {
-        QuizCardSnapshots.states + StatusIconSnapshots.states
+        QuizCardSnapshots.states + StatusIconSnapshots.states + TrayMenuSnapshots.states
     }
 }
 

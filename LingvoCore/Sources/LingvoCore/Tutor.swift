@@ -3,9 +3,9 @@ import Synchronization
 
 /// The single entry point the app uses for learning logic and persistence.
 public final class Tutor: Sendable {
-    private let dictionary: DictionaryStore
-    private let userDatabase: UserDatabase
-    private let clock: any TutorClock
+    let dictionary: DictionaryStore
+    let userDatabase: UserDatabase
+    let clock: any TutorClock
     private let picker: WordPicker
     private let cards: CardFactory
     private let deferrals = Mutex(CardDeferrals())

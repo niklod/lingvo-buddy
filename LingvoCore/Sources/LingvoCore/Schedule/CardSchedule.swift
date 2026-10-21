@@ -34,7 +34,7 @@ public struct CardSchedule: Sendable, Equatable {
         case autoClose
     }
 
-    public let settings: CardScheduleSettings
+    public private(set) var settings: CardScheduleSettings
     /// `nil` while a card is on screen: the next timer starts when it closes.
     public private(set) var nextCardAt: Date?
     public private(set) var shownCard: Card?
@@ -102,6 +102,17 @@ public struct CardSchedule: Sendable, Equatable {
         case .quietHours, .focus, .fullScreen:
             copy.nextCardAt = now.addingTimeInterval(settings.quietRetryDelay)
         case .noWordsAvailable:
+            copy.nextCardAt = now.addingTimeInterval(settings.interval)
+        }
+        return copy
+    }
+
+    /// A new interval: a running countdown restarts from `now`, so the next card
+    /// follows the new pace. A pause must be applied again afterwards.
+    public func withSettings(_ settings: CardScheduleSettings, at now: Date) -> CardSchedule {
+        var copy = self
+        copy.settings = settings
+        if nextCardAt != nil {
             copy.nextCardAt = now.addingTimeInterval(settings.interval)
         }
         return copy

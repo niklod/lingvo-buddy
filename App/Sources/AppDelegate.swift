@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let errors = ErrorPresenter()
     private var statusItem: StatusItemController?
     private var coordinator: CardCoordinator?
+    private var tray: TrayMenuController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.appearance = NSAppearance(named: .darkAqua)
@@ -26,6 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func start(with options: LaunchOptions) throws {
         let tutor = try AppEnvironment.makeTutor(options: options)
         let focus = SystemFocusStatus()
+        let intervals = IntervalStore()
         let coordinator = CardCoordinator(
             tutor: tutor,
             panel: CardPanelController(tutor: tutor, errors: errors),
@@ -35,20 +37,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 fullScreen: FullScreenDetector(),
                 pause: PauseStore()
             ),
-            settings: try AppEnvironment.scheduleSettings(options: options),
+            settings: try AppEnvironment.scheduleSettings(options: options, stored: intervals),
+            intervals: intervals,
             errors: errors
         )
+        let tray = TrayMenuController(tutor: tutor, commands: trayCommands(for: coordinator), errors: errors)
         let statusItem = StatusItemController(actions: StatusItemActions(
-            primaryClick: { [weak coordinator] in coordinator?.reopenWaitingCard() ?? false },
-            showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
-            pause: { [weak coordinator] option in coordinator?.pause(option) },
-            resume: { [weak coordinator] in coordinator?.resume() },
-            pausedUntil: { [weak coordinator] in coordinator?.pausedUntil }
+            primaryClick: { [weak coordinator, weak tray] in
+                guard coordinator?.reopenWaitingCard() == true else { return false }
+                tray?.close()
+                return true
+            },
+            toggleTray: { [weak tray] button in tray?.toggle(under: button) }
         ))
         coordinator.statusItem = statusItem
         self.coordinator = coordinator
         self.statusItem = statusItem
-        HotKeys.register { [weak coordinator] in coordinator?.showWordNow() }
+        self.tray = tray
+        HotKeys.register { [weak coordinator, weak tray] in
+            tray?.close()
+            coordinator?.showWordNow()
+        }
         focus.requestAccessIfNeeded()
         coordinator.start()
         if let view = options.openView {
@@ -60,10 +69,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Settings (#22) and the Dictionary window set their entry points here.
+    private func trayCommands(for coordinator: CardCoordinator) -> TrayCommands {
+        TrayCommands(
+            showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
+            schedule: { [weak coordinator] in
+                coordinator?.trayInfo
+                    ?? TrayScheduleInfo(nextCardAt: nil, interval: CardScheduleSettings.defaultInterval, pausedUntil: nil)
+            },
+            changeInterval: { [weak coordinator] interval in coordinator?.changeInterval(interval) },
+            pause: { [weak coordinator] option in coordinator?.pause(option) },
+            resume: { [weak coordinator] in coordinator?.resume() },
+            openDictionary: nil,
+            openSettings: nil
+        )
+    }
+
     private func open(_ view: OpenableView) {
         switch view {
         case .card:
             coordinator?.showWordNow()
+        case .tray:
+            tray?.open(under: statusItem?.anchor)
         }
     }
 

@@ -122,6 +122,29 @@ struct CardScheduleTests {
         }
     }
 
+    @Test("a new interval restarts the countdown to the next card")
+    func intervalChangeRestartsCountdown() throws {
+        let changedAt = start.addingTimeInterval(8 * minute)
+        let schedule = CardSchedule(startingAt: start)
+            .withSettings(try CardScheduleSettings(interval: 5 * minute), at: changedAt)
+
+        #expect(schedule.settings.interval == 5 * minute)
+        #expect(schedule.nextCardAt == changedAt.addingTimeInterval(5 * minute))
+        #expect(schedule.due(at: changedAt.addingTimeInterval(5 * minute)) == .showCard)
+    }
+
+    @Test("a new interval chosen while a card is on screen counts from the card's close")
+    func intervalChangeWhileShowing() throws {
+        let shownAt = start.addingTimeInterval(15 * minute)
+        let closedAt = shownAt.addingTimeInterval(2 * minute)
+        let schedule = CardSchedule(startingAt: start)
+            .showing(try sampleCard(), at: shownAt, engaged: true)
+            .withSettings(try CardScheduleSettings(interval: 30 * minute), at: shownAt.addingTimeInterval(minute))
+
+        #expect(schedule.nextCardAt == nil)
+        #expect(schedule.closed(at: closedAt).nextCardAt == closedAt.addingTimeInterval(30 * minute))
+    }
+
     private func sampleCard() throws -> Card {
         try #require(try Fixture.tutor().nextCard().card)
     }
