@@ -11,6 +11,8 @@ struct TrayCommands {
     var changeInterval: (TimeInterval) -> Void = { _ in }
     var pause: (PauseOption) -> Void = { _ in }
     var resume: () -> Void = {}
+    /// Opens quick add prefilled with the inline field's text.
+    var quickAdd: (String) -> Void = { _ in }
     /// `nil` until the Dictionary window slice lands; the item is then greyed out.
     var openDictionary: (() -> Void)?
     /// `nil` until the Settings slice lands; the item is then greyed out.
@@ -56,7 +58,9 @@ final class TrayMenuController {
             return
         }
         let panel = TrayPanel()
-        panel.setContent(TrayMenuView(state: state, actions: actions))
+        panel.setContent(TrayMenuView(state: state, actions: actions, highlighted: nil) {
+            TrayAddWordField { [weak self] text in self?.run { $0.commands.quickAdd(text) } }
+        })
         panel.onKey = { [weak self] command in self?.handle(command) ?? false }
         panel.setFrameOrigin(CardPlacement.origin(for: panel.frame.size, under: anchor))
         panel.makeKeyAndOrderFront(nil)

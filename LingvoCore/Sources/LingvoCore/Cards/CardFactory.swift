@@ -19,7 +19,7 @@ struct CardFactory {
             prompt: direction == .enToRu ? entry.headword : translation,
             direction: direction,
             kind: picked.kind,
-            source: .rank(entry.rank),
+            source: picked.isMine ? .mine : .rank(entry.rank),
             ipa: entry.ipa,
             partOfSpeech: entry.partOfSpeech,
             options: options,

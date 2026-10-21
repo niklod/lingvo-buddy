@@ -49,6 +49,16 @@ targets:
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.education
         NSFocusStatusUsageDescription: LingvoBuddy shows no cards while a Focus is on.
+        NSServices:
+          - NSMenuItem:
+              default: Add to LingvoBuddy
+            NSMessage: addToLingvoBuddy
+            NSPortName: LingvoBuddy
+            NSSendTypes:
+              - public.utf8-plain-text
+              - NSStringPboardType
+            # Without NSRequiredContext (even empty) macOS registers the service but hides it.
+            NSRequiredContext: {}
     entitlements:
       path: App/LingvoBuddy.entitlements
       properties:
