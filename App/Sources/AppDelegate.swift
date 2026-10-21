@@ -7,7 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private let errors = ErrorPresenter()
     private var statusItem: StatusItemController?
-    private var cardPanel: CardPanelController?
+    private var coordinator: CardCoordinator?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.appearance = NSAppearance(named: .darkAqua)
@@ -25,10 +25,32 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func start(with options: LaunchOptions) throws {
         let tutor = try AppEnvironment.makeTutor(options: options)
-        let cardPanel = CardPanelController(tutor: tutor, errors: errors)
-        let statusItem = StatusItemController { [weak self] in self?.showWordNow() }
-        self.cardPanel = cardPanel
+        let focus = SystemFocusStatus()
+        let coordinator = CardCoordinator(
+            tutor: tutor,
+            panel: CardPanelController(tutor: tutor, errors: errors),
+            contexts: CardContextBuilder(
+                quietHours: AppEnvironment.quietHours(options: options),
+                focus: focus,
+                fullScreen: FullScreenDetector(),
+                pause: PauseStore()
+            ),
+            settings: try AppEnvironment.scheduleSettings(options: options),
+            errors: errors
+        )
+        let statusItem = StatusItemController(actions: StatusItemActions(
+            primaryClick: { [weak coordinator] in coordinator?.reopenWaitingCard() ?? false },
+            showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
+            pause: { [weak coordinator] option in coordinator?.pause(option) },
+            resume: { [weak coordinator] in coordinator?.resume() },
+            pausedUntil: { [weak coordinator] in coordinator?.pausedUntil }
+        ))
+        coordinator.statusItem = statusItem
+        self.coordinator = coordinator
         self.statusItem = statusItem
+        HotKeys.register { [weak coordinator] in coordinator?.showWordNow() }
+        focus.requestAccessIfNeeded()
+        coordinator.start()
         if let view = options.openView {
             // The status item gets its place in the menu bar only after launch
             // finishes; opening earlier would anchor the card to a zero frame.
@@ -38,14 +60,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func showWordNow() {
-        cardPanel?.showNextCard(under: statusItem?.anchor)
-    }
-
     private func open(_ view: OpenableView) {
         switch view {
         case .card:
-            showWordNow()
+            coordinator?.showWordNow()
         }
     }
 

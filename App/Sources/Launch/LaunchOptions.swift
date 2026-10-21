@@ -1,4 +1,5 @@
 import Foundation
+import LingvoCore
 
 /// QA hooks passed as launch arguments (`make run ARGS="…"`, `make snapshots`).
 struct LaunchOptions: Equatable {
@@ -13,6 +14,10 @@ struct LaunchOptions: Equatable {
     var snapshotFilter: String?
     /// `--open <view>`: open a view right after launch.
     var openView: OpenableView?
+    /// `--interval-seconds <n>`: the card interval in seconds instead of 15 min (QA only).
+    var cardInterval: TimeInterval?
+    /// `--quiet-hours <HH:MM-HH:MM|off>`: replaces the default 23:00–09:00 for this run.
+    var quietHours: QuietHoursOverride?
 
     static func parse(_ arguments: [String]) throws -> LaunchOptions {
         var options = LaunchOptions()
@@ -29,6 +34,15 @@ struct LaunchOptions: Equatable {
                     throw LaunchOptionsError.unknownView(name)
                 }
                 options.openView = view
+            case "--interval-seconds":
+                let text = try value(for: argument, from: &remaining)
+                guard let seconds = TimeInterval(text), seconds > 0 else {
+                    throw LaunchOptionsError.invalidValue(argument, text)
+                }
+                options.cardInterval = seconds
+            case "--quiet-hours":
+                let text = try value(for: argument, from: &remaining)
+                options.quietHours = try QuietHoursOverride.parse(text, flag: argument)
             default:
                 // Xcode and LaunchServices add their own arguments (-NSDocumentRevisionsDebugMode, -psn_…).
                 continue
@@ -50,9 +64,31 @@ enum OpenableView: String, CaseIterable {
     case card
 }
 
+/// The value of `--quiet-hours`.
+enum QuietHoursOverride: Equatable {
+    case off
+    case hours(QuietHours)
+
+    static func parse(_ text: String, flag: String) throws -> QuietHoursOverride {
+        if text == "off" { return .off }
+        let bounds = text.split(separator: "-").map(String.init)
+        guard bounds.count == 2, let start = try? time(bounds[0]), let end = try? time(bounds[1]) else {
+            throw LaunchOptionsError.invalidValue(flag, text)
+        }
+        return .hours(QuietHours(start: start, end: end))
+    }
+
+    private static func time(_ text: String) throws -> TimeOfDay {
+        let parts = text.split(separator: ":").compactMap { Int($0) }
+        guard parts.count == 2 else { throw LaunchOptionsError.invalidValue("--quiet-hours", text) }
+        return try TimeOfDay(hour: parts[0], minute: parts[1])
+    }
+}
+
 enum LaunchOptionsError: Error, LocalizedError {
     case missingValue(String)
     case unknownView(String)
+    case invalidValue(String, String)
 
     var errorDescription: String? {
         switch self {
@@ -60,6 +96,8 @@ enum LaunchOptionsError: Error, LocalizedError {
             "\(flag) needs a value."
         case .unknownView(let name):
             "Unknown view \"\(name)\" for --open. Known: \(OpenableView.allCases.map(\.rawValue).joined(separator: ", "))."
+        case .invalidValue(let flag, let value):
+            "\"\(value)\" is not a valid value for \(flag)."
         }
     }
 }

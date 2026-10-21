@@ -12,7 +12,7 @@ struct SnapshotState {
 @MainActor
 enum SnapshotRegistry {
     static var all: [SnapshotState] {
-        QuizCardSnapshots.states
+        QuizCardSnapshots.states + StatusIconSnapshots.states
     }
 }
 
@@ -29,6 +29,31 @@ enum QuizCardSnapshots {
     private static func state(_ name: String, _ card: Card, answer: QuizCardState.Answer?) -> SnapshotState {
         SnapshotState(name: name) {
             AnyView(QuizCardView(state: QuizCardState(card: card, answer: answer)))
+        }
+    }
+}
+
+/// The menu-bar icon as macOS tints it on a dark menu bar, scaled up so the dot is easy to check.
+@MainActor
+enum StatusIconSnapshots {
+    private static let zoom: CGFloat = 4
+
+    static var states: [SnapshotState] {
+        [state("menubar_icon", waiting: false), state("menubar_icon_waiting", waiting: true)]
+    }
+
+    private static func state(_ name: String, waiting: Bool) -> SnapshotState {
+        SnapshotState(name: name) {
+            let image = StatusGlyph.image(waiting: waiting)
+            return AnyView(
+                Image(nsImage: image)
+                    .renderingMode(.template)
+                    .resizable()
+                    .foregroundStyle(.white)
+                    .frame(width: image.size.width * zoom, height: image.size.height * zoom)
+                    .padding(8 * zoom)
+                    .background(Color(hex: 0x2B2B2E))
+            )
         }
     }
 }

@@ -22,6 +22,20 @@ enum AppEnvironment {
         return Tutor(dictionary: dictionary, userDatabase: userDatabase)
     }
 
+    /// The Settings slice makes these editable; until then the defaults apply, or the QA overrides.
+    static func scheduleSettings(options: LaunchOptions) throws -> CardScheduleSettings {
+        guard let interval = options.cardInterval else { return .standard }
+        return try CardScheduleSettings(interval: interval)
+    }
+
+    static func quietHours(options: LaunchOptions) -> QuietHours? {
+        switch options.quietHours {
+        case nil: .standard
+        case .off: nil
+        case .hours(let hours): hours
+        }
+    }
+
     private static func bundledDictionary() throws -> DictionaryStore {
         guard let url = Bundle.main.url(forResource: "dictionary", withExtension: "sqlite") else {
             throw SetupError.missingBundledDictionary

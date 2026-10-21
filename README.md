@@ -13,4 +13,4 @@ Needs Xcode 16.3+ and XcodeGen (`brew install xcodegen`).
 - `make run ARGS="--user-db demo --seed-demo --open card"` starts the menu-bar app.
 - `make snapshots` renders the designed view states to `build/snapshots/*.png`.
 
-QA launch arguments: `--user-db <name|path>`, `--seed-demo`, `--open card`, `--snapshot <dir>`, `--snapshot-filter <text>`.
+QA launch arguments: `--user-db <name|path>`, `--seed-demo`, `--open card`, `--snapshot <dir>`, `--snapshot-filter <text>`, `--interval-seconds <n>` (card interval), `--quiet-hours <HH:MM-HH:MM|off>`.
