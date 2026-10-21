@@ -30,6 +30,12 @@ struct AnswerAgeTests {
         #expect(age(minutesAgo: 60 * 24 * 7) == .date(now.addingTimeInterval(-7 * Fixture.day)))
     }
 
+    @Test("just after midnight, an answer from late last night still shows hours")
+    func hoursCrossMidnight() {
+        let night = Fixture.date(hour: 0, minute: 20)
+        #expect(AnswerAge(of: night.addingTimeInterval(-60 * 60), now: night, calendar: Fixture.calendar) == .hours(1))
+    }
+
     @Test("a time after now, from a clock moved back, is just now")
     func futureIsJustNow() {
         #expect(age(minutesAgo: -10) == .justNow)

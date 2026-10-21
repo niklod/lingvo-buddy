@@ -5,7 +5,7 @@ import Foundation
 public enum AnswerAge: Sendable, Equatable {
     case justNow
     case minutes(Int)
-    /// Only for the first few hours: after that "today" reads better than "9 h".
+    /// Only for the first few hours, also across midnight: after that "today" reads better than "9 h".
     case hours(Int)
     case today
     case yesterday
@@ -26,7 +26,7 @@ public enum AnswerAge: Sendable, Equatable {
         switch true {
         case minutes < 1: self = .justNow
         case hours < 1: self = .minutes(minutes)
-        case hours < Self.hoursShown && days == 0: self = .hours(hours)
+        case hours < Self.hoursShown: self = .hours(hours)
         case days == 0: self = .today
         case days == 1: self = .yesterday
         case days < Self.daysShown: self = .days(days)

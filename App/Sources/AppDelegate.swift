@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
     private var quickAdd: QuickAddController?
+    private var dictionaryWindow: DictionaryWindowController?
     /// AppKit keeps only a weak reference to `servicesProvider`.
     private var services: ServiceProvider?
     private var onboarding: OnboardingWindowController?
@@ -41,7 +42,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
             errors: errors
         )
-        NSApp.mainMenu = MainMenu.make(settingsTarget: self, settingsAction: #selector(openSettingsFromMenu))
+        NSApp.mainMenu = MainMenu.make(
+            target: self,
+            settingsAction: #selector(openSettingsFromMenu),
+            dictionaryAction: #selector(openDictionaryFromMenu)
+        )
         let focus = SystemFocusStatus()
         let coordinator = CardCoordinator(
             tutor: tutor,
@@ -57,6 +62,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             errors: errors
         )
         let quickAdd = QuickAddController(tutor: tutor)
+        dictionaryWindow = DictionaryWindowController(
+            model: DictionaryModel(store: tutor, errors: errors),
+            settings: settings,
+            actions: DictionaryActions(addWord: { [weak quickAdd] prefill in quickAdd?.open(prefill: prefill) })
+        )
         let tray = TrayMenuController(
             tutor: tutor,
             commands: trayCommands(for: coordinator, quickAdd: quickAdd),
@@ -119,7 +129,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.services = services
     }
 
-    /// Settings (#22) and the Dictionary window set their entry points here.
     private func trayCommands(for coordinator: CardCoordinator, quickAdd: QuickAddController) -> TrayCommands {
         TrayCommands(
             showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
@@ -131,7 +140,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             pause: { [weak coordinator] option in coordinator?.pause(option) },
             resume: { [weak coordinator] in coordinator?.resume() },
             quickAdd: { [weak quickAdd] text in quickAdd?.open(prefill: text) },
-            openDictionary: nil,
+            openDictionary: { [weak self] in self?.openDictionary() },
             openSettings: { [weak self] in self?.openSettings() }
         )
     }
@@ -150,6 +159,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             openSettings(tab: .about)
         case .onboarding:
             showOnboarding?()
+        case .dictionary:
+            openDictionary()
         }
     }
 
@@ -185,6 +196,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func openSettingsFromMenu() {
         openSettings()
+    }
+
+    /// Tray item "Open Dictionary… ⌘D", the ⌘D key while one of our windows is key, `--open dictionary`.
+    func openDictionary() {
+        tray?.close()
+        dictionaryWindow?.show()
+    }
+
+    @objc private func openDictionaryFromMenu() {
+        openDictionary()
     }
 
     private func renderSnapshotsAndExit(to path: String, filter: String?) -> Never {

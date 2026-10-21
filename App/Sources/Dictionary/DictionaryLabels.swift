@@ -8,7 +8,7 @@ enum DictionaryLabels {
         case .learning: String(localized: "Learning")
         case .learned: String(localized: "Learned")
         case .myWords: String(localized: "My words")
-        case .queue: String(localized: "Top‑\(queueTier.maxRank) queue")
+        case .queue: String(localized: "Top‑\(String(queueTier.maxRank)) queue")
         }
     }
 
@@ -56,7 +56,7 @@ enum DictionaryLabels {
     static func rules(_ settings: TutorSettings) -> [(label: String, value: String)] {
         [
             (String(localized: "Interval"), String(localized: "\(Int(settings.cardInterval / 60)) min")),
-            (String(localized: "Learned after"), String(localized: "\(WordRow.masteryGoal) correct in a row")),
+            (String(localized: "Learned after"), String(localized: "\(WordRow.masteryGoal) in a row")),
             (String(localized: "Reviews"), String(localized: "\(Int((settings.learning.reviewShare * 100).rounded()))% of cards")),
             (String(localized: "Quiet hours"), quietHours(settings)),
             (String(localized: "Direction"), direction(settings.learning.direction)),
