@@ -15,7 +15,7 @@ struct SnapshotState {
 enum SnapshotRegistry {
     static var all: [SnapshotState] {
         QuizCardSnapshots.states + StatusIconSnapshots.states + TrayMenuSnapshots.states
-            + SettingsSnapshots.states
+            + SettingsSnapshots.states + OnboardingSnapshots.states
     }
 }
 

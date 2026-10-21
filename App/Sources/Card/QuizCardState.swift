@@ -86,7 +86,7 @@ extension QuizCardState {
         String(localized: "Mastery \(mastery)/4")
     }
 
-    private static func label(for partOfSpeech: PartOfSpeech) -> String {
+    static func label(for partOfSpeech: PartOfSpeech) -> String {
         switch partOfSpeech {
         case .noun: String(localized: "noun")
         case .verb: String(localized: "verb")
