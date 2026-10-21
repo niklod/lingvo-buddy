@@ -7,3 +7,7 @@ DerivedData/
 .swiftpm/
 __pycache__/
 .venv/
+App/Info.plist
+App/LingvoBuddy.entitlements
+App/Resources/dictionary.sqlite
+.claude/worktrees/
