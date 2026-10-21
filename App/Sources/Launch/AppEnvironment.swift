@@ -22,9 +22,10 @@ enum AppEnvironment {
         return Tutor(dictionary: dictionary, userDatabase: userDatabase)
     }
 
-    /// The Settings slice makes these editable; until then the defaults apply, or the QA overrides.
-    static func scheduleSettings(options: LaunchOptions) throws -> CardScheduleSettings {
-        guard let interval = options.cardInterval else { return .standard }
+    /// The QA override wins over the interval the learner chose.
+    @MainActor
+    static func scheduleSettings(options: LaunchOptions, stored: IntervalStore) throws -> CardScheduleSettings {
+        guard let interval = options.cardInterval else { return stored.settings() }
         return try CardScheduleSettings(interval: interval)
     }
 

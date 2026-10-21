@@ -10,6 +10,7 @@ final class CardCoordinator {
     private let panel: CardPanelController
     private let contexts: CardContextBuilder
     private let pauseStore: PauseStore
+    private let intervalStore: IntervalStore
     private let errors: ErrorPresenter
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "schedule")
     private var schedule: CardSchedule
@@ -24,12 +25,14 @@ final class CardCoordinator {
         panel: CardPanelController,
         contexts: CardContextBuilder,
         settings: CardScheduleSettings,
+        intervals: IntervalStore,
         errors: ErrorPresenter
     ) {
         self.tutor = tutor
         self.panel = panel
         self.contexts = contexts
         self.pauseStore = contexts.pause
+        self.intervalStore = intervals
         self.errors = errors
         self.schedule = CardSchedule(settings: settings, startingAt: Date())
         panel.events = CardPanelEvents(
@@ -98,6 +101,27 @@ final class CardCoordinator {
     }
 
     var pausedUntil: Date? { pauseStore.pausedUntil() }
+
+    /// What the tray menu shows: "Next in X min · every N min" or the pause end.
+    var trayInfo: TrayScheduleInfo {
+        TrayScheduleInfo(nextCardAt: schedule.nextCardAt, interval: schedule.settings.interval, pausedUntil: pausedUntil)
+    }
+
+    /// The next card follows the new interval; it is kept for the next launch.
+    func changeInterval(_ interval: TimeInterval) {
+        do {
+            let settings = try CardScheduleSettings(interval: interval)
+            intervalStore.save(settings)
+            schedule = schedule.withSettings(settings, at: Date())
+            if let pausedUntil {
+                schedule = schedule.paused(until: pausedUntil)
+            }
+            logger.notice("interval changed to \(interval, privacy: .public) s")
+            arm()
+        } catch {
+            errors.show(error)
+        }
+    }
 
     private func arm() {
         timer?.invalidate()

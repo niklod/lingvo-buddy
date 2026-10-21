@@ -1,4 +1,5 @@
 import Foundation
+import GRDB
 
 /// QA hook: puts the user database into the state shown by the design sample
 /// data, so screenshots of the running app can be compared with the design.
@@ -21,6 +22,9 @@ public enum DesignDemoSeed {
         Sample(headword: "require", mastery: 1, lastResult: .correct, minutesAgo: 300),
     ]
 
+    /// Earlier days with answers, so the tray menu shows the design's 6-day streak.
+    private static let historyDaysAgo = [2, 3, 4, 5]
+
     /// Erases the learner state, then writes the design sample state relative to `now`.
     public static func apply(to database: UserDatabase, dictionary: DictionaryStore, now: Date) throws {
         try database.eraseAll()
@@ -39,6 +43,22 @@ public enum DesignDemoSeed {
                 ),
                 updating: progress(for: sample, answeredAt: answeredAt)
             )
+        }
+        try writeHistory(to: database, now: now)
+    }
+
+    /// Log rows only: the stats read the answers log, the word rows stay as the design shows them.
+    private static func writeHistory(to database: UserDatabase, now: Date) throws {
+        try database.writer.write { db in
+            for daysAgo in historyDaysAgo {
+                try AnswerRecord(
+                    headword: samples[0].headword,
+                    direction: .enToRu,
+                    kind: .new,
+                    result: .correct,
+                    answeredAt: now.addingTimeInterval(-Double(daysAgo) * 24 * 60 * 60)
+                ).insert(db)
+            }
         }
     }
 
