@@ -63,6 +63,8 @@ struct LaunchOptions: Equatable {
 enum OpenableView: String, CaseIterable {
     case card
     case tray
+    case settings
+    case about
 }
 
 /// The value of `--quiet-hours`.

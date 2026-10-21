@@ -48,7 +48,7 @@ struct NextCardTests {
         {"entries": [{"headword": "reluctant", "rank": 4870, "pos": "adjective", "ipa": "/rɪˈlʌktənt/",
           "example": null, "synonym_group": null, "tier": "lookup", "translations": {"ru": ["неохотный"]}}]}
         """.utf8)
-        let tutor = Tutor(
+        let tutor = try Tutor(
             dictionary: try DictionaryStore.inMemory(fromJSON: [lookupOnly]),
             userDatabase: try UserDatabase.inMemory(),
             clock: TestClock(Fixture.start),

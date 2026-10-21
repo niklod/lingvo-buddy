@@ -1,7 +1,7 @@
 import Foundation
 import GRDB
 
-/// The writable database with the learner's state (progress, answers log).
+/// The writable database with the learner's state (progress, answers log, settings).
 ///
 /// Rows key words by `headword`, not by dictionary id: dictionary ids change
 /// whenever the bundled dictionary is rebuilt, headwords do not.
@@ -64,7 +64,14 @@ public struct UserDatabase: Sendable {
                 ALTER TABLE answers ADD COLUMN kind TEXT;
                 """)
         }
-        // v3 is the settings migration of the Settings slice.
+        migrator.registerMigration("v3-settings") { db in
+            try db.execute(sql: """
+                CREATE TABLE settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT NOT NULL
+                );
+                """)
+        }
         migrator.registerMigration("v4-my-words") { db in
             try db.execute(sql: """
                 CREATE TABLE my_words (

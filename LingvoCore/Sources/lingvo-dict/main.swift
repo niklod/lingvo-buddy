@@ -43,7 +43,7 @@ func runCheck(_ arguments: [String]) throws {
     guard let license = try store.meta()["license"], !license.isEmpty else {
         fail("meta has no license")
     }
-    let tutor = Tutor(dictionary: store, userDatabase: try UserDatabase.inMemory())
+    let tutor = try Tutor(dictionary: store, userDatabase: try UserDatabase.inMemory())
     guard let card = try tutor.nextCard().card else {
         fail("no quiz card in \(arguments[0])")
     }
