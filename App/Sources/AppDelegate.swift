@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let errors = ErrorPresenter()
     private var statusItem: StatusItemController?
     private var coordinator: CardCoordinator?
+    private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -25,20 +26,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func start(with options: LaunchOptions) throws {
-        let tutor = try AppEnvironment.makeTutor(options: options)
+        let services = try AppEnvironment.makeServices(options: options)
+        let tutor = services.tutor
+        let settings = SettingsModel(store: tutor, errors: errors)
+        settingsWindow = SettingsWindowController(
+            model: settings,
+            launchAtLogin: SystemLaunchAtLogin(),
+            about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
+            errors: errors
+        )
+        NSApp.mainMenu = MainMenu.make(settingsTarget: self, settingsAction: #selector(openSettingsFromMenu))
         let focus = SystemFocusStatus()
-        let intervals = IntervalStore()
         let coordinator = CardCoordinator(
             tutor: tutor,
             panel: CardPanelController(tutor: tutor, errors: errors),
             contexts: CardContextBuilder(
-                quietHours: AppEnvironment.quietHours(options: options),
+                settings: settings,
+                quietHoursOverride: options.quietHours,
                 focus: focus,
                 fullScreen: FullScreenDetector(),
                 pause: PauseStore()
             ),
-            settings: try AppEnvironment.scheduleSettings(options: options, stored: intervals),
-            intervals: intervals,
+            scheduleSettings: try AppEnvironment.scheduleSettings(options: options, settings: settings.settings),
             errors: errors
         )
         let tray = TrayMenuController(tutor: tutor, commands: trayCommands(for: coordinator), errors: errors)
@@ -81,7 +90,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             pause: { [weak coordinator] option in coordinator?.pause(option) },
             resume: { [weak coordinator] in coordinator?.resume() },
             openDictionary: nil,
-            openSettings: nil
+            openSettings: { [weak self] in self?.openSettings() }
         )
     }
 
@@ -91,7 +100,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             coordinator?.showWordNow()
         case .tray:
             tray?.open(under: statusItem?.anchor)
+        case .settings:
+            openSettings(tab: .general)
+        case .about:
+            openSettings(tab: .about)
         }
+    }
+
+    /// The single entry point to Settings: tray item "Settings… ⌘,", the ⌘, key, `--open settings`.
+    func openSettings(tab: SettingsTab? = nil) {
+        settingsWindow?.show(tab: tab)
+    }
+
+    @objc private func openSettingsFromMenu() {
+        openSettings()
     }
 
     private func renderSnapshotsAndExit(to path: String, filter: String?) -> Never {

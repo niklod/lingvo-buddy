@@ -10,7 +10,7 @@ final class CardCoordinator {
     private let panel: CardPanelController
     private let contexts: CardContextBuilder
     private let pauseStore: PauseStore
-    private let intervalStore: IntervalStore
+    private let settings: SettingsModel
     private let errors: ErrorPresenter
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "schedule")
     private var schedule: CardSchedule
@@ -24,17 +24,16 @@ final class CardCoordinator {
         tutor: Tutor,
         panel: CardPanelController,
         contexts: CardContextBuilder,
-        settings: CardScheduleSettings,
-        intervals: IntervalStore,
+        scheduleSettings: CardScheduleSettings,
         errors: ErrorPresenter
     ) {
         self.tutor = tutor
         self.panel = panel
         self.contexts = contexts
         self.pauseStore = contexts.pause
-        self.intervalStore = intervals
+        self.settings = contexts.settings
         self.errors = errors
-        self.schedule = CardSchedule(settings: settings, startingAt: Date())
+        self.schedule = CardSchedule(settings: scheduleSettings, startingAt: Date())
         panel.events = CardPanelEvents(
             engaged: { [weak self] in self?.engaged() },
             closed: { [weak self] card, action in self?.closed(card, with: action) }
@@ -42,6 +41,12 @@ final class CardCoordinator {
     }
 
     func start() {
+        settings.onChange { [weak self] old, new in
+            // Other settings act through the tutor and the context; only the interval moves the timer.
+            if old.cardInterval != new.cardInterval {
+                self?.applyInterval(new.cardInterval)
+            }
+        }
         if let pausedUntil = pauseStore.pausedUntil() {
             schedule = schedule.paused(until: pausedUntil)
         }
@@ -107,20 +112,24 @@ final class CardCoordinator {
         TrayScheduleInfo(nextCardAt: schedule.nextCardAt, interval: schedule.settings.interval, pausedUntil: pausedUntil)
     }
 
-    /// The next card follows the new interval; it is kept for the next launch.
-    func changeInterval(_ interval: TimeInterval) {
+    /// Tray interval submenu: saved like a Settings change, then applied by `applyInterval`.
+    func changeInterval(_ seconds: TimeInterval) {
+        settings.update { $0.replacing(cardInterval: seconds) }
+    }
+
+    /// The countdown restarts with the new interval; a pause still holds cards back.
+    private func applyInterval(_ interval: TimeInterval) {
         do {
-            let settings = try CardScheduleSettings(interval: interval)
-            intervalStore.save(settings)
-            schedule = schedule.withSettings(settings, at: Date())
-            if let pausedUntil {
-                schedule = schedule.paused(until: pausedUntil)
-            }
-            logger.notice("interval changed to \(interval, privacy: .public) s")
-            arm()
+            schedule = schedule.withSettings(try CardScheduleSettings(interval: interval), at: Date())
         } catch {
             errors.show(error)
+            return
         }
+        if let pausedUntil = pauseStore.pausedUntil() {
+            schedule = schedule.paused(until: pausedUntil)
+        }
+        logger.notice("interval changed to \(interval, privacy: .public) s")
+        arm()
     }
 
     private func arm() {

@@ -5,6 +5,8 @@ import SwiftUI
 /// Names follow the design screenshots (`design/screenshots/<name>.png`) where one exists.
 struct SnapshotState {
     let name: String
+    /// Render in an offscreen window: needed for AppKit-backed controls.
+    var usesWindow = false
     let view: @MainActor () -> AnyView
 }
 
@@ -13,6 +15,7 @@ struct SnapshotState {
 enum SnapshotRegistry {
     static var all: [SnapshotState] {
         QuizCardSnapshots.states + StatusIconSnapshots.states + TrayMenuSnapshots.states
+            + SettingsSnapshots.states
     }
 }
 

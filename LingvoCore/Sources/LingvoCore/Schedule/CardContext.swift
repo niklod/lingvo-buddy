@@ -44,6 +44,24 @@ public struct CardContext: Sendable, Equatable {
         self.calendar = calendar
     }
 
+    /// The context of a timer tick: the quiet hours come from the learner's settings.
+    public static func timer(
+        settings: TutorSettings,
+        isFocusOn: Bool = false,
+        isFullScreenAppFrontmost: Bool = false,
+        pausedUntil: Date? = nil,
+        calendar: Calendar = .current
+    ) -> CardContext {
+        CardContext(
+            trigger: .timer,
+            quietHours: settings.activeQuietHours,
+            isFocusOn: isFocusOn,
+            isFullScreenAppFrontmost: isFullScreenAppFrontmost,
+            pausedUntil: pausedUntil,
+            calendar: calendar
+        )
+    }
+
     /// Why a timed card must not appear at `now`, or `nil` when it may.
     /// A pause comes first: it is the learner's own, explicit choice.
     func holdReason(at now: Date) -> NoCardReason? {
