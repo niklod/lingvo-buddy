@@ -30,17 +30,13 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         }
         let window = window ?? makeWindow()
         self.window = window
-        // An accessory (menu-bar) app may not take activation on macOS 14+, so the
-        // window would open inactive behind other apps. A regular app may; the
-        // Dock icon shows only while Settings is open (see windowWillClose).
-        NSApp.setActivationPolicy(.regular)
-        NSApp.activate()
-        window.makeKeyAndOrderFront(nil)
+        ForegroundWindows.show(window)
         logger.notice("settings shown, active: \(NSApp.isActive)")
     }
 
     func windowWillClose(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        guard let window else { return }
+        ForegroundWindows.willClose(window)
     }
 
     private func makeWindow() -> NSWindow {

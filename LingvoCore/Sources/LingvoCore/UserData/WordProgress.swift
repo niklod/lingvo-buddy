@@ -130,4 +130,13 @@ extension UserDatabase {
     func save(_ progress: WordProgress) throws {
         try writer.write { db in try progress.save(db) }
     }
+
+    /// One transaction: either every row is written or none.
+    func save(_ progress: [WordProgress]) throws {
+        try writer.write { db in
+            for row in progress {
+                try row.save(db)
+            }
+        }
+    }
 }

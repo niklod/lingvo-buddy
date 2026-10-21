@@ -6,7 +6,7 @@ public final class Tutor: Sendable {
     let dictionary: DictionaryStore
     let userDatabase: UserDatabase
     let clock: any TutorClock
-    private let random: any RandomSource
+    let random: any RandomSource
     private let rules: Mutex<LearningRules>
     private let deferrals = Mutex(CardDeferrals())
 
