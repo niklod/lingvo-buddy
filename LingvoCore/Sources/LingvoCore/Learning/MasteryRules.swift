@@ -78,6 +78,7 @@ enum ReviewSchedule {
     private static let day: TimeInterval = 24 * 60 * 60
 
     static let firstStage = 1
+    static var lastStage: Int { intervalsInDays.count }
 
     static func nextStage(after stage: Int) -> Int {
         min(max(stage, 0) + 1, intervalsInDays.count)
