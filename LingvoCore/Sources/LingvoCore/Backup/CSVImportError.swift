@@ -1,0 +1,58 @@
+import Foundation
+
+/// Why a CSV file cannot be imported. Import is all or nothing: after any of
+/// these, the learner's data is as it was before.
+public enum CSVImportError: Error, Equatable, LocalizedError {
+    case fileTooLarge(limitBytes: Int)
+    case notUTF8
+    case empty
+    case unterminatedQuote(line: Int)
+    case misplacedQuote(line: Int)
+    case missingColumns([String])
+    case unknownColumns([String])
+    case duplicateColumns([String])
+    case wrongFieldCount(line: Int, expected: Int, found: Int)
+    case missingValue(line: Int, column: String)
+    case invalidValue(line: Int, column: String, value: String, expected: String)
+    case tooLong(line: Int, column: String, limit: Int)
+    case duplicateWord(line: Int, headword: String)
+    /// A progress column has a value, but the word has no status.
+    case progressWithoutStatus(line: Int, column: String)
+    /// Neither a translation (my word) nor a status (progress).
+    case nothingToImport(line: Int, headword: String)
+
+    public var errorDescription: String? {
+        switch self {
+        case .fileTooLarge(let limit):
+            "The file is too large for a LingvoBuddy export (more than \(limit / 1_000_000) MB)."
+        case .notUTF8:
+            "The file is not UTF-8 text. Save it as \"CSV UTF-8\" and try again."
+        case .empty:
+            "The file is empty."
+        case .unterminatedQuote(let line):
+            "Line \(line): a quoted value has no closing quote."
+        case .misplacedQuote(let line):
+            "Line \(line): a quote is in the wrong place. Put the whole value in quotes and double the quotes inside it."
+        case .missingColumns(let columns):
+            "The file is not a LingvoBuddy export: these columns are missing: \(columns.joined(separator: ", "))."
+        case .unknownColumns(let columns):
+            "The file has columns LingvoBuddy does not know: \(columns.joined(separator: ", "))."
+        case .duplicateColumns(let columns):
+            "The header has these columns more than once: \(columns.joined(separator: ", "))."
+        case .wrongFieldCount(let line, let expected, let found):
+            "Line \(line): \(found) values, but the header has \(expected) columns."
+        case .missingValue(let line, let column):
+            "Line \(line): \"\(column)\" is empty."
+        case .invalidValue(let line, let column, let value, let expected):
+            "Line \(line): \"\(value)\" is not a valid \(column). Expected: \(expected)."
+        case .tooLong(let line, let column, let limit):
+            "Line \(line): \"\(column)\" is too long: at most \(limit) characters."
+        case .duplicateWord(let line, let headword):
+            "Line \(line): \"\(headword)\" is already on an earlier line."
+        case .progressWithoutStatus(let line, let column):
+            "Line \(line): \"\(column)\" has a value, but \"status\" is empty."
+        case .nothingToImport(let line, let headword):
+            "Line \(line): \"\(headword)\" has neither a translation nor a status."
+        }
+    }
+}
