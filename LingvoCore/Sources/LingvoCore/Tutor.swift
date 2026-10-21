@@ -62,8 +62,10 @@ public final class Tutor: Sendable {
         let progress = try userDatabase.allProgress()
         let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
         let tier = try openTier(progress: progress)
-        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier, heldBack: heldBack)
-            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier)
+        let myWords = try myWordEntries()
+        let picked = picker.pick(
+            progress: progress, recentKinds: recentKinds, now: now, tier: tier, myWords: myWords, heldBack: heldBack
+        ) ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier, myWords: myWords)
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }
@@ -83,7 +85,8 @@ public final class Tutor: Sendable {
     }
 
     private func record(_ outcome: AnswerOutcome, for card: Card) throws -> AnswerResult {
-        guard try dictionary.entry(headword: card.headword) != nil else {
+        guard try dictionary.entry(headword: card.headword) != nil
+                || userDatabase.myWord(headword: card.headword) != nil else {
             throw LingvoCoreError.unknownWord(card.headword)
         }
         let now = clock.now()

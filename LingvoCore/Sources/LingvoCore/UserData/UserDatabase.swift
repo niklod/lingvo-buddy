@@ -29,7 +29,7 @@ public struct UserDatabase: Sendable {
     /// Removes all learner state. Used by QA hooks that seed a known state.
     public func eraseAll() throws {
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM answers; DELETE FROM word_progress;")
+            try db.execute(sql: "DELETE FROM answers; DELETE FROM word_progress; DELETE FROM my_words;")
         }
     }
 
@@ -62,6 +62,17 @@ public struct UserDatabase: Sendable {
                 ALTER TABLE word_progress ADD COLUMN review_stage INTEGER NOT NULL DEFAULT 0;
                 ALTER TABLE word_progress ADD COLUMN due_at DATETIME;
                 ALTER TABLE answers ADD COLUMN kind TEXT;
+                """)
+        }
+        // v3 is the settings migration of the Settings slice.
+        migrator.registerMigration("v4-my-words") { db in
+            try db.execute(sql: """
+                CREATE TABLE my_words (
+                    headword TEXT PRIMARY KEY,
+                    translation TEXT NOT NULL,
+                    example TEXT,
+                    added_at DATETIME NOT NULL
+                );
                 """)
         }
         return migrator

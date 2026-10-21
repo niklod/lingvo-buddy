@@ -11,7 +11,24 @@ public enum DesignDemoSeed {
         let minutesAgo: Double
     }
 
-    /// The Dictionary window rows of the design ("My words" rows arrive with quick add).
+    private struct MySample {
+        let headword: String
+        let translation: String
+        let example: String?
+        /// `nil`: added, not answered yet.
+        let wrongMinutesAgo: Double?
+    }
+
+    /// The "mine" rows of the design's Dictionary window; `suggest` is the q6/q7 card.
+    private static let myWords: [MySample] = [
+        MySample(headword: "suggest", translation: "предлагать",
+                 example: "I suggest we start again tomorrow.", wrongMinutesAgo: 60 * 24),
+        MySample(headword: "reluctant", translation: "неохотный",
+                 example: "He was reluctant to admit the mistake.", wrongMinutesAgo: nil),
+        MySample(headword: "eventually", translation: "в конце концов", example: nil, wrongMinutesAgo: 90),
+    ]
+
+    /// The Dictionary window rows of the design.
     private static let samples: [Sample] = [
         Sample(headword: "although", mastery: 2, lastResult: .correct, minutesAgo: 12),
         Sample(headword: "enough", mastery: 3, lastResult: .correct, minutesAgo: 60),
@@ -45,6 +62,31 @@ public enum DesignDemoSeed {
             )
         }
         try writeHistory(to: database, now: now)
+        try writeMyWords(to: database, dictionary: dictionary, now: now)
+    }
+
+    private static func writeMyWords(to database: UserDatabase, dictionary: DictionaryStore, now: Date) throws {
+        for (index, sample) in myWords.enumerated() {
+            guard try dictionary.entry(headword: sample.headword) != nil else {
+                throw LingvoCoreError.unknownWord(sample.headword)
+            }
+            let addedAt = now.addingTimeInterval(-Double(myWords.count - index) * 2 * 24 * 60 * 60)
+            try database.insert(MyWord(
+                headword: sample.headword,
+                translation: sample.translation,
+                example: sample.example,
+                addedAt: addedAt
+            ))
+            guard let minutesAgo = sample.wrongMinutesAgo else { continue }
+            let answeredAt = now.addingTimeInterval(-minutesAgo * 60)
+            try database.record(
+                AnswerRecord(headword: sample.headword, direction: .enToRu, kind: .mine, result: .wrong, answeredAt: answeredAt),
+                updating: WordProgress(
+                    headword: sample.headword, status: .learning, mastery: 0,
+                    lastResult: .wrong, lastAnsweredAt: answeredAt, dueAt: answeredAt
+                )
+            )
+        }
     }
 
     /// Log rows only: the stats read the answers log, the word rows stay as the design shows them.
