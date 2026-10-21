@@ -1,0 +1,9 @@
+.idea/
+.DS_Store
+*.xcodeproj/
+build/
+DerivedData/
+.build/
+.swiftpm/
+__pycache__/
+.venv/

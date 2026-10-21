@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<title>Меню из трея</title>
+<script src="7f819c3b-19cb-4284-9c7f-8f98eb571814"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
+a{color:#64D2FF}a:hover{color:#9BE3FF}
+button,input{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 420px; height: 620px; box-sizing: border-box; padding: 24px; background: #33404D; display: flex; justify-content: center; color: #F5F5F7">
+<div style="width: 320px; align-self: flex-start; box-sizing: border-box; padding: 14px; display: flex; flex-direction: column; gap: 14px; background: #1E1E20; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px; box-shadow: 0 18px 50px rgba(0,0,0,0.45)">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="font-size: 14px; font-weight: 700">LingvoBuddy</div>
+<div style="font-size: 12px; color: #A1A1A6">Серия 6 дней</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px; border-radius: 10px; background: #2C2C2E">
+<div style="display: flex; justify-content: space-between; font-size: 13px">
+<span>Топ‑1000</span>
+<span style="color: #A1A1A6">214 / 1000 выучено</span>
+</div>
+<div style="height: 6px; border-radius: 3px; background: #3A3A3C; overflow: hidden">
+<div style="width: 21.4%; height: 6px; background: #0A84FF"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding-top: 4px">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 700">38</span><span style="font-size: 11px; color: #A1A1A6">изучаю</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 700">12</span><span style="font-size: 11px; color: #A1A1A6">мои слова</span></div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 700">87%</span><span style="font-size: 11px; color: #A1A1A6">точность</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="qa" style="font-size: 12px; color: #A1A1A6">Добавить слово</label>
+<div style="display: flex; gap: 6px">
+<input id="qa" placeholder="Например, reluctant" style="flex: 1; min-width: 0; height: 32px; box-sizing: border-box; padding: 0 10px; border-radius: 8px; border: 1px solid #3A3A3C; background: #141416; color: #F5F5F7; font-size: 13px">
+<button aria-label="Добавить" style="width: 32px; height: 32px; border-radius: 8px; border: 0; background: #0A84FF; color: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="14" height="14" sc-camel-view-box="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M7 2v10M2 7h10"></path></svg>
+</button>
+</div>
+</div>
+
+<div style="height: 1px; background: #3A3A3C"></div>
+
+<div style="display: flex; flex-direction: column; gap: 2px; font-size: 13px">
+<button style="display: flex; justify-content: space-between; align-items: center; height: 34px; padding: 0 8px; border-radius: 6px; border: 0; background: #0A84FF; color: #FFFFFF; font-size: 13px; text-align: left; cursor: pointer"><span>Показать слово сейчас</span><span>⌥⌘W</span></button>
+<button style="display: flex; justify-content: space-between; align-items: center; height: 34px; padding: 0 8px; border-radius: 6px; border: 0; background: transparent; color: #F5F5F7; font-size: 13px; text-align: left; cursor: pointer"><span>Следующее через 7 мин</span><span style="color: #A1A1A6">каждые 15 мин ›</span></button>
+<button style="display: flex; justify-content: space-between; align-items: center; height: 34px; padding: 0 8px; border-radius: 6px; border: 0; background: transparent; color: #F5F5F7; font-size: 13px; text-align: left; cursor: pointer"><span>Пауза на 1 час</span><span style="color: #A1A1A6">›</span></button>
+<button style="display: flex; justify-content: space-between; align-items: center; height: 34px; padding: 0 8px; border-radius: 6px; border: 0; background: transparent; color: #F5F5F7; font-size: 13px; text-align: left; cursor: pointer"><span>Открыть словарь…</span><span style="color: #A1A1A6">⌘D</span></button>
+<button style="display: flex; justify-content: space-between; align-items: center; height: 34px; padding: 0 8px; border-radius: 6px; border: 0; background: transparent; color: #F5F5F7; font-size: 13px; text-align: left; cursor: pointer"><span>Настройки…</span><span style="color: #A1A1A6">⌘,</span></button>
+</div>
+
+<div style="height: 1px; background: #3A3A3C"></div>
+
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #A1A1A6">
+<span>Сегодня: 24 ответа · 21 верно</span>
+<span>Повторений на сегодня осталось: 5</span>
+</div>
+
+<button style="height: 30px; padding: 0 8px; border-radius: 6px; border: 0; background: transparent; color: #A1A1A6; font-size: 13px; text-align: left; cursor: pointer">Выйти</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:620}}">
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+
+
+</body></html>

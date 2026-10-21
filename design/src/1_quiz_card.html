@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<title>Карточка слова</title>
+<script src="c54a94d5-7267-4d93-961e-e67012978284"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif}
+a{color:#64D2FF}a:hover{color:#9BE3FF}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 760px; height: 500px; position: relative; overflow: hidden; background: #33404D; color: #F5F5F7">
+<div style="height: 28px; display: flex; align-items: center; justify-content: flex-end; gap: 18px; padding: 0 14px; background: rgba(20,24,30,0.55); font-size: 13px; color: #E5E5EA">
+<span>Wi‑Fi</span>
+<span>100%</span>
+<span style="display: flex; align-items: center; justify-content: center; width: 26px; height: 20px; border-radius: 5px; background: rgba(255,255,255,0.22); font-weight: 700; font-size: 12px; letter-spacing: -0.3px" aria-label="LingvoBuddy">Aa</span>
+<span>Ср 21 окт. 22:06</span>
+</div>
+
+<div style="position: absolute; top: 36px; right: 92px; width: 380px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: #1E1E20; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,0.45)">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #A1A1A6">
+<span style="padding: 2px 8px; border-radius: 6px; background: {{badgeBg}}; color: {{badgeFg}}; font-weight: 600">{{w.kindLabel}}</span>
+<span>{{w.rank}}</span>
+<span style="padding: 2px 6px; border-radius: 6px; border: 1px solid #3A3A3C; color: #D1D1D6; font-weight: 600">{{w.dir}}</span>
+</div>
+<div style="display: flex; gap: 4px">
+<button style="height: 28px; padding: 0 10px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; font-size: 12px; cursor: pointer">Позже</button>
+<button aria-label="Закрыть" style="width: 28px; height: 28px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<svg width="12" height="12" sc-camel-view-box="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"></path></svg>
+</button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0 4px">
+<div style="font-size: 34px; font-weight: 700; letter-spacing: -0.5px; color: #FFFFFF">{{w.word}}</div>
+<div style="font-size: 13px; color: #A1A1A6">{{sub}}</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="4">
+<button sc-camel-on-click="{{o.pick}}" style="{{o.style}}">
+<span style="display: flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 5px; background: rgba(255,255,255,0.08); font-size: 11px; color: #A1A1A6; flex-shrink: 0">{{o.key}}</span>
+<span>{{o.text}}</span>
+</button>
+</sc-for>
+</div>
+
+<sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: 10px; background: #2C2C2E">
+<div style="font-size: 13px; font-weight: 600; color: {{fbColor}}">{{fbText}}</div>
+<div style="font-size: 13px; color: #D1D1D6; font-style: italic">{{w.example}}</div>
+</div>
+</sc-if>
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: #A1A1A6">
+<div style="display: flex; gap: 4px">
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="4">
+<span style="{{d.style}}"></span>
+</sc-for>
+</div>
+<span>{{streakLabel}}</span>
+</div>
+<sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
+<button sc-camel-on-click="{{next}}" style="height: 32px; padding: 0 14px; border-radius: 8px; border: 0; background: #0A84FF; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Дальше ↵</button>
+</sc-if>
+<sc-if value="{{notAnswered}}" hint-placeholder-val="{{ true }}">
+<button sc-camel-on-click="{{dunno}}" style="height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid #3A3A3C; background: transparent; color: #D1D1D6; font-size: 13px; cursor: pointer">Не знаю</button>
+</sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#0A84FF&quot;,&quot;options&quot;:[&quot;#0A84FF&quot;,&quot;#5E5CE6&quot;,&quot;#FF9F0A&quot;]},&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:500}}">
+class Component extends DCLogic {
+  words() {
+    return [
+      { word: 'although', dir: 'EN → RU', ipa: '/ɔːlˈðəʊ/', pos: 'союз', rank: 'Топ‑1000 · №312', kind: 'new', kindLabel: 'Новое', opts: ['хотя', 'поэтому', 'кроме того', 'вдруг'], correct: 0, streak: 2, example: 'Although it was late, we kept working.' },
+      { word: 'достаточно', dir: 'RU → EN', ipa: '', pos: 'наречие · выберите английское слово', rank: 'Топ‑1000 · №188', kind: 'review', kindLabel: 'Повторение', opts: ['too', 'enough', 'barely', 'almost'], correct: 1, streak: 4, example: 'Is there enough coffee for everyone?' },
+      { word: 'suggest', dir: 'EN → RU', ipa: '/səˈdʒest/', pos: 'глагол', rank: 'Мои слова', kind: 'mine', kindLabel: 'Моё слово', opts: ['требовать', 'отказывать', 'предлагать', 'объяснять'], correct: 2, streak: 0, example: 'I suggest we start again tomorrow.' }
+    ];
+  }
+  renderVals() {
+    const s = this.state || {};
+    const list = this.words();
+    const i = s.i || 0;
+    const w = list[i % list.length];
+    const picked = s.picked === undefined ? null : s.picked;
+    const answered = picked !== null;
+    const right = answered && picked === w.correct;
+    const accent = this.props.accent ?? '#0A84FF';
+    const base = 'display:flex;align-items:center;gap:10px;height:48px;padding:0 12px;border-radius:10px;font-size:15px;text-align:left;cursor:pointer;color:#F5F5F7;';
+    const opts = w.opts.map((t, k) => {
+      let st = base + 'background:#2C2C2E;border:1px solid #3A3A3C;';
+      if (answered) {
+        if (k === w.correct) st = base + 'background:rgba(48,209,88,0.16);border:1px solid #30D158;';
+        else if (k === picked) st = base + 'background:rgba(255,159,10,0.16);border:1px solid #FF9F0A;';
+        else st = base + 'background:#2C2C2E;border:1px solid #2C2C2E;opacity:0.45;';
+      }
+      return { text: t, key: String(k + 1), style: st, pick: () => { if (!answered) this.setState({ picked: k }); } };
+    });
+    const streak = answered ? (right ? Math.min(w.streak + 1, 4) : 0) : w.streak;
+    const dots = [0, 1, 2, 3].map((k) => ({ style: 'width:8px;height:8px;border-radius:4px;background:' + (k < streak ? accent : '#3A3A3C') }));
+    const badge = { new: ['rgba(10,132,255,0.18)', '#64D2FF'], review: ['rgba(94,92,230,0.22)', '#B7B5FF'], mine: ['rgba(255,159,10,0.18)', '#FFC56B'] }[w.kind];
+    let fbText = '';
+    if (answered) fbText = right ? (streak >= 4 ? '✓ Верно — слово выучено!' : '✓ Верно') : (picked === -1 ? 'Ответ: ' + w.word + ' — ' + w.opts[w.correct] : '✗ ' + w.word + ' — ' + w.opts[w.correct]);
+    return {
+      w, opts, dots, answered, notAnswered: !answered,
+      sub: w.ipa ? w.ipa + ' · ' + w.pos : w.pos,
+      badgeBg: badge[0], badgeFg: badge[1],
+      fbText, fbColor: right ? '#30D158' : '#FFB340',
+      streakLabel: 'Освоение ' + streak + '/4',
+      dunno: () => this.setState({ picked: -1 }),
+      next: () => this.setState({ i: i + 1, picked: null })
+    };
+  }
+}
+</script>
+
+
+</body></html>
