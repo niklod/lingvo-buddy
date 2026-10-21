@@ -55,6 +55,12 @@ class BuildTest(unittest.TestCase):
             [(3, "ru", 0, "большой"), (3, "ru", 1, "крупный")],
         )
         self.assertEqual(self.query("PRAGMA journal_mode"), [("delete",)])
+        # Same contract as LingvoCore's DictionarySchema (schema version and RU lookup index).
+        self.assertEqual(self.query("PRAGMA user_version"), [(1,)])
+        self.assertEqual(
+            self.query("SELECT name FROM sqlite_master WHERE type = 'index' AND name = 'translations_text'"),
+            [("translations_text",)],
+        )
         meta = dict(self.query("SELECT key, value FROM meta"))
         self.assertEqual(meta["source"], "wordfreq 3.1.1 (en)")
         self.assertIn("CC BY-SA 4.0", meta["license"])

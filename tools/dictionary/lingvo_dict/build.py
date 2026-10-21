@@ -25,6 +25,8 @@ def _in_list(values: Sequence[str]) -> str:
     return ", ".join(f"'{value}'" for value in values)
 
 
+# Mirrors LingvoCore/Sources/LingvoCore/Dictionary/DictionarySchema.swift; keep both in step.
+SCHEMA_VERSION = 1
 SCHEMA = f"""
 CREATE TABLE entries (
     id INTEGER PRIMARY KEY,
@@ -37,16 +39,18 @@ CREATE TABLE entries (
     tier TEXT NOT NULL CHECK (tier IN ({_in_list(TIERS)}))
 );
 CREATE TABLE translations (
-    entry_id INTEGER NOT NULL REFERENCES entries(id),
+    entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
     lang TEXT NOT NULL,
     ord INTEGER NOT NULL,
     text TEXT NOT NULL,
     PRIMARY KEY (entry_id, lang, ord)
 );
+CREATE INDEX translations_text ON translations(lang, text);
 CREATE TABLE meta (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
 );
+PRAGMA user_version = {SCHEMA_VERSION};
 """
 
 
