@@ -16,7 +16,7 @@ struct CSVTransferActions {
     let export: () -> Void
     let importFile: () -> Void
 
-    static let none = CSVTransferActions(export: {}, importFile: {})
+    static var none: CSVTransferActions { CSVTransferActions(export: {}, importFile: {}) }
 }
 
 /// Runs the save and open panels for CSV export / import. The panels are
@@ -70,8 +70,11 @@ final class CSVTransferController {
         }
     }
 
+    /// The local date: the ISO style defaults to UTC, which names a file
+    /// saved just after midnight in Moscow with the day before.
     static func exportFileName(on date: Date) -> String {
-        "LingvoBuddy \(date.formatted(.iso8601.year().month().day())).csv"
+        let day = date.formatted(Date.ISO8601FormatStyle(timeZone: .current).year().month().day())
+        return "LingvoBuddy \(day).csv"
     }
 
     /// A sheet on Settings when it is key, so the panel cannot open behind other apps.
@@ -119,6 +122,9 @@ final class CSVTransferController {
         if summary.words == 0 {
             return String(localized: "The file has no words. Nothing changed.")
         }
-        return String(localized: "Imported \(summary.words) words, \(summary.myWords) of them from My words.")
+        let words = summary.words == 1
+            ? String(localized: "Imported 1 word.")
+            : String(localized: "Imported \(summary.words) words.")
+        return words + " " + String(localized: "In My words: \(summary.myWords).")
     }
 }
