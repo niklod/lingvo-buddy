@@ -19,6 +19,9 @@ settings:
 packages:
   LingvoCore:
     path: LingvoCore
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    exactVersion: "3.1.0"
 targets:
   LingvoBuddy:
     type: application
@@ -45,6 +48,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.education
+        NSFocusStatusUsageDescription: LingvoBuddy shows no cards while a Focus is on.
     entitlements:
       path: App/LingvoBuddy.entitlements
       properties:
@@ -52,6 +56,7 @@ targets:
     dependencies:
       - package: LingvoCore
         product: LingvoCore
+      - package: KeyboardShortcuts
 schemes:
   LingvoBuddy:
     build:

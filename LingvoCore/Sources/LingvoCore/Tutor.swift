@@ -1,4 +1,5 @@
 import Foundation
+import Synchronization
 
 /// The single entry point the app uses for learning logic and persistence.
 public final class Tutor: Sendable {
@@ -7,6 +8,7 @@ public final class Tutor: Sendable {
     private let clock: any TutorClock
     private let picker: WordPicker
     private let cards: CardFactory
+    private let deferrals = Mutex(CardDeferrals())
 
     public init(
         dictionary: DictionaryStore,
@@ -26,12 +28,41 @@ public final class Tutor: Sendable {
         )
     }
 
+    /// A card that "Later" postponed comes first once its 5 minutes are over.
     public func nextCard(context: CardContext = CardContext()) throws -> CardDecision {
-        let picked = picker.pick(
-            progress: try userDatabase.allProgress(),
-            recentKinds: try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow),
-            now: clock.now()
-        )
+        let now = clock.now()
+        if let reason = context.holdReason(at: now) {
+            return .noCard(reason)
+        }
+        let decision: CardDecision
+        if let postponed = deferrals.withLock({ $0.dueCard(at: now) }) {
+            decision = .card(postponed)
+        } else {
+            decision = try pickCard(heldBack: deferrals.withLock { $0.heldBack(at: now) }, now: now)
+        }
+        if let card = decision.card {
+            deferrals.withLock { $0 = $0.shown(card) }
+        }
+        return decision
+    }
+
+    /// "Later": the same card comes back in 5 minutes. Not an answer: no stat changes.
+    public func later(_ card: Card) {
+        let now = clock.now()
+        deferrals.withLock { $0 = $0.postponing(card, at: now) }
+    }
+
+    /// "×" or Esc: the next card is another word. Not an answer: no stat changes.
+    public func skip(_ card: Card) {
+        deferrals.withLock { $0 = $0.skipping(card) }
+    }
+
+    /// A held-back word is still offered when nothing else is left.
+    private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
+        let progress = try userDatabase.allProgress()
+        let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
+        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, heldBack: heldBack)
+            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now)
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }

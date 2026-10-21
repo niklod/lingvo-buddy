@@ -2,9 +2,14 @@ import AppKit
 import SwiftUI
 
 /// A borderless panel that never activates the app, so the frontmost app keeps
-/// keyboard focus when a card appears.
+/// keyboard focus when a card appears. A click or ⌥⌘W makes it key (still
+/// without activating the app); then the keys reach `onKey`.
 @MainActor
 final class CardPanel: NSPanel {
+    /// Returns `true` when the key press was handled.
+    var onKey: (CardKeyCommand) -> Bool = { _ in false }
+    var onBecameKey: () -> Void = {}
+
     init() {
         // .nonactivatingPanel must be set at init: toggling it later does not
         // update the window server.
@@ -18,7 +23,9 @@ final class CardPanel: NSPanel {
         level = .statusBar
         collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .transient]
         hidesOnDeactivate = false
-        becomesKeyOnlyIfNeeded = true
+        // A click anywhere on the card must give it keyboard focus, not only a click on a text field.
+        becomesKeyOnlyIfNeeded = false
+        animationBehavior = .none
         isOpaque = false
         backgroundColor = .clear
         // The SwiftUI view draws the design shadow itself.
@@ -28,6 +35,23 @@ final class CardPanel: NSPanel {
 
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
+
+    override func becomeKey() {
+        super.becomeKey()
+        onBecameKey()
+    }
+
+    /// Keys are caught before SwiftUI sees them, so a focused button cannot
+    /// turn Enter or Space into a click.
+    override func sendEvent(_ event: NSEvent) {
+        if event.type == .leftMouseDown, !isKeyWindow {
+            makeKey()
+        }
+        if event.type == .keyDown, let command = CardKeyCommand(event: event), onKey(command) {
+            return
+        }
+        super.sendEvent(event)
+    }
 
     /// AppKit keeps the bottom-left corner when the content grows (the feedback
     /// block appears after an answer); the card must instead stay pinned under the menu bar.

@@ -21,7 +21,14 @@ struct WordPicker {
         return max(Int((1 / settings.reviewShare).rounded()) - 1, 0)
     }
 
-    func pick(progress: [String: WordProgress], recentKinds: [CardKind?], now: Date) -> PickedWord? {
+    /// `heldBack` words ("Later", "×") are left out as if they were not in the dictionary.
+    func pick(
+        progress: [String: WordProgress],
+        recentKinds: [CardKind?],
+        now: Date,
+        heldBack: Set<String> = []
+    ) -> PickedWord? {
+        let quizEntries = heldBack.isEmpty ? quizEntries : quizEntries.filter { !heldBack.contains($0.headword) }
         let started = quizEntries.compactMap { entry in progress[entry.headword].map { (entry, $0) } }
         let reviews = started
             .filter { $0.1.status == .learned && $0.1.isDue(at: now) }
