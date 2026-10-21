@@ -13,10 +13,8 @@ public struct TutorStats: Sendable, Equatable {
     public let accuracy: Double?
     /// Learned words whose review date is today or earlier.
     public let reviewsLeftToday: Int
-    /// Learned words ranked within `Tutor.topTierRank`.
-    public let learnedTopWords: Int
-    /// Dictionary words ranked within `Tutor.topTierRank` (1000 with the full dictionary).
-    public let topWordsTotal: Int
+    /// Learned words of the open tier (Top‑1000, then Top‑2000) out of its card words.
+    public let tierProgress: TierProgress
     public let learningCount: Int
     public let myWordsCount: Int
 
@@ -26,8 +24,7 @@ public struct TutorStats: Sendable, Equatable {
         todayCorrect: Int,
         accuracy: Double?,
         reviewsLeftToday: Int,
-        learnedTopWords: Int,
-        topWordsTotal: Int,
+        tierProgress: TierProgress,
         learningCount: Int,
         myWordsCount: Int
     ) {
@@ -36,8 +33,7 @@ public struct TutorStats: Sendable, Equatable {
         self.todayCorrect = todayCorrect
         self.accuracy = accuracy
         self.reviewsLeftToday = reviewsLeftToday
-        self.learnedTopWords = learnedTopWords
-        self.topWordsTotal = topWordsTotal
+        self.tierProgress = tierProgress
         self.learningCount = learningCount
         self.myWordsCount = myWordsCount
     }

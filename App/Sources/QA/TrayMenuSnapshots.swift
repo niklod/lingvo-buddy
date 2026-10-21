@@ -14,8 +14,7 @@ enum TrayMenuSnapshots {
         todayCorrect: 21,
         accuracy: 0.87,
         reviewsLeftToday: 5,
-        learnedTopWords: 214,
-        topWordsTotal: 1000,
+        tierProgress: TierProgress(tier: .top1000, learned: 214, total: 1000),
         learningCount: 38,
         myWordsCount: 12
     )

@@ -125,12 +125,11 @@ struct StatsTests {
 
         let progress = try stats(learner)
 
-        #expect(progress.learnedTopWords == 1)
+        #expect(progress.tierProgress == TierProgress(tier: .top1000, learned: 1, total: 40))
         #expect(progress.learningCount == 2)
-        #expect(progress.topWordsTotal == 40)
     }
 
-    @Test("the Top-1000 total leaves out words ranked above 1000")
+    @Test("before the Top-2000 gate opens, the total leaves out words ranked above 1000")
     func topTotalStopsAtRank1000() throws {
         let dictionary = try TestDictionary.make([
             .init("one", rank: 1, pos: "noun", ru: ["один"]),
@@ -140,7 +139,23 @@ struct StatsTests {
         ])
         let tutor = try Fixture.tutor(dictionary: dictionary, clock: TestClock(morning))
 
-        #expect(try tutor.stats(calendar: Fixture.calendar).topWordsTotal == 3)
+        #expect(try tutor.stats(calendar: Fixture.calendar).tierProgress == TierProgress(tier: .top1000, learned: 0, total: 3))
+    }
+
+    @Test("once every Top-1000 word is learned, progress counts the Top-2000 words")
+    func progressSwitchesToTop2000() throws {
+        let dictionary = try TestDictionary.make([
+            .init("one", rank: 1, pos: "noun", ru: ["один"]),
+            .init("two", rank: 2, pos: "noun", ru: ["два"]),
+            .init("three", rank: 3, pos: "noun", ru: ["три"]),
+            .init("four", rank: 4, pos: "noun", ru: ["четыре"]),
+            .init("fifteen", rank: 1500, pos: "noun", ru: ["пятнадцать"]),
+        ])
+        let clock = TestClock(morning)
+        let learner = Learner(tutor: try Fixture.tutor(dictionary: dictionary, clock: clock), clock: clock)
+        for _ in 0..<4 { try learner.learnNextWord() }
+
+        #expect(try stats(learner).tierProgress == TierProgress(tier: .top2000, learned: 4, total: 5))
     }
 
     @Test("reviews left today count learned words due today or earlier")
@@ -164,7 +179,7 @@ struct StatsTests {
 
         #expect(fresh.streakDays == 0)
         #expect(fresh.todayAnswers == 0)
-        #expect(fresh.learnedTopWords == 0)
+        #expect(fresh.tierProgress.learned == 0)
         #expect(fresh.learningCount == 0)
         #expect(fresh.myWordsCount == 0)
         #expect(fresh.reviewsLeftToday == 0)

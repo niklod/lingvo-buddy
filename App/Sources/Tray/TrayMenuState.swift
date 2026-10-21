@@ -27,17 +27,18 @@ struct TrayMenuState: Equatable {
     }
 
     var topTierTitle: String {
-        String(localized: "Top‑\(String(Tutor.topTierRank))")
+        String(localized: "Top‑\(String(stats.tierProgress.tier.maxRank))")
     }
 
     var learnedLabel: String {
-        String(localized: "\(String(stats.learnedTopWords)) / \(String(stats.topWordsTotal)) learned")
+        String(localized: "\(String(stats.tierProgress.learned)) / \(String(stats.tierProgress.total)) learned")
     }
 
     /// 0...1 for the progress bar.
     var learnedFraction: Double {
-        guard stats.topWordsTotal > 0 else { return 0 }
-        return min(Double(stats.learnedTopWords) / Double(stats.topWordsTotal), 1)
+        let progress = stats.tierProgress
+        guard progress.total > 0 else { return 0 }
+        return min(Double(progress.learned) / Double(progress.total), 1)
     }
 
     var accuracyValue: String {

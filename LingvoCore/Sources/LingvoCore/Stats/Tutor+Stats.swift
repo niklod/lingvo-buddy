@@ -3,8 +3,6 @@ import Foundation
 extension Tutor {
     /// Today and the 6 local days before it.
     static let accuracyWindowDays = 7
-    /// The progress card tracks the most frequent words up to this rank.
-    public static let topTierRank = 1000
 
     /// Days are local days of `calendar`.
     public func stats(calendar: Calendar = .current) throws -> TutorStats {
@@ -21,8 +19,7 @@ extension Tutor {
             todayCorrect: todays.correctCount,
             accuracy: recent.isEmpty ? nil : Double(recent.correctCount) / Double(recent.count),
             reviewsLeftToday: words.reviewsDue,
-            learnedTopWords: words.learnedTop,
-            topWordsTotal: words.topTotal,
+            tierProgress: try tierProgress(),
             learningCount: words.learning,
             // Quick add (#19) brings the learner's own words; until then there are none.
             myWordsCount: 0
@@ -30,22 +27,20 @@ extension Tutor {
     }
 
     private struct WordCounts {
-        var learnedTop = 0
-        var topTotal = 0
         var learning = 0
         var reviewsDue = 0
     }
 
     private func wordCounts(endOfToday: Date) throws -> WordCounts {
-        let topWords = Set(dictionary.quizEntries.filter { $0.rank <= Self.topTierRank }.map(\.headword))
-        var counts = WordCounts(topTotal: topWords.count)
+        var counts = WordCounts()
         for progress in try userDatabase.allProgress().values {
             switch progress.status {
             case .learning:
                 counts.learning += 1
+            case .learned where progress.isDue(before: endOfToday):
+                counts.reviewsDue += 1
             case .learned:
-                if topWords.contains(progress.headword) { counts.learnedTop += 1 }
-                if progress.isDue(before: endOfToday) { counts.reviewsDue += 1 }
+                break
             }
         }
         return counts
