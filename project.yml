@@ -63,6 +63,8 @@ targets:
       path: App/LingvoBuddy.entitlements
       properties:
         com.apple.security.app-sandbox: true
+        # CSV export / import: Powerbox save and open panels grant access to the chosen file.
+        com.apple.security.files.user-selected.read-write: true
     dependencies:
       - package: LingvoCore
         product: LingvoCore

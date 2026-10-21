@@ -2,8 +2,7 @@ import Foundation
 
 /// The CSV file: a header line with column names, then one line per word.
 enum WordBackupCSV {
-    /// An export of all 10,000 dictionary words is about 2 MB.
-    static let maxBytes = 10_000_000
+    static let maxBytes = Tutor.maxCSVImportBytes
     /// Excel reads a CSV without it as a legacy encoding and garbles Cyrillic.
     private static let byteOrderMark = "\u{FEFF}"
 

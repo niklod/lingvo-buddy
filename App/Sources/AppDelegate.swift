@@ -11,6 +11,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
     private var quickAdd: QuickAddController?
+    private var csvTransfer: CSVTransferController?
     /// AppKit keeps only a weak reference to `servicesProvider`.
     private var services: ServiceProvider?
 
@@ -32,11 +33,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let services = try AppEnvironment.makeServices(options: options)
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
+        let csvTransfer = CSVTransferController(store: tutor, errors: errors)
+        self.csvTransfer = csvTransfer
         settingsWindow = SettingsWindowController(
             model: settings,
             launchAtLogin: SystemLaunchAtLogin(),
             about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
-            errors: errors
+            errors: errors,
+            transfer: csvTransfer.actions
         )
         NSApp.mainMenu = MainMenu.make(settingsTarget: self, settingsAction: #selector(openSettingsFromMenu))
         let focus = SystemFocusStatus()

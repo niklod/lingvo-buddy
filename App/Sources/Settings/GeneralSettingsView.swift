@@ -9,6 +9,7 @@ struct GeneralSettingsView: View {
     @Bindable var model: SettingsModel
     let launchAtLogin: any LaunchAtLoginControlling
     let errors: ErrorPresenter?
+    let transfer: CSVTransferActions
 
     var body: some View {
         VStack(alignment: .leading, spacing: SettingsLayout.sectionSpacing) {
@@ -16,8 +17,7 @@ struct GeneralSettingsView: View {
             LearningSection(model: model)
             SystemSection(launchAtLogin: launchAtLogin, errors: errors)
             ShortcutsSection()
-            // #24 (CSV export / import): add a `SettingsSection(title: "Data")` with
-            // the "Export to CSV…" and "Import from CSV…" buttons here.
+            DataSettingsSection(transfer: transfer)
         }
     }
 }

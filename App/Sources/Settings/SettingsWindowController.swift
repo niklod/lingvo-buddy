@@ -10,15 +10,23 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     private let launchAtLogin: any LaunchAtLoginControlling
     private let about: AboutInfo
     private let errors: ErrorPresenter
+    private let transfer: CSVTransferActions
     private let navigation = SettingsNavigation()
     private var window: NSWindow?
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "settings")
 
-    init(model: SettingsModel, launchAtLogin: any LaunchAtLoginControlling, about: AboutInfo, errors: ErrorPresenter) {
+    init(
+        model: SettingsModel,
+        launchAtLogin: any LaunchAtLoginControlling,
+        about: AboutInfo,
+        errors: ErrorPresenter,
+        transfer: CSVTransferActions
+    ) {
         self.model = model
         self.launchAtLogin = launchAtLogin
         self.about = about
         self.errors = errors
+        self.transfer = transfer
         super.init()
     }
 
@@ -49,7 +57,8 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
             navigation: navigation,
             launchAtLogin: launchAtLogin,
             about: about,
-            errors: errors
+            errors: errors,
+            transfer: transfer
         )
         let host = NSHostingController(rootView: root)
         // The window follows the content height, which changes with the tab.
