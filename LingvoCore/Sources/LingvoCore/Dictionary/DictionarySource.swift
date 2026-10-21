@@ -3,21 +3,28 @@ import Foundation
 /// One JSON source file of dictionary data (the sample, or one generated batch).
 ///
 /// Format: `{"meta": {"key": "value"}, "entries": [{"headword", "rank", "pos", "ipa",
-/// "example", "synonym_group", "tier", "translations": {"ru": ["…"]}}]}`.
-/// `meta` is optional.
+/// "example", "synonym_group", "tier", "translations": {"ru": ["…"]}}],
+/// "quiz_exclusions": ["headword"]}`. `meta` and `quiz_exclusions` are optional.
 public struct DictionarySource: Sendable, Equatable {
     public let meta: [String: String]
     public let entries: [DictionaryEntry]
+    /// Headwords that stay in lookup but never become quiz cards or distractors.
+    public let quizExclusions: [String]
 
-    public init(meta: [String: String], entries: [DictionaryEntry]) {
+    public init(meta: [String: String], entries: [DictionaryEntry], quizExclusions: [String] = []) {
         self.meta = meta
         self.entries = entries
+        self.quizExclusions = quizExclusions
     }
 
     public static func decode(json data: Data) throws -> DictionarySource {
         do {
             let file = try JSONDecoder().decode(SourceFile.self, from: data)
-            return DictionarySource(meta: file.meta ?? [:], entries: try file.entries.map { try $0.entry() })
+            return DictionarySource(
+                meta: file.meta ?? [:],
+                entries: try file.entries.map { try $0.entry() },
+                quizExclusions: file.quizExclusions ?? []
+            )
         } catch let error as LingvoCoreError {
             throw error
         } catch {
@@ -29,7 +36,8 @@ public struct DictionarySource: Sendable, Equatable {
     public static func merged(_ sources: [DictionarySource]) -> DictionarySource {
         DictionarySource(
             meta: sources.reduce(into: [:]) { result, source in result.merge(source.meta) { _, new in new } },
-            entries: sources.flatMap(\.entries)
+            entries: sources.flatMap(\.entries),
+            quizExclusions: sources.flatMap(\.quizExclusions)
         )
     }
 }
@@ -37,6 +45,12 @@ public struct DictionarySource: Sendable, Equatable {
 private struct SourceFile: Decodable {
     let meta: [String: String]?
     let entries: [SourceEntry]
+    let quizExclusions: [String]?
+
+    enum CodingKeys: String, CodingKey {
+        case meta, entries
+        case quizExclusions = "quiz_exclusions"
+    }
 }
 
 private struct SourceEntry: Decodable {

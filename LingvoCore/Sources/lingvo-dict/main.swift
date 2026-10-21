@@ -51,6 +51,22 @@ func runCheck(_ arguments: [String]) throws {
         fail("card for \(card.headword) misses ipa, example or options")
     }
     print("lingvo-dict: first card \(card.headword) \(card.ipa ?? "") \(card.options) - \(card.example ?? "")")
+    try checkTiers(tutor)
+}
+
+/// Quick add must fill a lookup-tier word ("reluctant" in the spec) and tell it is outside Top‑1000.
+func checkTiers(_ tutor: Tutor) throws {
+    let progress = try tutor.tierProgress()
+    guard progress.tier == .top1000, progress.total > 0 else {
+        fail("a fresh learner should start on Top-1000 with card words, got \(progress)")
+    }
+    guard let found = try tutor.lookup("reluctant") else {
+        fail("lookup of \"reluctant\" found nothing")
+    }
+    guard found.entry.ipa != nil, found.entry.primaryRussian != nil, found.membership == .outside(.top1000) else {
+        fail("lookup of \"reluctant\" misses ipa or translation, or is not outside Top-1000: \(found)")
+    }
+    print("lingvo-dict: Top-1000 has \(progress.total) card words; reluctant #\(found.entry.rank) \(found.membership)")
 }
 
 let arguments = Array(CommandLine.arguments.dropFirst())

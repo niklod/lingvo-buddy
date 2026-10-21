@@ -54,6 +54,21 @@ enum DesignSamples {
         )
     )
 
+    /// A Top‑2000 card for a lookup-tier word: it has no example sentence.
+    static let eventuallyTop2000 = Card(
+        headword: "eventually",
+        prompt: "eventually",
+        direction: .enToRu,
+        kind: .new,
+        source: .rank(1308),
+        ipa: "/ɪˈventʃuəli/",
+        partOfSpeech: .adverb,
+        options: ["немедленно", "в конце концов", "почти", "очевидно"],
+        correctIndex: 1,
+        example: nil,
+        mastery: 0
+    )
+
     /// Answers on the `although` card, which stays in learning.
     private static func result(_ outcome: AnswerOutcome, correctAnswer: String, mastery: Int) -> AnswerResult {
         AnswerResult(

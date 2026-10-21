@@ -17,6 +17,7 @@ class BuildTest(unittest.TestCase):
         self.word_list_path = self.folder.path / "wordlist.tsv"
         self.word_list_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         self.out = self.folder.path / "out" / "dictionary.sqlite"
+        self.exclusions_path = self.folder.write_exclusions()
 
     def run_build(self, *args):
         out, err = io.StringIO(), io.StringIO()
@@ -26,6 +27,7 @@ class BuildTest(unittest.TestCase):
                     "--word-list", str(self.word_list_path),
                     "--batches", str(self.folder.path),
                     "--out", str(self.out),
+                    "--quiz-exclusions", str(self.exclusions_path),
                     *args,
                 ]
             )
@@ -56,7 +58,7 @@ class BuildTest(unittest.TestCase):
         )
         self.assertEqual(self.query("PRAGMA journal_mode"), [("delete",)])
         # Same contract as LingvoCore's DictionarySchema (schema version and RU lookup index).
-        self.assertEqual(self.query("PRAGMA user_version"), [(1,)])
+        self.assertEqual(self.query("PRAGMA user_version"), [(2,)])
         self.assertEqual(
             self.query("SELECT name FROM sqlite_master WHERE type = 'index' AND name = 'translations_text'"),
             [("translations_text",)],
@@ -65,6 +67,28 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(meta["source"], "wordfreq 3.1.1 (en)")
         self.assertIn("CC BY-SA 4.0", meta["license"])
         self.assertIn("batch-01, batch-03", meta["built_from"])
+
+    def test_quiz_exclusions_of_built_words_go_into_the_dictionary(self):
+        self.folder.write(3, [lookup_entry(self.word_list, 1001), lookup_entry(self.word_list, 1002)])
+        excluded = self.word_list.headword_at(1002)
+        self.folder.write_exclusions(excluded, self.word_list.headword_at(1500))
+
+        code, out, err = self.run_build("--allow-partial")
+
+        self.assertEqual(code, 0, err)
+        self.assertIn("2 quiz exclusions", out)
+        # Rank 1500 is not in this partial build, so only the built word is written.
+        self.assertEqual(self.query("SELECT headword FROM quiz_exclusions"), [(excluded,)])
+
+    def test_invalid_quiz_exclusions_stop_the_build(self):
+        self.folder.write(3, [lookup_entry(self.word_list, 1001)])
+        self.folder.write_exclusions("nosuchword")
+
+        code, _, err = self.run_build("--allow-partial")
+
+        self.assertEqual(code, 1)
+        self.assertIn("'nosuchword': not a headword of the word list", err)
+        self.assertFalse(self.out.exists())
 
     def test_invalid_batches_stop_the_build_and_write_nothing(self):
         self.folder.write(1, [quiz_entry(self.word_list, 4, pos="thing")])

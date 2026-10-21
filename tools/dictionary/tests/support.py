@@ -88,6 +88,10 @@ class BatchFolder:
         )
         return file
 
+    def write_exclusions(self, *lines):
+        """Writes a quiz-exclusion list (empty by default) and returns its path."""
+        return self.write_raw("quiz-exclusions.txt", "".join(line + "\n" for line in lines))
+
     def write_raw(self, name, text):
         file = self.path / name
         file.write_text(text, encoding="utf-8")

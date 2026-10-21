@@ -24,6 +24,9 @@ public enum DictionaryBuilder {
                 for (index, entry) in source.entries.enumerated() {
                     try insert(entry, id: index + 1, in: db)
                 }
+                for headword in source.quizExclusions {
+                    try db.execute(sql: "INSERT INTO quiz_exclusions (headword) VALUES (?)", arguments: [headword])
+                }
                 for (key, value) in source.meta.sorted(by: { $0.key < $1.key }) {
                     try db.execute(sql: "INSERT INTO meta (key, value) VALUES (?, ?)", arguments: [key, value])
                 }
