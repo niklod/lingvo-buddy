@@ -27,7 +27,7 @@ struct DictionaryContractTests {
         let url = Fixture.temporaryDatabaseURL()
         defer { try? FileManager.default.removeItem(at: url) }
         try DictionaryBuilder.buildFile(from: DictionarySource.decode(json: Fixture.sampleDictionaryData()), at: url)
-        let tutor = Tutor(
+        let tutor = try Tutor(
             dictionary: try DictionaryStore.open(at: url),
             userDatabase: try UserDatabase.inMemory(),
             clock: TestClock(Fixture.start),

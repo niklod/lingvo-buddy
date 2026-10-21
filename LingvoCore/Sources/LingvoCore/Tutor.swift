@@ -6,26 +6,37 @@ public final class Tutor: Sendable {
     private let dictionary: DictionaryStore
     private let userDatabase: UserDatabase
     private let clock: any TutorClock
-    private let picker: WordPicker
-    private let cards: CardFactory
+    private let random: any RandomSource
+    private let rules: Mutex<LearningRules>
     private let deferrals = Mutex(CardDeferrals())
 
+    /// Reads the stored settings, so the first card already follows them.
     public init(
         dictionary: DictionaryStore,
         userDatabase: UserDatabase,
         clock: any TutorClock = SystemClock(),
-        random: any RandomSource = SystemRandomSource(),
-        settings: LearningSettings = LearningSettings()
-    ) {
+        random: any RandomSource = SystemRandomSource()
+    ) throws {
         self.dictionary = dictionary
         self.userDatabase = userDatabase
         self.clock = clock
-        self.picker = WordPicker(quizEntries: dictionary.quizEntries, settings: settings)
-        self.cards = CardFactory(
-            directions: DirectionChooser(setting: settings.direction, random: random),
-            distractors: DistractorPicker(quizEntries: dictionary.quizEntries, random: random),
+        self.random = random
+        self.rules = Mutex(LearningRules(
+            settings: try userDatabase.settings(),
+            quizEntries: dictionary.quizEntries,
             random: random
-        )
+        ))
+    }
+
+    public var settings: TutorSettings {
+        rules.withLock { $0.settings }
+    }
+
+    /// Saves the settings; the next card already follows them.
+    public func updateSettings(_ settings: TutorSettings) throws {
+        try userDatabase.save(settings)
+        let updated = LearningRules(settings: settings, quizEntries: dictionary.quizEntries, random: random)
+        rules.withLock { $0 = updated }
     }
 
     /// A card that "Later" postponed comes first once its 5 minutes are over.
@@ -59,6 +70,7 @@ public final class Tutor: Sendable {
 
     /// A held-back word is still offered when nothing else is left.
     private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
+        let (picker, cards) = rules.withLock { ($0.picker, $0.cards) }
         let progress = try userDatabase.allProgress()
         let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
         let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, heldBack: heldBack)
@@ -105,6 +117,24 @@ public final class Tutor: Sendable {
             becameLearned: before.status != .learned && after.status == .learned,
             isLearned: after.status == .learned,
             mastery: after.mastery
+        )
+    }
+}
+
+/// The picker and card factory built from one settings value; replaced as a
+/// whole when the settings change, so a card never mixes old and new rules.
+private struct LearningRules: Sendable {
+    let settings: TutorSettings
+    let picker: WordPicker
+    let cards: CardFactory
+
+    init(settings: TutorSettings, quizEntries: [DictionaryEntry], random: any RandomSource) {
+        self.settings = settings
+        self.picker = WordPicker(quizEntries: quizEntries, settings: settings.learning)
+        self.cards = CardFactory(
+            directions: DirectionChooser(setting: settings.learning.direction, random: random),
+            distractors: DistractorPicker(quizEntries: quizEntries, random: random),
+            random: random
         )
     }
 }

@@ -24,15 +24,18 @@ enum Fixture {
         dictionary: DictionaryStore? = nil,
         clock: TestClock = TestClock(start),
         seed: UInt64 = 1,
-        settings: LearningSettings = LearningSettings()
+        settings: LearningSettings? = nil
     ) throws -> Tutor {
-        Tutor(
+        let tutor = try Tutor(
             dictionary: try dictionary ?? Self.dictionary(),
             userDatabase: try userDatabase ?? UserDatabase.inMemory(),
             clock: clock,
-            random: SeededRandomSource(seed: seed),
-            settings: settings
+            random: SeededRandomSource(seed: seed)
         )
+        if let settings {
+            try tutor.updateSettings(tutor.settings.replacing(learning: settings))
+        }
+        return tutor
     }
 
     static func temporaryDatabaseURL() -> URL {
