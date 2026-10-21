@@ -26,7 +26,7 @@ def _in_list(values: Sequence[str]) -> str:
 
 
 # Mirrors LingvoCore/Sources/LingvoCore/Dictionary/DictionarySchema.swift; keep both in step.
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 SCHEMA = f"""
 CREATE TABLE entries (
     id INTEGER PRIMARY KEY,
@@ -46,6 +46,9 @@ CREATE TABLE translations (
     PRIMARY KEY (entry_id, lang, ord)
 );
 CREATE INDEX translations_text ON translations(lang, text);
+CREATE TABLE quiz_exclusions (
+    headword TEXT PRIMARY KEY REFERENCES entries(headword)
+);
 CREATE TABLE meta (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
@@ -54,7 +57,9 @@ PRAGMA user_version = {SCHEMA_VERSION};
 """
 
 
-def write_dictionary(entries: Sequence[LoadedEntry], meta: Sequence[tuple], out: Path) -> None:
+def write_dictionary(
+    entries: Sequence[LoadedEntry], meta: Sequence[tuple], out: Path, quiz_exclusions: Sequence[str] = ()
+) -> None:
     """Writes to a temporary file first so a failed build never leaves a half-written dictionary."""
     out.parent.mkdir(parents=True, exist_ok=True)
     temporary = out.with_name(out.name + ".tmp")
@@ -77,6 +82,12 @@ def write_dictionary(entries: Sequence[LoadedEntry], meta: Sequence[tuple], out:
                     for item in ordered
                     for index, text in enumerate(item.data["translations"])
                 ],
+            )
+            # A partial build (--through 1000) holds only some ranks; skip exclusions of words it lacks.
+            built = {item.headword for item in ordered}
+            connection.executemany(
+                "INSERT INTO quiz_exclusions (headword) VALUES (?)",
+                [(headword,) for headword in sorted(quiz_exclusions) if headword in built],
             )
             connection.executemany("INSERT INTO meta (key, value) VALUES (?, ?)", list(meta))
         # The app opens the file read-only inside its signed bundle, where SQLite
@@ -133,9 +144,13 @@ def main(argv: List[str]) -> int:
         print("build stopped: fix the validation errors first", file=sys.stderr)
         return 2 if word_list is None else 1
     try:
-        write_dictionary(report.entries, build_meta(word_list, args.word_list, paths, report.entries), args.out)
+        meta = build_meta(word_list, args.word_list, paths, report.entries)
+        write_dictionary(report.entries, meta, args.out, report.quiz_exclusions)
     except (OSError, sqlite3.Error) as error:
         print(f"error: cannot write {args.out}: {error}", file=sys.stderr)
         return 1
-    print(f"wrote {args.out}: {plural(report.entry_count, 'entry')} from {plural(report.batch_count, 'batch')}")
+    print(
+        f"wrote {args.out}: {plural(report.entry_count, 'entry')} from {plural(report.batch_count, 'batch')}, "
+        f"{plural(len(report.quiz_exclusions), 'quiz exclusion')}"
+    )
     return 0

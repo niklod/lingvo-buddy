@@ -3,7 +3,7 @@ import GRDB
 /// The bundled dictionary contract. Every dictionary build (sample or real data)
 /// produces exactly these tables, so the app never depends on how the data was made.
 enum DictionarySchema {
-    static let schemaVersion = 1
+    static let schemaVersion = 2
 
     static func create(in db: Database) throws {
         try db.execute(sql: """
@@ -25,6 +25,9 @@ enum DictionarySchema {
                 PRIMARY KEY (entry_id, lang, ord)
             );
             CREATE INDEX translations_text ON translations(lang, text);
+            CREATE TABLE quiz_exclusions (
+                headword TEXT PRIMARY KEY REFERENCES entries(headword)
+            );
             CREATE TABLE meta (
                 key TEXT PRIMARY KEY,
                 value TEXT NOT NULL

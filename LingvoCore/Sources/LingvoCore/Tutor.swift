@@ -61,8 +61,9 @@ public final class Tutor: Sendable {
     private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
         let progress = try userDatabase.allProgress()
         let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
-        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, heldBack: heldBack)
-            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now)
+        let tier = try openTier(progress: progress)
+        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier, heldBack: heldBack)
+            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now, tier: tier)
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }
