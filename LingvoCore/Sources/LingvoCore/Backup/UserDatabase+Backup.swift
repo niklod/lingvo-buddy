@@ -2,13 +2,19 @@ import Foundation
 import GRDB
 
 extension UserDatabase {
-    /// Every word with progress or in My words, sorted by headword.
+    /// Every word with progress, in My words or with an own translation, sorted by headword.
     func backupRows() throws -> [WordBackupRow] {
-        try writer.read { db in
+        let overrides = try translationOverrides()
+        return try writer.read { db in
             let progress = try WordProgress.fetchAll(db).reduce(into: [String: WordProgress]()) { $0[$1.headword] = $1 }
             let myWords = try MyWord.fetchAll(db).reduce(into: [String: MyWord]()) { $0[$1.headword] = $1 }
-            return Set(progress.keys).union(myWords.keys).sorted().map { headword in
-                WordBackupRow(headword: headword, myWord: myWords[headword], progress: progress[headword])
+            return Set(progress.keys).union(myWords.keys).union(overrides.keys).sorted().map { headword in
+                WordBackupRow(
+                    headword: headword,
+                    myWord: myWords[headword],
+                    progress: progress[headword],
+                    ownTranslation: overrides[headword]
+                )
             }
         }
     }
@@ -20,6 +26,13 @@ extension UserDatabase {
             for row in rows {
                 try db.execute(sql: "DELETE FROM my_words WHERE headword = ?", arguments: [row.headword])
                 try db.execute(sql: "DELETE FROM word_progress WHERE headword = ?", arguments: [row.headword])
+                try db.execute(sql: "DELETE FROM translation_overrides WHERE headword = ?", arguments: [row.headword])
+                if let ownTranslation = row.ownTranslation {
+                    try db.execute(
+                        sql: "INSERT INTO translation_overrides (headword, translation) VALUES (?, ?)",
+                        arguments: [row.headword, ownTranslation]
+                    )
+                }
                 if let myWord = row.myWord {
                     try insert(myWord, into: db)
                 }

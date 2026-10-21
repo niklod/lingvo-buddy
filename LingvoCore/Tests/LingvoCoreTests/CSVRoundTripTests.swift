@@ -38,6 +38,22 @@ struct CSVRoundTripTests {
         #expect(second.correctAnswer == "кубернетес")
     }
 
+    @Test("an own translation of a dictionary word comes back, also for a word not answered yet")
+    func ownTranslationRoundTrip() throws {
+        let source = try freshLearner()
+        try source.tutor.editTranslation("they", to: "они сами")
+        try source.tutor.editTranslation("year", to: "годик")
+        try source.answerNext()
+
+        let target = try roundTrip(source)
+        let queued = try target.tutor.wordList(.queue).rows.first { $0.headword == "year" }
+
+        #expect(try target.tutor.wordList(.learning).rows.first?.translation == "они сами")
+        #expect(queued?.translation == "годик")
+        #expect(queued?.source == .rank(70))
+        #expect(try target.tutor.stats().myWordsCount == 0)
+    }
+
     @Test("progress comes back: learned words, words in learning and their due times")
     func progressRoundTrip() throws {
         let source = try freshLearner()

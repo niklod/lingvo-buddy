@@ -8,9 +8,10 @@ extension WordBackupRow {
         self.init(
             headword: headword,
             myWord: try Self.myWord(headword, reader: reader, now: now),
-            progress: try Self.progress(headword, reader: reader)
+            progress: try Self.progress(headword, reader: reader),
+            ownTranslation: try reader.text(.ownTranslation, limit: NewMyWord.maxTranslationLength)
         )
-        guard myWord != nil || progress != nil else {
+        guard myWord != nil || progress != nil || ownTranslation != nil else {
             throw .nothingToImport(line: reader.line, headword: headword)
         }
     }
