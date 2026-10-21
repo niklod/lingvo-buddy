@@ -29,6 +29,7 @@ struct SettingsView: View {
     let launchAtLogin: any LaunchAtLoginControlling
     let about: AboutInfo
     let errors: ErrorPresenter?
+    let transfer: CSVTransferActions
 
     var body: some View {
         VStack(spacing: SettingsLayout.sectionSpacing) {
@@ -42,7 +43,7 @@ struct SettingsView: View {
             .fixedSize()
             switch navigation.tab {
             case .general:
-                GeneralSettingsView(model: model, launchAtLogin: launchAtLogin, errors: errors)
+                GeneralSettingsView(model: model, launchAtLogin: launchAtLogin, errors: errors, transfer: transfer)
             case .about:
                 AboutView(info: about)
             }

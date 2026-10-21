@@ -43,7 +43,8 @@ enum SettingsSnapshots {
                 navigation: SettingsNavigation(tab: tab),
                 launchAtLogin: FixedLaunchAtLogin(login),
                 about: sampleAbout,
-                errors: nil
+                errors: nil,
+                transfer: .none
             ))
         }
     }
