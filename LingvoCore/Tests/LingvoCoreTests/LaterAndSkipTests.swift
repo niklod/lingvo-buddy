@@ -27,13 +27,14 @@ struct LaterAndSkipTests {
         let tutor = try Fixture.tutor(clock: clock)
         let first = try #require(try tutor.nextCard().card)
         _ = try tutor.answer(first, choice: first.correctIndex)
+        clock.advance(by: Fixture.hour)
         let second = try #require(try tutor.nextCard().card)
 
         tutor.later(second)
         clock.advance(by: 5 * 60)
         let back = try #require(try tutor.nextCard().card)
 
-        #expect(back.headword == "they")
+        #expect(back == second)
         #expect(back.mastery == 1)
     }
 
@@ -52,9 +53,11 @@ struct LaterAndSkipTests {
 
     @Test("\"×\" skips the word with no penalty: the next card is another word, mastery stays")
     func skipMovesOnWithoutPenalty() throws {
-        let tutor = try Fixture.tutor()
+        let clock = TestClock(Fixture.start)
+        let tutor = try Fixture.tutor(clock: clock)
         let first = try #require(try tutor.nextCard().card)
         _ = try tutor.answer(first, choice: first.correctIndex)
+        clock.advance(by: Fixture.hour)
         let second = try #require(try tutor.nextCard().card)
 
         tutor.skip(second)

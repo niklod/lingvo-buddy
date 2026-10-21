@@ -6,7 +6,7 @@ import Testing
 struct NextCardTests {
     @Test("a fresh learner gets the most frequent quiz word as a new EN→RU card")
     func freshLearnerGetsMostFrequentWord() throws {
-        let tutor = try Fixture.tutor()
+        let tutor = try Fixture.tutor(settings: LearningSettings(direction: .enToRu))
 
         let card = try #require(try tutor.nextCard().card)
 
@@ -23,7 +23,7 @@ struct NextCardTests {
 
     @Test("the card has the correct translation and three different distractors")
     func cardHasCorrectAnswerAndThreeDistractors() throws {
-        let tutor = try Fixture.tutor()
+        let tutor = try Fixture.tutor(settings: LearningSettings(direction: .enToRu))
 
         let card = try #require(try tutor.nextCard().card)
 

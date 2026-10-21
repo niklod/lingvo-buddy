@@ -5,7 +5,7 @@ public enum Direction: String, Sendable, Codable {
     case ruToEn = "ru_en"
 }
 
-public enum CardKind: String, Sendable {
+public enum CardKind: String, Sendable, Codable {
     case new
     case review
     case mine
@@ -76,14 +76,25 @@ public struct AnswerResult: Sendable, Equatable {
     public let outcome: AnswerOutcome
     public let correctIndex: Int
     public let correctAnswer: String
+    /// This answer moved the word from learning to learned.
     public let becameLearned: Bool
+    /// The word is learned after this answer: just now, or a passed review.
+    public let isLearned: Bool
     public let mastery: Int
 
-    public init(outcome: AnswerOutcome, correctIndex: Int, correctAnswer: String, becameLearned: Bool, mastery: Int) {
+    public init(
+        outcome: AnswerOutcome,
+        correctIndex: Int,
+        correctAnswer: String,
+        becameLearned: Bool,
+        isLearned: Bool,
+        mastery: Int
+    ) {
         self.outcome = outcome
         self.correctIndex = correctIndex
         self.correctAnswer = correctAnswer
         self.becameLearned = becameLearned
+        self.isLearned = isLearned
         self.mastery = mastery
     }
 }

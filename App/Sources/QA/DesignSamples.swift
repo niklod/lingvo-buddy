@@ -18,11 +18,47 @@ enum DesignSamples {
 
     static let althoughCorrect = QuizCardState.Answer(
         pickedIndex: 0,
-        result: AnswerResult(outcome: .correct, correctIndex: 0, correctAnswer: "хотя", becameLearned: false, mastery: 3)
+        result: result(.correct, correctAnswer: "хотя", mastery: 3)
     )
 
     static let althoughWrong = QuizCardState.Answer(
         pickedIndex: 2,
-        result: AnswerResult(outcome: .wrong, correctIndex: 0, correctAnswer: "хотя", becameLearned: false, mastery: 0)
+        result: result(.wrong, correctAnswer: "хотя", mastery: 0)
     )
+
+    static let althoughDontKnow = QuizCardState.Answer(
+        pickedIndex: nil,
+        result: result(.dontKnow, correctAnswer: "хотя", mastery: 0)
+    )
+
+    /// A learned word due for review, asked RU → EN.
+    static let enoughReview = Card(
+        headword: "enough",
+        prompt: "достаточно",
+        direction: .ruToEn,
+        kind: .review,
+        source: .rank(188),
+        ipa: "/ɪˈnʌf/",
+        partOfSpeech: .adverb,
+        options: ["too", "enough", "barely", "almost"],
+        correctIndex: 1,
+        example: "Is there enough coffee for everyone?",
+        mastery: 4
+    )
+
+    static let enoughReviewPassed = QuizCardState.Answer(
+        pickedIndex: 1,
+        result: AnswerResult(
+            outcome: .correct, correctIndex: 1, correctAnswer: "enough",
+            becameLearned: false, isLearned: true, mastery: 4
+        )
+    )
+
+    /// Answers on the `although` card, which stays in learning.
+    private static func result(_ outcome: AnswerOutcome, correctAnswer: String, mastery: Int) -> AnswerResult {
+        AnswerResult(
+            outcome: outcome, correctIndex: 0, correctAnswer: correctAnswer,
+            becameLearned: false, isLearned: false, mastery: mastery
+        )
+    }
 }

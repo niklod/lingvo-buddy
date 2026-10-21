@@ -6,6 +6,7 @@ public final class Tutor: Sendable {
     private let dictionary: DictionaryStore
     private let userDatabase: UserDatabase
     private let clock: any TutorClock
+    private let picker: WordPicker
     private let cards: CardFactory
     private let deferrals = Mutex(CardDeferrals())
 
@@ -13,12 +14,18 @@ public final class Tutor: Sendable {
         dictionary: DictionaryStore,
         userDatabase: UserDatabase,
         clock: any TutorClock = SystemClock(),
-        random: any RandomSource = SystemRandomSource()
+        random: any RandomSource = SystemRandomSource(),
+        settings: LearningSettings = LearningSettings()
     ) {
         self.dictionary = dictionary
         self.userDatabase = userDatabase
         self.clock = clock
-        self.cards = CardFactory(quizEntries: dictionary.quizEntries, random: random)
+        self.picker = WordPicker(quizEntries: dictionary.quizEntries, settings: settings)
+        self.cards = CardFactory(
+            directions: DirectionChooser(setting: settings.direction, random: random),
+            distractors: DistractorPicker(quizEntries: dictionary.quizEntries, random: random),
+            random: random
+        )
     }
 
     /// A card that "Later" postponed comes first once its 5 minutes are over.
@@ -31,7 +38,7 @@ public final class Tutor: Sendable {
         if let postponed = deferrals.withLock({ $0.dueCard(at: now) }) {
             decision = .card(postponed)
         } else {
-            decision = try pickCard(heldBack: deferrals.withLock { $0.heldBack(at: now) })
+            decision = try pickCard(heldBack: deferrals.withLock { $0.heldBack(at: now) }, now: now)
         }
         if let card = decision.card {
             deferrals.withLock { $0 = $0.shown(card) }
@@ -51,13 +58,15 @@ public final class Tutor: Sendable {
     }
 
     /// A held-back word is still offered when nothing else is left.
-    private func pickCard(heldBack: Set<String>) throws -> CardDecision {
+    private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
         let progress = try userDatabase.allProgress()
-        let candidates = dictionary.quizEntries.filter { progress[$0.headword]?.status != .learned }
-        guard let entry = candidates.first(where: { !heldBack.contains($0.headword) }) ?? candidates.first else {
+        let recentKinds = try userDatabase.recentAnswerKinds(limit: picker.reviewCapWindow)
+        let picked = picker.pick(progress: progress, recentKinds: recentKinds, now: now, heldBack: heldBack)
+            ?? picker.pick(progress: progress, recentKinds: recentKinds, now: now)
+        guard let picked else {
             return .noCard(.noWordsAvailable)
         }
-        return .card(try cards.card(for: entry, progress: progress[entry.headword]))
+        return .card(try cards.card(for: picked))
     }
 
     public func answer(_ card: Card, choice: Int) throws -> AnswerResult {
@@ -78,9 +87,15 @@ public final class Tutor: Sendable {
         }
         let now = clock.now()
         let before = try userDatabase.progress(for: card.headword) ?? .fresh(card.headword)
-        let after = before.applying(outcome, at: now)
+        let after = before.applying(outcome, direction: card.direction, at: now)
         try userDatabase.record(
-            AnswerRecord(headword: card.headword, direction: card.direction, result: outcome, answeredAt: now),
+            AnswerRecord(
+                headword: card.headword,
+                direction: card.direction,
+                kind: card.kind,
+                result: outcome,
+                answeredAt: now
+            ),
             updating: after
         )
         return AnswerResult(
@@ -88,6 +103,7 @@ public final class Tutor: Sendable {
             correctIndex: card.correctIndex,
             correctAnswer: card.correctAnswer,
             becameLearned: before.status != .learned && after.status == .learned,
+            isLearned: after.status == .learned,
             mastery: after.mastery
         )
     }
