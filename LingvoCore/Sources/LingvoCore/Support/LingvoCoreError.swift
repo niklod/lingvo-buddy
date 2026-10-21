@@ -5,6 +5,7 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
     case unknownWord(String)
     case invalidChoice(Int)
     case invalidTimeOfDay(hour: Int, minute: Int)
+    case invalidInterval(TimeInterval)
 
     public var errorDescription: String? {
         switch self {
@@ -16,6 +17,8 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
             "Option \(index) does not exist on this card."
         case .invalidTimeOfDay(let hour, let minute):
             "\(hour):\(minute) is not a valid time of day."
+        case .invalidInterval(let seconds):
+            "A card interval of \(seconds) s is not valid; it must be positive."
         }
     }
 }
