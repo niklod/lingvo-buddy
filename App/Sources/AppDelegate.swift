@@ -8,6 +8,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let errors = ErrorPresenter()
     private var statusItem: StatusItemController?
     private var coordinator: CardCoordinator?
+    private var settingsWindow: SettingsWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.appearance = NSAppearance(named: .darkAqua)
@@ -24,18 +25,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func start(with options: LaunchOptions) throws {
-        let tutor = try AppEnvironment.makeTutor(options: options)
+        let services = try AppEnvironment.makeServices(options: options)
+        let tutor = services.tutor
+        let settings = SettingsModel(store: tutor, errors: errors)
+        settingsWindow = SettingsWindowController(
+            model: settings,
+            launchAtLogin: SystemLaunchAtLogin(),
+            about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
+            errors: errors
+        )
+        NSApp.mainMenu = MainMenu.make(settingsTarget: self, settingsAction: #selector(openSettingsFromMenu))
         let focus = SystemFocusStatus()
         let coordinator = CardCoordinator(
             tutor: tutor,
             panel: CardPanelController(tutor: tutor, errors: errors),
             contexts: CardContextBuilder(
-                quietHours: AppEnvironment.quietHours(options: options),
+                settings: settings,
+                quietHoursOverride: options.quietHours,
                 focus: focus,
                 fullScreen: FullScreenDetector(),
                 pause: PauseStore()
             ),
-            settings: try AppEnvironment.scheduleSettings(options: options),
+            scheduleSettings: try AppEnvironment.scheduleSettings(options: options, settings: settings.settings),
             errors: errors
         )
         let statusItem = StatusItemController(actions: StatusItemActions(
@@ -43,7 +54,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
             pause: { [weak coordinator] option in coordinator?.pause(option) },
             resume: { [weak coordinator] in coordinator?.resume() },
-            pausedUntil: { [weak coordinator] in coordinator?.pausedUntil }
+            pausedUntil: { [weak coordinator] in coordinator?.pausedUntil },
+            openSettings: { [weak self] in self?.openSettings() }
         ))
         coordinator.statusItem = statusItem
         self.coordinator = coordinator
@@ -64,7 +76,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         switch view {
         case .card:
             coordinator?.showWordNow()
+        case .settings:
+            openSettings(tab: .general)
+        case .about:
+            openSettings(tab: .about)
         }
+    }
+
+    /// The single entry point to Settings: tray item "Settings… ⌘,", the ⌘, key, `--open settings`.
+    func openSettings(tab: SettingsTab? = nil) {
+        settingsWindow?.show(tab: tab)
+    }
+
+    @objc private func openSettingsFromMenu() {
+        openSettings()
     }
 
     private func renderSnapshotsAndExit(to path: String, filter: String?) -> Never {

@@ -31,7 +31,8 @@ app: dictionary project
 		-quiet build
 
 run: app
-	-pkill -x LingvoBuddy
+	@# Stop only this checkout's build: other worktrees may run their own copy.
+	-pkill -f "$(abspath $(APP_BINARY))"
 	open -n $(APP) --args $(ARGS)
 
 # Renders every registered view state to PNG inside the sandbox container (the app prints

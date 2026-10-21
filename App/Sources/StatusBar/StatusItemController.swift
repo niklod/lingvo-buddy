@@ -8,6 +8,7 @@ struct StatusItemActions {
     var pause: (PauseOption) -> Void = { _ in }
     var resume: () -> Void = {}
     var pausedUntil: () -> Date? = { nil }
+    var openSettings: () -> Void = {}
 }
 
 /// The "Aa" status item. A left click reopens a waiting card (dot shown);
@@ -66,6 +67,10 @@ final class StatusItemController: NSObject {
     @objc func resumeClicked() {
         actions.resume()
     }
+
+    @objc func settingsClicked() {
+        actions.openSettings()
+    }
 }
 
 @MainActor
@@ -91,6 +96,13 @@ private enum StatusMenu {
         pause.submenu = pauseMenu(target: target, isPaused: pausedUntil != nil)
         menu.addItem(pause)
         menu.addItem(.separator())
+        let settings = NSMenuItem(
+            title: String(localized: "Settings…"),
+            action: #selector(StatusItemController.settingsClicked),
+            keyEquivalent: ","
+        )
+        settings.target = target
+        menu.addItem(settings)
         menu.addItem(NSMenuItem(
             title: String(localized: "Quit"),
             action: #selector(NSApplication.terminate(_:)),

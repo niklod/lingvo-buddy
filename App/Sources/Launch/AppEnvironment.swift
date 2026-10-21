@@ -13,27 +13,27 @@ enum AppEnvironment {
         }
     }
 
-    static func makeTutor(options: LaunchOptions) throws -> Tutor {
+    struct Services {
+        let tutor: Tutor
+        /// The bundled dictionary's `meta` table (source, licence) for About.
+        let dictionaryMeta: [String: String]
+    }
+
+    static func makeServices(options: LaunchOptions) throws -> Services {
         let dictionary = try bundledDictionary()
         let userDatabase = try UserDatabase.open(at: userDatabaseURL(options.userDatabase))
         if options.seedDemo {
             try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: Date())
         }
-        return Tutor(dictionary: dictionary, userDatabase: userDatabase)
+        return Services(
+            tutor: try Tutor(dictionary: dictionary, userDatabase: userDatabase),
+            dictionaryMeta: try dictionary.meta()
+        )
     }
 
-    /// The Settings slice makes these editable; until then the defaults apply, or the QA overrides.
-    static func scheduleSettings(options: LaunchOptions) throws -> CardScheduleSettings {
-        guard let interval = options.cardInterval else { return .standard }
-        return try CardScheduleSettings(interval: interval)
-    }
-
-    static func quietHours(options: LaunchOptions) -> QuietHours? {
-        switch options.quietHours {
-        case nil: .standard
-        case .off: nil
-        case .hours(let hours): hours
-        }
+    /// The stored interval, or the `--interval-seconds` QA override for this run.
+    static func scheduleSettings(options: LaunchOptions, settings: TutorSettings) throws -> CardScheduleSettings {
+        try CardScheduleSettings(interval: options.cardInterval ?? settings.cardInterval)
     }
 
     private static func bundledDictionary() throws -> DictionaryStore {

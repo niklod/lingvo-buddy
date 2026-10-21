@@ -5,7 +5,10 @@ import LingvoCore
 /// into the plain value the tutor needs.
 @MainActor
 struct CardContextBuilder {
-    let quietHours: QuietHours?
+    /// Read at every tick, so a change in Settings applies to the next one.
+    let settings: SettingsModel
+    /// `--quiet-hours` (QA) wins over the stored quiet hours for this run.
+    let quietHoursOverride: QuietHoursOverride?
     let focus: any FocusStatusReading
     let fullScreen: any FullScreenDetecting
     let pause: PauseStore
@@ -13,13 +16,18 @@ struct CardContextBuilder {
     func context(for trigger: CardContext.Trigger) -> CardContext {
         // An on-demand card ignores the signals, so do not query the system for them.
         guard trigger == .timer else { return CardContext(trigger: .onDemand) }
-        return CardContext(
-            trigger: .timer,
-            quietHours: quietHours,
+        var context = CardContext.timer(
+            settings: settings.settings,
             isFocusOn: focus.isFocusOn,
             isFullScreenAppFrontmost: fullScreen.isOtherAppFullScreen(),
             pausedUntil: pause.pausedUntil(),
             calendar: .current
         )
+        switch quietHoursOverride {
+        case nil: break
+        case .off: context.quietHours = nil
+        case .hours(let hours): context.quietHours = hours
+        }
+        return context
     }
 }

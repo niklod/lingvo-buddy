@@ -62,6 +62,8 @@ struct LaunchOptions: Equatable {
 /// Views that `--open` can show immediately. Later slices add their views here.
 enum OpenableView: String, CaseIterable {
     case card
+    case settings
+    case about
 }
 
 /// The value of `--quiet-hours`.
