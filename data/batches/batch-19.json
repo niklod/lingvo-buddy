@@ -1,0 +1,5288 @@
+{
+ "batch": "batch-19",
+ "entries": [
+  {
+   "rank": 9001,
+   "headword": "broom",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "метла",
+    "веник"
+   ],
+   "ipa": "/bruːm/"
+  },
+  {
+   "rank": 9002,
+   "headword": "infer",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "делать вывод",
+    "заключать"
+   ],
+   "ipa": "/ɪnˈfɜː/"
+  },
+  {
+   "rank": 9003,
+   "headword": "acronym",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "акроним",
+    "аббревиатура"
+   ],
+   "ipa": "/ˈækrənɪm/"
+  },
+  {
+   "rank": 9004,
+   "headword": "gorge",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ущелье",
+    "теснина"
+   ],
+   "ipa": "/ɡɔːdʒ/"
+  },
+  {
+   "rank": 9005,
+   "headword": "quantify",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "оценивать количественно",
+    "измерять"
+   ],
+   "ipa": "/ˈkwɒntɪfaɪ/"
+  },
+  {
+   "rank": 9006,
+   "headword": "dreamer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "мечтатель",
+    "фантазёр"
+   ],
+   "ipa": "/ˈdriːmə/"
+  },
+  {
+   "rank": 9007,
+   "headword": "doggy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "собачка",
+    "пёсик"
+   ],
+   "ipa": "/ˈdɒɡi/"
+  },
+  {
+   "rank": 9008,
+   "headword": "acquit",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "оправдывать"
+   ],
+   "ipa": "/əˈkwɪt/"
+  },
+  {
+   "rank": 9009,
+   "headword": "kilo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "килограмм",
+    "кило"
+   ],
+   "ipa": "/ˈkiːləʊ/"
+  },
+  {
+   "rank": 9010,
+   "headword": "kink",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "изгиб",
+    "перегиб"
+   ],
+   "ipa": "/kɪŋk/"
+  },
+  {
+   "rank": 9011,
+   "headword": "pinnacle",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вершина",
+    "пик"
+   ],
+   "ipa": "/ˈpɪnəkəl/"
+  },
+  {
+   "rank": 9012,
+   "headword": "stylist",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "стилист"
+   ],
+   "ipa": "/ˈstaɪlɪst/"
+  },
+  {
+   "rank": 9013,
+   "headword": "counterfeit",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "поддельный",
+    "фальшивый"
+   ],
+   "ipa": "/ˈkaʊntəfɪt/"
+  },
+  {
+   "rank": 9014,
+   "headword": "inhibition",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "торможение",
+    "скованность",
+    "подавление"
+   ],
+   "ipa": "/ˌɪnhɪˈbɪʃən/"
+  },
+  {
+   "rank": 9015,
+   "headword": "blister",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "волдырь",
+    "пузырь"
+   ],
+   "ipa": "/ˈblɪstə/"
+  },
+  {
+   "rank": 9016,
+   "headword": "gutter",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "канава",
+    "водосток"
+   ],
+   "ipa": "/ˈɡʌtə/"
+  },
+  {
+   "rank": 9017,
+   "headword": "socialize",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "общаться"
+   ],
+   "ipa": "/ˈsəʊʃəlaɪz/"
+  },
+  {
+   "rank": 9018,
+   "headword": "crumb",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "крошка"
+   ],
+   "ipa": "/krʌm/"
+  },
+  {
+   "rank": 9019,
+   "headword": "intoxicate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "опьянять"
+   ],
+   "ipa": "/ɪnˈtɒksɪkeɪt/"
+  },
+  {
+   "rank": 9020,
+   "headword": "degenerate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вырождаться",
+    "деградировать"
+   ],
+   "ipa": "/dɪˈdʒenəreɪt/"
+  },
+  {
+   "rank": 9021,
+   "headword": "errand",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "поручение"
+   ],
+   "ipa": "/ˈerənd/"
+  },
+  {
+   "rank": 9022,
+   "headword": "motorist",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "автомобилист",
+    "водитель"
+   ],
+   "ipa": "/ˈməʊtərɪst/"
+  },
+  {
+   "rank": 9023,
+   "headword": "adhesive",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "клей"
+   ],
+   "ipa": "/ədˈhiːsɪv/"
+  },
+  {
+   "rank": 9024,
+   "headword": "dyke",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "дамба",
+    "плотина"
+   ],
+   "ipa": "/daɪk/"
+  },
+  {
+   "rank": 9025,
+   "headword": "discern",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "различать",
+    "распознавать"
+   ],
+   "ipa": "/dɪˈsɜːn/"
+  },
+  {
+   "rank": 9026,
+   "headword": "fender",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "крыло",
+    "бампер"
+   ],
+   "ipa": "/ˈfendə/"
+  },
+  {
+   "rank": 9027,
+   "headword": "deacon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "дьякон"
+   ],
+   "ipa": "/ˈdiːkən/"
+  },
+  {
+   "rank": 9028,
+   "headword": "commando",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "коммандос",
+    "диверсант"
+   ],
+   "ipa": "/kəˈmɑːndəʊ/"
+  },
+  {
+   "rank": 9029,
+   "headword": "misconception",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "заблуждение",
+    "неверное представление"
+   ],
+   "ipa": "/ˌmɪskənˈsepʃən/"
+  },
+  {
+   "rank": 9030,
+   "headword": "coarse",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "грубый",
+    "шероховатый",
+    "крупный"
+   ],
+   "ipa": "/kɔːs/"
+  },
+  {
+   "rank": 9031,
+   "headword": "gong",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "гонг"
+   ],
+   "ipa": "/ɡɒŋ/"
+  },
+  {
+   "rank": 9032,
+   "headword": "jag",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "зубец",
+    "выступ"
+   ],
+   "ipa": "/dʒæɡ/"
+  },
+  {
+   "rank": 9033,
+   "headword": "bulge",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "выпуклость",
+    "вздутие"
+   ],
+   "ipa": "/bʌldʒ/"
+  },
+  {
+   "rank": 9034,
+   "headword": "redefine",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "переопределять",
+    "пересматривать"
+   ],
+   "ipa": "/ˌriːdɪˈfaɪn/"
+  },
+  {
+   "rank": 9035,
+   "headword": "powerhouse",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "электростанция",
+    "движущая сила"
+   ],
+   "ipa": "/ˈpaʊəhaʊs/"
+  },
+  {
+   "rank": 9036,
+   "headword": "err",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "ошибаться",
+    "заблуждаться"
+   ],
+   "ipa": "/ɜː/"
+  },
+  {
+   "rank": 9037,
+   "headword": "ledge",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "выступ",
+    "уступ",
+    "карниз"
+   ],
+   "ipa": "/ledʒ/"
+  },
+  {
+   "rank": 9038,
+   "headword": "thrash",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "пороть",
+    "избивать"
+   ],
+   "ipa": "/θræʃ/"
+  },
+  {
+   "rank": 9039,
+   "headword": "werewolf",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "оборотень"
+   ],
+   "ipa": "/ˈweəwʊlf/"
+  },
+  {
+   "rank": 9040,
+   "headword": "crease",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "складка",
+    "морщина"
+   ],
+   "ipa": "/kriːs/"
+  },
+  {
+   "rank": 9041,
+   "headword": "surrogate",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "заменитель",
+    "суррогат"
+   ],
+   "ipa": "/ˈsʌrəɡət/"
+  },
+  {
+   "rank": 9042,
+   "headword": "pip",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "косточка",
+    "семечко"
+   ],
+   "ipa": "/pɪp/"
+  },
+  {
+   "rank": 9043,
+   "headword": "arbor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "беседка"
+   ],
+   "ipa": "/ˈɑːbə/"
+  },
+  {
+   "rank": 9044,
+   "headword": "astronomical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "астрономический"
+   ],
+   "ipa": "/ˌæstrəˈnɒmɪkəl/"
+  },
+  {
+   "rank": 9045,
+   "headword": "attire",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "одеяние",
+    "наряд"
+   ],
+   "ipa": "/əˈtaɪə/"
+  },
+  {
+   "rank": 9046,
+   "headword": "barley",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ячмень"
+   ],
+   "ipa": "/ˈbɑːli/"
+  },
+  {
+   "rank": 9047,
+   "headword": "botanical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "ботанический"
+   ],
+   "ipa": "/bəˈtænɪkəl/"
+  },
+  {
+   "rank": 9048,
+   "headword": "catchy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "запоминающийся",
+    "цепляющий"
+   ],
+   "ipa": "/ˈkætʃi/"
+  },
+  {
+   "rank": 9049,
+   "headword": "ceremonial",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "церемониальный",
+    "торжественный"
+   ],
+   "ipa": "/ˌserɪˈməʊniəl/"
+  },
+  {
+   "rank": 9050,
+   "headword": "choreography",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "хореография"
+   ],
+   "ipa": "/ˌkɒriˈɒɡrəfi/"
+  },
+  {
+   "rank": 9051,
+   "headword": "concurrent",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "одновременный",
+    "параллельный"
+   ],
+   "ipa": "/kənˈkʌrənt/"
+  },
+  {
+   "rank": 9052,
+   "headword": "derrick",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "буровая вышка",
+    "кран"
+   ],
+   "ipa": "/ˈderɪk/"
+  },
+  {
+   "rank": 9053,
+   "headword": "differentiation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "дифференциация",
+    "различение"
+   ],
+   "ipa": "/ˌdɪfərenʃiˈeɪʃən/"
+  },
+  {
+   "rank": 9054,
+   "headword": "dubious",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "сомнительный"
+   ],
+   "ipa": "/ˈdjuːbiəs/"
+  },
+  {
+   "rank": 9055,
+   "headword": "eagerly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "охотно",
+    "с нетерпением"
+   ],
+   "ipa": "/ˈiːɡəli/"
+  },
+  {
+   "rank": 9056,
+   "headword": "ecclesiastical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "церковный"
+   ],
+   "ipa": "/ɪˌkliːziˈæstɪkəl/"
+  },
+  {
+   "rank": 9057,
+   "headword": "exhaustion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "истощение",
+    "изнеможение"
+   ],
+   "ipa": "/ɪɡˈzɔːstʃən/"
+  },
+  {
+   "rank": 9058,
+   "headword": "expectancy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ожидание"
+   ],
+   "ipa": "/ɪkˈspektənsi/"
+  },
+  {
+   "rank": 9059,
+   "headword": "famously",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "знаменито",
+    "как известно"
+   ],
+   "ipa": "/ˈfeɪməsli/"
+  },
+  {
+   "rank": 9060,
+   "headword": "folklore",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "фольклор"
+   ],
+   "ipa": "/ˈfəʊklɔː/"
+  },
+  {
+   "rank": 9061,
+   "headword": "galactic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "галактический"
+   ],
+   "ipa": "/ɡəˈlæktɪk/"
+  },
+  {
+   "rank": 9062,
+   "headword": "glee",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ликование",
+    "радость"
+   ],
+   "ipa": "/ɡliː/"
+  },
+  {
+   "rank": 9063,
+   "headword": "grassroots",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "низовой",
+    "массовый"
+   ],
+   "ipa": "/ˌɡrɑːsˈruːts/"
+  },
+  {
+   "rank": 9064,
+   "headword": "gravitational",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "гравитационный"
+   ],
+   "ipa": "/ˌɡrævɪˈteɪʃənəl/"
+  },
+  {
+   "rank": 9065,
+   "headword": "hereditary",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "наследственный"
+   ],
+   "ipa": "/həˈredɪtəri/"
+  },
+  {
+   "rank": 9066,
+   "headword": "hiatus",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "перерыв",
+    "пауза"
+   ],
+   "ipa": "/haɪˈeɪtəs/"
+  },
+  {
+   "rank": 9067,
+   "headword": "horribly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "ужасно"
+   ],
+   "ipa": "/ˈhɒrɪbli/"
+  },
+  {
+   "rank": 9068,
+   "headword": "horsepower",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лошадиная сила"
+   ],
+   "ipa": "/ˈhɔːspaʊə/"
+  },
+  {
+   "rank": 9069,
+   "headword": "icing",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "глазурь"
+   ],
+   "ipa": "/ˈaɪsɪŋ/"
+  },
+  {
+   "rank": 9070,
+   "headword": "intellect",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "интеллект",
+    "разум"
+   ],
+   "ipa": "/ˈɪntəlekt/"
+  },
+  {
+   "rank": 9071,
+   "headword": "jihad",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "джихад"
+   ],
+   "ipa": "/dʒɪˈhæd/"
+  },
+  {
+   "rank": 9072,
+   "headword": "magnesium",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "магний"
+   ],
+   "ipa": "/mæɡˈniːziəm/"
+  },
+  {
+   "rank": 9073,
+   "headword": "malware",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вредоносная программа",
+    "вирус"
+   ],
+   "ipa": "/ˈmælweə/"
+  },
+  {
+   "rank": 9074,
+   "headword": "mathematician",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "математик"
+   ],
+   "ipa": "/ˌmæθəməˈtɪʃən/"
+  },
+  {
+   "rank": 9075,
+   "headword": "midwife",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "акушерка",
+    "повитуха"
+   ],
+   "ipa": "/ˈmɪdwaɪf/"
+  },
+  {
+   "rank": 9076,
+   "headword": "mindful",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "внимательный",
+    "осознанный"
+   ],
+   "ipa": "/ˈmaɪndfəl/"
+  },
+  {
+   "rank": 9077,
+   "headword": "musk",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "мускус"
+   ],
+   "ipa": "/mʌsk/"
+  },
+  {
+   "rank": 9078,
+   "headword": "myriad",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "бесчисленный",
+    "многочисленный"
+   ],
+   "ipa": "/ˈmɪriəd/"
+  },
+  {
+   "rank": 9079,
+   "headword": "nan",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бабушка",
+    "бабуля"
+   ],
+   "ipa": "/næn/"
+  },
+  {
+   "rank": 9080,
+   "headword": "nasal",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "носовой",
+    "назальный"
+   ],
+   "ipa": "/ˈneɪzəl/"
+  },
+  {
+   "rank": 9081,
+   "headword": "nautical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "морской",
+    "навигационный"
+   ],
+   "ipa": "/ˈnɔːtɪkəl/"
+  },
+  {
+   "rank": 9082,
+   "headword": "neatly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "аккуратно",
+    "опрятно"
+   ],
+   "ipa": "/ˈniːtli/"
+  },
+  {
+   "rank": 9083,
+   "headword": "negativity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "негатив",
+    "негативность"
+   ],
+   "ipa": "/ˌneɡəˈtɪvəti/"
+  },
+  {
+   "rank": 9084,
+   "headword": "noteworthy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "примечательный",
+    "достойный внимания"
+   ],
+   "ipa": "/ˈnəʊtwɜːði/"
+  },
+  {
+   "rank": 9085,
+   "headword": "powerless",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "бессильный",
+    "беспомощный"
+   ],
+   "ipa": "/ˈpaʊələs/"
+  },
+  {
+   "rank": 9086,
+   "headword": "pragmatic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "прагматичный",
+    "практичный"
+   ],
+   "ipa": "/præɡˈmætɪk/"
+  },
+  {
+   "rank": 9087,
+   "headword": "quasi",
+   "tier": "lookup",
+   "pos": "other",
+   "translations": [
+    "квази",
+    "почти"
+   ],
+   "ipa": "/ˈkweɪzaɪ/"
+  },
+  {
+   "rank": 9088,
+   "headword": "radiant",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "сияющий",
+    "лучезарный"
+   ],
+   "ipa": "/ˈreɪdiənt/"
+  },
+  {
+   "rank": 9089,
+   "headword": "remorse",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "раскаяние",
+    "угрызения совести"
+   ],
+   "ipa": "/rɪˈmɔːs/"
+  },
+  {
+   "rank": 9090,
+   "headword": "sanity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "здравомыслие",
+    "рассудок"
+   ],
+   "ipa": "/ˈsænəti/"
+  },
+  {
+   "rank": 9091,
+   "headword": "sharia",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "шариат"
+   ],
+   "ipa": "/ʃəˈriːə/"
+  },
+  {
+   "rank": 9092,
+   "headword": "showdown",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "решающая схватка",
+    "разборка"
+   ],
+   "ipa": "/ˈʃəʊdaʊn/"
+  },
+  {
+   "rank": 9093,
+   "headword": "skyline",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "линия горизонта",
+    "силуэт города"
+   ],
+   "ipa": "/ˈskaɪlaɪn/"
+  },
+  {
+   "rank": 9094,
+   "headword": "soprano",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сопрано"
+   ],
+   "ipa": "/səˈprɑːnəʊ/"
+  },
+  {
+   "rank": 9095,
+   "headword": "supplemental",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "дополнительный"
+   ],
+   "ipa": "/ˌsʌplɪˈmentəl/"
+  },
+  {
+   "rank": 9096,
+   "headword": "techno",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "техно"
+   ],
+   "ipa": "/ˈteknəʊ/"
+  },
+  {
+   "rank": 9097,
+   "headword": "trance",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "транс"
+   ],
+   "ipa": "/trɑːns/"
+  },
+  {
+   "rank": 9098,
+   "headword": "unconditional",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "безусловный"
+   ],
+   "ipa": "/ˌʌnkənˈdɪʃənəl/"
+  },
+  {
+   "rank": 9099,
+   "headword": "unforgettable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "незабываемый"
+   ],
+   "ipa": "/ˌʌnfəˈɡetəbəl/"
+  },
+  {
+   "rank": 9100,
+   "headword": "volatility",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "неустойчивость",
+    "изменчивость",
+    "волатильность"
+   ],
+   "ipa": "/ˌvɒləˈtɪləti/"
+  },
+  {
+   "rank": 9101,
+   "headword": "wen",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "жировик"
+   ],
+   "ipa": "/wen/"
+  },
+  {
+   "rank": 9102,
+   "headword": "yearbook",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ежегодник"
+   ],
+   "ipa": "/ˈjɪəbʊk/"
+  },
+  {
+   "rank": 9103,
+   "headword": "refill",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "пополнять",
+    "заправлять"
+   ],
+   "ipa": "/ˌriːˈfɪl/"
+  },
+  {
+   "rank": 9104,
+   "headword": "mingle",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "смешиваться",
+    "общаться"
+   ],
+   "ipa": "/ˈmɪŋɡəl/"
+  },
+  {
+   "rank": 9105,
+   "headword": "burglar",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "взломщик",
+    "вор"
+   ],
+   "ipa": "/ˈbɜːɡlə/"
+  },
+  {
+   "rank": 9106,
+   "headword": "pellet",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "гранула",
+    "дробинка"
+   ],
+   "ipa": "/ˈpelɪt/"
+  },
+  {
+   "rank": 9107,
+   "headword": "mow",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "косить"
+   ],
+   "ipa": "/məʊ/"
+  },
+  {
+   "rank": 9108,
+   "headword": "chatter",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "болтать",
+    "трещать"
+   ],
+   "ipa": "/ˈtʃætə/"
+  },
+  {
+   "rank": 9109,
+   "headword": "compressor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "компрессор"
+   ],
+   "ipa": "/kəmˈpresə/"
+  },
+  {
+   "rank": 9110,
+   "headword": "headlight",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "фара"
+   ],
+   "ipa": "/ˈhedlaɪt/"
+  },
+  {
+   "rank": 9111,
+   "headword": "casing",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "корпус",
+    "оболочка",
+    "кожух"
+   ],
+   "ipa": "/ˈkeɪsɪŋ/"
+  },
+  {
+   "rank": 9112,
+   "headword": "cactus",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кактус"
+   ],
+   "ipa": "/ˈkæktəs/"
+  },
+  {
+   "rank": 9113,
+   "headword": "puncture",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "прокол"
+   ],
+   "ipa": "/ˈpʌŋktʃə/"
+  },
+  {
+   "rank": 9114,
+   "headword": "eviction",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "выселение"
+   ],
+   "ipa": "/ɪˈvɪkʃən/"
+  },
+  {
+   "rank": 9115,
+   "headword": "coroner",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "коронер"
+   ],
+   "ipa": "/ˈkɒrənə/"
+  },
+  {
+   "rank": 9116,
+   "headword": "minion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "приспешник",
+    "миньон"
+   ],
+   "ipa": "/ˈmɪniən/"
+  },
+  {
+   "rank": 9117,
+   "headword": "pedophile",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "педофил"
+   ],
+   "ipa": "/ˈpiːdəfaɪl/"
+  },
+  {
+   "rank": 9118,
+   "headword": "snowflake",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "снежинка"
+   ],
+   "ipa": "/ˈsnəʊfleɪk/"
+  },
+  {
+   "rank": 9119,
+   "headword": "skid",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "буксовать",
+    "скользить"
+   ],
+   "ipa": "/skɪd/"
+  },
+  {
+   "rank": 9120,
+   "headword": "conditioner",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кондиционер"
+   ],
+   "ipa": "/kənˈdɪʃənə/"
+  },
+  {
+   "rank": 9121,
+   "headword": "barrister",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "адвокат",
+    "барристер"
+   ],
+   "ipa": "/ˈbærɪstə/"
+  },
+  {
+   "rank": 9122,
+   "headword": "behead",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "обезглавливать"
+   ],
+   "ipa": "/bɪˈhed/"
+  },
+  {
+   "rank": 9123,
+   "headword": "bloat",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "раздувать",
+    "вздуваться"
+   ],
+   "ipa": "/bləʊt/"
+  },
+  {
+   "rank": 9124,
+   "headword": "thwart",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "срывать",
+    "препятствовать"
+   ],
+   "ipa": "/θwɔːt/"
+  },
+  {
+   "rank": 9125,
+   "headword": "treatise",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "трактат"
+   ],
+   "ipa": "/ˈtriːtɪs/"
+  },
+  {
+   "rank": 9126,
+   "headword": "impede",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "препятствовать",
+    "затруднять"
+   ],
+   "ipa": "/ɪmˈpiːd/"
+  },
+  {
+   "rank": 9127,
+   "headword": "engraving",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "гравюра",
+    "гравировка"
+   ],
+   "ipa": "/ɪnˈɡreɪvɪŋ/"
+  },
+  {
+   "rank": 9128,
+   "headword": "footnote",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сноска"
+   ],
+   "ipa": "/ˈfʊtnəʊt/"
+  },
+  {
+   "rank": 9129,
+   "headword": "goblin",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "гоблин"
+   ],
+   "ipa": "/ˈɡɒblɪn/"
+  },
+  {
+   "rank": 9130,
+   "headword": "tendon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сухожилие"
+   ],
+   "ipa": "/ˈtendən/"
+  },
+  {
+   "rank": 9131,
+   "headword": "squid",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кальмар"
+   ],
+   "ipa": "/skwɪd/"
+  },
+  {
+   "rank": 9132,
+   "headword": "visualize",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "представлять",
+    "визуализировать"
+   ],
+   "ipa": "/ˈvɪʒuəlaɪz/"
+  },
+  {
+   "rank": 9133,
+   "headword": "underdog",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "аутсайдер"
+   ],
+   "ipa": "/ˈʌndədɒɡ/"
+  },
+  {
+   "rank": 9134,
+   "headword": "weirdo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "чудак",
+    "псих"
+   ],
+   "ipa": "/ˈwɪədəʊ/"
+  },
+  {
+   "rank": 9135,
+   "headword": "outage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "отключение",
+    "перебой"
+   ],
+   "ipa": "/ˈaʊtɪdʒ/"
+  },
+  {
+   "rank": 9136,
+   "headword": "wreath",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "венок"
+   ],
+   "ipa": "/riːθ/"
+  },
+  {
+   "rank": 9137,
+   "headword": "interrogate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "допрашивать"
+   ],
+   "ipa": "/ɪnˈterəɡeɪt/"
+  },
+  {
+   "rank": 9138,
+   "headword": "potion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "зелье"
+   ],
+   "ipa": "/ˈpəʊʃən/"
+  },
+  {
+   "rank": 9139,
+   "headword": "enslave",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "порабощать"
+   ],
+   "ipa": "/ɪnˈsleɪv/"
+  },
+  {
+   "rank": 9140,
+   "headword": "superpower",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сверхдержава"
+   ],
+   "ipa": "/ˈsuːpəpaʊə/"
+  },
+  {
+   "rank": 9141,
+   "headword": "extinguish",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "тушить",
+    "гасить"
+   ],
+   "ipa": "/ɪkˈstɪŋɡwɪʃ/"
+  },
+  {
+   "rank": 9142,
+   "headword": "visionary",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "провидец",
+    "визионер"
+   ],
+   "ipa": "/ˈvɪʒənəri/"
+  },
+  {
+   "rank": 9143,
+   "headword": "evaporate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "испаряться"
+   ],
+   "ipa": "/ɪˈvæpəreɪt/"
+  },
+  {
+   "rank": 9144,
+   "headword": "gust",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "порыв ветра",
+    "шквал"
+   ],
+   "ipa": "/ɡʌst/"
+  },
+  {
+   "rank": 9145,
+   "headword": "admirer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "поклонник",
+    "почитатель"
+   ],
+   "ipa": "/ədˈmaɪərə/"
+  },
+  {
+   "rank": 9146,
+   "headword": "caregiver",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сиделка",
+    "опекун"
+   ],
+   "ipa": "/ˈkeəɡɪvə/"
+  },
+  {
+   "rank": 9147,
+   "headword": "loophole",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лазейка"
+   ],
+   "ipa": "/ˈluːphəʊl/"
+  },
+  {
+   "rank": 9148,
+   "headword": "utilise",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "использовать",
+    "применять"
+   ],
+   "ipa": "/ˈjuːtɪlaɪz/"
+  },
+  {
+   "rank": 9149,
+   "headword": "brute",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "скотина",
+    "грубиян",
+    "зверь"
+   ],
+   "ipa": "/bruːt/"
+  },
+  {
+   "rank": 9150,
+   "headword": "rejoin",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вновь присоединяться",
+    "возвращаться"
+   ],
+   "ipa": "/ˌriːˈdʒɔɪn/"
+  },
+  {
+   "rank": 9151,
+   "headword": "modem",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "модем"
+   ],
+   "ipa": "/ˈməʊdem/"
+  },
+  {
+   "rank": 9152,
+   "headword": "washer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "стиральная машина",
+    "шайба"
+   ],
+   "ipa": "/ˈwɒʃə/"
+  },
+  {
+   "rank": 9153,
+   "headword": "admirable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "достойный восхищения",
+    "похвальный"
+   ],
+   "ipa": "/ˈædmərəbəl/"
+  },
+  {
+   "rank": 9154,
+   "headword": "adventurer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "искатель приключений",
+    "авантюрист"
+   ],
+   "ipa": "/ədˈventʃərə/"
+  },
+  {
+   "rank": 9155,
+   "headword": "adventurous",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "авантюрный",
+    "смелый"
+   ],
+   "ipa": "/ədˈventʃərəs/"
+  },
+  {
+   "rank": 9156,
+   "headword": "ammo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "боеприпасы",
+    "патроны"
+   ],
+   "ipa": "/ˈæməʊ/"
+  },
+  {
+   "rank": 9157,
+   "headword": "anyhow",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "в любом случае",
+    "так или иначе"
+   ],
+   "ipa": "/ˈenihaʊ/"
+  },
+  {
+   "rank": 9158,
+   "headword": "ballistic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "баллистический"
+   ],
+   "ipa": "/bəˈlɪstɪk/"
+  },
+  {
+   "rank": 9159,
+   "headword": "banter",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "подтрунивание",
+    "шутливая беседа"
+   ],
+   "ipa": "/ˈbæntə/"
+  },
+  {
+   "rank": 9160,
+   "headword": "caramel",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "карамель"
+   ],
+   "ipa": "/ˈkærəmel/"
+  },
+  {
+   "rank": 9161,
+   "headword": "charismatic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "харизматичный",
+    "обаятельный"
+   ],
+   "ipa": "/ˌkærɪzˈmætɪk/"
+  },
+  {
+   "rank": 9162,
+   "headword": "commencement",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "начало",
+    "церемония выпуска"
+   ],
+   "ipa": "/kəˈmensmənt/"
+  },
+  {
+   "rank": 9163,
+   "headword": "contradictory",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "противоречивый"
+   ],
+   "ipa": "/ˌkɒntrəˈdɪktəri/"
+  },
+  {
+   "rank": 9164,
+   "headword": "corrosion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "коррозия"
+   ],
+   "ipa": "/kəˈrəʊʒən/"
+  },
+  {
+   "rank": 9165,
+   "headword": "dearly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "сильно",
+    "дорого"
+   ],
+   "ipa": "/ˈdɪəli/"
+  },
+  {
+   "rank": 9166,
+   "headword": "defiance",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "неповиновение",
+    "вызов"
+   ],
+   "ipa": "/dɪˈfaɪəns/"
+  },
+  {
+   "rank": 9167,
+   "headword": "ecstasy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "экстаз",
+    "восторг"
+   ],
+   "ipa": "/ˈekstəsi/"
+  },
+  {
+   "rank": 9168,
+   "headword": "eleventh",
+   "tier": "lookup",
+   "pos": "numeral",
+   "translations": [
+    "одиннадцатый"
+   ],
+   "ipa": "/ɪˈlevənθ/"
+  },
+  {
+   "rank": 9169,
+   "headword": "expiration",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "истечение срока",
+    "окончание"
+   ],
+   "ipa": "/ˌekspɪˈreɪʃən/"
+  },
+  {
+   "rank": 9170,
+   "headword": "expressly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "прямо",
+    "специально",
+    "явно"
+   ],
+   "ipa": "/ɪkˈspresli/"
+  },
+  {
+   "rank": 9171,
+   "headword": "fascination",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "очарование",
+    "увлечение"
+   ],
+   "ipa": "/ˌfæsɪˈneɪʃən/"
+  },
+  {
+   "rank": 9172,
+   "headword": "frontal",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "лобовой",
+    "фронтальный"
+   ],
+   "ipa": "/ˈfrʌntəl/"
+  },
+  {
+   "rank": 9173,
+   "headword": "gravy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "соус",
+    "подливка"
+   ],
+   "ipa": "/ˈɡreɪvi/"
+  },
+  {
+   "rank": 9174,
+   "headword": "hysterical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "истеричный",
+    "истерический"
+   ],
+   "ipa": "/hɪˈsterɪkəl/"
+  },
+  {
+   "rank": 9175,
+   "headword": "incompatible",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "несовместимый"
+   ],
+   "ipa": "/ˌɪnkəmˈpætəbəl/"
+  },
+  {
+   "rank": 9176,
+   "headword": "innate",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "врождённый"
+   ],
+   "ipa": "/ɪˈneɪt/"
+  },
+  {
+   "rank": 9177,
+   "headword": "keynote",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "основная идея",
+    "главная мысль"
+   ],
+   "ipa": "/ˈkiːnəʊt/"
+  },
+  {
+   "rank": 9178,
+   "headword": "motivational",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "мотивационный",
+    "мотивирующий"
+   ],
+   "ipa": "/ˌməʊtɪˈveɪʃənəl/"
+  },
+  {
+   "rank": 9179,
+   "headword": "nightly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "каждую ночь",
+    "каждый вечер"
+   ],
+   "ipa": "/ˈnaɪtli/"
+  },
+  {
+   "rank": 9180,
+   "headword": "noir",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "нуар"
+   ],
+   "ipa": "/nwɑː/"
+  },
+  {
+   "rank": 9181,
+   "headword": "notwithstanding",
+   "tier": "lookup",
+   "pos": "preposition",
+   "translations": [
+    "несмотря на"
+   ],
+   "ipa": "/ˌnɒtwɪðˈstændɪŋ/"
+  },
+  {
+   "rank": 9182,
+   "headword": "paralysis",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "паралич"
+   ],
+   "ipa": "/pəˈræləsɪs/"
+  },
+  {
+   "rank": 9183,
+   "headword": "patiently",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "терпеливо"
+   ],
+   "ipa": "/ˈpeɪʃəntli/"
+  },
+  {
+   "rank": 9184,
+   "headword": "placebo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "плацебо"
+   ],
+   "ipa": "/pləˈsiːbəʊ/"
+  },
+  {
+   "rank": 9185,
+   "headword": "progressively",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "постепенно",
+    "прогрессивно"
+   ],
+   "ipa": "/prəˈɡresɪvli/"
+  },
+  {
+   "rank": 9186,
+   "headword": "psych",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "морально настраивать",
+    "запугивать"
+   ],
+   "ipa": "/saɪk/"
+  },
+  {
+   "rank": 9187,
+   "headword": "retrospective",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "ретроспективный"
+   ],
+   "ipa": "/ˌretrəˈspektɪv/"
+  },
+  {
+   "rank": 9188,
+   "headword": "righteousness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "праведность"
+   ],
+   "ipa": "/ˈraɪtʃəsnəs/"
+  },
+  {
+   "rank": 9189,
+   "headword": "spinach",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "шпинат"
+   ],
+   "ipa": "/ˈspɪnɪdʒ/"
+  },
+  {
+   "rank": 9190,
+   "headword": "sublime",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "возвышенный",
+    "великолепный"
+   ],
+   "ipa": "/səˈblaɪm/"
+  },
+  {
+   "rank": 9191,
+   "headword": "sweetness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сладость",
+    "сладкий вкус"
+   ],
+   "ipa": "/ˈswiːtnəs/"
+  },
+  {
+   "rank": 9192,
+   "headword": "teamwork",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "командная работа"
+   ],
+   "ipa": "/ˈtiːmwɜːk/"
+  },
+  {
+   "rank": 9193,
+   "headword": "tequila",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "текила"
+   ],
+   "ipa": "/təˈkiːlə/"
+  },
+  {
+   "rank": 9194,
+   "headword": "terrestrial",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "земной",
+    "наземный"
+   ],
+   "ipa": "/təˈrestriəl/"
+  },
+  {
+   "rank": 9195,
+   "headword": "typo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "опечатка"
+   ],
+   "ipa": "/ˈtaɪpəʊ/"
+  },
+  {
+   "rank": 9196,
+   "headword": "unnatural",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неестественный"
+   ],
+   "ipa": "/ʌnˈnætʃərəl/"
+  },
+  {
+   "rank": 9197,
+   "headword": "unstoppable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неудержимый"
+   ],
+   "ipa": "/ʌnˈstɒpəbəl/"
+  },
+  {
+   "rank": 9198,
+   "headword": "upfront",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "заранее",
+    "авансом"
+   ],
+   "ipa": "/ˌʌpˈfrʌnt/"
+  },
+  {
+   "rank": 9199,
+   "headword": "urgently",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "срочно"
+   ],
+   "ipa": "/ˈɜːdʒəntli/"
+  },
+  {
+   "rank": 9200,
+   "headword": "virginity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "девственность"
+   ],
+   "ipa": "/vəˈdʒɪnəti/"
+  },
+  {
+   "rank": 9201,
+   "headword": "cafeteria",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кафетерий",
+    "столовая"
+   ],
+   "ipa": "/ˌkæfəˈtɪəriə/"
+  },
+  {
+   "rank": 9202,
+   "headword": "stifle",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "подавлять",
+    "душить"
+   ],
+   "ipa": "/ˈstaɪfəl/"
+  },
+  {
+   "rank": 9203,
+   "headword": "steamer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "пароход",
+    "пароварка"
+   ],
+   "ipa": "/ˈstiːmə/"
+  },
+  {
+   "rank": 9204,
+   "headword": "patio",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "патио",
+    "внутренний дворик"
+   ],
+   "ipa": "/ˈpætiəʊ/"
+  },
+  {
+   "rank": 9205,
+   "headword": "sectional",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "секционный",
+    "модульный"
+   ],
+   "ipa": "/ˈsekʃənəl/"
+  },
+  {
+   "rank": 9206,
+   "headword": "clam",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "моллюск"
+   ],
+   "ipa": "/klæm/"
+  },
+  {
+   "rank": 9207,
+   "headword": "cricketer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "игрок в крикет",
+    "крикетист"
+   ],
+   "ipa": "/ˈkrɪkɪtə/"
+  },
+  {
+   "rank": 9208,
+   "headword": "recollection",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "воспоминание"
+   ],
+   "ipa": "/ˌrekəˈlekʃən/"
+  },
+  {
+   "rank": 9209,
+   "headword": "sprawl",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "развалиться",
+    "разрастаться"
+   ],
+   "ipa": "/sprɔːl/"
+  },
+  {
+   "rank": 9210,
+   "headword": "deduct",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вычитать",
+    "удерживать"
+   ],
+   "ipa": "/dɪˈdʌkt/"
+  },
+  {
+   "rank": 9211,
+   "headword": "fluctuate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "колебаться"
+   ],
+   "ipa": "/ˈflʌktʃueɪt/"
+  },
+  {
+   "rank": 9212,
+   "headword": "misfortune",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "несчастье",
+    "невезение"
+   ],
+   "ipa": "/mɪsˈfɔːtʃən/"
+  },
+  {
+   "rank": 9213,
+   "headword": "acrylic",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "акрил"
+   ],
+   "ipa": "/əˈkrɪlɪk/"
+  },
+  {
+   "rank": 9214,
+   "headword": "takeaway",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "еда навынос"
+   ],
+   "ipa": "/ˈteɪkəweɪ/"
+  },
+  {
+   "rank": 9215,
+   "headword": "geologist",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "геолог"
+   ],
+   "ipa": "/dʒiˈɒlədʒɪst/"
+  },
+  {
+   "rank": 9216,
+   "headword": "rainforest",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "тропический лес",
+    "дождевой лес"
+   ],
+   "ipa": "/ˈreɪnfɒrɪst/"
+  },
+  {
+   "rank": 9217,
+   "headword": "projectile",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "снаряд"
+   ],
+   "ipa": "/prəˈdʒektaɪl/"
+  },
+  {
+   "rank": 9218,
+   "headword": "oversize",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "негабаритный",
+    "огромный"
+   ],
+   "ipa": "/ˈəʊvəsaɪz/"
+  },
+  {
+   "rank": 9219,
+   "headword": "barrow",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "тачка",
+    "курган"
+   ],
+   "ipa": "/ˈbærəʊ/"
+  },
+  {
+   "rank": 9220,
+   "headword": "Malay",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "малаец",
+    "малайский язык"
+   ],
+   "ipa": "/məˈleɪ/"
+  },
+  {
+   "rank": 9221,
+   "headword": "compiler",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "компилятор",
+    "составитель"
+   ],
+   "ipa": "/kəmˈpaɪlə/"
+  },
+  {
+   "rank": 9222,
+   "headword": "trespass",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "незаконно проникать",
+    "вторгаться"
+   ],
+   "ipa": "/ˈtrespəs/"
+  },
+  {
+   "rank": 9223,
+   "headword": "lavish",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "роскошный",
+    "щедрый"
+   ],
+   "ipa": "/ˈlævɪʃ/"
+  },
+  {
+   "rank": 9224,
+   "headword": "snort",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "фыркать",
+    "хрюкать"
+   ],
+   "ipa": "/snɔːt/"
+  },
+  {
+   "rank": 9225,
+   "headword": "mastermind",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вдохновитель",
+    "организатор",
+    "мозг"
+   ],
+   "ipa": "/ˈmɑːstəmaɪnd/"
+  },
+  {
+   "rank": 9226,
+   "headword": "folly",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "глупость",
+    "безрассудство"
+   ],
+   "ipa": "/ˈfɒli/"
+  },
+  {
+   "rank": 9227,
+   "headword": "toad",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "жаба"
+   ],
+   "ipa": "/təʊd/"
+  },
+  {
+   "rank": 9228,
+   "headword": "synthesize",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "синтезировать"
+   ],
+   "ipa": "/ˈsɪnθəsaɪz/"
+  },
+  {
+   "rank": 9229,
+   "headword": "profess",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "заявлять",
+    "исповедовать"
+   ],
+   "ipa": "/prəˈfes/"
+  },
+  {
+   "rank": 9230,
+   "headword": "watcher",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "наблюдатель"
+   ],
+   "ipa": "/ˈwɒtʃə/"
+  },
+  {
+   "rank": 9231,
+   "headword": "headquarter",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "размещать штаб-квартиру"
+   ],
+   "ipa": "/ˌhedˈkwɔːtə/"
+  },
+  {
+   "rank": 9232,
+   "headword": "amass",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "накапливать",
+    "собирать"
+   ],
+   "ipa": "/əˈmæs/"
+  },
+  {
+   "rank": 9233,
+   "headword": "proprietor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "владелец",
+    "собственник"
+   ],
+   "ipa": "/prəˈpraɪətə/"
+  },
+  {
+   "rank": 9234,
+   "headword": "protestor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "протестующий",
+    "демонстрант"
+   ],
+   "ipa": "/prəˈtestə/"
+  },
+  {
+   "rank": 9235,
+   "headword": "impeach",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "обвинять",
+    "объявлять импичмент"
+   ],
+   "ipa": "/ɪmˈpiːtʃ/"
+  },
+  {
+   "rank": 9236,
+   "headword": "synonym",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "синоним"
+   ],
+   "ipa": "/ˈsɪnənɪm/"
+  },
+  {
+   "rank": 9237,
+   "headword": "hillside",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "склон холма"
+   ],
+   "ipa": "/ˈhɪlsaɪd/"
+  },
+  {
+   "rank": 9238,
+   "headword": "misdemeanor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "проступок"
+   ],
+   "ipa": "/ˌmɪsdɪˈmiːnə/"
+  },
+  {
+   "rank": 9239,
+   "headword": "fag",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сигарета"
+   ],
+   "ipa": "/fæɡ/"
+  },
+  {
+   "rank": 9240,
+   "headword": "phosphate",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "фосфат"
+   ],
+   "ipa": "/ˈfɒsfeɪt/"
+  },
+  {
+   "rank": 9241,
+   "headword": "retake",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "пересдавать",
+    "отбивать"
+   ],
+   "ipa": "/ˌriːˈteɪk/"
+  },
+  {
+   "rank": 9242,
+   "headword": "lobbyist",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лоббист"
+   ],
+   "ipa": "/ˈlɒbiɪst/"
+  },
+  {
+   "rank": 9243,
+   "headword": "staffer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сотрудник",
+    "штатный работник"
+   ],
+   "ipa": "/ˈstɑːfə/"
+  },
+  {
+   "rank": 9244,
+   "headword": "primate",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "примат"
+   ],
+   "ipa": "/ˈpraɪmeɪt/"
+  },
+  {
+   "rank": 9245,
+   "headword": "abbot",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "аббат",
+    "настоятель"
+   ],
+   "ipa": "/ˈæbət/"
+  },
+  {
+   "rank": 9246,
+   "headword": "renounce",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "отрекаться",
+    "отказываться"
+   ],
+   "ipa": "/rɪˈnaʊns/"
+  },
+  {
+   "rank": 9247,
+   "headword": "reaffirm",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "подтверждать вновь",
+    "подтверждать"
+   ],
+   "ipa": "/ˌriːəˈfɜːm/"
+  },
+  {
+   "rank": 9248,
+   "headword": "cookbook",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кулинарная книга",
+    "книга рецептов"
+   ],
+   "ipa": "/ˈkʊkbʊk/"
+  },
+  {
+   "rank": 9249,
+   "headword": "sunflower",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "подсолнух"
+   ],
+   "ipa": "/ˈsʌnflaʊə/"
+  },
+  {
+   "rank": 9250,
+   "headword": "biodiversity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "биоразнообразие"
+   ],
+   "ipa": "/ˌbaɪəʊdaɪˈvɜːsəti/"
+  },
+  {
+   "rank": 9251,
+   "headword": "biomedical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "биомедицинский"
+   ],
+   "ipa": "/ˌbaɪəʊˈmedɪkəl/"
+  },
+  {
+   "rank": 9252,
+   "headword": "breadth",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ширина",
+    "широта"
+   ],
+   "ipa": "/bredθ/"
+  },
+  {
+   "rank": 9253,
+   "headword": "concord",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "согласие",
+    "гармония"
+   ],
+   "ipa": "/ˈkɒŋkɔːd/"
+  },
+  {
+   "rank": 9254,
+   "headword": "containment",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сдерживание",
+    "локализация"
+   ],
+   "ipa": "/kənˈteɪnmənt/"
+  },
+  {
+   "rank": 9255,
+   "headword": "dangerously",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "опасно"
+   ],
+   "ipa": "/ˈdeɪndʒərəsli/"
+  },
+  {
+   "rank": 9256,
+   "headword": "elusive",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неуловимый"
+   ],
+   "ipa": "/ɪˈluːsɪv/"
+  },
+  {
+   "rank": 9257,
+   "headword": "espionage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "шпионаж"
+   ],
+   "ipa": "/ˈespiənɑːʒ/"
+  },
+  {
+   "rank": 9258,
+   "headword": "existential",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "экзистенциальный"
+   ],
+   "ipa": "/ˌeɡzɪˈstenʃəl/"
+  },
+  {
+   "rank": 9259,
+   "headword": "experimentation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "экспериментирование",
+    "эксперименты"
+   ],
+   "ipa": "/ɪkˌsperɪmenˈteɪʃən/"
+  },
+  {
+   "rank": 9260,
+   "headword": "fanny",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "попа",
+    "зад"
+   ],
+   "ipa": "/ˈfæni/"
+  },
+  {
+   "rank": 9261,
+   "headword": "grading",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "выставление оценок",
+    "сортировка"
+   ],
+   "ipa": "/ˈɡreɪdɪŋ/"
+  },
+  {
+   "rank": 9262,
+   "headword": "grumpy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "ворчливый",
+    "сердитый"
+   ],
+   "ipa": "/ˈɡrʌmpi/"
+  },
+  {
+   "rank": 9263,
+   "headword": "immersion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "погружение"
+   ],
+   "ipa": "/ɪˈmɜːʃən/"
+  },
+  {
+   "rank": 9264,
+   "headword": "inconvenient",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неудобный"
+   ],
+   "ipa": "/ˌɪnkənˈviːniənt/"
+  },
+  {
+   "rank": 9265,
+   "headword": "intrinsic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "внутренний",
+    "присущий"
+   ],
+   "ipa": "/ɪnˈtrɪnzɪk/"
+  },
+  {
+   "rank": 9266,
+   "headword": "irresistible",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неотразимый",
+    "непреодолимый"
+   ],
+   "ipa": "/ˌɪrɪˈzɪstəbəl/"
+  },
+  {
+   "rank": 9267,
+   "headword": "moderation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "умеренность",
+    "сдержанность"
+   ],
+   "ipa": "/ˌmɒdəˈreɪʃən/"
+  },
+  {
+   "rank": 9268,
+   "headword": "Moroccan",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "марокканский"
+   ],
+   "ipa": "/məˈrɒkən/"
+  },
+  {
+   "rank": 9269,
+   "headword": "nobility",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "знать",
+    "дворянство",
+    "благородство"
+   ],
+   "ipa": "/nəʊˈbɪləti/"
+  },
+  {
+   "rank": 9270,
+   "headword": "onstage",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "на сцене"
+   ],
+   "ipa": "/ˌɒnˈsteɪdʒ/"
+  },
+  {
+   "rank": 9271,
+   "headword": "ordeal",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "тяжёлое испытание"
+   ],
+   "ipa": "/ɔːˈdiːl/"
+  },
+  {
+   "rank": 9272,
+   "headword": "painfully",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "болезненно",
+    "мучительно"
+   ],
+   "ipa": "/ˈpeɪnfəli/"
+  },
+  {
+   "rank": 9273,
+   "headword": "paranormal",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "паранормальный"
+   ],
+   "ipa": "/ˌpærəˈnɔːməl/"
+  },
+  {
+   "rank": 9274,
+   "headword": "politely",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "вежливо"
+   ],
+   "ipa": "/pəˈlaɪtli/"
+  },
+  {
+   "rank": 9275,
+   "headword": "pollen",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "пыльца"
+   ],
+   "ipa": "/ˈpɒlən/"
+  },
+  {
+   "rank": 9276,
+   "headword": "puberty",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "половое созревание",
+    "пубертат"
+   ],
+   "ipa": "/ˈpjuːbəti/"
+  },
+  {
+   "rank": 9277,
+   "headword": "reggae",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "регги"
+   ],
+   "ipa": "/ˈreɡeɪ/"
+  },
+  {
+   "rank": 9278,
+   "headword": "respectfully",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "почтительно",
+    "с уважением"
+   ],
+   "ipa": "/rɪˈspektfəli/"
+  },
+  {
+   "rank": 9279,
+   "headword": "rodeo",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "родео"
+   ],
+   "ipa": "/ˈrəʊdiəʊ/"
+  },
+  {
+   "rank": 9280,
+   "headword": "stocking",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "чулок"
+   ],
+   "ipa": "/ˈstɒkɪŋ/"
+  },
+  {
+   "rank": 9281,
+   "headword": "thatcher",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кровельщик"
+   ],
+   "ipa": "/ˈθætʃə/"
+  },
+  {
+   "rank": 9282,
+   "headword": "trendy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "модный"
+   ],
+   "ipa": "/ˈtrendi/"
+  },
+  {
+   "rank": 9283,
+   "headword": "turbulent",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "бурный",
+    "турбулентный"
+   ],
+   "ipa": "/ˈtɜːbjələnt/"
+  },
+  {
+   "rank": 9284,
+   "headword": "unbearable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "невыносимый"
+   ],
+   "ipa": "/ʌnˈbeərəbəl/"
+  },
+  {
+   "rank": 9285,
+   "headword": "underage",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "несовершеннолетний"
+   ],
+   "ipa": "/ˌʌndərˈeɪdʒ/"
+  },
+  {
+   "rank": 9286,
+   "headword": "unmarried",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неженатый",
+    "незамужний"
+   ],
+   "ipa": "/ʌnˈmærid/"
+  },
+  {
+   "rank": 9287,
+   "headword": "vaguely",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "смутно",
+    "неопределённо"
+   ],
+   "ipa": "/ˈveɪɡli/"
+  },
+  {
+   "rank": 9288,
+   "headword": "veggy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "овощ"
+   ],
+   "ipa": "/ˈvedʒi/"
+  },
+  {
+   "rank": 9289,
+   "headword": "Olympian",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "олимпиец"
+   ],
+   "ipa": "/əˈlɪmpiən/"
+  },
+  {
+   "rank": 9290,
+   "headword": "padre",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "священник",
+    "капеллан"
+   ],
+   "ipa": "/ˈpɑːdreɪ/"
+  },
+  {
+   "rank": 9291,
+   "headword": "characterise",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "характеризовать"
+   ],
+   "ipa": "/ˈkærəktəraɪz/"
+  },
+  {
+   "rank": 9292,
+   "headword": "foresee",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "предвидеть"
+   ],
+   "ipa": "/fɔːˈsiː/"
+  },
+  {
+   "rank": 9293,
+   "headword": "delve",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "копаться",
+    "углубляться",
+    "вникать"
+   ],
+   "ipa": "/delv/"
+  },
+  {
+   "rank": 9294,
+   "headword": "healer",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "целитель"
+   ],
+   "ipa": "/ˈhiːlə/"
+  },
+  {
+   "rank": 9295,
+   "headword": "psychopath",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "психопат"
+   ],
+   "ipa": "/ˈsaɪkəpæθ/"
+  },
+  {
+   "rank": 9296,
+   "headword": "waltz",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вальс"
+   ],
+   "ipa": "/wɔːls/"
+  },
+  {
+   "rank": 9297,
+   "headword": "orphanage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "приют",
+    "детский дом"
+   ],
+   "ipa": "/ˈɔːfənɪdʒ/"
+  },
+  {
+   "rank": 9298,
+   "headword": "payload",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "полезная нагрузка"
+   ],
+   "ipa": "/ˈpeɪləʊd/"
+  },
+  {
+   "rank": 9299,
+   "headword": "rink",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "каток"
+   ],
+   "ipa": "/rɪŋk/"
+  },
+  {
+   "rank": 9300,
+   "headword": "blocker",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "блокировщик"
+   ],
+   "ipa": "/ˈblɒkə/"
+  },
+  {
+   "rank": 9301,
+   "headword": "pundit",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "обозреватель",
+    "эксперт"
+   ],
+   "ipa": "/ˈpʌndɪt/"
+  },
+  {
+   "rank": 9302,
+   "headword": "shilling",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "шиллинг"
+   ],
+   "ipa": "/ˈʃɪlɪŋ/"
+  },
+  {
+   "rank": 9303,
+   "headword": "vape",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "парить",
+    "курить вейп"
+   ],
+   "ipa": "/veɪp/"
+  },
+  {
+   "rank": 9304,
+   "headword": "doodle",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "рисовать каракули"
+   ],
+   "ipa": "/ˈduːdəl/"
+  },
+  {
+   "rank": 9305,
+   "headword": "dredge",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вычерпывать",
+    "углублять дно"
+   ],
+   "ipa": "/dredʒ/"
+  },
+  {
+   "rank": 9306,
+   "headword": "tablespoon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "столовая ложка"
+   ],
+   "ipa": "/ˈteɪbəlspuːn/"
+  },
+  {
+   "rank": 9307,
+   "headword": "abound",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "изобиловать"
+   ],
+   "ipa": "/əˈbaʊnd/"
+  },
+  {
+   "rank": 9308,
+   "headword": "segregate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "разделять",
+    "обособлять"
+   ],
+   "ipa": "/ˈseɡrɪɡeɪt/"
+  },
+  {
+   "rank": 9309,
+   "headword": "mammoth",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "мамонт"
+   ],
+   "ipa": "/ˈmæməθ/"
+  },
+  {
+   "rank": 9310,
+   "headword": "exclaim",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "восклицать"
+   ],
+   "ipa": "/ɪkˈskleɪm/"
+  },
+  {
+   "rank": 9311,
+   "headword": "ascent",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "подъём",
+    "восхождение"
+   ],
+   "ipa": "/əˈsent/"
+  },
+  {
+   "rank": 9312,
+   "headword": "nylon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "нейлон"
+   ],
+   "ipa": "/ˈnaɪlɒn/"
+  },
+  {
+   "rank": 9313,
+   "headword": "winery",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "винодельня"
+   ],
+   "ipa": "/ˈwaɪnəri/"
+  },
+  {
+   "rank": 9314,
+   "headword": "goon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бандит",
+    "громила"
+   ],
+   "ipa": "/ɡuːn/"
+  },
+  {
+   "rank": 9315,
+   "headword": "organiser",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "организатор"
+   ],
+   "ipa": "/ˈɔːɡənaɪzə/"
+  },
+  {
+   "rank": 9316,
+   "headword": "squirt",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "брызгать",
+    "прыскать"
+   ],
+   "ipa": "/skwɜːt/"
+  },
+  {
+   "rank": 9317,
+   "headword": "scorch",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "опалять",
+    "обжигать"
+   ],
+   "ipa": "/skɔːtʃ/"
+  },
+  {
+   "rank": 9318,
+   "headword": "eyewitness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "очевидец"
+   ],
+   "ipa": "/ˈaɪwɪtnəs/"
+  },
+  {
+   "rank": 9319,
+   "headword": "giraffe",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "жираф"
+   ],
+   "ipa": "/dʒɪˈrɑːf/"
+  },
+  {
+   "rank": 9320,
+   "headword": "melon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "дыня"
+   ],
+   "ipa": "/ˈmelən/"
+  },
+  {
+   "rank": 9321,
+   "headword": "thump",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "бить",
+    "колотить"
+   ],
+   "ipa": "/θʌmp/"
+  },
+  {
+   "rank": 9322,
+   "headword": "mustache",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "усы"
+   ],
+   "ipa": "/məˈstɑːʃ/"
+  },
+  {
+   "rank": 9323,
+   "headword": "skyscraper",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "небоскрёб"
+   ],
+   "ipa": "/ˈskaɪskreɪpə/"
+  },
+  {
+   "rank": 9324,
+   "headword": "smoothie",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "смузи"
+   ],
+   "ipa": "/ˈsmuːði/"
+  },
+  {
+   "rank": 9325,
+   "headword": "morph",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "превращаться",
+    "трансформироваться"
+   ],
+   "ipa": "/mɔːf/"
+  },
+  {
+   "rank": 9326,
+   "headword": "elm",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вяз"
+   ],
+   "ipa": "/elm/"
+  },
+  {
+   "rank": 9327,
+   "headword": "sicken",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вызывать отвращение",
+    "заболевать"
+   ],
+   "ipa": "/ˈsɪkən/"
+  },
+  {
+   "rank": 9328,
+   "headword": "polarize",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "поляризовать",
+    "разделять"
+   ],
+   "ipa": "/ˈpəʊləraɪz/"
+  },
+  {
+   "rank": 9329,
+   "headword": "doughnut",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "пончик"
+   ],
+   "ipa": "/ˈdəʊnʌt/"
+  },
+  {
+   "rank": 9330,
+   "headword": "inclination",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "склонность",
+    "наклонность"
+   ],
+   "ipa": "/ˌɪnklɪˈneɪʃən/"
+  },
+  {
+   "rank": 9331,
+   "headword": "rampage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "буйство",
+    "бесчинство"
+   ],
+   "ipa": "/ˈræmpeɪdʒ/"
+  },
+  {
+   "rank": 9332,
+   "headword": "periodical",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "периодическое издание",
+    "журнал"
+   ],
+   "ipa": "/ˌpɪəriˈɒdɪkəl/"
+  },
+  {
+   "rank": 9333,
+   "headword": "conjecture",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "догадка",
+    "предположение"
+   ],
+   "ipa": "/kənˈdʒektʃə/"
+  },
+  {
+   "rank": 9334,
+   "headword": "assay",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "проба",
+    "анализ"
+   ],
+   "ipa": "/ˈæseɪ/"
+  },
+  {
+   "rank": 9335,
+   "headword": "martian",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "марсианин"
+   ],
+   "ipa": "/ˈmɑːʃən/"
+  },
+  {
+   "rank": 9336,
+   "headword": "vaccinate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "вакцинировать",
+    "прививать"
+   ],
+   "ipa": "/ˈvæksɪneɪt/"
+  },
+  {
+   "rank": 9337,
+   "headword": "radiator",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "радиатор",
+    "батарея"
+   ],
+   "ipa": "/ˈreɪdieɪtə/"
+  },
+  {
+   "rank": 9338,
+   "headword": "sculptor",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "скульптор"
+   ],
+   "ipa": "/ˈskʌlptə/"
+  },
+  {
+   "rank": 9339,
+   "headword": "kiwi",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "киви"
+   ],
+   "ipa": "/ˈkiːwi/"
+  },
+  {
+   "rank": 9340,
+   "headword": "backfire",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "приводить к обратному результату"
+   ],
+   "ipa": "/ˌbækˈfaɪə/"
+  },
+  {
+   "rank": 9341,
+   "headword": "bondage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "рабство",
+    "неволя"
+   ],
+   "ipa": "/ˈbɒndɪdʒ/"
+  },
+  {
+   "rank": 9342,
+   "headword": "boredom",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "скука"
+   ],
+   "ipa": "/ˈbɔːdəm/"
+  },
+  {
+   "rank": 9343,
+   "headword": "bowman",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лучник"
+   ],
+   "ipa": "/ˈbəʊmən/"
+  },
+  {
+   "rank": 9344,
+   "headword": "brilliantly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "блестяще"
+   ],
+   "ipa": "/ˈbrɪliəntli/"
+  },
+  {
+   "rank": 9345,
+   "headword": "brunch",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "поздний завтрак",
+    "бранч"
+   ],
+   "ipa": "/brʌntʃ/"
+  },
+  {
+   "rank": 9346,
+   "headword": "burgundy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бордовый цвет",
+    "бургундское"
+   ],
+   "ipa": "/ˈbɜːɡəndi/"
+  },
+  {
+   "rank": 9347,
+   "headword": "chem",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "химия"
+   ],
+   "ipa": "/kem/"
+  },
+  {
+   "rank": 9348,
+   "headword": "cleanup",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "уборка",
+    "очистка"
+   ],
+   "ipa": "/ˈkliːnʌp/"
+  },
+  {
+   "rank": 9349,
+   "headword": "concise",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "краткий",
+    "сжатый"
+   ],
+   "ipa": "/kənˈsaɪs/"
+  },
+  {
+   "rank": 9350,
+   "headword": "confinement",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "заключение",
+    "лишение свободы"
+   ],
+   "ipa": "/kənˈfaɪnmənt/"
+  },
+  {
+   "rank": 9351,
+   "headword": "consultancy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "консалтинг",
+    "консультация"
+   ],
+   "ipa": "/kənˈsʌltənsi/"
+  },
+  {
+   "rank": 9352,
+   "headword": "convergence",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "сближение",
+    "схождение",
+    "конвергенция"
+   ],
+   "ipa": "/kənˈvɜːdʒəns/"
+  },
+  {
+   "rank": 9353,
+   "headword": "despicable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "презренный",
+    "подлый"
+   ],
+   "ipa": "/dɪˈspɪkəbəl/"
+  },
+  {
+   "rank": 9354,
+   "headword": "dialog",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "диалог"
+   ],
+   "ipa": "/ˈdaɪəlɒɡ/"
+  },
+  {
+   "rank": 9355,
+   "headword": "digestive",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "пищеварительный"
+   ],
+   "ipa": "/daɪˈdʒestɪv/"
+  },
+  {
+   "rank": 9356,
+   "headword": "discriminatory",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "дискриминационный"
+   ],
+   "ipa": "/dɪˈskrɪmɪnətəri/"
+  },
+  {
+   "rank": 9357,
+   "headword": "disruptive",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "мешающий",
+    "подрывной"
+   ],
+   "ipa": "/dɪsˈrʌptɪv/"
+  },
+  {
+   "rank": 9358,
+   "headword": "endlessly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "бесконечно"
+   ],
+   "ipa": "/ˈendləsli/"
+  },
+  {
+   "rank": 9359,
+   "headword": "epilepsy",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "эпилепсия"
+   ],
+   "ipa": "/ˈepɪlepsi/"
+  },
+  {
+   "rank": 9360,
+   "headword": "ethanol",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "этанол"
+   ],
+   "ipa": "/ˈeθənɒl/"
+  },
+  {
+   "rank": 9361,
+   "headword": "eyeball",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "глазное яблоко"
+   ],
+   "ipa": "/ˈaɪbɔːl/"
+  },
+  {
+   "rank": 9362,
+   "headword": "forcibly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "силой",
+    "насильно"
+   ],
+   "ipa": "/ˈfɔːsɪbli/"
+  },
+  {
+   "rank": 9363,
+   "headword": "globalization",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "глобализация"
+   ],
+   "ipa": "/ˌɡləʊbəlaɪˈzeɪʃən/"
+  },
+  {
+   "rank": 9364,
+   "headword": "grail",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "грааль"
+   ],
+   "ipa": "/ɡreɪl/"
+  },
+  {
+   "rank": 9365,
+   "headword": "graphical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "графический"
+   ],
+   "ipa": "/ˈɡræfɪkəl/"
+  },
+  {
+   "rank": 9366,
+   "headword": "groundbreaking",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "новаторский",
+    "революционный"
+   ],
+   "ipa": "/ˈɡraʊndbreɪkɪŋ/"
+  },
+  {
+   "rank": 9367,
+   "headword": "holiness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "святость"
+   ],
+   "ipa": "/ˈhəʊlinəs/"
+  },
+  {
+   "rank": 9368,
+   "headword": "immoral",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "аморальный",
+    "безнравственный"
+   ],
+   "ipa": "/ɪˈmɒrəl/"
+  },
+  {
+   "rank": 9369,
+   "headword": "inefficient",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неэффективный"
+   ],
+   "ipa": "/ˌɪnɪˈfɪʃənt/"
+  },
+  {
+   "rank": 9370,
+   "headword": "instrumentation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "аппаратура",
+    "приборы"
+   ],
+   "ipa": "/ˌɪnstrəmenˈteɪʃən/"
+  },
+  {
+   "rank": 9371,
+   "headword": "intolerance",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "нетерпимость"
+   ],
+   "ipa": "/ɪnˈtɒlərəns/"
+  },
+  {
+   "rank": 9372,
+   "headword": "ketchup",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кетчуп"
+   ],
+   "ipa": "/ˈketʃəp/"
+  },
+  {
+   "rank": 9373,
+   "headword": "leukemia",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лейкемия",
+    "лейкоз"
+   ],
+   "ipa": "/luːˈkiːmiə/"
+  },
+  {
+   "rank": 9374,
+   "headword": "manpower",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "рабочая сила",
+    "кадры"
+   ],
+   "ipa": "/ˈmænpaʊə/"
+  },
+  {
+   "rank": 9375,
+   "headword": "masturbation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "мастурбация"
+   ],
+   "ipa": "/ˌmæstəˈbeɪʃən/"
+  },
+  {
+   "rank": 9376,
+   "headword": "mitigation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "смягчение",
+    "снижение"
+   ],
+   "ipa": "/ˌmɪtɪˈɡeɪʃən/"
+  },
+  {
+   "rank": 9377,
+   "headword": "obscene",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "непристойный",
+    "неприличный"
+   ],
+   "ipa": "/əbˈsiːn/"
+  },
+  {
+   "rank": 9378,
+   "headword": "onward",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "вперёд",
+    "дальше"
+   ],
+   "ipa": "/ˈɒnwəd/"
+  },
+  {
+   "rank": 9379,
+   "headword": "opium",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "опиум"
+   ],
+   "ipa": "/ˈəʊpiəm/"
+  },
+  {
+   "rank": 9380,
+   "headword": "ovarian",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "яичниковый"
+   ],
+   "ipa": "/əʊˈveəriən/"
+  },
+  {
+   "rank": 9381,
+   "headword": "penal",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "уголовный",
+    "штрафной"
+   ],
+   "ipa": "/ˈpiːnəl/"
+  },
+  {
+   "rank": 9382,
+   "headword": "plight",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бедственное положение"
+   ],
+   "ipa": "/plaɪt/"
+  },
+  {
+   "rank": 9383,
+   "headword": "privy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "посвящённый",
+    "осведомлённый"
+   ],
+   "ipa": "/ˈprɪvi/"
+  },
+  {
+   "rank": 9384,
+   "headword": "propulsion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "движение вперёд",
+    "тяга"
+   ],
+   "ipa": "/prəˈpʌlʃən/"
+  },
+  {
+   "rank": 9385,
+   "headword": "ren",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "рэн"
+   ],
+   "ipa": "/ren/"
+  },
+  {
+   "rank": 9386,
+   "headword": "sesame",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кунжут",
+    "сезам"
+   ],
+   "ipa": "/ˈsesəmi/"
+  },
+  {
+   "rank": 9387,
+   "headword": "snowy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "снежный"
+   ],
+   "ipa": "/ˈsnəʊi/"
+  },
+  {
+   "rank": 9388,
+   "headword": "spectral",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "призрачный",
+    "спектральный"
+   ],
+   "ipa": "/ˈspektrəl/"
+  },
+  {
+   "rank": 9389,
+   "headword": "standing",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "положение",
+    "статус"
+   ],
+   "ipa": "/ˈstændɪŋ/"
+  },
+  {
+   "rank": 9390,
+   "headword": "stormy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "бурный",
+    "штормовой"
+   ],
+   "ipa": "/ˈstɔːmi/"
+  },
+  {
+   "rank": 9391,
+   "headword": "subcommittee",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "подкомитет"
+   ],
+   "ipa": "/ˈsʌbkəmɪti/"
+  },
+  {
+   "rank": 9392,
+   "headword": "swine",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "свинья"
+   ],
+   "ipa": "/swaɪn/"
+  },
+  {
+   "rank": 9393,
+   "headword": "symbolism",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "символизм",
+    "символика"
+   ],
+   "ipa": "/ˈsɪmbəlɪzəm/"
+  },
+  {
+   "rank": 9394,
+   "headword": "underworld",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "преступный мир",
+    "подземное царство"
+   ],
+   "ipa": "/ˈʌndəwɜːld/"
+  },
+  {
+   "rank": 9395,
+   "headword": "vertically",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "вертикально"
+   ],
+   "ipa": "/ˈvɜːtɪkli/"
+  },
+  {
+   "rank": 9396,
+   "headword": "vigorous",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "энергичный",
+    "активный"
+   ],
+   "ipa": "/ˈvɪɡərəs/"
+  },
+  {
+   "rank": 9397,
+   "headword": "wrongly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "неправильно",
+    "ошибочно"
+   ],
+   "ipa": "/ˈrɒŋli/"
+  },
+  {
+   "rank": 9398,
+   "headword": "dab",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "промокать",
+    "слегка касаться"
+   ],
+   "ipa": "/dæb/"
+  },
+  {
+   "rank": 9399,
+   "headword": "drape",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "драпировать"
+   ],
+   "ipa": "/dreɪp/"
+  },
+  {
+   "rank": 9400,
+   "headword": "computation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вычисление",
+    "расчёт"
+   ],
+   "ipa": "/ˌkɒmpjuˈteɪʃən/"
+  },
+  {
+   "rank": 9401,
+   "headword": "entrant",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "участник",
+    "конкурсант"
+   ],
+   "ipa": "/ˈentrənt/"
+  },
+  {
+   "rank": 9402,
+   "headword": "landfill",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "свалка",
+    "мусорный полигон"
+   ],
+   "ipa": "/ˈlændfɪl/"
+  },
+  {
+   "rank": 9403,
+   "headword": "brothel",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бордель",
+    "публичный дом"
+   ],
+   "ipa": "/ˈbrɒθəl/"
+  },
+  {
+   "rank": 9404,
+   "headword": "fireman",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "пожарный"
+   ],
+   "ipa": "/ˈfaɪəmən/"
+  },
+  {
+   "rank": 9405,
+   "headword": "blouse",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "блузка"
+   ],
+   "ipa": "/blaʊz/"
+  },
+  {
+   "rank": 9406,
+   "headword": "avert",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "предотвращать",
+    "отводить"
+   ],
+   "ipa": "/əˈvɜːt/"
+  },
+  {
+   "rank": 9407,
+   "headword": "poach",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "браконьерствовать",
+    "незаконно охотиться"
+   ],
+   "ipa": "/pəʊtʃ/"
+  },
+  {
+   "rank": 9408,
+   "headword": "simmer",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "томиться",
+    "кипеть на медленном огне"
+   ],
+   "ipa": "/ˈsɪmə/"
+  },
+  {
+   "rank": 9409,
+   "headword": "domino",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "домино"
+   ],
+   "ipa": "/ˈdɒmɪnəʊ/"
+  },
+  {
+   "rank": 9410,
+   "headword": "brunette",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "брюнетка"
+   ],
+   "ipa": "/bruːˈnet/"
+  },
+  {
+   "rank": 9411,
+   "headword": "drinker",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "выпивоха",
+    "пьяница"
+   ],
+   "ipa": "/ˈdrɪŋkə/"
+  },
+  {
+   "rank": 9412,
+   "headword": "relish",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "наслаждаться",
+    "смаковать"
+   ],
+   "ipa": "/ˈrelɪʃ/"
+  },
+  {
+   "rank": 9413,
+   "headword": "spaceship",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "космический корабль"
+   ],
+   "ipa": "/ˈspeɪsʃɪp/"
+  },
+  {
+   "rank": 9414,
+   "headword": "covet",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "страстно желать",
+    "жаждать"
+   ],
+   "ipa": "/ˈkʌvɪt/"
+  },
+  {
+   "rank": 9415,
+   "headword": "jug",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "кувшин",
+    "графин"
+   ],
+   "ipa": "/dʒʌɡ/"
+  },
+  {
+   "rank": 9416,
+   "headword": "teaspoon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "чайная ложка"
+   ],
+   "ipa": "/ˈtiːspuːn/"
+  },
+  {
+   "rank": 9417,
+   "headword": "localize",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "локализовать"
+   ],
+   "ipa": "/ˈləʊkəlaɪz/"
+  },
+  {
+   "rank": 9418,
+   "headword": "alligator",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "аллигатор"
+   ],
+   "ipa": "/ˈælɪɡeɪtə/"
+  },
+  {
+   "rank": 9419,
+   "headword": "millimeter",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "миллиметр"
+   ],
+   "ipa": "/ˈmɪlɪmiːtə/"
+  },
+  {
+   "rank": 9420,
+   "headword": "dun",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "серо-коричневый",
+    "бурый"
+   ],
+   "ipa": "/dʌn/"
+  },
+  {
+   "rank": 9421,
+   "headword": "affidavit",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "письменное показание",
+    "аффидевит"
+   ],
+   "ipa": "/ˌæfɪˈdeɪvɪt/"
+  },
+  {
+   "rank": 9422,
+   "headword": "elongate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "удлинять",
+    "вытягивать"
+   ],
+   "ipa": "/ˈiːlɒŋɡeɪt/"
+  },
+  {
+   "rank": 9423,
+   "headword": "rework",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "переделывать",
+    "перерабатывать"
+   ],
+   "ipa": "/ˌriːˈwɜːk/"
+  },
+  {
+   "rank": 9424,
+   "headword": "prune",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "обрезать",
+    "подрезать"
+   ],
+   "ipa": "/pruːn/"
+  },
+  {
+   "rank": 9425,
+   "headword": "lipid",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "липид"
+   ],
+   "ipa": "/ˈlɪpɪd/"
+  },
+  {
+   "rank": 9426,
+   "headword": "mediator",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "посредник",
+    "медиатор"
+   ],
+   "ipa": "/ˈmiːdieɪtə/"
+  },
+  {
+   "rank": 9427,
+   "headword": "excavate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "раскапывать",
+    "вести раскопки"
+   ],
+   "ipa": "/ˈekskəveɪt/"
+  },
+  {
+   "rank": 9428,
+   "headword": "sensibility",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "чувствительность",
+    "восприимчивость"
+   ],
+   "ipa": "/ˌsensəˈbɪləti/"
+  },
+  {
+   "rank": 9429,
+   "headword": "endow",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "наделять",
+    "одарять"
+   ],
+   "ipa": "/ɪnˈdaʊ/"
+  },
+  {
+   "rank": 9430,
+   "headword": "slander",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "клевета"
+   ],
+   "ipa": "/ˈslɑːndə/"
+  },
+  {
+   "rank": 9431,
+   "headword": "competency",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "компетентность",
+    "компетенция"
+   ],
+   "ipa": "/ˈkɒmpɪtənsi/"
+  },
+  {
+   "rank": 9432,
+   "headword": "bungalow",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "бунгало"
+   ],
+   "ipa": "/ˈbʌŋɡələʊ/"
+  },
+  {
+   "rank": 9433,
+   "headword": "strut",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "расхаживать",
+    "вышагивать"
+   ],
+   "ipa": "/strʌt/"
+  },
+  {
+   "rank": 9434,
+   "headword": "solidify",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "затвердевать",
+    "укреплять"
+   ],
+   "ipa": "/səˈlɪdɪfaɪ/"
+  },
+  {
+   "rank": 9435,
+   "headword": "captivate",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "пленять",
+    "очаровывать"
+   ],
+   "ipa": "/ˈkæptɪveɪt/"
+  },
+  {
+   "rank": 9436,
+   "headword": "heave",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "поднимать",
+    "тянуть"
+   ],
+   "ipa": "/hiːv/"
+  },
+  {
+   "rank": 9437,
+   "headword": "repress",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "подавлять"
+   ],
+   "ipa": "/rɪˈpres/"
+  },
+  {
+   "rank": 9438,
+   "headword": "apron",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "фартук"
+   ],
+   "ipa": "/ˈeɪprən/"
+  },
+  {
+   "rank": 9439,
+   "headword": "linebacker",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "лайнбекер"
+   ],
+   "ipa": "/ˈlaɪnbækə/"
+  },
+  {
+   "rank": 9440,
+   "headword": "toothbrush",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "зубная щётка"
+   ],
+   "ipa": "/ˈtuːθbrʌʃ/"
+  },
+  {
+   "rank": 9441,
+   "headword": "nudge",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "подталкивать",
+    "толкать локтем"
+   ],
+   "ipa": "/nʌdʒ/"
+  },
+  {
+   "rank": 9442,
+   "headword": "tinker",
+   "tier": "lookup",
+   "pos": "verb",
+   "translations": [
+    "возиться",
+    "мастерить"
+   ],
+   "ipa": "/ˈtɪŋkə/"
+  },
+  {
+   "rank": 9443,
+   "headword": "expulsion",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "изгнание",
+    "исключение"
+   ],
+   "ipa": "/ɪkˈspʌlʃən/"
+  },
+  {
+   "rank": 9444,
+   "headword": "alcoholism",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "алкоголизм"
+   ],
+   "ipa": "/ˈælkəhɒlɪzəm/"
+  },
+  {
+   "rank": 9445,
+   "headword": "atheism",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "атеизм"
+   ],
+   "ipa": "/ˈeɪθiɪzəm/"
+  },
+  {
+   "rank": 9446,
+   "headword": "audible",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "слышимый"
+   ],
+   "ipa": "/ˈɔːdəbəl/"
+  },
+  {
+   "rank": 9447,
+   "headword": "bathtub",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ванна"
+   ],
+   "ipa": "/ˈbɑːθtʌb/"
+  },
+  {
+   "rank": 9448,
+   "headword": "bitterness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "горечь"
+   ],
+   "ipa": "/ˈbɪtənəs/"
+  },
+  {
+   "rank": 9449,
+   "headword": "blatant",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "вопиющий",
+    "откровенный"
+   ],
+   "ipa": "/ˈbleɪtənt/"
+  },
+  {
+   "rank": 9450,
+   "headword": "boon",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "благо",
+    "благодеяние"
+   ],
+   "ipa": "/buːn/"
+  },
+  {
+   "rank": 9451,
+   "headword": "candid",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "искренний",
+    "откровенный"
+   ],
+   "ipa": "/ˈkændɪd/"
+  },
+  {
+   "rank": 9452,
+   "headword": "cervical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "шейный"
+   ],
+   "ipa": "/ˈsɜːvɪkəl/"
+  },
+  {
+   "rank": 9453,
+   "headword": "competitiveness",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "конкурентоспособность"
+   ],
+   "ipa": "/kəmˈpetətɪvnəs/"
+  },
+  {
+   "rank": 9454,
+   "headword": "confidentiality",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "конфиденциальность"
+   ],
+   "ipa": "/ˌkɒnfɪdenʃiˈæləti/"
+  },
+  {
+   "rank": 9455,
+   "headword": "coronation",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "коронация"
+   ],
+   "ipa": "/ˌkɒrəˈneɪʃən/"
+  },
+  {
+   "rank": 9456,
+   "headword": "cunning",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "хитрый",
+    "коварный"
+   ],
+   "ipa": "/ˈkʌnɪŋ/"
+  },
+  {
+   "rank": 9457,
+   "headword": "diaspora",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "диаспора"
+   ],
+   "ipa": "/daɪˈæspərə/"
+  },
+  {
+   "rank": 9458,
+   "headword": "digitally",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "в цифровом виде"
+   ],
+   "ipa": "/ˈdɪdʒɪtəli/"
+  },
+  {
+   "rank": 9459,
+   "headword": "discord",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "раздор",
+    "разлад"
+   ],
+   "ipa": "/ˈdɪskɔːd/"
+  },
+  {
+   "rank": 9460,
+   "headword": "divinity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "божественность",
+    "божество"
+   ],
+   "ipa": "/dɪˈvɪnəti/"
+  },
+  {
+   "rank": 9461,
+   "headword": "dorsal",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "спинной"
+   ],
+   "ipa": "/ˈdɔːsəl/"
+  },
+  {
+   "rank": 9462,
+   "headword": "durability",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "долговечность",
+    "прочность"
+   ],
+   "ipa": "/ˌdjʊərəˈbɪləti/"
+  },
+  {
+   "rank": 9463,
+   "headword": "empress",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "императрица"
+   ],
+   "ipa": "/ˈemprəs/"
+  },
+  {
+   "rank": 9464,
+   "headword": "genital",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "половой",
+    "генитальный"
+   ],
+   "ipa": "/ˈdʒenɪtəl/"
+  },
+  {
+   "rank": 9465,
+   "headword": "gent",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "джентльмен"
+   ],
+   "ipa": "/dʒent/"
+  },
+  {
+   "rank": 9466,
+   "headword": "greasy",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "жирный",
+    "сальный"
+   ],
+   "ipa": "/ˈɡriːsi/"
+  },
+  {
+   "rank": 9467,
+   "headword": "hideous",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "отвратительный",
+    "ужасный"
+   ],
+   "ipa": "/ˈhɪdiəs/"
+  },
+  {
+   "rank": 9468,
+   "headword": "homepage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "домашняя страница",
+    "главная страница"
+   ],
+   "ipa": "/ˈhəʊmpeɪdʒ/"
+  },
+  {
+   "rank": 9469,
+   "headword": "imaginative",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "изобретательный",
+    "творческий"
+   ],
+   "ipa": "/ɪˈmædʒɪnətɪv/"
+  },
+  {
+   "rank": 9470,
+   "headword": "imperfect",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "несовершенный",
+    "неидеальный"
+   ],
+   "ipa": "/ɪmˈpɜːfɪkt/"
+  },
+  {
+   "rank": 9471,
+   "headword": "implicit",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "неявный",
+    "подразумеваемый"
+   ],
+   "ipa": "/ɪmˈplɪsɪt/"
+  },
+  {
+   "rank": 9472,
+   "headword": "insensitive",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "бесчувственный",
+    "нечуткий"
+   ],
+   "ipa": "/ɪnˈsensɪtɪv/"
+  },
+  {
+   "rank": 9473,
+   "headword": "keystone",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "краеугольный камень",
+    "замковый камень"
+   ],
+   "ipa": "/ˈkiːstəʊn/"
+  },
+  {
+   "rank": 9474,
+   "headword": "kudos",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "слава",
+    "почёт",
+    "похвала"
+   ],
+   "ipa": "/ˈkjuːdɒs/"
+  },
+  {
+   "rank": 9475,
+   "headword": "lieu",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "место"
+   ],
+   "ipa": "/ljuː/"
+  },
+  {
+   "rank": 9476,
+   "headword": "liquidity",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "ликвидность"
+   ],
+   "ipa": "/lɪˈkwɪdəti/"
+  },
+  {
+   "rank": 9477,
+   "headword": "loch",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "озеро"
+   ],
+   "ipa": "/lɒx/"
+  },
+  {
+   "rank": 9478,
+   "headword": "mayhem",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "хаос",
+    "беспорядок"
+   ],
+   "ipa": "/ˈmeɪhem/"
+  },
+  {
+   "rank": 9479,
+   "headword": "mistakenly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "ошибочно",
+    "по ошибке"
+   ],
+   "ipa": "/mɪˈsteɪkənli/"
+  },
+  {
+   "rank": 9480,
+   "headword": "neuroscience",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "нейронаука"
+   ],
+   "ipa": "/ˈnjʊərəʊsaɪəns/"
+  },
+  {
+   "rank": 9481,
+   "headword": "nostalgic",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "ностальгический"
+   ],
+   "ipa": "/nɒˈstældʒɪk/"
+  },
+  {
+   "rank": 9482,
+   "headword": "oppressive",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "угнетающий",
+    "гнетущий"
+   ],
+   "ipa": "/əˈpresɪv/"
+  },
+  {
+   "rank": 9483,
+   "headword": "patronage",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "покровительство",
+    "патронаж"
+   ],
+   "ipa": "/ˈpætrənɪdʒ/"
+  },
+  {
+   "rank": 9484,
+   "headword": "pong",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "вонь",
+    "зловоние"
+   ],
+   "ipa": "/pɒŋ/"
+  },
+  {
+   "rank": 9485,
+   "headword": "qualitative",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "качественный"
+   ],
+   "ipa": "/ˈkwɒlɪtətɪv/"
+  },
+  {
+   "rank": 9486,
+   "headword": "radial",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "радиальный"
+   ],
+   "ipa": "/ˈreɪdiəl/"
+  },
+  {
+   "rank": 9487,
+   "headword": "recognizable",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "узнаваемый"
+   ],
+   "ipa": "/ˈrekəɡnaɪzəbəl/"
+  },
+  {
+   "rank": 9488,
+   "headword": "reconnaissance",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "разведка"
+   ],
+   "ipa": "/rɪˈkɒnɪsəns/"
+  },
+  {
+   "rank": 9489,
+   "headword": "reluctantly",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "неохотно"
+   ],
+   "ipa": "/rɪˈlʌktəntli/"
+  },
+  {
+   "rank": 9490,
+   "headword": "roadside",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "обочина"
+   ],
+   "ipa": "/ˈrəʊdsaɪd/"
+  },
+  {
+   "rank": 9491,
+   "headword": "scientifically",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "научно"
+   ],
+   "ipa": "/ˌsaɪənˈtɪfɪkli/"
+  },
+  {
+   "rank": 9492,
+   "headword": "secretariat",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "секретариат"
+   ],
+   "ipa": "/ˌsekrəˈteəriət/"
+  },
+  {
+   "rank": 9493,
+   "headword": "shaky",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "шаткий",
+    "дрожащий"
+   ],
+   "ipa": "/ˈʃeɪki/"
+  },
+  {
+   "rank": 9494,
+   "headword": "spore",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "спора"
+   ],
+   "ipa": "/spɔː/"
+  },
+  {
+   "rank": 9495,
+   "headword": "stature",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "рост",
+    "статус",
+    "авторитет"
+   ],
+   "ipa": "/ˈstætʃə/"
+  },
+  {
+   "rank": 9496,
+   "headword": "stout",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "коренастый",
+    "крепкий"
+   ],
+   "ipa": "/staʊt/"
+  },
+  {
+   "rank": 9497,
+   "headword": "strategically",
+   "tier": "lookup",
+   "pos": "adverb",
+   "translations": [
+    "стратегически"
+   ],
+   "ipa": "/strəˈtiːdʒɪkli/"
+  },
+  {
+   "rank": 9498,
+   "headword": "tentative",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "предварительный",
+    "неуверенный"
+   ],
+   "ipa": "/ˈtentətɪv/"
+  },
+  {
+   "rank": 9499,
+   "headword": "topical",
+   "tier": "lookup",
+   "pos": "adjective",
+   "translations": [
+    "актуальный",
+    "злободневный"
+   ],
+   "ipa": "/ˈtɒpɪkəl/"
+  },
+  {
+   "rank": 9500,
+   "headword": "tributary",
+   "tier": "lookup",
+   "pos": "noun",
+   "translations": [
+    "приток"
+   ],
+   "ipa": "/ˈtrɪbjətəri/"
+  }
+ ]
+}

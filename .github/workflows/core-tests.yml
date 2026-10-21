@@ -24,4 +24,7 @@ jobs:
           path: LingvoCore/.build
           key: spm-${{ runner.os }}-${{ hashFiles('LingvoCore/Package.resolved') }}
       - run: swift --version
+      # The dictionary tools use only the Python standard library (3.9+), so no pip install.
+      - run: python3 --version
+      # Core tests, dictionary tool tests, `validate.py --full` and a LingvoCore read of the built dictionary.
       - run: make test
