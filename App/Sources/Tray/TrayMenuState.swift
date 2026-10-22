@@ -23,6 +23,9 @@ struct TrayMenuState: Equatable {
 
     var isPaused: Bool { schedule.pausedUntil != nil }
 
+    /// Kapa in the header sleeps while timed cards are held back: a pause, quiet hours, Focus, full screen.
+    var kapaMood: KapaMood { isPaused || schedule.hold != nil ? .asleep : .calm }
+
     var streakLabel: String {
         stats.streakDays == 1
             ? String(localized: "Streak 1 day")

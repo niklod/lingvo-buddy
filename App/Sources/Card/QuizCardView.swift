@@ -9,7 +9,7 @@ struct QuizCardActions {
     var close: () -> Void = {}
 }
 
-/// The quiz card from the design: header, word, 2×2 options, feedback, footer.
+/// The quiz card from the design: header, word, 2×2 options, feedback with Kapa's mood, footer.
 struct QuizCardView: View {
     static let width: CGFloat = 380
 
@@ -79,6 +79,19 @@ struct QuizCardView: View {
     }
 
     private func feedbackBlock(_ text: String) -> some View {
+        HStack(spacing: 12) {
+            if let answer = state.answer {
+                KapaMoodView(mood: KapaMood(answer.result))
+            }
+            feedbackText(text)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
+        .background(Theme.Palette.raised, in: RoundedRectangle(cornerRadius: Theme.Radius.option))
+    }
+
+    private func feedbackText(_ text: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(verbatim: text)
                 .font(.system(size: Theme.FontSize.body, weight: .semibold))
@@ -95,8 +108,5 @@ struct QuizCardView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 10)
-        .padding(.horizontal, 12)
-        .background(Theme.Palette.raised, in: RoundedRectangle(cornerRadius: Theme.Radius.option))
     }
 }
