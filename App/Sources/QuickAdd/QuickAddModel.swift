@@ -30,6 +30,8 @@ final class QuickAddModel {
     var example = ""
     private(set) var preview: QuickAddPreview?
     private(set) var message: QuickAddMessage?
+    /// Index into `preview.candidates`: the English word for Russian input.
+    private(set) var candidateIndex = 0
 
     @ObservationIgnored private let lookup: (String) throws -> QuickAddPreview?
     @ObservationIgnored private var pendingLookup: Task<Void, Never>?
@@ -41,24 +43,43 @@ final class QuickAddModel {
         refreshPreview()
     }
 
+    /// The word the footer, the meta line and "Add" refer to.
+    var candidate: QuickAddCandidate? {
+        guard let candidates = preview?.candidates, candidates.indices.contains(candidateIndex) else {
+            return preview?.candidates.first
+        }
+        return candidates[candidateIndex]
+    }
+
+    /// The English words to choose from; empty for English input.
+    var candidates: [QuickAddCandidate] {
+        isRussianInput ? preview?.candidates ?? [] : []
+    }
+
+    /// The typed Russian word is the translation, so there is none to choose.
+    var isRussianInput: Bool { preview?.russianText != nil }
+
     var translations: [String] {
-        preview?.lookup?.entry.translations[.russian] ?? []
+        guard !isRussianInput else { return [] }
+        return candidate?.lookup?.entry.translations[.russian] ?? []
     }
 
     /// Words the dictionary lacks always need the custom field.
     var showsCustomField: Bool {
-        choice == .custom || (preview != nil && translations.isEmpty)
+        guard !isRussianInput else { return false }
+        return choice == .custom || (preview != nil && translations.isEmpty)
     }
 
     var chosenTranslation: String {
-        switch choice {
+        if let russianText = preview?.russianText { return russianText }
+        return switch choice {
         case .dictionary(let index) where translations.indices.contains(index): translations[index]
         case .dictionary, .custom: customTranslation
         }
     }
 
     var canSubmit: Bool {
-        guard let preview, preview.canAdd else { return false }
+        guard let candidate, candidate.canAdd else { return false }
         return !chosenTranslation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
@@ -67,30 +88,44 @@ final class QuickAddModel {
         if message.isError { message = nil }
     }
 
+    func chooseCandidate(_ index: Int) {
+        guard candidates.indices.contains(index) else { return }
+        candidateIndex = index
+        message = Self.standingMessage(for: candidate)
+    }
+
+    /// `false` when there is nothing to move through, so the key keeps its text-field meaning.
+    func moveCandidate(by offset: Int) -> Bool {
+        guard candidates.count > 1 else { return false }
+        chooseCandidate(min(max(candidateIndex + offset, 0), candidates.count - 1))
+        return true
+    }
+
     /// The word to add, or `nil` (with a footer message) when the form is not ready.
     func submission() -> NewMyWord? {
         // Enter can come before the typing pause ends; the word must be the one on screen.
         if pendingLookup != nil {
             refreshPreview()
         }
-        guard let preview else { return nil }
-        guard preview.canAdd else {
-            message = .standing(preview.standing)
+        guard let candidate else { return nil }
+        guard candidate.canAdd else {
+            message = .standing(candidate.standing)
             return nil
         }
         guard canSubmit else {
             message = .error(String(localized: "Type a translation for the card."))
             return nil
         }
-        return NewMyWord(text: preview.headword, translation: chosenTranslation, example: example)
+        return NewMyWord(text: candidate.headword, translation: chosenTranslation, example: example)
     }
 
     func show(_ message: QuickAddMessage) {
         self.message = message
     }
 
-    /// The first dictionary translation is preselected for each new word; a
-    /// choice made for the same word survives further edits (a trailing space).
+    /// The first dictionary translation and the first candidate are preselected
+    /// for each new word; a choice made for the same word survives further edits
+    /// (a trailing space).
     private func scheduleLookup() {
         pendingLookup?.cancel()
         pendingLookup = Task { [weak self] in
@@ -103,18 +138,30 @@ final class QuickAddModel {
     private func refreshPreview() {
         pendingLookup?.cancel()
         pendingLookup = nil
-        let previousHeadword = preview?.headword
+        let previousWord = preview?.typedWord
+        var failure: QuickAddMessage?
         do {
             preview = try lookup(text)
-            message = preview.flatMap { $0.canAdd ? nil : .standing($0.standing) }
         } catch {
             preview = nil
-            message = .error(error.localizedDescription)
+            failure = .error(error.localizedDescription)
         }
-        if preview?.headword != previousHeadword {
+        if preview?.typedWord != previousWord {
+            candidateIndex = 0
             choice = translations.isEmpty ? .custom : .dictionary(0)
         }
+        message = failure ?? Self.standingMessage(for: candidate)
     }
+
+    private static func standingMessage(for candidate: QuickAddCandidate?) -> QuickAddMessage? {
+        candidate.flatMap { $0.canAdd ? nil : .standing($0.standing) }
+    }
+}
+
+private extension QuickAddPreview {
+    /// The dictionary headword for English input (so "Reluctant" and "reluctant"
+    /// keep the choice), the trimmed text for Russian input.
+    var typedWord: String { russianText ?? headword }
 }
 
 private extension Optional where Wrapped == QuickAddMessage {

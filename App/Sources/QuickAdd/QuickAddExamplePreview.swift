@@ -7,13 +7,13 @@ struct DictionaryExample: Equatable {
 }
 
 extension QuickAddModel {
-    /// The dictionary example the card gets if "Where I saw it" stays empty.
+    /// The dictionary example of the selected word, which the card gets if "Where I saw it" stays empty.
     /// Own text replaces it on the card, so the preview hides as soon as the
     /// learner types; blank text still gives the dictionary example, so it does not.
     var examplePreview: DictionaryExample? {
         guard example.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              let english = preview?.example else { return nil }
-        return DictionaryExample(english: english, russian: preview?.russianExample)
+              let english = candidate?.example else { return nil }
+        return DictionaryExample(english: english, russian: candidate?.russianExample)
     }
 }
 

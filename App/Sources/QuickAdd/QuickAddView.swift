@@ -23,7 +23,9 @@ struct QuickAddView: View {
                 Text(verbatim: model.metaLine)
                     .font(.system(size: Theme.FontSize.caption))
                     .foregroundStyle(Theme.Palette.textSecondary)
-                if model.preview != nil {
+                if model.isRussianInput {
+                    candidateSection
+                } else if model.preview != nil {
                     translationSection
                 }
                 section(String(localized: "Where I saw it (optional)")) {
@@ -62,7 +64,7 @@ struct QuickAddView: View {
             .font(.system(size: QuickAddTheme.wordFontSize, weight: .semibold))
             .foregroundStyle(Theme.Palette.textStrong)
             .focused($focus, equals: .word)
-            Text(verbatim: "EN → RU")
+            Text(verbatim: model.directionLabel)
                 .font(.system(size: Theme.FontSize.caption))
                 .foregroundStyle(Theme.Palette.textSecondary)
         }
@@ -93,6 +95,18 @@ struct QuickAddView: View {
             if model.showsCustomField {
                 QuickAddField(placeholder: String(localized: "Your translation"), text: $model.customTranslation)
                     .focused($focus, equals: .custom)
+            }
+        }
+    }
+
+    private var candidateSection: some View {
+        section(String(localized: "English word for the card")) {
+            FlowLayout(spacing: 6) {
+                ForEach(Array(model.candidates.enumerated()), id: \.offset) { index, candidate in
+                    TranslationPill(title: candidate.headword, isSelected: model.candidateIndex == index) {
+                        model.chooseCandidate(index)
+                    }
+                }
             }
         }
     }

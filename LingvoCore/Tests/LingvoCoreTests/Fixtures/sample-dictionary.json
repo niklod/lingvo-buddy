@@ -46,6 +46,17 @@
     { "headword": "propose", "rank": 720, "pos": "verb", "ipa": "/prəˈpəʊz/", "example": "I propose a short break.", "synonym_group": "suggest", "tier": "quiz", "translations": { "ru": ["предлагать"] } },
     { "headword": "hello", "rank": 900, "pos": "interjection", "ipa": "/həˈləʊ/", "example": "Hello, how are you?", "synonym_group": "hello", "tier": "quiz", "translations": { "ru": ["привет", "здравствуйте"] } },
     { "headword": "eventually", "rank": 1460, "pos": "adverb", "ipa": "/ɪˈventʃuəli/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["в конце концов", "в итоге"] } },
-    { "headword": "reluctant", "rank": 4870, "pos": "adjective", "ipa": "/rɪˈlʌktənt/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["неохотный", "нежелающий", "сопротивляющийся"] } }
+    { "headword": "reluctant", "rank": 4870, "pos": "adjective", "ipa": "/rɪˈlʌktənt/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["неохотный", "нежелающий", "сопротивляющийся"] } },
+    { "headword": "speedy", "rank": 8800, "pos": "adjective", "ipa": "/ˈspiːdi/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["быстрый", "скорый"] } },
+    { "headword": "doubt", "rank": 2210, "pos": "noun", "ipa": "/daʊt/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["сомнение", "сомневаться"] } },
+    { "headword": "rapid", "rank": 2300, "pos": "adjective", "ipa": "/ˈræpɪd/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["быстрый", "стремительный"] } },
+    { "headword": "prompt", "rank": 2900, "pos": "adjective", "ipa": "/prɒmpt/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["быстрый", "немедленный"] } },
+    { "headword": "lightweight", "rank": 4400, "pos": "adjective", "ipa": "/ˈlaɪtweɪt/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["лёгкий"] } },
+    { "headword": "swift", "rank": 5200, "pos": "adjective", "ipa": "/swɪft/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["быстрый", "стремительный"] } },
+    { "headword": "hesitation", "rank": 6100, "pos": "noun", "ipa": "/ˌhezɪˈteɪʃən/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["колебание", "сомнение"] } },
+    { "headword": "effortless", "rank": 6700, "pos": "adjective", "ipa": "/ˈefətləs/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["лёгкий", "непринуждённый"] } },
+    { "headword": "brisk", "rank": 7400, "pos": "adjective", "ipa": "/brɪsk/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["быстрый", "оживлённый"] } },
+    { "headword": "hasty", "rank": 9100, "pos": "adjective", "ipa": "/ˈheɪsti/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["поспешный", "быстрый"] } },
+    { "headword": "airy", "rank": 9500, "pos": "adjective", "ipa": "/ˈeəri/", "example": null, "synonym_group": null, "tier": "lookup", "translations": { "ru": ["воздушный", "легкий"] } }
   ]
 }
