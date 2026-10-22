@@ -134,7 +134,7 @@ public struct DictionaryStore: Sendable {
         in db: Database
     ) throws -> [DictionaryEntry] {
         let rows = try Row.fetchAll(db, sql: """
-            SELECT e.id, e.headword, e.rank, e.pos, e.ipa, e.example, e.synonym_group, e.tier,
+            SELECT e.id, e.headword, e.rank, e.pos, e.ipa, e.example, e.example_ru, e.synonym_group, e.tier,
                    t.lang, t.text
             FROM entries e
             LEFT JOIN translations t ON t.entry_id = e.id
@@ -182,7 +182,8 @@ public struct DictionaryStore: Sendable {
             example: row["example"],
             synonymGroup: row["synonym_group"],
             tier: tier,
-            translations: translations
+            translations: translations,
+            russianExample: row["example_ru"]
         )
     }
 }

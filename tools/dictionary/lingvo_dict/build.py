@@ -27,7 +27,7 @@ def _in_list(values: Sequence[str]) -> str:
 
 
 # Mirrors LingvoCore/Sources/LingvoCore/Dictionary/DictionarySchema.swift; keep both in step.
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 SCHEMA = f"""
 CREATE TABLE entries (
     id INTEGER PRIMARY KEY,
@@ -36,6 +36,7 @@ CREATE TABLE entries (
     pos TEXT NOT NULL CHECK (pos IN ({_in_list(POS_VALUES)})),
     ipa TEXT NOT NULL,
     example TEXT,
+    example_ru TEXT,
     synonym_group TEXT,
     tier TEXT NOT NULL CHECK (tier IN ({_in_list(TIERS)}))
 );
@@ -59,14 +60,15 @@ PRAGMA user_version = {SCHEMA_VERSION};
 
 
 INSERT_ENTRY = (
-    "INSERT INTO entries (id, headword, rank, pos, ipa, example, synonym_group, tier) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    "INSERT INTO entries (id, headword, rank, pos, ipa, example, example_ru, synonym_group, tier)"
+    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 )
 INSERT_TRANSLATION = "INSERT INTO translations (entry_id, lang, ord, text) VALUES (?, ?, ?, ?)"
 INSERT_EXCLUSION = "INSERT INTO quiz_exclusions (headword) VALUES (?)"
 INSERT_META = "INSERT INTO meta (key, value) VALUES (?, ?)"
 
 MetaRow = tuple[str, str]
-EntryRow = tuple[int, str, int, str, str, Optional[str], Optional[str], str]
+EntryRow = tuple[int, str, int, str, str, Optional[str], Optional[str], Optional[str], str]
 
 
 def write_dictionary(
@@ -121,6 +123,7 @@ def _entry_row(item: LoadedEntry) -> EntryRow:
         data["pos"],
         data["ipa"],
         data.get("example"),
+        data.get("example_ru"),
         data.get("synonym_group"),
         data["tier"],
     )

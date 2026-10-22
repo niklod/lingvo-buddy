@@ -17,6 +17,22 @@ enum DesignSamples {
         mastery: 2
     )
 
+    /// The `although` card once the dictionary has the example's Russian translation.
+    static let althoughWithRussianExample = Card(
+        headword: "although",
+        prompt: "although",
+        direction: .enToRu,
+        kind: .new,
+        source: .rank(312),
+        ipa: "/ɔːlˈðəʊ/",
+        partOfSpeech: .conjunction,
+        options: ["хотя", "поэтому", "кроме того", "вдруг"],
+        correctIndex: 0,
+        example: "Although it was late, we kept working.",
+        mastery: 2,
+        russianExample: "Хотя было поздно, мы продолжали работать."
+    )
+
     static let althoughCorrect = QuizCardState.Answer(
         pickedIndex: 0,
         result: result(.correct, correctAnswer: "хотя", mastery: 3)

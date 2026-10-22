@@ -82,6 +82,13 @@
               "synonym_group": {
                 "type": "string",
                 "description": "Headword of the lowest-ranked quiz-tier word with the same main meaning; the entry's own headword if none."
+              },
+              "example_ru": {
+                "type": "string",
+                "description": "A natural Russian translation of example, in the meaning of the first translation.",
+                "minLength": 1,
+                "maxLength": 180,
+                "pattern": "^[А-ЯЁ0-9«\\\"][А-Яа-яЁё0-9 ,.;:!?\\\"()«»\\-–—]*[.!?»\\\"]$"
               }
             }
           },

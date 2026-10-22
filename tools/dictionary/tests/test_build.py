@@ -34,18 +34,31 @@ class BuildTest(unittest.TestCase):
             return connection.execute(sql, params).fetchall()
 
     def test_builds_entries_translations_and_meta_from_the_batches(self):
-        self.folder.write(1, [quiz_entry(self.word_list, 3, translations=["большой", "крупный"], synonym_group="big")])
+        self.folder.write(
+            1,
+            [
+                quiz_entry(self.word_list, 2),
+                quiz_entry(
+                    self.word_list, 3,
+                    translations=["большой", "крупный"], synonym_group="big", example_ru="Это очень старый дом.",
+                ),
+            ],
+        )
         self.folder.write(5, [lookup_entry(self.word_list, 2001)])
 
         code, out, err = self.run_build("--allow-partial")
 
         self.assertEqual(code, 0, err)
-        self.assertIn("2 entries", out)
+        self.assertIn("3 entries", out)
         self.assertEqual(
-            self.query("SELECT id, headword, rank, pos, ipa, example, synonym_group, tier FROM entries ORDER BY rank"),
+            self.query(
+                "SELECT id, headword, rank, pos, ipa, example, example_ru, synonym_group, tier"
+                " FROM entries ORDER BY rank"
+            ),
             [
-                (3, "large", 3, "noun", "/haʊs/", "This large is very old.", "big", "quiz"),
-                (2001, self.word_list.headword_at(2001), 2001, "noun", "/haʊs/", None, None, "lookup"),
+                (2, "big", 2, "noun", "/haʊs/", "This big is very old.", None, "big", "quiz"),
+                (3, "large", 3, "noun", "/haʊs/", "This large is very old.", "Это очень старый дом.", "big", "quiz"),
+                (2001, self.word_list.headword_at(2001), 2001, "noun", "/haʊs/", None, None, None, "lookup"),
             ],
         )
         self.assertEqual(
@@ -54,7 +67,7 @@ class BuildTest(unittest.TestCase):
         )
         self.assertEqual(self.query("PRAGMA journal_mode"), [("delete",)])
         # Same contract as LingvoCore's DictionarySchema (schema version and RU lookup index).
-        self.assertEqual(self.query("PRAGMA user_version"), [(2,)])
+        self.assertEqual(self.query("PRAGMA user_version"), [(3,)])
         self.assertEqual(
             self.query("SELECT name FROM sqlite_master WHERE type = 'index' AND name = 'translations_text'"),
             [("translations_text",)],

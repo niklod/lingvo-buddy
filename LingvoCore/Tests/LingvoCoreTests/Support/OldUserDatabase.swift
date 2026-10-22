@@ -18,7 +18,8 @@ enum OldUserDatabase {
         return url
     }
 
-    private static func run(_ sql: String, at url: URL) throws {
+    /// Also writes old dictionary files: the same plain SQLite, no GRDB.
+    static func run(_ sql: String, at url: URL) throws {
         var db: OpaquePointer?
         defer { sqlite3_close(db) }
         guard sqlite3_open(url.path, &db) == SQLITE_OK else {

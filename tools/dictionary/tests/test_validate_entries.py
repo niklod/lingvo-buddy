@@ -207,5 +207,55 @@ class EntryRulesTest(unittest.TestCase):
         self.assert_one_error(self.errors_for(1, [entry]), "missing field 'synonym_group'")
 
 
+    def test_quiz_entry_may_carry_a_russian_example(self):
+        entry = quiz_entry(self.word_list, 4, example_ru="Этот дом очень старый, ему «сто» лет!")
+
+        self.assertEqual(self.errors_for(1, [entry]), ())
+
+    def test_russian_example_must_not_be_empty(self):
+        errors = self.errors_for(1, [quiz_entry(self.word_list, 4, example_ru="")])
+
+        self.assert_one_error(errors, "example_ru must not be empty")
+
+    def test_russian_example_has_at_most_one_hundred_eighty_characters(self):
+        entries = [
+            quiz_entry(self.word_list, 3, example_ru="Это " + "д" * 175 + "."),
+            quiz_entry(self.word_list, 4, example_ru="Это " + "д" * 176 + "."),
+        ]
+
+        errors = self.errors_for(1, entries)
+
+        self.assert_one_error(errors, "example_ru must have at most 180 characters, got 181")
+        self.assertIn("rank 4", errors[0])
+
+    def test_russian_example_must_be_a_cyrillic_sentence(self):
+        entries = [
+            quiz_entry(self.word_list, 1, example_ru="This house is old."),
+            quiz_entry(self.word_list, 2, example_ru="Этот house очень старый."),
+            quiz_entry(self.word_list, 3, example_ru="этот дом старый"),
+            quiz_entry(self.word_list, 4, example_ru=["Этот дом старый."]),
+        ]
+
+        errors = self.errors_for(1, entries)
+
+        self.assertEqual(len(errors), 4, errors)
+        self.assertTrue(all("example_ru" in e and "Russian sentence" in e for e in errors), errors)
+
+    def test_russian_example_needs_an_english_example(self):
+        entry = quiz_entry(self.word_list, 4, example_ru="Этот дом очень старый.")
+        del entry["example"]
+
+        errors = self.errors_for(1, [entry])
+
+        self.assertEqual(len(errors), 2, errors)
+        self.assertTrue(any("missing field 'example'" in e for e in errors), errors)
+        self.assertTrue(any("example_ru needs an English example" in e for e in errors), errors)
+
+    def test_lookup_entry_must_not_carry_a_russian_example(self):
+        entry = lookup_entry(self.word_list, 2001, example_ru="Этот дом очень старый.")
+
+        self.assert_one_error(self.errors_for(5, [entry]), "unknown field 'example_ru'")
+
+
 if __name__ == "__main__":
     unittest.main()
