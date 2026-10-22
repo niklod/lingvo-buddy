@@ -122,7 +122,25 @@ private struct LearningSection: View {
             ) {
                 Toggle("", isOn: showsExampleTranslation).labelsHidden().toggleStyle(.switch).controlSize(.small)
             }
+            SettingsDivider()
+            SettingsRow(label: String(localized: "YouGlish accent")) {
+                Picker("", selection: youGlishAccent) {
+                    ForEach(YouGlishAccent.allCases, id: \.self) { accent in
+                        Text(accent.label).tag(accent)
+                    }
+                }
+                .labelsHidden()
+                .pickerStyle(.menu)
+                .fixedSize()
+            }
         }
+    }
+
+    private var youGlishAccent: Binding<YouGlishAccent> {
+        Binding(
+            get: { model.settings.youGlishAccent },
+            set: { accent in model.update { $0.replacing(youGlishAccent: accent) } }
+        )
     }
 
     private var showsExampleTranslation: Binding<Bool> {
@@ -184,4 +202,15 @@ enum SettingsRanges {
     static let reviewPercent = 0...50
     static let reviewPercentStep = 5
     static let maxActiveNewWords = 1...30
+}
+
+private extension YouGlishAccent {
+    var label: String {
+        switch self {
+        case .all: String(localized: "All accents")
+        case .us: String(localized: "American")
+        case .uk: String(localized: "British")
+        case .aus: String(localized: "Australian")
+        }
+    }
 }

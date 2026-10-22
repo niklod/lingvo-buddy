@@ -22,14 +22,15 @@ enum SettingsSnapshots {
         ]
     }
 
-    /// Non-default values in every control, quiet hours off, example translation on, login item waiting for approval.
+    /// Non-default values in every control, quiet hours off, example translation on, British YouGlish accent, login item waiting for approval.
     private static var custom: TutorSettings {
         TutorSettings(
             learning: LearningSettings(direction: .ruToEn, reviewShare: 0.3, maxActiveNewWords: 6),
             cardInterval: 45 * 60,
             quietHours: .standard,
             quietHoursEnabled: false,
-            showsExampleTranslation: true
+            showsExampleTranslation: true,
+            youGlishAccent: .uk
         )
     }
 
