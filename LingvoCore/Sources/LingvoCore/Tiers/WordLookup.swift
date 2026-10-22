@@ -16,6 +16,15 @@ public struct WordLookup: Sendable, Equatable {
         self.entry = entry
         self.membership = membership
     }
+
+    init(entry: DictionaryEntry, openTier open: TopTier) {
+        let membership: TierMembership = if entry.rank <= open.maxRank, let tier = TopTier.containing(rank: entry.rank) {
+            .inside(tier)
+        } else {
+            .outside(open)
+        }
+        self.init(entry: entry, membership: membership)
+    }
 }
 
 extension Tutor {
@@ -23,12 +32,6 @@ extension Tutor {
     /// too). Case and surrounding spaces are ignored; `nil` when the word is missing.
     public func lookup(_ text: String) throws -> WordLookup? {
         guard let entry = try dictionary.lookupEntry(text) else { return nil }
-        let open = try openTier()
-        let membership: TierMembership = if entry.rank <= open.maxRank, let tier = TopTier.containing(rank: entry.rank) {
-            .inside(tier)
-        } else {
-            .outside(open)
-        }
-        return WordLookup(entry: entry, membership: membership)
+        return WordLookup(entry: entry, openTier: try openTier())
     }
 }
