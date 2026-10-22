@@ -73,13 +73,6 @@ struct WordProgress: Sendable, Equatable, Codable, FetchableRecord, PersistableR
     func isDue(at time: Date) -> Bool {
         dueAt.map { $0 <= time } ?? true
     }
-
-    func hasCorrect(in direction: Direction) -> Bool {
-        switch direction {
-        case .enToRu: enToRuCorrect
-        case .ruToEn: ruToEnCorrect
-        }
-    }
 }
 
 struct AnswerRecord: Sendable, Codable, PersistableRecord {

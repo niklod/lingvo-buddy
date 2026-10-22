@@ -32,7 +32,6 @@ public struct TutorSettings: Sendable, Equatable {
         quietHoursEnabled ? quietHours : nil
     }
 
-    /// A copy with the given values changed.
     public func replacing(
         learning: LearningSettings? = nil,
         cardInterval: TimeInterval? = nil,

@@ -1,7 +1,7 @@
 import Foundation
 
 /// A frequency tier the queue learns from: Top‑1000 first, then Top‑2000.
-public enum TopTier: Int, Sendable, CaseIterable, Comparable {
+public enum TopTier: Int, Sendable, CaseIterable {
     case top1000 = 1000
     case top2000 = 2000
 
@@ -16,10 +16,6 @@ public enum TopTier: Int, Sendable, CaseIterable, Comparable {
 
     /// Words past this tier never become cards.
     static let last = TopTier.top2000
-
-    public static func < (lhs: TopTier, rhs: TopTier) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
 }
 
 extension CardSource {

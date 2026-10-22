@@ -20,8 +20,8 @@ extension Tutor {
     /// and each line costs a few writes in one transaction.
     public static let maxCSVImportRows = 20_000
 
-    /// My words (translation, example) and the progress of every word, as
-    /// UTF-8 CSV. The answers log is not in it: streak and accuracy start over.
+    /// My words (translation, example), own translations of dictionary words
+    /// and the progress of every word, as UTF-8 CSV. The answers log is not in it: streak and accuracy start over.
     public func exportCSV() throws -> Data {
         WordBackupCSV.encode(try userDatabase.backupRows())
     }

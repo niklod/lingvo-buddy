@@ -16,7 +16,6 @@ public struct LevelCheckSample: Sendable, Equatable {
     }
 }
 
-/// The learner's answer to one level-check word.
 public struct LevelCheckAnswer: Sendable, Equatable {
     public let headword: String
     public let knows: Bool

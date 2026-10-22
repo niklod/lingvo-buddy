@@ -36,7 +36,6 @@ public struct TimeOfDay: Sendable, Equatable, Hashable, Comparable {
 /// The daily span with no timed cards: `start` is inclusive, `end` exclusive.
 /// When `end` is earlier than `start` the span crosses midnight.
 public struct QuietHours: Sendable, Equatable, Hashable {
-    /// 23:00–09:00.
     public static let standard = QuietHours(start: .elevenPM, end: .nineAM)
 
     public let start: TimeOfDay

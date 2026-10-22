@@ -42,7 +42,6 @@ public struct NewMyWord: Sendable, Equatable {
     }
 }
 
-/// The result of quick add.
 public enum AddWordOutcome: Sendable, Equatable {
     case added(headword: String)
     /// Nothing changed: the word is already in My words, learning or learned.

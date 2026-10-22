@@ -6,7 +6,6 @@ extension Tutor {
         try openTier(progress: userDatabase.allProgress())
     }
 
-    /// Learned words of the open tier out of all its card words.
     public func tierProgress() throws -> TierProgress {
         let progress = try userDatabase.allProgress()
         let tier = try openTier(progress: progress)
