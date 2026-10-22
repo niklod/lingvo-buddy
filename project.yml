@@ -40,6 +40,11 @@ targets:
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         GENERATE_INFOPLIST_FILE: NO
+        # `make check` passes STRICT_WARNINGS=YES. A command-line SWIFT_TREAT_WARNINGS_AS_ERRORS
+        # reaches the GRDB and KeyboardShortcuts targets too, which Xcode builds with -suppress-warnings.
+        STRICT_WARNINGS: NO
+        SWIFT_TREAT_WARNINGS_AS_ERRORS: $(STRICT_WARNINGS)
+        GCC_TREAT_WARNINGS_AS_ERRORS: $(STRICT_WARNINGS)
     info:
       path: App/Info.plist
       properties:

@@ -15,7 +15,7 @@ concurrency:
 jobs:
   core-tests:
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       # GRDB 7.11 needs swift-tools 6.1 (Xcode 16.3 or later).
@@ -29,4 +29,7 @@ jobs:
       - run: swift --version
       # The dictionary tools use only the Python standard library (3.9+), so no pip install.
       - run: python3 --version
-      - run: make test
+      # The app build needs XcodeGen; the lint steps of `make check` need SwiftLint and ruff.
+      - run: brew install xcodegen swiftlint ruff
+      - run: swiftlint version && ruff --version && xcodegen --version
+      - run: make check
