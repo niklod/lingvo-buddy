@@ -38,14 +38,15 @@ extension QuickAddModel {
     private static var notInDictionaryLine: String { String(localized: "Not in the dictionary: type your own translation") }
 
     var footerText: String {
-        switch message {
+        if let problem = englishWordProblem { return problem.localizedDescription }
+        return switch message {
         case .standing(let standing): Self.label(for: standing)
         case .error(let text): text
         case nil: String(localized: "I'll show it in one of the next cards")
         }
     }
 
-    var footerIsWarning: Bool { message != nil }
+    var footerIsWarning: Bool { message != nil || englishWordProblem != nil }
 
     /// The panel follows the typed script; there is no direction toggle.
     var directionLabel: String { isRussianInput ? "RU → EN" : "EN → RU" }

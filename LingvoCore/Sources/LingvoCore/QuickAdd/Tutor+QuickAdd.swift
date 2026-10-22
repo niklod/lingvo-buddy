@@ -30,7 +30,7 @@ extension Tutor {
     public func addMyWord(_ word: NewMyWord) throws -> AddWordOutcome {
         let word = try word.validated()
         // Russian text would preview as Russian input and add its first English candidate instead.
-        guard !RussianText.isRussian(word.text) else { throw LingvoCoreError.notEnglishWord(word.text) }
+        if let problem = EnglishWordInput.problem(in: word.text) { throw problem }
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
         let candidate = preview.candidates[0]

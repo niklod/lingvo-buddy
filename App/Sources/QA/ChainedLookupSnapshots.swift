@@ -22,6 +22,7 @@ enum ChainedLookupSnapshots {
             pickedBubble("quick_add_russian_chained_pick"),
             machineWord("quick_add_russian_chained_machine"),
             typedWord("quick_add_russian_chained_typed"),
+            cyrillicWord("quick_add_russian_english_word_cyrillic"),
         ]
     }
 
@@ -60,6 +61,17 @@ enum ChainedLookupSnapshots {
             let model = await unknownRussianModel()
             model.choose(.custom)
             model.englishWord = "skedaddle"
+            await model.machineTranslationSettled()
+            return model
+        }
+    }
+
+    /// Russian text typed into the English word field: the footer warns and Add is off.
+    private static func cyrillicWord(_ name: String) -> SnapshotState {
+        QuickAddSnapshots.panelState(name) {
+            let model = await unknownRussianModel()
+            model.choose(.custom)
+            model.englishWord = "барьер"
             await model.machineTranslationSettled()
             return model
         }

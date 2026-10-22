@@ -88,7 +88,7 @@ final class QuickAddModel {
         guard isRussianInput else { return nil }
         if needsEnglishWord {
             let word = chosenEnglishWord
-            return word.isEmpty ? nil : word
+            return word.isEmpty || englishWordProblem != nil ? nil : word
         }
         guard let candidate, candidate.lookup == nil else { return nil }
         return candidate.headword
@@ -133,8 +133,13 @@ final class QuickAddModel {
         choice == .machine ? machineBubble ?? "" : Self.trimmed(englishWord)
     }
 
+    /// Cyrillic in the English word field, shown at once and not only after Add.
+    var englishWordProblem: LingvoCoreError? {
+        needsEnglishWord ? EnglishWordInput.problem(in: chosenEnglishWord) : nil
+    }
+
     var canSubmit: Bool {
-        if needsEnglishWord { return !chosenEnglishWord.isEmpty }
+        if needsEnglishWord { return !chosenEnglishWord.isEmpty && englishWordProblem == nil }
         guard let candidate, candidate.canAdd else { return false }
         return !Self.trimmed(chosenTranslation).isEmpty
     }
@@ -204,6 +209,10 @@ final class QuickAddModel {
     }
 
     private func englishWordSubmission() -> NewMyWord? {
+        if let problem = englishWordProblem {
+            message = .error(problem.localizedDescription)
+            return nil
+        }
         guard canSubmit else {
             message = .error(String(localized: "Type the English word for the card."))
             return nil
