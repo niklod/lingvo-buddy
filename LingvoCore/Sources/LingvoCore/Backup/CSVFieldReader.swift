@@ -7,7 +7,7 @@ struct CSVFieldReader {
     let values: [WordBackupColumn: String]
 
     func text(_ column: WordBackupColumn) -> String? {
-        let value = values[column]?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let value = CSVCodec.restored(values[column] ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         return value.isEmpty ? nil : value
     }
 

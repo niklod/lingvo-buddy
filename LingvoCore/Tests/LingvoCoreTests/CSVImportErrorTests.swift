@@ -29,7 +29,8 @@ struct CSVImportErrorTests {
     static let badFiles: [BadFile] = [
         BadFile("empty file", "", .empty),
         BadFile("not UTF-8", data: Data([0xFF, 0xFE, 0x41, 0x00, 0xE9]), .notUTF8),
-        BadFile("another app's CSV", "name,age\nBob,4\n", .unknownColumns(["name", "age"])),
+        BadFile("separated by semicolons (Excel in some locales)", "headword;translation\nfoo;бар\n", .semicolonSeparated),
+        BadFile("another app's CSV","name,age\nBob,4\n", .unknownColumns(["name", "age"])),
         BadFile("no headword column", "translation\nсо временем\n", .missingColumns(["headword"])),
         BadFile("a column twice", "headword,status,status\nx,learning,learning\n", .duplicateColumns(["status"])),
         BadFile(

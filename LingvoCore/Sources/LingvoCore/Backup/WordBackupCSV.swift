@@ -2,7 +2,6 @@ import Foundation
 
 /// The CSV file: a header line with column names, then one line per word.
 enum WordBackupCSV {
-    static let maxBytes = Tutor.maxCSVImportBytes
     /// Excel reads a CSV without it as a legacy encoding and garbles Cyrillic.
     private static let byteOrderMark = "\u{FEFF}"
 
@@ -15,6 +14,9 @@ enum WordBackupCSV {
     static func decode(_ data: Data, now: Date, headwords: ImportHeadwords) throws -> [WordBackupRow] {
         let records = try records(in: data)
         guard let header = records.first else { throw CSVImportError.empty }
+        guard records.count - 1 <= Tutor.maxCSVImportRows else {
+            throw CSVImportError.tooManyRows(limit: Tutor.maxCSVImportRows)
+        }
         let columns = try self.columns(in: header)
         var headwords = headwords
         return try records.dropFirst().map { record in
@@ -29,7 +31,7 @@ enum WordBackupCSV {
     }
 
     private static func records(in data: Data) throws(CSVImportError) -> [CSVRecord] {
-        guard data.count <= maxBytes else { throw .fileTooLarge(limitBytes: maxBytes) }
+        guard data.count <= Tutor.maxCSVImportBytes else { throw .fileTooLarge(limitBytes: Tutor.maxCSVImportBytes) }
         guard var text = String(data: data, encoding: .utf8) else { throw .notUTF8 }
         if text.hasPrefix(byteOrderMark) {
             text.removeFirst()
@@ -38,6 +40,9 @@ enum WordBackupCSV {
     }
 
     private static func columns(in header: CSVRecord) throws(CSVImportError) -> [WordBackupColumn] {
+        if header.fields.count == 1, header.fields[0].contains(";") {
+            throw .semicolonSeparated
+        }
         let names = header.fields.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
         let unknown = names.filter { WordBackupColumn(rawValue: $0) == nil }
         guard unknown.isEmpty else { throw .unknownColumns(unknown) }

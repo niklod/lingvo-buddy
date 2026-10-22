@@ -4,6 +4,9 @@ import Foundation
 /// these, the learner's data is as it was before.
 public enum CSVImportError: Error, Equatable, LocalizedError {
     case fileTooLarge(limitBytes: Int)
+    case tooManyRows(limit: Int)
+    /// Excel in many locales saves CSV with ";": the header then reads as one unknown column.
+    case semicolonSeparated
     case notUTF8
     case empty
     case unterminatedQuote(line: Int)
@@ -27,6 +30,10 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
         switch self {
         case .fileTooLarge(let limit):
             "The file is too large for a LingvoBuddy export (more than \(limit / 1_000_000) MB)."
+        case .tooManyRows(let limit):
+            "The file has more than \(limit) words. Split it into smaller files."
+        case .semicolonSeparated:
+            "The values are separated by \";\". Save the file as CSV with commas and try again."
         case .notUTF8:
             "The file is not UTF-8 text. Save it as \"CSV UTF-8\" and try again."
         case .empty:
