@@ -2,8 +2,6 @@
 
 # lingvo buddy
 
-Created in [T3 Code](https://t3.codes).
-
 ## Build
 
 Needs Xcode 16.3+ and XcodeGen (`brew install xcodegen`).
