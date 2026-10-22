@@ -26,6 +26,9 @@ public struct QuickAddCandidate: Sendable, Equatable {
     }
 
     public var canAdd: Bool { standing == .notAdded }
+
+    /// The dictionary example that goes on the card when "Where I saw it" stays empty.
+    public var example: String? { lookup?.entry.example }
 }
 
 /// What the quick-add panel shows for the typed text, before the learner adds it.
@@ -56,6 +59,7 @@ public struct QuickAddPreview: Sendable, Equatable {
     public var lookup: WordLookup? { preselected.lookup }
     public var standing: WordStanding { preselected.standing }
     public var canAdd: Bool { preselected.canAdd }
+    public var example: String? { preselected.example }
 
     private var preselected: QuickAddCandidate { candidates[0] }
 }

@@ -20,6 +20,7 @@ struct QuickAddRussianTests {
         #expect(preview.headword == "offer")
         #expect(preview.candidates[1].lookup?.entry.translations[.russian] == ["предлагать", "советовать"])
         #expect(preview.candidates[1].lookup?.membership == .inside(.top1000))
+        #expect(preview.candidates[1].example == "I suggest we start again tomorrow.")
     }
 
     @Test("at most 5 candidates, sorted by rank and not by dictionary order")

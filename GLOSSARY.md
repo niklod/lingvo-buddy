@@ -68,7 +68,7 @@ _Avoid_: wrong answer (that is the learner's pick)
 The card button that shows the answer. It counts as a wrong answer. Code: `AnswerOutcome.dontKnow`.
 
 **Example**:
-The English sentence a card shows after the answer. For a my word it is the "Where I saw it" text.
+The English sentence a card shows after the answer. For a my word it is the "Where I saw it" text, or the dictionary example when that field is empty.
 
 ### Learning
 
@@ -170,6 +170,9 @@ _Avoid_: popover, dropdown
 
 **Quick add**:
 The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. Code: `QuickAdd*`.
+
+**Example preview**:
+The read-only dictionary example that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `ExamplePreview`.
 
 **Dictionary window**:
 The window that lists the learner's words: Learning, Learned, My words and the queue. Code: `WordList`.
