@@ -29,6 +29,9 @@ struct QuickAddView: View {
                 section(String(localized: "Where I saw it (optional)")) {
                     QuickAddField(placeholder: "", text: $model.example, italic: true)
                         .focused($focus, equals: .example)
+                    if let example = model.examplePreview {
+                        ExamplePreview(text: example)
+                    }
                 }
             }
             .padding(16)
