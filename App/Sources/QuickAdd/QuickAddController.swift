@@ -13,6 +13,7 @@ final class QuickAddController {
     private let logger = Logger.app(category: "quick-add")
     private var panel: QuickAddPanel?
     private var model: QuickAddModel?
+    private var translator: SystemTranslator?
     private var outsideClickMonitor: Any?
 
     init(tutor: Tutor) {
@@ -24,9 +25,11 @@ final class QuickAddController {
     func open(prefill: String? = nil, example: String = "") {
         close()
         let tutor = tutor
+        let translator = SystemTranslator()
         let model = QuickAddModel(
             text: Self.cleaned(prefill),
-            example: String(example.prefix(NewMyWord.maxExampleLength))
+            example: String(example.prefix(NewMyWord.maxExampleLength)),
+            translator: translator
         ) { try tutor.quickAddPreview($0) }
         let panel = QuickAddPanel()
         panel.setContent(QuickAddView(
@@ -35,13 +38,14 @@ final class QuickAddController {
                 submit: { [weak self] in self?.submit() },
                 cancel: { [weak self] in self?.close() }
             )
-        ))
+        ).modifier(SystemTranslatorHost(translator: translator)))
         panel.onKey = { [weak self] command in self?.handle(command) ?? false }
-        panel.onResignKey = { [weak self] in self?.close() }
+        panel.onResignKey = { [weak self] in self?.closeUnlessDownloading() }
         panel.setFrameOrigin(Self.origin(for: panel.frame.size))
         panel.makeKeyAndOrderFront(nil)
         self.panel = panel
         self.model = model
+        self.translator = translator
         watchOutsideClicks()
         logger.notice("quick add opened, prefilled: \(prefill != nil, privacy: .public)")
     }
@@ -50,12 +54,21 @@ final class QuickAddController {
         guard let panel else { return }
         self.panel = nil
         model = nil
+        translator?.cancelAll()
+        translator = nil
         panel.onResignKey = {}
         panel.orderOut(nil)
         if let outsideClickMonitor {
             NSEvent.removeMonitor(outsideClickMonitor)
         }
         outsideClickMonitor = nil
+    }
+
+    /// The system download sheet takes the keys and the clicks; the panel must
+    /// stay, or its translation session goes away while the pack downloads.
+    private func closeUnlessDownloading() {
+        guard model?.isDownloadingLanguagePack != true else { return }
+        close()
     }
 
     private func handle(_ command: QuickAddKeyCommand) -> Bool {
@@ -105,7 +118,7 @@ final class QuickAddController {
     /// the rest (⌘⇥, a click on another window of this app).
     private func watchOutsideClicks() {
         outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-            MainActor.assumeIsolated { self?.close() }
+            MainActor.assumeIsolated { self?.closeUnlessDownloading() }
         }
     }
 }
