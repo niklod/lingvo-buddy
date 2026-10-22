@@ -13,6 +13,8 @@ extension QuickAddModel {
             if let extended = candidate.extended {
                 return [extended.ipa, extended.partOfSpeech.label].compactMap { $0 }.joined(separator: " · ")
             }
+            // An English candidate for Russian input is a real translation: the line is empty without details.
+            if isRussianInput { return "" }
             return machineBubble == nil ? String(localized: "Not in the dictionary: type your own translation") : ""
         }
         let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]

@@ -34,12 +34,15 @@ extension Tutor {
         let word = try word.validated()
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
+        let candidate = preview.candidates[0]
         try userDatabase.insert(MyWord(
             headword: preview.headword,
             translation: word.translation,
             // The extended or system example is a dictionary example: it goes on the card like the bundled one does.
-            example: word.example ?? preview.candidates[0].fallbackExample,
-            addedAt: clock.now()
+            example: word.example ?? candidate.fallbackExample,
+            addedAt: clock.now(),
+            ipa: candidate.fallbackIPA,
+            partOfSpeech: candidate.fallbackPartOfSpeech
         ))
         return .added(headword: preview.headword)
     }
@@ -53,7 +56,7 @@ extension Tutor {
 
     private func russianPreview(_ query: String) throws -> QuickAddPreview? {
         let entries = try dictionary.russianLookupEntries(query, limit: QuickAddPreview.maxCandidates)
-        guard !entries.isEmpty else { return nil }
+        guard !entries.isEmpty else { return try extendedRussianPreview(query) }
         let open = try openTier()
         let candidates = try entries.map { entry in
             QuickAddCandidate(
@@ -67,6 +70,24 @@ extension Tutor {
 
     private func systemEntry(for headword: String) -> SystemEntry? {
         systemDictionary?.definition(of: headword).flatMap { SystemEntry.parse($0, for: headword) }
+    }
+
+    /// Bundled Russian candidates always win, so this runs only for Russian text the bundled dictionary lacks.
+    private func extendedRussianPreview(_ query: String) throws -> QuickAddPreview? {
+        let headwords = try extendedDictionary?.englishTranslations(
+            forRussian: query, limit: QuickAddPreview.maxCandidates
+        ) ?? []
+        guard !headwords.isEmpty else { return nil }
+        let candidates = try headwords.map { headword in
+            let lookup = try lookup(headword)
+            return QuickAddCandidate(
+                headword: lookup?.entry.headword ?? headword,
+                lookup: lookup,
+                standing: try standing(of: lookup?.entry.headword ?? headword),
+                extended: lookup == nil ? try extendedDictionary?.entry(headword: headword) : nil
+            )
+        }
+        return QuickAddPreview(russianText: query, candidates: candidates)
     }
 
     private func standing(of headword: String) throws -> WordStanding {

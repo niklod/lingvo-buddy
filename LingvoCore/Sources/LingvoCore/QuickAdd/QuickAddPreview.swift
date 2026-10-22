@@ -56,6 +56,10 @@ public struct QuickAddCandidate: Sendable, Equatable {
     /// The example a word outside the bundled dictionary puts on its card; a bundled word keeps its own.
     public var fallbackExample: String? { extended?.example ?? system?.example }
 
+    /// The transcription and part of speech a my word saves; a bundled word keeps its own entry.
+    public var fallbackIPA: String? { extended?.ipa ?? system?.ipa }
+    public var fallbackPartOfSpeech: PartOfSpeech? { extended?.partOfSpeech ?? system?.partOfSpeech }
+
     /// The first English definition, shown small under the bubbles so the learner can judge a translation.
     /// Never saved with the word.
     public var definitionHint: String? { system?.definition }

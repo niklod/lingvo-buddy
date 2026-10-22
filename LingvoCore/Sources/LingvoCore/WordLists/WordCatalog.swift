@@ -81,7 +81,10 @@ struct WordCatalog {
             mastery: progress?.mastery ?? 0,
             lastAnswer: progress.flatMap(lastAnswer(of:)),
             source: myWord == nil ? .rank(entry?.rank ?? 0) : .mine,
-            status: progress?.status
+            status: progress?.status,
+            // Only my words get the line: rows of bundled words look as the design has them.
+            ipa: myWord.flatMap { entry?.ipa ?? $0.ipa },
+            partOfSpeech: myWord.flatMap { entry?.partOfSpeech ?? $0.partOfSpeech }
         )
         return Item(
             row: row,

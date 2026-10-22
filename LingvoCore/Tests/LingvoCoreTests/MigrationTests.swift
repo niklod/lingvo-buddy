@@ -86,6 +86,11 @@ struct MigrationTests {
         #expect(!tutor.settings.showsExampleTranslation)
         #expect(try tutor.stats().myWordsCount == 1)
         #expect(try tutor.nextCard().card?.correctAnswer == "кубернетес")
+        #expect(try tutor.nextCard().card?.ipa == nil)
+        #expect(try tutor.nextCard().card?.partOfSpeech == .other)
+        let row = try #require(try tutor.wordList(.myWords).rows.first)
+        #expect(row.ipa == nil)
+        #expect(row.partOfSpeech == nil)
         #expect(try tutor.wordList(.queue).rows.first { $0.headword == "they" }?.translation == "они сами")
     }
 

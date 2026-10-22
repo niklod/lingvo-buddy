@@ -167,6 +167,34 @@ struct SystemDictionaryQuickAddTests {
         #expect(card.example == "when he saw us, he skedaddled.")
     }
 
+    @Test("adding a word saves the system IPA and part of speech, shown on the card and in the Dictionary window")
+    func systemDetailsAreSaved() throws {
+        let tutor = try Self.tutor()
+
+        _ = try tutor.addMyWord(NewMyWord(text: "skedaddle", translation: "удирать", example: nil))
+        let card = try #require(try tutor.nextCard().card)
+        let row = try #require(try tutor.wordList(.myWords).rows.first)
+
+        #expect(card.ipa == "/skəˈdædəl/")
+        #expect(card.partOfSpeech == .verb)
+        #expect(row.ipa == "/skəˈdædəl/")
+        #expect(row.partOfSpeech == .verb)
+    }
+
+    @Test("adding a word saves extended IPA and part of speech before the system ones")
+    func extendedDetailsAreSavedFirst() throws {
+        let extended = ExtendedEntry(
+            headword: "skedaddle", partOfSpeech: .noun, ipa: "/extended/", translations: ["удирать"]
+        )
+        let tutor = try Self.tutor(extended: [extended])
+
+        _ = try tutor.addMyWord(NewMyWord(text: "skedaddle", translation: "удирать", example: nil))
+        let card = try #require(try tutor.nextCard().card)
+
+        #expect(card.ipa == "/extended/")
+        #expect(card.partOfSpeech == .noun)
+    }
+
     @Test("the definition hint is not saved: a word with no example has no card example")
     func hintIsNotSaved() throws {
         let tutor = try Self.tutor()

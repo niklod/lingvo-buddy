@@ -25,7 +25,14 @@ extension WordBackupRow {
             }
             return nil
         }
-        return MyWord(headword: headword, translation: translation, example: example, addedAt: addedAt ?? now)
+        return MyWord(
+            headword: headword,
+            translation: translation,
+            example: example,
+            addedAt: addedAt ?? now,
+            ipa: try reader.text(.ipa, limit: NewMyWord.maxIPALength),
+            partOfSpeech: try reader.choice(.partOfSpeech, of: PartOfSpeech.self)
+        )
     }
 
     private static func progress(_ headword: String, reader: CSVFieldReader) throws(CSVImportError) -> WordProgress? {

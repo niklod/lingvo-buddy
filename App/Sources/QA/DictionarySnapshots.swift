@@ -12,13 +12,14 @@ enum DictionarySnapshots {
             state("dictionary_window", list: .learning, search: ""),
             state("dictionary_window_search", list: .learning, search: "пред"),
             state("dictionary_window_queue", list: .queue, search: ""),
+            state("dictionary_window_my_words", list: .myWords, search: "", addsExtendedWord: true),
         ]
     }
 
-    private static func state(_ name: String, list: WordList, search: String) -> SnapshotState {
+    private static func state(_ name: String, list: WordList, search: String, addsExtendedWord: Bool = false) -> SnapshotState {
         SnapshotState(name: name, usesWindow: true) {
             do {
-                let model = DictionaryModel(store: try seededTutor(), errors: nil)
+                let model = DictionaryModel(store: try seededTutor(addsExtendedWord: addsExtendedWord), errors: nil)
                 model.list = list
                 model.search = search
                 // A snapshot cannot wait for the typing pause of the search field.
@@ -32,14 +33,24 @@ enum DictionarySnapshots {
         }
     }
 
-    private static func seededTutor() throws -> Tutor {
+    /// A word the bundled dictionary lacks, added through quick add so that the real code saves its IPA and part of speech.
+    private static let petrichor = ExtendedEntry(
+        headword: "petrichor", partOfSpeech: .noun, ipa: "/ˈpetrɪkɔːr/", translations: ["петрихор"]
+    )
+
+    private static func seededTutor(addsExtendedWord: Bool) throws -> Tutor {
         guard let url = Bundle.main.url(forResource: "dictionary", withExtension: "sqlite") else {
             throw AppEnvironment.SetupError.missingBundledDictionary
         }
         let dictionary = try DictionaryStore.open(at: url)
         let userDatabase = try UserDatabase.inMemory()
         try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
-        return try Tutor(dictionary: dictionary, userDatabase: userDatabase)
+        let extended = try ExtendedDictionary.inMemory(english: addsExtendedWord ? [petrichor] : [])
+        let tutor = try Tutor(dictionary: dictionary, userDatabase: userDatabase, extendedDictionary: extended)
+        if addsExtendedWord {
+            _ = try tutor.addMyWord(NewMyWord(text: "petrichor", translation: "петрихор", example: nil))
+        }
+        return tutor
     }
 }
 
