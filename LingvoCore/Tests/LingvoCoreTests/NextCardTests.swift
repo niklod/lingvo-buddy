@@ -18,6 +18,7 @@ struct NextCardTests {
         #expect(card.ipa == "/ðeɪ/")
         #expect(card.partOfSpeech == .pronoun)
         #expect(card.example == "They live next door.")
+        #expect(card.russianExample == "Они живут по соседству.")
         #expect(card.mastery == 0)
     }
 

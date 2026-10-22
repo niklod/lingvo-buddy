@@ -29,4 +29,7 @@ public struct QuickAddPreview: Sendable, Equatable {
 
     /// The dictionary example that goes on the card when "Where I saw it" stays empty.
     public var example: String? { lookup?.entry.example }
+
+    /// The Russian translation of `example`; the card shows it only with the dictionary example.
+    public var russianExample: String? { lookup?.entry.russianExample }
 }

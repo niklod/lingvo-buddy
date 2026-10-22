@@ -25,7 +25,8 @@ struct CardFactory {
             options: options,
             correctIndex: options.firstIndex(of: answer) ?? 0,
             example: entry.example,
-            mastery: picked.progress?.mastery ?? 0
+            mastery: picked.progress?.mastery ?? 0,
+            russianExample: entry.russianExample
         )
     }
 }

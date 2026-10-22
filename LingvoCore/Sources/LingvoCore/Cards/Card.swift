@@ -30,6 +30,9 @@ public struct Card: Sendable, Equatable {
     public let options: [String]
     public let correctIndex: Int
     public let example: String?
+    /// The Russian translation of `example`, from the dictionary: a my word's
+    /// own example has none, since nobody translated the learner's text.
+    public let russianExample: String?
     public let mastery: Int
 
     public init(
@@ -43,7 +46,8 @@ public struct Card: Sendable, Equatable {
         options: [String],
         correctIndex: Int,
         example: String?,
-        mastery: Int
+        mastery: Int,
+        russianExample: String? = nil
     ) {
         self.headword = headword
         self.prompt = prompt
@@ -55,6 +59,7 @@ public struct Card: Sendable, Equatable {
         self.options = options
         self.correctIndex = correctIndex
         self.example = example
+        self.russianExample = russianExample
         self.mastery = mastery
     }
 
