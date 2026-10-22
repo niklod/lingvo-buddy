@@ -31,7 +31,7 @@ BUILD_NUMBER ?= 1
 PKG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).pkg
 
 .PHONY: test test-core test-dictionary check lint lint-swift lint-python build-core-strict app-strict \
-	hooks dictionary import-wiktionary project packages app run snapshots pkg clean
+	hooks dictionary import-wiktionary project packages app run snapshots check-panels pkg clean
 
 test: test-core test-dictionary
 
@@ -50,7 +50,7 @@ test-dictionary:
 
 # The full gate before a push (the pre-push hook and CI run it). `make test` stays the fast loop.
 # The last step fails when a build changed a tracked file, or when work is not committed.
-check: lint test build-core-strict app-strict
+check: lint test build-core-strict app-strict check-panels
 	@git diff --exit-code --stat || { echo "make check: tracked files changed; commit them or find the step that writes them."; exit 1; }
 
 lint: lint-swift lint-python
@@ -67,6 +67,11 @@ build-core-strict:
 
 app-strict:
 	$(MAKE) app XCODE_SETTINGS=STRICT_WARNINGS=YES
+
+# Needs a Debug build (`make check` runs app-strict first). An endless panel size makes
+# AppKit refuse the panel, and snapshots do not show it (docs/agents/macos-traps.md).
+check-panels:
+	$(APP_BINARY) --check-panel-sizes
 
 hooks:
 	git config core.hooksPath .githooks

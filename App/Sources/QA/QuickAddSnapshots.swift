@@ -69,7 +69,7 @@ enum QuickAddSnapshots {
     private static func machineState(
         _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true) {
+        SnapshotState(name: name, usesWindow: true, isPanel: true) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
                 QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query == "медленно")
             }
@@ -97,7 +97,7 @@ enum QuickAddSnapshots {
     }
 
     private static func russianState(_ name: String, text: String) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true) {
+        SnapshotState(name: name, usesWindow: true, isPanel: true) {
             let model = QuickAddModel(text: text) { query in
                 QuickAddPreview(russianText: query, candidates: doubtCandidates)
             }
@@ -129,7 +129,7 @@ enum QuickAddSnapshots {
         standing: WordStanding,
         showsExampleTranslation: Bool = false
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true) {
+        SnapshotState(name: name, usesWindow: true, isPanel: true) {
             let model = QuickAddModel(text: text, example: example, showsExampleTranslation: showsExampleTranslation) { query in
                 let lookup = [reluctant, provide].first { $0.headword == query }.map { entry in
                     WordLookup(entry: entry, membership: entry.tier == .quiz ? .inside(.top1000) : .outside(.top1000))

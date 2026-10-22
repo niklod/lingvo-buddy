@@ -24,10 +24,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             let options = try LaunchOptions.parse(CommandLine.arguments)
             #if DEBUG
-            if let directory = options.snapshotDirectory {
-                Task { await renderSnapshotsAndExit(to: directory, filter: options.snapshotFilter) }
-                return
-            }
+            if QALaunchModes.takeOver(options) { return }
             #endif
             try start(with: options)
         } catch {
@@ -260,18 +257,4 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func openDictionaryFromMenu() {
         openDictionary()
     }
-
-    #if DEBUG
-    private func renderSnapshotsAndExit(to path: String, filter: String?) async -> Never {
-        let states = SnapshotRegistry.all.filter { state in filter.map { state.name.contains($0) } ?? true }
-        do {
-            let files = try await SnapshotRenderer.render(states, to: SnapshotRenderer.directoryURL(path))
-            files.forEach { print($0.path) }
-            exit(0)
-        } catch {
-            FileHandle.standardError.write(Data("snapshot failed: \(error.localizedDescription)\n".utf8))
-            exit(1)
-        }
-    }
-    #endif
 }
