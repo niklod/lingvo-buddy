@@ -19,7 +19,8 @@ struct LevelIntroView: View {
             HStack {
                 OnboardingLinkButton(title: String(localized: "Skip the check")) { model.skipLevelCheck() }
                 Spacer()
-                OnboardingButton(title: String(localized: "Start check")) { model.startLevelCheck() }
+                Button(String(localized: "Start check")) { model.startLevelCheck() }
+                    .buttonStyle(.onboarding())
                     .keyboardShortcut(.defaultAction)
             }
         }
@@ -61,11 +62,11 @@ struct LevelWordView: View {
             HStack(spacing: 8) {
                 OnboardingLinkButton(title: String(localized: "Finish now")) { model.finishLevelCheck() }
                 Spacer()
-                OnboardingButton(title: String(localized: "Don't know ⌫"), kind: .secondary) {
-                    model.answer(knows: false)
-                }
-                .keyboardShortcut(.delete, modifiers: [])
-                OnboardingButton(title: String(localized: "Know ↵")) { model.answer(knows: true) }
+                Button(String(localized: "Don't know ⌫")) { model.answer(knows: false) }
+                    .buttonStyle(.onboarding(.secondary))
+                    .keyboardShortcut(.delete, modifiers: [])
+                Button(String(localized: "Know ↵")) { model.answer(knows: true) }
+                    .buttonStyle(.onboarding())
                     .keyboardShortcut(.defaultAction)
             }
         }
@@ -87,7 +88,8 @@ struct LevelDoneView: View {
             OnboardingHeader(step: model.step, title: String(localized: "Level check done"), text: text)
             HStack {
                 Spacer()
-                OnboardingButton(title: String(localized: "Continue")) { model.showSetup() }
+                Button(String(localized: "Continue")) { model.showSetup() }
+                    .buttonStyle(.onboarding())
                     .keyboardShortcut(.defaultAction)
             }
         }

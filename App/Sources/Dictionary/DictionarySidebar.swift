@@ -31,7 +31,7 @@ struct DictionarySidebar: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 12)
         .frame(maxHeight: .infinity, alignment: .top)
-        .background(DictionaryLayout.sidebarBackground)
+        .background(Theme.Palette.sidebar)
     }
 
     private func sectionTitle(_ title: LocalizedStringKey, top: CGFloat) -> some View {

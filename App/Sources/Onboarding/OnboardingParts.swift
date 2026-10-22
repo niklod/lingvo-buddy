@@ -33,41 +33,10 @@ struct OnboardingHeader: View {
     }
 }
 
-/// The card's "Next ↵" (primary) and "Don't know" (secondary) button looks.
-struct OnboardingButton: View {
-    enum Kind {
-        case primary
-        case secondary
-    }
-
-    let title: String
-    var kind: Kind = .primary
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(title)
-                .font(.system(size: Theme.FontSize.body, weight: kind == .primary ? .semibold : .regular))
-                .foregroundStyle(kind == .primary ? Theme.Palette.textStrong : Theme.Palette.textBody)
-                .padding(.horizontal, 14)
-                .frame(minWidth: 80, minHeight: OnboardingLayout.buttonHeight)
-                .background(background)
-                .overlay(border)
-                .contentShape(RoundedRectangle(cornerRadius: Theme.Radius.button))
-        }
-        .buttonStyle(.plain)
-    }
-
-    @ViewBuilder private var background: some View {
-        if kind == .primary {
-            RoundedRectangle(cornerRadius: Theme.Radius.button).fill(Theme.Palette.accent)
-        }
-    }
-
-    @ViewBuilder private var border: some View {
-        if kind == .secondary {
-            RoundedRectangle(cornerRadius: Theme.Radius.button).strokeBorder(Theme.Palette.border)
-        }
+extension ButtonStyle where Self == ThemeButtonStyle {
+    /// The card buttons with a minimum width, so short titles ("Continue") do not look cramped.
+    static func onboarding(_ kind: ThemeButtonStyle.Kind = .primary) -> ThemeButtonStyle {
+        .theme(kind, height: OnboardingLayout.buttonHeight, horizontalPadding: 14, minWidth: 80)
     }
 }
 

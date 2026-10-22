@@ -13,10 +13,8 @@ enum DictionaryLayout {
     static let controlHeight: CGFloat = 30
     static let rowHeight: CGFloat = 44
     static let headerBackground = Color(hex: 0x232325)
-    static let sidebarBackground = Color(hex: 0x1A1A1C)
-    static let searchBackground = Color(hex: 0x141416)
     static let rowDivider = Color(hex: 0x2A2A2C)
-    static let selectedList = Color(hex: 0x0A84FF).opacity(0.22)
+    static let selectedList = Theme.Palette.accent.opacity(0.22)
 }
 
 struct DictionaryActions {
@@ -53,17 +51,13 @@ struct DictionaryView: View {
                 .font(.system(size: Theme.FontSize.title, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
             DictionarySearchField(text: $model.search)
-            Button { actions.addWord(model.unmatchedSearch) } label: {
-                Text("+ Word")
-                    .font(.system(size: Theme.FontSize.body, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 12)
-                    .frame(height: DictionaryLayout.controlHeight)
-                    .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: Theme.Radius.smallButton))
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .help(Text("Add a word of your own"))
+            Button("+ Word") { actions.addWord(model.unmatchedSearch) }
+                .buttonStyle(.theme(
+                    height: DictionaryLayout.controlHeight,
+                    radius: Theme.Radius.smallButton,
+                    horizontalPadding: 12
+                ))
+                .help(Text("Add a word of your own"))
         }
         .padding(.leading, DictionaryLayout.trafficLightsWidth)
         .padding(.trailing, 16)
@@ -79,14 +73,11 @@ struct DictionarySearchField: View {
         TextField(text: $text, prompt: Text("Search word or translation").foregroundStyle(Theme.Palette.textSecondary)) {
             Text("Search")
         }
-        .textFieldStyle(.plain)
         .font(.system(size: Theme.FontSize.body))
-        .padding(.horizontal, 10)
-        .frame(width: DictionaryLayout.searchWidth, height: DictionaryLayout.controlHeight)
-        .background(DictionaryLayout.searchBackground, in: RoundedRectangle(cornerRadius: Theme.Radius.smallButton))
-        .overlay(
-            RoundedRectangle(cornerRadius: Theme.Radius.smallButton)
-                .strokeBorder(Theme.Palette.border, lineWidth: 1)
+        .insetField(
+            width: DictionaryLayout.searchWidth,
+            height: DictionaryLayout.controlHeight,
+            radius: Theme.Radius.smallButton
         )
     }
 }

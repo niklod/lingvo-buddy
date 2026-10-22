@@ -30,8 +30,6 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         super.init()
     }
 
-    var isShowing: Bool { window?.isVisible == true }
-
     func show(tab: SettingsTab? = nil) {
         if let tab {
             navigation.tab = tab
@@ -56,20 +54,14 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
             errors: errors,
             transfer: transfer
         )
-        let host = NSHostingController(rootView: root)
-        // The window follows the content height, which changes with the tab.
-        host.sizingOptions = [.preferredContentSize]
-        let window = NSWindow(contentViewController: host)
-        window.title = String(localized: "LingvoBuddy Settings")
-        window.styleMask = [.titled, .closable, .miniaturizable]
-        window.titlebarAppearsTransparent = true
-        window.backgroundColor = NSColor(Theme.Palette.panel)
-        window.appearance = NSAppearance(named: .darkAqua)
-        window.isReleasedWhenClosed = false
+        // The default sizing makes the window follow the content height, which changes with the tab.
+        let window = NSWindow.themed(
+            root,
+            title: String(localized: "LingvoBuddy Settings"),
+            style: [.titled, .closable, .miniaturizable],
+            autosaveName: "LingvoBuddySettings"
+        )
         window.delegate = self
-        window.center()
-        // Restores the last position, if there is one.
-        window.setFrameAutosaveName("LingvoBuddySettings")
         return window
     }
 }

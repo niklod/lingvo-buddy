@@ -7,9 +7,15 @@ enum QuickAddTheme {
     static let wordFontSize: CGFloat = 22
     static let pillHeight: CGFloat = 30
     static let fieldHeight: CGFloat = 34
-    static let fieldBackground = Color(hex: 0x141416)
     static let footerBackground = Color(hex: 0x19191B)
     static let selectedFill = Theme.Palette.accent.opacity(0.18)
+}
+
+extension ButtonStyle where Self == ThemeButtonStyle {
+    /// The footer's smaller buttons, as tall as the pills.
+    static func footer(_ kind: ThemeButtonStyle.Kind) -> ThemeButtonStyle {
+        .theme(kind, height: QuickAddTheme.pillHeight, radius: Theme.Radius.smallButton)
+    }
 }
 
 /// A translation choice: filled blue when chosen, dashed for "+ custom variant".
@@ -66,42 +72,9 @@ struct QuickAddField: View {
         TextField(text: $text, prompt: Text(verbatim: placeholder).foregroundStyle(Theme.Palette.textSecondary)) {
             Text(verbatim: placeholder)
         }
-        .textFieldStyle(.plain)
         .font(italic ? .system(size: Theme.FontSize.body).italic() : .system(size: Theme.FontSize.body))
         .foregroundStyle(Theme.Palette.textBody)
-        .padding(.horizontal, 10)
-        .frame(height: QuickAddTheme.fieldHeight)
-        .background(RoundedRectangle(cornerRadius: Theme.Radius.button).fill(QuickAddTheme.fieldBackground))
-        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.button).strokeBorder(Theme.Palette.border, lineWidth: 1))
-    }
-}
-
-struct FooterButton: View {
-    let title: String
-    var isPrimary = false
-    var isEnabled = true
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(verbatim: title)
-                .font(.system(size: Theme.FontSize.body, weight: isPrimary ? .semibold : .regular))
-                .foregroundStyle(isPrimary ? Theme.Palette.textStrong : Theme.Palette.textBody)
-                .padding(.horizontal, isPrimary ? 14 : 12)
-                .frame(height: QuickAddTheme.pillHeight)
-                .background(
-                    RoundedRectangle(cornerRadius: Theme.Radius.smallButton)
-                        .fill(isPrimary ? Theme.Palette.accent : .clear)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: Theme.Radius.smallButton)
-                        .strokeBorder(isPrimary ? .clear : Theme.Palette.border, lineWidth: 1)
-                )
-                .opacity(isEnabled ? 1 : 0.45)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .disabled(!isEnabled)
+        .insetField(height: QuickAddTheme.fieldHeight)
     }
 }
 

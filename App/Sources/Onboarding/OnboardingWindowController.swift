@@ -58,20 +58,13 @@ final class OnboardingWindowController: NSObject, NSWindowDelegate {
         onFinish()
     }
 
+    /// The default sizing makes the window follow the content height, which changes with the step.
     private static func makeWindow(root: OnboardingView) -> NSWindow {
-        let host = NSHostingController(rootView: root)
-        // The window follows the content height, which changes with the step.
-        host.sizingOptions = [.preferredContentSize]
-        let window = NSWindow(contentViewController: host)
-        window.title = String(localized: "Welcome to LingvoBuddy")
-        window.styleMask = [.titled, .closable]
-        window.titlebarAppearsTransparent = true
-        // Each step has its own heading; the title stays for VoiceOver and Mission Control.
-        window.titleVisibility = .hidden
-        window.backgroundColor = NSColor(Theme.Palette.panel)
-        window.appearance = NSAppearance(named: .darkAqua)
-        window.isReleasedWhenClosed = false
-        window.center()
-        return window
+        NSWindow.themed(
+            root,
+            title: String(localized: "Welcome to LingvoBuddy"),
+            style: [.titled, .closable],
+            hidesTitle: true
+        )
     }
 }
