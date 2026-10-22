@@ -56,6 +56,9 @@ public struct QuickAddCandidate: Sendable, Equatable {
     /// The example a word outside the bundled dictionary puts on its card; a bundled word keeps its own.
     public var fallbackExample: String? { extended?.example ?? system?.example }
 
+    /// The Russian translation of `fallbackExample`; `nil` when that example is not the extended one.
+    public var fallbackRussianExample: String? { extended?.example == nil ? nil : extended?.russianExample }
+
     /// The transcription and part of speech a my word saves; a bundled word keeps its own entry.
     public var fallbackIPA: String? { extended?.ipa ?? system?.ipa }
     public var fallbackPartOfSpeech: PartOfSpeech? { extended?.partOfSpeech ?? system?.partOfSpeech }

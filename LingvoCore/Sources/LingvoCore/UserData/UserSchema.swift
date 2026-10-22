@@ -58,5 +58,9 @@ enum UserSchema {
             ALTER TABLE my_words ADD COLUMN ipa TEXT;
             ALTER TABLE my_words ADD COLUMN pos TEXT;
             """),
+        // Nullable: the translation exists only for an extended dictionary example.
+        ("v9-my-word-russian-example", """
+            ALTER TABLE my_words ADD COLUMN example_ru TEXT;
+            """),
     ]
 }

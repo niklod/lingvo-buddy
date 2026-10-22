@@ -31,7 +31,8 @@ extension WordBackupRow {
             example: example,
             addedAt: addedAt ?? now,
             ipa: try reader.text(.ipa, limit: NewMyWord.maxIPALength),
-            partOfSpeech: try reader.choice(.partOfSpeech, of: PartOfSpeech.self)
+            partOfSpeech: try reader.choice(.partOfSpeech, of: PartOfSpeech.self),
+            russianExample: try reader.text(.russianExample, limit: NewMyWord.maxExampleLength)
         )
     }
 
