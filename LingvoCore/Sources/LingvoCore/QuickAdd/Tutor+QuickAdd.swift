@@ -55,13 +55,31 @@ extension Tutor {
 
     private func russianPreview(_ query: String) throws -> QuickAddPreview? {
         let entries = try dictionary.russianLookupEntries(query, limit: QuickAddPreview.maxCandidates)
-        guard !entries.isEmpty else { return nil }
+        guard !entries.isEmpty else { return try extendedRussianPreview(query) }
         let open = try openTier()
         let candidates = try entries.map { entry in
             QuickAddCandidate(
                 headword: entry.headword,
                 lookup: WordLookup(entry: entry, openTier: open),
                 standing: try standing(of: entry.headword)
+            )
+        }
+        return QuickAddPreview(russianText: query, candidates: candidates)
+    }
+
+    /// Bundled Russian candidates always win, so this runs only for Russian text the bundled dictionary lacks.
+    private func extendedRussianPreview(_ query: String) throws -> QuickAddPreview? {
+        let headwords = try extendedDictionary?.englishTranslations(
+            forRussian: query, limit: QuickAddPreview.maxCandidates
+        ) ?? []
+        guard !headwords.isEmpty else { return nil }
+        let candidates = try headwords.map { headword in
+            let lookup = try lookup(headword)
+            return QuickAddCandidate(
+                headword: lookup?.entry.headword ?? headword,
+                lookup: lookup,
+                standing: try standing(of: lookup?.entry.headword ?? headword),
+                extended: lookup == nil ? try extendedDictionary?.entry(headword: headword) : nil
             )
         }
         return QuickAddPreview(russianText: query, candidates: candidates)
