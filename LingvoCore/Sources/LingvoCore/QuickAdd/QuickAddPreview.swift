@@ -99,6 +99,12 @@ public struct QuickAddPreview: Sendable, Equatable {
         self.isRussianInput = isRussianInput
     }
 
+    public init(candidate: QuickAddCandidate, isRussianInput: Bool) {
+        self.candidates = [candidate]
+        self.russianText = nil
+        self.isRussianInput = isRussianInput
+    }
+
     public init(russianText: String, candidates: [QuickAddCandidate]) {
         precondition(!candidates.isEmpty, "Russian input without candidates takes the English path")
         self.candidates = candidates

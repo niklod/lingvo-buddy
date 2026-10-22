@@ -10,21 +10,18 @@ extension Tutor {
         if isRussian, let preview = try russianPreview(query) {
             return preview
         }
-        let lookup = try lookup(query)
         // Russian text the dictionaries do not know is an English word to type, not an English headword.
-        let extended = lookup == nil && !isRussian ? try extendedDictionary?.entry(headword: query) : nil
-        let headword = try lookup?.entry.headword
-            ?? userDatabase.myWord(ignoringCase: query)?.headword
-            ?? extended?.headword
-            ?? query
-        return QuickAddPreview(
-            headword: headword,
-            lookup: lookup,
-            standing: try standing(of: headword),
-            isRussianInput: isRussian,
-            extended: extended,
-            system: lookup == nil && !isRussian ? systemEntry(for: headword) : nil
-        )
+        let candidate = try englishCandidate(query, detailed: !isRussian)
+        return QuickAddPreview(candidate: candidate, isRussianInput: isRussian)
+    }
+
+    /// What the panel shows for an English word the card gets for Russian input: a bubble the learner
+    /// picks, a custom word, or a machine translation. `nil` for blank text. Russian text has no
+    /// English entry, so it gets none of the extended and system details.
+    public func englishDetails(_ text: String) throws -> QuickAddCandidate? {
+        let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return nil }
+        return try englishCandidate(query, detailed: !RussianText.isRussian(query))
     }
 
     /// Adds the word to My words. A queued dictionary word keeps its rank and
@@ -66,6 +63,22 @@ extension Tutor {
             )
         }
         return QuickAddPreview(russianText: query, candidates: candidates)
+    }
+
+    private func englishCandidate(_ query: String, detailed: Bool) throws -> QuickAddCandidate {
+        let lookup = try lookup(query)
+        let extended = lookup == nil && detailed ? try extendedDictionary?.entry(headword: query) : nil
+        let headword = try lookup?.entry.headword
+            ?? userDatabase.myWord(ignoringCase: query)?.headword
+            ?? extended?.headword
+            ?? query
+        return QuickAddCandidate(
+            headword: headword,
+            lookup: lookup,
+            standing: try standing(of: headword),
+            extended: extended,
+            system: lookup == nil && detailed ? systemEntry(for: headword) : nil
+        )
     }
 
     private func systemEntry(for headword: String) -> SystemEntry? {
