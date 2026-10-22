@@ -1,4 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#9333ea"/>
-  <text x="32" y="32" dy="0.35em" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, sans-serif" font-size="26" font-weight="600" fill="#ffffff">LB</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<defs><clipPath id="sq"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BE2EA"/><stop offset="1" stop-color="#3E9FB8"/></linearGradient>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.28"/></filter></defs>
+<g filter="url(#sh)"><g clip-path="url(#sq)">
+<rect x="100" y="100" width="824" height="824" fill="url(#bg)"/>
+<path d="M230 470 Q200 420 230 370 Q260 320 230 270 M800 500 Q770 450 800 400 Q830 350 800 300" fill="none" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="16" stroke-linecap="round"/>
+<g transform="translate(0 40)"><ellipse cx="320" cy="400" rx="46" ry="38" fill="#8A5A37"/><ellipse cx="704" cy="400" rx="46" ry="38" fill="#8A5A37"/>
+<ellipse cx="322" cy="404" rx="20" ry="15" fill="#6E4529"/><ellipse cx="702" cy="404" rx="20" ry="15" fill="#6E4529"/>
+<rect x="250" y="390" width="524" height="420" rx="175" fill="#B07A4F"/>
+<path d="M310 470 Q512 405 714 470" fill="none" stroke="#C4916A" stroke-width="18" stroke-linecap="round" stroke-opacity="0.6"/>
+<rect x="392" y="600" width="240" height="160" rx="76" fill="#C8946A"/>
+<ellipse cx="470" cy="648" rx="16" ry="10" fill="#3A2414"/><ellipse cx="554" cy="648" rx="16" ry="10" fill="#3A2414"/>
+<path d="M366 548 Q398 568 430 548" fill="none" stroke="#2A1A10" stroke-width="17" stroke-linecap="round"/>
+<path d="M594 548 Q626 568 658 548" fill="none" stroke="#2A1A10" stroke-width="17" stroke-linecap="round"/>
+<circle cx="350" cy="630" r="32" fill="#FF3D7F" fill-opacity="0.25"/><circle cx="674" cy="630" r="32" fill="#FF3D7F" fill-opacity="0.25"/>
+<path d="M486 712 Q512 730 538 712" fill="none" stroke="#3A2414" stroke-width="11" stroke-linecap="round"/>
+<g transform="rotate(-6 512 320)"><rect x="366" y="240" width="292" height="160" rx="26" fill="#FFFFFF"/><path d="M438.52734375 355.0H459.96484375L465.26953125 337.6640625H492.39453125L497.91796875 355.0H519.57421875L491.57421875 273.515625H465.70703125ZM469.80859375 322.8984375 470.90234375 319.3984375C473.58203125 310.15625 475.98828125 299.875 478.44921875 288.8828125C481.07421875 299.8203125 483.75390625 310.1015625 486.59765625 319.3984375L487.69140625 322.8984375ZM545.55078125 356.09375C554.02734375 356.09375 559.93359375 352.703125 563.26953125 346.4140625H563.76171875V355.0H581.69921875V313.4921875C581.69921875 300.3671875 569.72265625 293.09375 554.51953125 293.09375C539.20703125 293.09375 529.58203125 300.2578125 527.17578125 310.703125L544.45703125 312.9453125C545.49609375 309.1171875 549.05078125 306.65625 554.35546875 306.65625C559.55078125 306.65625 562.66796875 309.0625 562.66796875 313.2734375V313.4921875C562.66796875 317.265625 558.51171875 318.03125 548.17578125 318.90625C535.81640625 319.9453125 525.42578125 324.484375 525.42578125 338.046875C525.42578125 350.1328125 533.79296875 356.09375 545.55078125 356.09375ZM551.34765625 343.4609375C546.75390625 343.4609375 543.47265625 341.2734375 543.47265625 337.171875C543.47265625 333.125 546.64453125 330.71875 552.27734375 329.8984375C555.83203125 329.3515625 560.64453125 328.53125 562.83203125 327.3828125V333.234375C562.83203125 339.25 557.74609375 343.4609375 551.34765625 343.4609375Z" fill="#0A84FF"/></g></g>
+<path d="M100 740 Q200 708 300 740 T500 740 T700 740 T900 740 T1100 740 L1100 924 L100 924 Z" fill="#D4F6FA" fill-opacity="0.9"/>
+<path d="M260 800 Q300 788 340 800 M620 830 Q660 818 700 830" fill="none" stroke="#7FC9DA" stroke-width="10" stroke-linecap="round"/>
+</g></g></svg>

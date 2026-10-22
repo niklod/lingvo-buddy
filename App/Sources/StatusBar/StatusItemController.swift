@@ -7,7 +7,7 @@ struct StatusItemActions {
     var toggleTray: (NSStatusBarButton) -> Void = { _ in }
 }
 
-/// The "Aa" status item. A left click reopens a waiting card (dot shown);
+/// The Kapa status item. A left click reopens a waiting card (dot shown);
 /// otherwise, and on a right click, it toggles the tray menu.
 @MainActor
 final class StatusItemController: NSObject {

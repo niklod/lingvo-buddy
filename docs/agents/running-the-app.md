@@ -33,7 +33,7 @@ Other agents and the owner run LingvoBuddy on the same Mac at the same time. All
 
 Agent shells on this Mac have Accessibility and Screen Recording permission. Use CGEvent mouse and key events, the AX API or System Events, and capture with `screencapture -l <windowID>` or `screencapture -R x,y,w,h`.
 
-- Two instances put two "Aa" icons side by side. Find your own icon by PID before you click: `osascript -e 'tell application "System Events" to tell (first process whose unix id is <pid>) to get {position, size} of every UI element of every menu bar'`.
+- Two instances put two Kapa icons side by side. Find your own icon by PID before you click: `osascript -e 'tell application "System Events" to tell (first process whose unix id is <pid>) to get {position, size} of every UI element of every menu bar'`.
 - Move the pointer away from the status icon before a synthetic click on it. The click registers only when the pointer enters the icon from outside.
 - Send keys as CGEvent key codes. System Events `keystroke` and Unicode-string CGEvents (`keyboardSetUnicodeString`) do not reach our non-activating panels (card, quick add) reliably.
 - The save and open panels run out of process. Fill them with AX (`set value of text field "Save As:"`), or the keys may land in Finder.

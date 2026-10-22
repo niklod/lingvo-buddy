@@ -1,4 +1,4 @@
-import Foundation
+import AppKit
 import SwiftUI
 
 /// What the About tab shows. The attribution comes from the bundled
@@ -27,12 +27,11 @@ struct AboutView: View {
     var body: some View {
         VStack(spacing: SettingsLayout.sectionSpacing) {
             VStack(spacing: 6) {
-                Text("Aa")
-                    .font(.system(size: 26, weight: .semibold))
-                    .foregroundStyle(Theme.Palette.textStrong)
-                    .frame(width: 64, height: 52)
-                    .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(Theme.Palette.textStrong, lineWidth: 2.5))
-                    .padding(.bottom, 4)
+                // The app icon: Kapa the capybara in her onsen (AppIcon in Assets.xcassets).
+                Image(nsImage: NSApp.applicationIconImage)
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .accessibilityHidden(true)
                 Text("LingvoBuddy")
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Theme.Palette.textPrimary)

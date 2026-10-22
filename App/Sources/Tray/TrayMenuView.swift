@@ -14,10 +14,11 @@ enum TrayRow: Hashable {
     case showWordNow, nextCard, pause, dictionary, settings
 }
 
-/// The tray menu from the design: header, Top‑1000 progress card, add-word
+/// The tray menu from the design: header with Kapa, Top‑1000 progress card, add-word
 /// slot, menu rows, today's numbers and Quit.
 struct TrayMenuView<AddWordField: View>: View {
     static var width: CGFloat { 320 }
+    private static var kapaHeight: CGFloat { 30 }
 
     let state: TrayMenuState
     var actions = TrayMenuActions()
@@ -52,7 +53,8 @@ struct TrayMenuView<AddWordField: View>: View {
     }
 
     private var header: some View {
-        HStack {
+        HStack(spacing: 8) {
+            KapaMoodView(mood: state.kapaMood, height: Self.kapaHeight)
             Text(verbatim: "LingvoBuddy")
                 .font(.system(size: Theme.FontSize.title, weight: .bold))
                 .foregroundStyle(Theme.Palette.textPrimary)

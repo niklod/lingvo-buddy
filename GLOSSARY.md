@@ -164,7 +164,7 @@ A quiet rule other than a pause (quiet hours, Focus, full screen) while it keeps
 ### App
 
 **Menu-bar icon**:
-The "Aa" status item. A click reopens a waiting card, or else opens the tray.
+The Kapa status item (the capybara of the app icon). A click reopens a waiting card, or else opens the tray.
 _Avoid_: tray icon
 
 **Tray**:
