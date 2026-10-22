@@ -7,6 +7,8 @@ enum TranslationChoice: Equatable {
     case dictionary(Int)
     /// The "+ custom variant" text.
     case custom
+    /// The machine translation bubble: the card's translation, or the English word for Russian input.
+    case machine
 }
 
 /// Where the machine translation fallback stands for the typed word.
@@ -101,19 +103,34 @@ final class QuickAddModel {
     /// Words the dictionary lacks always need the custom field.
     var showsCustomField: Bool {
         guard !isRussianInput else { return false }
-        return choice == .custom || (preview != nil && translations.isEmpty)
+        return preview != nil && choice == .custom
+    }
+
+    /// Russian text with no candidates: the field shows until the learner picks the machine bubble.
+    var showsEnglishWordField: Bool { needsEnglishWord && choice == .custom }
+
+    /// The machine result as a bubble; `nil` until it arrives.
+    var machineBubble: String? {
+        guard case .suggested(let suggestion) = machine else { return nil }
+        return suggestion
     }
 
     var chosenTranslation: String {
         if let preview, preview.isRussianInput { return preview.russianText ?? preview.headword }
         return switch choice {
         case .dictionary(let index) where translations.indices.contains(index): translations[index]
+        case .machine: machineBubble ?? customTranslation
         case .dictionary, .custom: customTranslation
         }
     }
 
+    /// The English word for Russian text the dictionary does not know.
+    private var chosenEnglishWord: String {
+        choice == .machine ? machineBubble ?? "" : Self.trimmed(englishWord)
+    }
+
     var canSubmit: Bool {
-        if needsEnglishWord { return !Self.trimmed(englishWord).isEmpty }
+        if needsEnglishWord { return !chosenEnglishWord.isEmpty }
         guard let candidate, candidate.canAdd else { return false }
         return !Self.trimmed(chosenTranslation).isEmpty
     }
@@ -183,7 +200,7 @@ final class QuickAddModel {
             message = .error(String(localized: "Type the English word for the card."))
             return nil
         }
-        return NewMyWord(text: Self.trimmed(englishWord), translation: chosenTranslation, example: example)
+        return NewMyWord(text: chosenEnglishWord, translation: chosenTranslation, example: example)
     }
 
     /// The first dictionary translation and the first candidate are preselected
@@ -233,7 +250,7 @@ final class QuickAddModel {
         let request = neededMachineRequest
         guard request != machineRequest else { return }
         pendingTranslation?.cancel()
-        clearSuggestionFields()
+        dropMachineChoice()
         machineRequest = request
         guard let request, let translator else {
             machine = .none
@@ -257,7 +274,7 @@ final class QuickAddModel {
         switch result {
         case .translated(let suggestion):
             machine = .suggested(suggestion)
-            fillSuggestion(suggestion, direction: request.direction)
+            preselectMachineBubble(direction: request.direction)
         case .languagePackMissing:
             machine = .languagePackMissing
         case .failed:
@@ -266,22 +283,16 @@ final class QuickAddModel {
     }
 
     /// Text the learner typed while waiting wins over the suggestion.
-    private func fillSuggestion(_ suggestion: String, direction: MachineTranslationDirection) {
-        switch direction {
-        case .englishToRussian where Self.trimmed(customTranslation).isEmpty:
-            customTranslation = suggestion
-        case .russianToEnglish where Self.trimmed(englishWord).isEmpty:
-            englishWord = suggestion
-        case .englishToRussian, .russianToEnglish:
-            break
+    private func preselectMachineBubble(direction: MachineTranslationDirection) {
+        let typed = direction == .englishToRussian ? customTranslation : englishWord
+        if choice == .custom, Self.trimmed(typed).isEmpty {
+            choice = .machine
         }
     }
 
-    /// A suggestion for the previous word must not stay on screen as if it were for the new one.
-    private func clearSuggestionFields() {
-        guard case .suggested(let suggestion) = machine else { return }
-        if customTranslation == suggestion { customTranslation = "" }
-        if englishWord == suggestion { englishWord = "" }
+    /// A suggestion for the previous word must not stay selected as if it were for the new one.
+    private func dropMachineChoice() {
+        if choice == .machine { choice = .custom }
     }
 
     /// A newer keystroke cancels the request at once; the lookup after the pause asks again.

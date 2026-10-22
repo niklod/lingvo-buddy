@@ -20,9 +20,11 @@ struct QuickAddView: View {
         VStack(spacing: 0) {
             header
             VStack(alignment: .leading, spacing: 12) {
-                Text(verbatim: model.metaLine)
-                    .font(.system(size: Theme.FontSize.caption))
-                    .foregroundStyle(Theme.Palette.textSecondary)
+                if !model.metaLine.isEmpty {
+                    Text(verbatim: model.metaLine)
+                        .font(.system(size: Theme.FontSize.caption))
+                        .foregroundStyle(Theme.Palette.textSecondary)
+                }
                 if model.needsEnglishWord {
                     englishWordSection
                 } else if model.isRussianInput {
@@ -77,29 +79,21 @@ struct QuickAddView: View {
 
     private var translationSection: some View {
         section(String(localized: "Translation for the card")) {
-            if !model.translations.isEmpty {
+            if !model.translations.isEmpty || model.machineBubble != nil {
                 FlowLayout(spacing: 6) {
                     ForEach(Array(model.translations.enumerated()), id: \.offset) { index, translation in
                         TranslationPill(title: translation, isSelected: model.choice == .dictionary(index)) {
                             model.choose(.dictionary(index))
                         }
                     }
-                    TranslationPill(
-                        title: String(localized: "+ custom variant"),
-                        isSelected: model.choice == .custom,
-                        isCustom: true
-                    ) {
-                        model.choose(.custom)
-                        focus = .custom
-                    }
+                    machinePill
+                    customPill(focusing: .custom)
                 }
             }
             if model.showsCustomField {
                 QuickAddField(placeholder: String(localized: "Your translation"), text: $model.customTranslation)
                     .focused($focus, equals: .custom)
-                MachineSuggestionNote(machine: model.machine, fieldText: model.customTranslation) {
-                    model.downloadLanguagePack()
-                }
+                MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
             }
         }
     }
@@ -107,11 +101,40 @@ struct QuickAddView: View {
     /// Russian text the dictionary does not know: the typed text is the translation.
     private var englishWordSection: some View {
         section(String(localized: "English word for the card")) {
-            QuickAddField(placeholder: String(localized: "English word"), text: $model.englishWord)
-                .focused($focus, equals: .englishWord)
-            MachineSuggestionNote(machine: model.machine, fieldText: model.englishWord) {
-                model.downloadLanguagePack()
+            if model.machineBubble != nil {
+                FlowLayout(spacing: 6) {
+                    machinePill
+                    customPill(focusing: .englishWord)
+                }
             }
+            if model.showsEnglishWordField {
+                QuickAddField(placeholder: String(localized: "English word"), text: $model.englishWord)
+                    .focused($focus, equals: .englishWord)
+                MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
+            }
+        }
+    }
+
+    @ViewBuilder private var machinePill: some View {
+        if let bubble = model.machineBubble {
+            TranslationPill(
+                title: bubble,
+                isSelected: model.choice == .machine,
+                mark: String(localized: "machine translation")
+            ) {
+                model.choose(.machine)
+            }
+        }
+    }
+
+    private func customPill(focusing field: Field) -> some View {
+        TranslationPill(
+            title: String(localized: "+ custom variant"),
+            isSelected: model.choice == .custom,
+            isCustom: true
+        ) {
+            model.choose(.custom)
+            focus = field
         }
     }
 
