@@ -42,6 +42,7 @@ enum AppEnvironment {
         if options.seedDemo {
             try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
         }
+        LiveSystemDictionary.warmUp()
         return Services(
             tutor: try Tutor(
                 dictionary: dictionary, userDatabase: userDatabase, extendedDictionary: extended,

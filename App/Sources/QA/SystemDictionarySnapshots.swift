@@ -8,7 +8,7 @@ enum SystemDictionarySnapshots {
     // swiftlint:disable:next line_length
     private static let mumpsimus = "mumpsimus mump·si·mus | ˈməm(p)səməs | noun (plural mumpsimuses) a traditional custom or notion adhered to although shown to be unreasonable. • a person who obstinately adheres to unreasonable customs or notions. ORIGIN mid 16th century: erroneously for Latin sumpsimus in quod in ore sumpsimus."
     // swiftlint:disable:next line_length
-    private static let codswallop = "codswallop cods·wal·lop | ˈkädzˌwäləp | noun British English informal nonsense: I think that's a right load of old codswallop. ORIGIN 1920s: probably an alteration of cod walloper."
+    static let codswallop = "codswallop cods·wal·lop | ˈkädzˌwäləp | noun British English informal nonsense: I think that's a right load of old codswallop. ORIGIN 1920s: probably an alteration of cod walloper."
 
     static var states: [SnapshotState] {
         [
@@ -26,13 +26,13 @@ enum SystemDictionarySnapshots {
         extended: ExtendedEntry? = nil,
         answer: MachineTranslation? = nil
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true) {
+        QuickAddSnapshots.panelState(name) {
             let entry = system.flatMap { SystemEntry.parse($0, for: text) }
             let model = QuickAddModel(text: text, translator: answer.map(FakeMachineTranslator.init(answer:))) { query in
                 QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, extended: extended, system: entry)
             }
             await model.machineTranslationSettled()
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
         }
     }
 }
