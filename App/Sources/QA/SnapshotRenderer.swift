@@ -19,13 +19,15 @@ enum SnapshotRenderer {
         }
     }
 
-    static func render(_ states: [SnapshotState], to directory: URL) throws -> [URL] {
+    static func render(_ states: [SnapshotState], to directory: URL) async throws -> [URL] {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        return try states.map { state in
+        var urls: [URL] = []
+        for state in states {
             let url = directory.appendingPathComponent(state.name).appendingPathExtension("png")
-            try png(for: state).write(to: url, options: .atomic)
-            return url
+            try png(for: state, view: await state.view()).write(to: url, options: .atomic)
+            urls.append(url)
         }
+        return urls
     }
 
     /// A relative path lands in the app's temporary folder: the sandbox allows
@@ -38,8 +40,8 @@ enum SnapshotRenderer {
             .appendingPathComponent(path, isDirectory: true)
     }
 
-    private static func png(for state: SnapshotState) throws -> Data {
-        let bitmap = state.usesWindow ? windowBitmap(for: state) : rendererBitmap(for: state)
+    private static func png(for state: SnapshotState, view: AnyView) throws -> Data {
+        let bitmap = state.usesWindow ? windowBitmap(for: view) : rendererBitmap(for: view)
         guard let bitmap else { throw RenderError.renderFailed(state.name) }
         guard let data = bitmap.representation(using: .png, properties: [:]) else {
             throw RenderError.encodeFailed(state.name)
@@ -47,11 +49,11 @@ enum SnapshotRenderer {
         return data
     }
 
-    private static func rendererBitmap(for state: SnapshotState) -> NSBitmapImageRep? {
+    private static func rendererBitmap(for view: AnyView) -> NSBitmapImageRep? {
         var image: CGImage?
         // Dynamic NSColors resolve against the current drawing appearance.
         NSAppearance(named: .darkAqua)?.performAsCurrentDrawingAppearance {
-            let renderer = ImageRenderer(content: state.view().background(Theme.Palette.desktop))
+            let renderer = ImageRenderer(content: view.background(Theme.Palette.desktop))
             renderer.scale = scale
             image = renderer.cgImage
         }
@@ -60,8 +62,8 @@ enum SnapshotRenderer {
 
     /// `ImageRenderer` draws AppKit-backed controls (toggles, steppers, pickers,
     /// recorders) as placeholders, so those states go through a real, offscreen window.
-    private static func windowBitmap(for state: SnapshotState) -> NSBitmapImageRep? {
-        let host = NSHostingView(rootView: state.view())
+    private static func windowBitmap(for view: AnyView) -> NSBitmapImageRep? {
+        let host = NSHostingView(rootView: view)
         host.appearance = NSAppearance(named: .darkAqua)
         // Whole points: a fractional height leaves an unpainted pixel row at the top.
         let size = NSSize(width: host.fittingSize.width.rounded(.up), height: host.fittingSize.height.rounded(.up))

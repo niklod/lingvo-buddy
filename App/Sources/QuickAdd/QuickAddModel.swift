@@ -9,6 +9,17 @@ enum TranslationChoice: Equatable {
     case custom
 }
 
+/// Where the machine translation fallback stands for the typed word.
+enum MachineSuggestion: Equatable {
+    /// The dictionary has a match, or there is nothing to ask.
+    case none
+    case waiting
+    case suggested(String)
+    case languagePackMissing
+    case downloading
+    case failed
+}
+
 /// A line the footer shows instead of the default hint.
 enum QuickAddMessage: Equatable {
     case standing(WordStanding)
@@ -23,22 +34,39 @@ final class QuickAddModel {
     private static let lookupDelay: Duration = .milliseconds(80)
 
     var text: String {
-        didSet { if text != oldValue { scheduleLookup() } }
+        didSet {
+            guard text != oldValue else { return }
+            cancelWaitingTranslation()
+            scheduleLookup()
+        }
     }
     var choice: TranslationChoice = .custom
     var customTranslation = ""
+    /// The card's English word for Russian text the dictionary does not know.
+    var englishWord = ""
     var example = ""
     private(set) var preview: QuickAddPreview?
     private(set) var message: QuickAddMessage?
     /// Index into `preview.candidates`: the English word for Russian input.
     private(set) var candidateIndex = 0
+    private(set) var machine: MachineSuggestion = .none
 
     @ObservationIgnored private let lookup: (String) throws -> QuickAddPreview?
+    @ObservationIgnored private let translator: MachineTranslator?
     @ObservationIgnored private var pendingLookup: Task<Void, Never>?
+    @ObservationIgnored private var pendingTranslation: Task<Void, Never>?
+    /// The request whose result may still be shown; any other result is stale.
+    @ObservationIgnored private var machineRequest: MachineTranslationRequest?
 
-    init(text: String = "", example: String = "", lookup: @escaping (String) throws -> QuickAddPreview?) {
+    init(
+        text: String = "",
+        example: String = "",
+        translator: MachineTranslator? = nil,
+        lookup: @escaping (String) throws -> QuickAddPreview?
+    ) {
         self.text = text
         self.example = example
+        self.translator = translator
         self.lookup = lookup
         refreshPreview()
     }
@@ -53,11 +81,14 @@ final class QuickAddModel {
 
     /// The English words to choose from; empty for English input.
     var candidates: [QuickAddCandidate] {
-        isRussianInput ? preview?.candidates ?? [] : []
+        preview?.russianText == nil ? [] : preview?.candidates ?? []
     }
 
     /// The typed Russian word is the translation, so there is none to choose.
-    var isRussianInput: Bool { preview?.russianText != nil }
+    var isRussianInput: Bool { preview?.isRussianInput == true }
+
+    /// Russian text with no candidates: the learner (or the translator) gives the English word.
+    var needsEnglishWord: Bool { isRussianInput && candidates.isEmpty }
 
     var translations: [String] {
         guard !isRussianInput else { return [] }
@@ -71,7 +102,7 @@ final class QuickAddModel {
     }
 
     var chosenTranslation: String {
-        if let russianText = preview?.russianText { return russianText }
+        if let preview, preview.isRussianInput { return preview.russianText ?? preview.headword }
         return switch choice {
         case .dictionary(let index) where translations.indices.contains(index): translations[index]
         case .dictionary, .custom: customTranslation
@@ -79,8 +110,9 @@ final class QuickAddModel {
     }
 
     var canSubmit: Bool {
+        if needsEnglishWord { return !Self.trimmed(englishWord).isEmpty }
         guard let candidate, candidate.canAdd else { return false }
-        return !chosenTranslation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        return !Self.trimmed(chosenTranslation).isEmpty
     }
 
     func choose(_ choice: TranslationChoice) {
@@ -107,6 +139,7 @@ final class QuickAddModel {
         if pendingLookup != nil {
             refreshPreview()
         }
+        if needsEnglishWord { return englishWordSubmission() }
         guard let candidate else { return nil }
         guard candidate.canAdd else {
             message = .standing(candidate.standing)
@@ -121,6 +154,33 @@ final class QuickAddModel {
 
     func show(_ message: QuickAddMessage) {
         self.message = message
+    }
+
+    /// The panel stays open while the system download sheet is up.
+    var isDownloadingLanguagePack: Bool { machine == .downloading }
+
+    /// Only this starts the system download sheet; the translation is asked again after it.
+    func downloadLanguagePack() {
+        guard machine == .languagePackMissing, let translator, let request = machineRequest else { return }
+        machine = .downloading
+        pendingTranslation = Task { [weak self] in
+            await translator.downloadLanguagePack(for: request.direction)
+            guard !Task.isCancelled, let self, self.machineRequest == request else { return }
+            self.ask(translator, request)
+        }
+    }
+
+    /// Snapshots render the state after the fake translator has answered.
+    func machineTranslationSettled() async {
+        await pendingTranslation?.value
+    }
+
+    private func englishWordSubmission() -> NewMyWord? {
+        guard canSubmit else {
+            message = .error(String(localized: "Type the English word for the card."))
+            return nil
+        }
+        return NewMyWord(text: Self.trimmed(englishWord), translation: chosenTranslation, example: example)
     }
 
     /// The first dictionary translation and the first candidate are preselected
@@ -150,7 +210,88 @@ final class QuickAddModel {
             candidateIndex = 0
             choice = translations.isEmpty ? .custom : .dictionary(0)
         }
-        message = failure ?? Self.standingMessage(for: candidate)
+        // Unknown Russian text is not the word that gets added, so its own standing does not matter.
+        message = failure ?? (needsEnglishWord ? nil : Self.standingMessage(for: candidate))
+        requestMachineTranslation()
+    }
+
+    /// The dictionary has no match: an English word outside it, or Russian text with no candidates.
+    private var neededMachineRequest: MachineTranslationRequest? {
+        guard let preview, let candidate, preview.russianText == nil, candidate.lookup == nil else { return nil }
+        if preview.isRussianInput {
+            return MachineTranslationRequest(text: preview.headword, direction: .russianToEnglish)
+        }
+        guard candidate.canAdd else { return nil }
+        return MachineTranslationRequest(text: preview.headword, direction: .englishToRussian)
+    }
+
+    /// The same word keeps its answer (a trailing space does not ask again).
+    private func requestMachineTranslation() {
+        let request = neededMachineRequest
+        guard request != machineRequest else { return }
+        pendingTranslation?.cancel()
+        clearSuggestionFields()
+        machineRequest = request
+        guard let request, let translator else {
+            machine = .none
+            return
+        }
+        ask(translator, request)
+    }
+
+    private func ask(_ translator: MachineTranslator, _ request: MachineTranslationRequest) {
+        machine = .waiting
+        pendingTranslation = Task { [weak self] in
+            let result = await translator.translate(request)
+            guard !Task.isCancelled else { return }
+            self?.receive(result, for: request)
+        }
+    }
+
+    private func receive(_ result: MachineTranslation, for request: MachineTranslationRequest) {
+        guard request == machineRequest else { return }
+        pendingTranslation = nil
+        switch result {
+        case .translated(let suggestion):
+            machine = .suggested(suggestion)
+            fillSuggestion(suggestion, direction: request.direction)
+        case .languagePackMissing:
+            machine = .languagePackMissing
+        case .failed:
+            machine = .failed
+        }
+    }
+
+    /// Text the learner typed while waiting wins over the suggestion.
+    private func fillSuggestion(_ suggestion: String, direction: MachineTranslationDirection) {
+        switch direction {
+        case .englishToRussian where Self.trimmed(customTranslation).isEmpty:
+            customTranslation = suggestion
+        case .russianToEnglish where Self.trimmed(englishWord).isEmpty:
+            englishWord = suggestion
+        case .englishToRussian, .russianToEnglish:
+            break
+        }
+    }
+
+    /// A suggestion for the previous word must not stay on screen as if it were for the new one.
+    private func clearSuggestionFields() {
+        guard case .suggested(let suggestion) = machine else { return }
+        if customTranslation == suggestion { customTranslation = "" }
+        if englishWord == suggestion { englishWord = "" }
+    }
+
+    /// A newer keystroke cancels the request at once; the lookup after the pause asks again.
+    private func cancelWaitingTranslation() {
+        guard machine == .waiting else { return }
+        pendingTranslation?.cancel()
+        pendingTranslation = nil
+        machineRequest = nil
+        machine = .none
+    }
+
+    private static func trimmed(_ text: String) -> String {
+        text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private static func standingMessage(for candidate: QuickAddCandidate?) -> QuickAddMessage? {
