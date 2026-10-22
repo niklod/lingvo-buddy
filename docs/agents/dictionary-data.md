@@ -17,7 +17,7 @@ A contract change also touches:
 Every batch entry is tied to its rank in `data/wordlist/wordlist.tsv`. The export ranks the lemmas of the top 60,000 `wordfreq` forms first (ranks 1–24,494), then appends new lemmas of the top 100,000 forms up to rank 30,000; one pass over all forms would move ranks from 180 on. A new run of `export_wordlist.py` with changed rule files shifts ranks and breaks every batch after the change, so leave the word list as it is. A bad headword goes on one of two lists:
 
 - `data/quiz-exclusions.txt`: ranks 1001–2000 only. The word stays in the dictionary for quick-add lookup but never becomes a card or a distractor. Use it for names, clippings, inflected forms, slang and vulgar main senses. Such an entry still needs its example and synonym group, in the lookup sense.
-- `data/wordlist/exclusions.txt`: drops the word from the word list itself. It takes effect only on a new export, so it is for a full rebuild only.
+- `data/wordlist/exclusions.txt`: drops the word from the word list itself. It takes effect only on a new export, so use it only for ranks that no batch file covers yet, and check after the export that every line up to the end of the last batch is byte-identical. A listed word also drops that bare form from its lemma: "cm" would take frequency from "centimeter" and move ranks, so list the source form ("cms") instead.
 
 ## Synonym groups
 
