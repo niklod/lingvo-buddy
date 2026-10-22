@@ -35,7 +35,7 @@ class BuildTest(unittest.TestCase):
 
     def test_builds_entries_translations_and_meta_from_the_batches(self):
         self.folder.write(1, [quiz_entry(self.word_list, 3, translations=["большой", "крупный"], synonym_group="big")])
-        self.folder.write(3, [lookup_entry(self.word_list, 1001)])
+        self.folder.write(5, [lookup_entry(self.word_list, 2001)])
 
         code, out, err = self.run_build("--allow-partial")
 
@@ -45,7 +45,7 @@ class BuildTest(unittest.TestCase):
             self.query("SELECT id, headword, rank, pos, ipa, example, synonym_group, tier FROM entries ORDER BY rank"),
             [
                 (3, "large", 3, "noun", "/haʊs/", "This large is very old.", "big", "quiz"),
-                (1001, self.word_list.headword_at(1001), 1001, "noun", "/haʊs/", None, None, "lookup"),
+                (2001, self.word_list.headword_at(2001), 2001, "noun", "/haʊs/", None, None, "lookup"),
             ],
         )
         self.assertEqual(
@@ -62,10 +62,10 @@ class BuildTest(unittest.TestCase):
         meta = dict(self.query("SELECT key, value FROM meta"))
         self.assertEqual(meta["source"], "wordfreq 3.1.1 (en)")
         self.assertIn("CC BY-SA 4.0", meta["license"])
-        self.assertIn("batch-01, batch-03", meta["built_from"])
+        self.assertIn("batch-01, batch-05", meta["built_from"])
 
     def test_quiz_exclusions_of_built_words_go_into_the_dictionary(self):
-        self.folder.write(3, [lookup_entry(self.word_list, 1001), lookup_entry(self.word_list, 1002)])
+        self.folder.write(3, [quiz_entry(self.word_list, 1001), quiz_entry(self.word_list, 1002)])
         excluded = self.word_list.headword_at(1002)
         self.folder.write_exclusions(excluded, self.word_list.headword_at(1500))
 
@@ -77,7 +77,7 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(self.query("SELECT headword FROM quiz_exclusions"), [(excluded,)])
 
     def test_invalid_quiz_exclusions_stop_the_build(self):
-        self.folder.write(3, [lookup_entry(self.word_list, 1001)])
+        self.folder.write(3, [quiz_entry(self.word_list, 1001)])
         self.folder.write_exclusions("nosuchword")
 
         code, _, err = self.run_build("--allow-partial")
