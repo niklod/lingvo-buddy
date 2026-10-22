@@ -64,6 +64,16 @@ struct DictionaryContractTests {
         }
     }
 
+    @Test("a dictionary file built for schema version 2 fails with a clear rebuild message")
+    func olderSchemaVersionFails() throws {
+        let url = Fixture.temporaryDatabaseURL()
+        try OldUserDatabase.run("CREATE TABLE entries (id INTEGER PRIMARY KEY); PRAGMA user_version = 2;", at: url)
+
+        #expect(throws: LingvoCoreError.invalidDictionary("dictionary schema version 2, expected 3: rebuild it")) {
+            try DictionaryStore.open(at: url)
+        }
+    }
+
     @Test("opening a missing dictionary file fails with a clear error")
     func missingFileFails() throws {
         let url = Fixture.temporaryDatabaseURL()

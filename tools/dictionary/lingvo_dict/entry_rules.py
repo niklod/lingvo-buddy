@@ -8,12 +8,15 @@ from typing import Any
 from lingvo_dict.contract import (
     EXAMPLE_LENGTH,
     EXAMPLE_PATTERN,
+    EXAMPLE_RU_MAX_LENGTH,
+    EXAMPLE_RU_PATTERN,
     IPA_PATTERN,
     IPA_VOWELS,
     POS_VALUES,
     TIER_RULES,
     TRANSLATION_MAX_LENGTH,
     TRANSLATION_PATTERN,
+    TierRules,
     tier_for_rank,
 )
 from lingvo_dict.wordlist_file import WordList
@@ -35,7 +38,7 @@ def check_entry(entry: Any, word_list: WordList, ranks: tuple[int, int], batch: 
 
     tier = tier_for_rank(rank)
     rules = TIER_RULES[tier]
-    errors = _check_fields(entry, rules.fields)
+    errors = _check_fields(entry, rules)
     errors += _check_rank(rank, ranks, batch)
     errors += _check_headword(entry, rank, word_list)
     if "tier" in entry and entry["tier"] != tier:
@@ -48,6 +51,9 @@ def check_entry(entry: Any, word_list: WordList, ranks: tuple[int, int], batch: 
         errors += check_ipa(entry["ipa"])
     if tier == "quiz" and "example" in entry and isinstance(entry.get("headword"), str):
         errors += check_example(entry["example"], entry["headword"])
+    # On a tier without example_ru, _check_fields already reports the field.
+    if "example_ru" in entry and "example_ru" in rules.allowed:
+        errors += check_example_ru(entry["example_ru"], has_example="example" in entry)
     if tier == "quiz" and "synonym_group" in entry:
         group = entry["synonym_group"]
         if not isinstance(group, str) or not group:
@@ -55,9 +61,9 @@ def check_entry(entry: Any, word_list: WordList, ranks: tuple[int, int], batch: 
     return errors
 
 
-def _check_fields(entry: dict[str, Any], fields: tuple[str, ...]) -> list[str]:
-    missing = [f"missing field '{name}'" for name in fields if name not in entry]
-    unknown = [f"unknown field '{name}' for this tier" for name in entry if name not in fields]
+def _check_fields(entry: dict[str, Any], rules: TierRules) -> list[str]:
+    missing = [f"missing field '{name}'" for name in rules.fields if name not in entry]
+    unknown = [f"unknown field '{name}' for this tier" for name in entry if name not in rules.allowed]
     return missing + unknown
 
 
@@ -121,6 +127,18 @@ def check_example(example: Any, headword: str) -> list[str]:
     stem = _stem(headword.lower())
     if not any(token.startswith(stem) for token in WORD_TOKEN.findall(example.lower())):
         return [f"example must contain '{headword}' or a form that starts with '{stem}'"]
+    return []
+
+
+def check_example_ru(example_ru: Any, has_example: bool) -> list[str]:
+    if not has_example:
+        return ["example_ru needs an English example: it is the translation of 'example'"]
+    if example_ru == "":
+        return ["example_ru must not be empty"]
+    if isinstance(example_ru, str) and len(example_ru) > EXAMPLE_RU_MAX_LENGTH:
+        return [f"example_ru must have at most {EXAMPLE_RU_MAX_LENGTH} characters, got {len(example_ru)}"]
+    if not isinstance(example_ru, str) or not EXAMPLE_RU_PATTERN.fullmatch(example_ru):
+        return [f"example_ru {example_ru!r} must be one Russian sentence: Cyrillic, capital first, no Latin"]
     return []
 
 

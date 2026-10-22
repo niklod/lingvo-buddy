@@ -5,6 +5,7 @@ import Testing
 @Suite("Quick add example")
 struct QuickAddExampleTests {
     static let provideExample = "The hotel provides free breakfast."
+    static let provideRussianExample = "Отель предоставляет бесплатный завтрак."
 
     static func learner() throws -> Learner {
         try Learner(settings: LearningSettings(direction: .enToRu))
@@ -17,6 +18,7 @@ struct QuickAddExampleTests {
         let preview = try #require(try learner.tutor.quickAddPreview(" Provide "))
 
         #expect(preview.example == Self.provideExample)
+        #expect(preview.russianExample == Self.provideRussianExample)
     }
 
     @Test("the preview has no example for a word without one or a word the dictionary lacks")
@@ -27,7 +29,9 @@ struct QuickAddExampleTests {
         let unknown = try #require(try learner.tutor.quickAddPreview("Kubernetes"))
 
         #expect(lookupTier.example == nil)
+        #expect(lookupTier.russianExample == nil)
         #expect(unknown.example == nil)
+        #expect(unknown.russianExample == nil)
     }
 
     @Test("an empty \"Where I saw it\" field puts the previewed example on the card")
@@ -41,9 +45,11 @@ struct QuickAddExampleTests {
         #expect(card.headword == "provide")
         #expect(card.example == preview.example)
         #expect(card.example == Self.provideExample)
+        #expect(card.russianExample == preview.russianExample)
+        #expect(card.russianExample == Self.provideRussianExample)
     }
 
-    @Test("own \"Where I saw it\" text replaces the previewed example on the card")
+    @Test("own \"Where I saw it\" text replaces the previewed example and drops the Russian example")
     func ownTextReplacesExample() throws {
         let learner = try Self.learner()
 
@@ -56,5 +62,6 @@ struct QuickAddExampleTests {
 
         #expect(card.headword == "provide")
         #expect(card.example == "We provide the data.")
+        #expect(card.russianExample == nil)
     }
 }

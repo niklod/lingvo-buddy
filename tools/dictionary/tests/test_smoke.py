@@ -35,10 +35,12 @@ class SmokeTest(unittest.TestCase):
 
             self.assertEqual(code, 0, output)
             with closing(sqlite3.connect(out)) as connection:
-                first = connection.execute("SELECT headword, rank, tier FROM entries WHERE rank = 1").fetchone()
+                first = connection.execute(
+                    "SELECT headword, rank, tier, example_ru FROM entries WHERE rank = 1"
+                ).fetchone()
                 license_text = connection.execute("SELECT value FROM meta WHERE key = 'license'").fetchone()[0]
                 source = connection.execute("SELECT value FROM meta WHERE key = 'source'").fetchone()[0]
-        self.assertEqual(first, ("be", 1, "quiz"))
+        self.assertEqual(first, ("be", 1, "quiz", "Я хочу быть врачом."))
         self.assertIn("wordfreq", license_text)
         self.assertIn("CC BY-SA 4.0", license_text)
         self.assertTrue(source.startswith("wordfreq 3.1.1"), source)

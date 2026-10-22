@@ -31,12 +31,12 @@ enum DictionaryBuilder {
     private static func insert(_ entry: DictionaryEntry, in db: Database) throws {
         try db.execute(
             sql: """
-                INSERT INTO entries (id, headword, rank, pos, ipa, example, synonym_group, tier)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO entries (id, headword, rank, pos, ipa, example, example_ru, synonym_group, tier)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
             arguments: [
                 entry.rank, entry.headword, entry.rank, entry.partOfSpeech.rawValue,
-                entry.ipa, entry.example, entry.synonymGroup, entry.tier.rawValue,
+                entry.ipa, entry.example, entry.russianExample, entry.synonymGroup, entry.tier.rawValue,
             ]
         )
         for (language, texts) in entry.translations.sorted(by: { $0.key.rawValue < $1.key.rawValue }) {

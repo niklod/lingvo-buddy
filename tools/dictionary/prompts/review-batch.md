@@ -10,6 +10,7 @@ The generation rules are in `tools/dictionary/prompts/generate-batch.md`. Read t
 2. **Part of speech.** `pos` matches the meaning of the translations, and all translations have that part of speech.
 3. **Translations.** At most 3, in dictionary form, no rare or unrelated meanings, no near-duplicates that add nothing.
 4. **Example.** A natural sentence that uses the headword in the same meaning as the first translation.
+   `example_ru` is a natural Russian translation of that sentence, in the same meaning, with no English words left in it.
 5. **IPA.** A plausible British transcription of the headword, with the stress on the right syllable.
 6. **synonym_group.** Points at the lowest-ranked quiz word with the same main meaning, or at the headword itself. Remove groups between words that are only related; add a group when two words would both be correct answers.
 
@@ -21,4 +22,4 @@ The generation rules are in `tools/dictionary/prompts/generate-batch.md`. Read t
 
 ## Report
 
-Reply in at most 15 lines: the validator's OK line, the number of entries you changed, and one line per change of meaning or part of speech (`rank headword: old → new`). Skip pure IPA or example polish in the list; give only their count.
+Reply in at most 15 lines: the validator's OK line, the number of entries you changed, and one line per change of meaning or part of speech (`rank headword: old → new`). Skip pure IPA, example or `example_ru` polish in the list; give only their count.

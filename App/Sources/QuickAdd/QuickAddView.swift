@@ -34,7 +34,7 @@ struct QuickAddView: View {
                     QuickAddField(placeholder: "", text: $model.example, italic: true)
                         .focused($focus, equals: .example)
                     if let example = model.examplePreview {
-                        ExamplePreview(text: example)
+                        ExamplePreview(example: example)
                     }
                 }
             }

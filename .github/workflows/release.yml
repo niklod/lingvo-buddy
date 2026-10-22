@@ -1,0 +1,64 @@
+name: Release
+
+# A tag push `vX.Y.Z` publishes a Release with the installer. A manual run only uploads the
+# installer as a workflow artifact, to test the pipeline without a Release.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      # GRDB 7.11 needs swift-tools 6.1 (Xcode 16.3 or later).
+      - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: LingvoCore/.build
+          key: spm-${{ runner.os }}-${{ hashFiles('LingvoCore/Package.resolved') }}
+      - name: Version
+        id: version
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" = push ]; then
+            version="${GITHUB_REF_NAME#v}"
+            # Fail before the long build: the version goes into CFBundleShortVersionString.
+            if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::Tag $GITHUB_REF_NAME is not vX.Y.Z"
+              exit 1
+            fi
+          else
+            version="0.0.0-dev.$GITHUB_RUN_NUMBER"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - run: brew install xcodegen swiftlint ruff
+      - run: make check
+      - run: make pkg VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+      - name: Publish the Release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "$GITHUB_REF_NAME" "build/LingvoBuddy-$VERSION.pkg" --verify-tag --generate-notes
+      - name: Upload the installer
+        if: github.event_name != 'push'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: LingvoBuddy-${{ steps.version.outputs.version }}
+          path: build/LingvoBuddy-${{ steps.version.outputs.version }}.pkg
+          if-no-files-found: error

@@ -29,6 +29,9 @@ public struct QuickAddCandidate: Sendable, Equatable {
 
     /// The dictionary example that goes on the card when "Where I saw it" stays empty.
     public var example: String? { lookup?.entry.example }
+
+    /// The Russian translation of `example`; the card shows it only with the dictionary example.
+    public var russianExample: String? { lookup?.entry.russianExample }
 }
 
 /// What the quick-add panel shows for the typed text, before the learner adds it.
@@ -65,6 +68,7 @@ public struct QuickAddPreview: Sendable, Equatable {
     public var standing: WordStanding { preselected.standing }
     public var canAdd: Bool { preselected.canAdd }
     public var example: String? { preselected.example }
+    public var russianExample: String? { preselected.russianExample }
 
     private var preselected: QuickAddCandidate { candidates[0] }
 }

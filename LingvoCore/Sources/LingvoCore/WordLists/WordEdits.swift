@@ -55,7 +55,8 @@ extension UserDatabase {
 
 extension DictionaryEntry {
     /// The card asks for `translation`; the other dictionary translations stay
-    /// so none of them can show up as a wrong option.
+    /// so none of them can show up as a wrong option. An own `example` drops the
+    /// dictionary's Russian example: it translates a different sentence.
     func withPrimaryTranslation(_ translation: String, example: String? = nil) -> DictionaryEntry {
         let others = (translations[.russian] ?? []).filter { $0 != translation }
         return DictionaryEntry(
@@ -66,7 +67,8 @@ extension DictionaryEntry {
             example: example ?? self.example,
             synonymGroup: synonymGroup,
             tier: tier,
-            translations: [.russian: [translation] + others]
+            translations: [.russian: [translation] + others],
+            russianExample: example == nil ? russianExample : nil
         )
     }
 }
