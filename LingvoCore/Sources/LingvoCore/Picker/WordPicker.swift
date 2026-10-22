@@ -19,9 +19,10 @@ struct WordPicker {
     let settings: LearningSettings
 
     /// How many of the latest answers the review cap looks at (see `reviewAllowed`).
+    /// The real share is 1 / (window + 1); rounding up keeps it at or below the setting.
     var reviewCapWindow: Int {
         guard settings.reviewShare > 0 else { return 0 }
-        return max(Int((1 / settings.reviewShare).rounded()) - 1, 0)
+        return max(Int((1 / settings.reviewShare).rounded(.up)) - 1, 0)
     }
 
     /// New words come only from the open `tier`. `myWords` are card entries of
