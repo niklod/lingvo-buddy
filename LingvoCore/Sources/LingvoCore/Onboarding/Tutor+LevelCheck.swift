@@ -15,6 +15,7 @@ extension Tutor {
 
     /// Marks the known sample words learned, and every queued word of the tier
     /// below the learner's level too, except words the learner did not know.
+    /// Their first reviews are spread over days 7 to 60, hardest words first.
     /// Logs no answers: the level check is not practice. Words with progress
     /// keep it. An answer for a word that is not a card word throws
     /// `unknownWord`, and nothing is saved.
@@ -30,12 +31,17 @@ extension Tutor {
         let unknown = Set(answers.filter { !$0.knows }.map(\.headword))
         let progress = try userDatabase.allProgress()
         let now = clock.now()
-        let learned = dictionary.quizEntries
-            .filter { entry in
-                progress[entry.headword] == nil && !unknown.contains(entry.headword)
-                    && (known.contains(entry.headword) || entry.rank <= levelRank)
-            }
-            .map { WordProgress.knownBeforePractice($0.headword, at: now) }
+        let entries = dictionary.quizEntries.filter { entry in
+            progress[entry.headword] == nil && !unknown.contains(entry.headword)
+                && (known.contains(entry.headword) || entry.rank <= levelRank)
+        }
+        let learned = LevelCheckReviewSpread.reviewOrder(entries).enumerated().map { index, entry in
+            WordProgress.knownBeforePractice(
+                entry.headword,
+                at: now,
+                firstReviewDelay: LevelCheckReviewSpread.firstReviewDelay(index: index, of: entries.count)
+            )
+        }
         try userDatabase.save(learned)
         return LevelCheckOutcome(learnedCount: learned.count, levelRank: levelRank > 0 ? levelRank : nil)
     }

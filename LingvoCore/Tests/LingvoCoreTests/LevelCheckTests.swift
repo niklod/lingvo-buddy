@@ -119,19 +119,49 @@ struct LevelCheckTests {
         #expect(stats.reviewsLeftToday == 0)
     }
 
-    @Test("words known before practice come back as a review only after 60 days")
-    func knownWordsReviewAfterSixtyDays() throws {
+    /// Reviews due by the end of each local day `0...days` after the level
+    /// check. Nobody answers, so the count only grows as words fall due.
+    static func dueByDay(_ tutor: Tutor, clock: TestClock, days: Int) throws -> [Int] {
+        try (0...days).map { day in
+            clock.advance(by: day == 0 ? 0 : Fixture.day)
+            return try tutor.stats(calendar: Fixture.calendar).reviewsLeftToday
+        }
+    }
+
+    @Test("the first reviews of known words are spread over days 7 to 60, not all on day 60")
+    func knownWordsFirstReviewsAreSpread() throws {
         let clock = TestClock(Fixture.start)
         let tutor = try Fixture.tutor(dictionary: Self.wideDictionary(), clock: clock)
-        _ = try tutor.applyLevelCheck(Self.answers { $0 == 10 })
+        let outcome = try tutor.applyLevelCheck(Self.answers { $0 <= 110 })
 
-        clock.advance(by: 59 * Fixture.day)
-        #expect(try tutor.nextCard().card?.kind == .new)
+        let dueByDay = try Self.dueByDay(tutor, clock: clock, days: 61)
+        let newPerDay = zip(dueByDay.dropFirst(), dueByDay).map { $0 - $1 }
 
-        clock.advance(by: 2 * Fixture.day)
-        let review = try #require(try tutor.nextCard().card)
-        #expect(review.kind == .review)
-        #expect((1...10).map { "w\($0)" }.contains(review.headword))
+        #expect(outcome.learnedCount == 110)
+        #expect(try tutor.tierProgress().learned == 110)
+        #expect(dueByDay[6] == 0, "a review came before day 7")
+        #expect(dueByDay[7] > 0, "no review on day 7")
+        #expect(dueByDay[60] == 110, "a review came after day 60")
+        #expect(newPerDay.allSatisfy { $0 <= 3 }, "too many reviews on one day: \(newPerDay)")
+    }
+
+    @Test("a passed first review of a known word comes back after 60 days, not after 21")
+    func knownWordReviewKeepsTheLongInterval() throws {
+        let clock = TestClock(Fixture.start)
+        let tutor = try Fixture.tutor(
+            dictionary: Self.wideDictionary(), clock: clock, settings: LearningSettings(reviewShare: 1)
+        )
+        let learner = Learner(tutor: tutor, clock: clock)
+        let outcome = try tutor.applyLevelCheck([LevelCheckAnswer(headword: "w1", knows: true)])
+        try #require(outcome.learnedCount == 1)
+        clock.advance(by: 7 * Fixture.day)
+        let (review, _) = try learner.answerNext()
+        try #require(review.headword == "w1" && review.kind == .review)
+
+        let dueByDay = try Self.dueByDay(tutor, clock: clock, days: 60)
+
+        #expect(dueByDay[59] == 0)
+        #expect(dueByDay[60] == 1)
     }
 
     @Test("a word the learner already practised keeps its progress")
