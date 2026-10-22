@@ -96,10 +96,14 @@ struct QuietRulesTests {
     @Test("\"Show word now\" gives a card even when the quiet rules hold timed cards back")
     func onDemandIgnoresQuietRules() throws {
         let tutor = try Fixture.tutor(clock: TestClock(Fixture.date(hour: 23, minute: 30)))
-        var context = Fixture.timedContext(
-            isFocusOn: true, isFullScreenAppFrontmost: true, pausedUntil: Fixture.date(hour: 23, minute: 59)
+        let context = CardContext(
+            trigger: .onDemand,
+            quietHours: .standard,
+            isFocusOn: true,
+            isFullScreenAppFrontmost: true,
+            pausedUntil: Fixture.date(hour: 23, minute: 59),
+            calendar: Fixture.calendar
         )
-        context.trigger = .onDemand
 
         let decision = try tutor.nextCard(context: context)
 

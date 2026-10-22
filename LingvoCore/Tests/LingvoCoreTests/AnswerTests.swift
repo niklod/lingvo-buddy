@@ -101,4 +101,20 @@ struct AnswerTests {
             try learner.tutor.answer(card, choice: 4)
         }
     }
+
+    @Test("a card whose right option does not exist is refused, not a crash, and nothing is saved")
+    func cardWithBadCorrectIndexIsRefused() throws {
+        let learner = try Learner()
+        let card = try learner.nextCard()
+        let broken = Card(
+            headword: card.headword, prompt: card.prompt, direction: card.direction, kind: card.kind,
+            source: card.source, ipa: card.ipa, partOfSpeech: card.partOfSpeech, options: card.options,
+            correctIndex: 7, example: card.example, mastery: card.mastery
+        )
+
+        #expect(throws: LingvoCoreError.invalidChoice(7)) { try learner.tutor.answer(broken, choice: 0) }
+        #expect(throws: LingvoCoreError.invalidChoice(7)) { try learner.tutor.dontKnow(broken) }
+        #expect(broken.correctAnswer == "")
+        #expect(try learner.tutor.stats().todayAnswers == 0)
+    }
 }

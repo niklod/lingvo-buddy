@@ -115,6 +115,10 @@ public final class Tutor: Sendable {
     }
 
     private func record(_ outcome: AnswerOutcome, for card: Card) throws -> AnswerResult {
+        // Cards are public values: one built outside the tutor may name a missing option.
+        guard card.options.indices.contains(card.correctIndex) else {
+            throw LingvoCoreError.invalidChoice(card.correctIndex)
+        }
         guard try dictionary.entry(headword: card.headword) != nil
                 || userDatabase.myWord(headword: card.headword) != nil else {
             throw LingvoCoreError.unknownWord(card.headword)
