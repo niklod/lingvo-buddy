@@ -7,9 +7,15 @@ enum AppEnvironment {
 
     enum SetupError: Error, LocalizedError {
         case missingBundledDictionary
+        case seedDemoOnLearnerDatabase
 
         var errorDescription: String? {
-            "The bundled dictionary is missing. Run `make dictionary` and rebuild the app."
+            switch self {
+            case .missingBundledDictionary:
+                "The bundled dictionary is missing. Run `make dictionary` and rebuild the app."
+            case .seedDemoOnLearnerDatabase:
+                "--seed-demo would replace the learner's own database. Pass --user-db with a test database."
+            }
         }
     }
 
@@ -21,7 +27,12 @@ enum AppEnvironment {
 
     static func makeServices(options: LaunchOptions) throws -> Services {
         let dictionary = try bundledDictionary()
-        let userDatabase = try UserDatabase.open(at: userDatabaseURL(options.userDatabase))
+        let userDatabaseURL = try userDatabaseURL(options.userDatabase)
+        // A name check is not enough: `--user-db` with the full path names the same file.
+        if options.seedDemo, try userDatabaseURL.standardizedFileURL == Self.userDatabaseURL(nil).standardizedFileURL {
+            throw SetupError.seedDemoOnLearnerDatabase
+        }
+        let userDatabase = try UserDatabase.open(at: userDatabaseURL)
         if options.seedDemo {
             try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: Date())
         }

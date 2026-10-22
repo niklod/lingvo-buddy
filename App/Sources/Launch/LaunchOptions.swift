@@ -2,10 +2,13 @@ import Foundation
 import LingvoCore
 
 /// QA hooks passed as launch arguments (`make run ARGS="…"`, `make snapshots`).
+/// Only Debug builds read them: in a shipped app any local process could
+/// otherwise reseed or redirect the learner's data with `open --args`.
 struct LaunchOptions: Equatable {
     /// `--user-db <name|path>`: a name resolves to `<Application Support>/LingvoBuddy/<name>.sqlite`.
     var userDatabase: String?
     /// `--seed-demo`: replace the user state with the design sample state.
+    /// Needs a `--user-db` other than the learner's own database.
     var seedDemo = false
     /// `--snapshot <dir>`: render all registered views to PNG, then exit.
     /// A relative dir resolves inside the app's temporary folder (sandbox container).
@@ -16,14 +19,22 @@ struct LaunchOptions: Equatable {
     var openView: OpenableView?
     /// `--prefill <text>`: the word `--open quick-add` starts with.
     var prefill: String?
-    /// `--interval-seconds <n>`: the card interval in seconds instead of 15 min (QA only).
+    /// `--interval-seconds <n>`: the card interval in seconds instead of the stored interval.
     var cardInterval: TimeInterval?
-    /// `--quiet-hours <HH:MM-HH:MM|off>`: replaces the default 23:00–09:00 for this run.
+    /// `--quiet-hours <HH:MM-HH:MM|off>`: replaces the stored quiet hours for this run.
     var quietHours: QuietHoursOverride?
     /// `--skip-onboarding`: do not show first-run onboarding in this run (QA on fresh databases).
     var skipOnboarding = false
 
     static func parse(_ arguments: [String]) throws -> LaunchOptions {
+        #if DEBUG
+        try parseQAFlags(arguments)
+        #else
+        LaunchOptions()
+        #endif
+    }
+
+    private static func parseQAFlags(_ arguments: [String]) throws -> LaunchOptions {
         var options = LaunchOptions()
         var remaining = arguments.dropFirst()[...]
         while let argument = remaining.popFirst() {
@@ -54,6 +65,9 @@ struct LaunchOptions: Equatable {
                 continue
             }
         }
+        guard !options.seedDemo || options.userDatabase != nil else {
+            throw LaunchOptionsError.seedDemoNeedsUserDatabase
+        }
         return options
     }
 
@@ -65,7 +79,7 @@ struct LaunchOptions: Equatable {
     }
 }
 
-/// Views that `--open` can show immediately. Later slices add their views here.
+/// Views that `--open` can show immediately.
 enum OpenableView: String, CaseIterable {
     case card
     case tray
@@ -102,6 +116,7 @@ enum LaunchOptionsError: Error, LocalizedError {
     case missingValue(String)
     case unknownView(String)
     case invalidValue(String, String)
+    case seedDemoNeedsUserDatabase
 
     var errorDescription: String? {
         switch self {
@@ -111,6 +126,8 @@ enum LaunchOptionsError: Error, LocalizedError {
             "Unknown view \"\(name)\" for --open. Known: \(OpenableView.allCases.map(\.rawValue).joined(separator: ", "))."
         case .invalidValue(let flag, let value):
             "\"\(value)\" is not a valid value for \(flag)."
+        case .seedDemoNeedsUserDatabase:
+            "--seed-demo replaces every word and answer, so it needs --user-db with a test database."
         }
     }
 }

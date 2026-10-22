@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 
 /// The sample cards from the design file, as fixed values for snapshots.
@@ -100,3 +101,4 @@ enum DesignSamples {
         )
     }
 }
+#endif

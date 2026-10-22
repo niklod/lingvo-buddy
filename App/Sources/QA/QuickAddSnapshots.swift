@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 import SwiftUI
 
@@ -36,3 +37,4 @@ enum QuickAddSnapshots {
         }
     }
 }
+#endif

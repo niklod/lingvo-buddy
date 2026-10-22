@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 import SwiftUI
 
@@ -70,3 +71,4 @@ enum OnboardingSnapshots {
         }
     }
 }
+#endif

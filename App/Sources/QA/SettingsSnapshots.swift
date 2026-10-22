@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 import SwiftUI
 
@@ -49,3 +50,4 @@ enum SettingsSnapshots {
         }
     }
 }
+#endif
