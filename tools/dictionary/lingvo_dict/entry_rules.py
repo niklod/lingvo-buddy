@@ -124,6 +124,6 @@ def check_example(example: Any, headword: str) -> List[str]:
 
 def _stem(headword: str) -> str:
     """Lets regular forms match: make -> making, try -> tried."""
-    if len(headword) > 3 and headword[-1] in "ey":
+    if len(headword) > 2 and headword[-1] in "ey":
         return headword[:-1]
     return headword

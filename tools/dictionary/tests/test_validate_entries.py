@@ -1,6 +1,7 @@
 import unittest
 
 from lingvo_dict.validate import ValidationOptions, validate_batches
+from lingvo_dict.wordlist_file import WordList
 from tests.support import BatchFolder, lookup_entry, make_word_list, quiz_entry
 
 PARTIAL = ValidationOptions(allow_partial=True)
@@ -122,6 +123,12 @@ class EntryRulesTest(unittest.TestCase):
 
     def test_example_may_use_a_regular_form_of_the_headword(self):
         entry = quiz_entry(self.word_list, 4, example="They are housing the guests tonight.")
+
+        self.assertEqual(self.errors_for(1, [entry]), ())
+
+    def test_example_may_use_tried_for_a_three_letter_y_headword(self):
+        self.word_list = WordList(headwords=("be", "try") + self.word_list.headwords[2:])
+        entry = quiz_entry(self.word_list, 2, example="I tried it twice today.")
 
         self.assertEqual(self.errors_for(1, [entry]), ())
 
