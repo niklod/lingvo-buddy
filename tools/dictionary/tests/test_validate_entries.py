@@ -59,6 +59,12 @@ class EntryRulesTest(unittest.TestCase):
 
         self.assert_one_error(errors, "translation 'house' must be Cyrillic")
 
+    def test_non_string_translations_are_errors_not_crashes(self):
+        errors = self.errors_for(1, [quiz_entry(self.word_list, 4, translations=[["дом"], {"a": 1}, 1])])
+
+        self.assertEqual(len(errors), 3, errors)
+        self.assertTrue(all("must be Cyrillic" in e for e in errors), errors)
+
     def test_translations_allow_spaces_hyphens_and_capitals(self):
         entry = quiz_entry(self.word_list, 5, translations=["понедельник", "что-нибудь", "в течение"])
 

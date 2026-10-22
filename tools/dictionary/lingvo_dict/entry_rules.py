@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Set, Tuple
 
 from lingvo_dict.contract import (
     EXAMPLE_LENGTH,
@@ -81,10 +81,10 @@ def check_translations(translations: Any, limits: Tuple[int, int]) -> List[str]:
     if not isinstance(translations, list):
         return ["translations must be a list of strings"]
     low, high = limits
-    errors = []
+    errors: List[str] = []
     if not low <= len(translations) <= high:
         errors.append(f"needs {low} to {high} translations, got {len(translations)}")
-    seen = set()
+    seen: Set[str] = set()
     for text in translations:
         if not isinstance(text, str) or not TRANSLATION_PATTERN.fullmatch(text):
             errors.append(f"translation {text!r} must be Cyrillic words separated by single spaces or hyphens")
@@ -92,7 +92,8 @@ def check_translations(translations: Any, limits: Tuple[int, int]) -> List[str]:
             errors.append(f"translation {text!r} is longer than {TRANSLATION_MAX_LENGTH} characters")
         elif text in seen:
             errors.append(f"duplicate translation {text!r}")
-        seen.add(text)
+        else:
+            seen.add(text)
     return errors
 
 
