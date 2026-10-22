@@ -33,12 +33,15 @@ extension Tutor {
         let word = try word.validated()
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
+        let extended = preview.candidates[0].extended
         try userDatabase.insert(MyWord(
             headword: preview.headword,
             translation: word.translation,
             // The extended example is a dictionary example: it goes on the card like the bundled one does.
-            example: word.example ?? preview.candidates[0].extended?.example,
-            addedAt: clock.now()
+            example: word.example ?? extended?.example,
+            addedAt: clock.now(),
+            ipa: extended?.ipa,
+            partOfSpeech: extended?.partOfSpeech
         ))
         return .added(headword: preview.headword)
     }

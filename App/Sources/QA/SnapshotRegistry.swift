@@ -45,6 +45,7 @@ enum QuizCardSnapshots {
                 showsExampleTranslation: true
             ),
             state("q12_russian_example_hidden", DesignSamples.althoughWithRussianExample, answer: DesignSamples.althoughCorrect),
+            state("q13_mine_saved_ipa_pos", DesignSamples.petrichorMine, answer: nil),
         ]
     }
 

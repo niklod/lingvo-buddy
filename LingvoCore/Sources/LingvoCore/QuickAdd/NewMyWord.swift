@@ -5,6 +5,7 @@ public struct NewMyWord: Sendable, Equatable {
     public static let maxWordLength = 64
     public static let maxTranslationLength = 80
     public static let maxExampleLength = 300
+    public static let maxIPALength = 64
 
     public let text: String
     /// A dictionary translation the learner picked, or their own.

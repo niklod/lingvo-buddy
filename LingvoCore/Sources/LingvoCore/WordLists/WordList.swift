@@ -35,6 +35,9 @@ public struct WordRow: Sendable, Equatable, Identifiable {
     /// `.mine` for my words, else the frequency rank.
     public let source: CardSource
     public let status: WordStatus?
+    /// The transcription and part of speech the window shows under the word, when known.
+    public let ipa: String?
+    public let partOfSpeech: PartOfSpeech?
 
     public var id: String { headword }
 
@@ -44,7 +47,9 @@ public struct WordRow: Sendable, Equatable, Identifiable {
         mastery: Int,
         lastAnswer: LastAnswer?,
         source: CardSource,
-        status: WordStatus?
+        status: WordStatus?,
+        ipa: String? = nil,
+        partOfSpeech: PartOfSpeech? = nil
     ) {
         self.headword = headword
         self.translation = translation
@@ -52,6 +57,8 @@ public struct WordRow: Sendable, Equatable, Identifiable {
         self.lastAnswer = lastAnswer
         self.source = source
         self.status = status
+        self.ipa = ipa
+        self.partOfSpeech = partOfSpeech
     }
 
     /// A queued word has nothing to reset.

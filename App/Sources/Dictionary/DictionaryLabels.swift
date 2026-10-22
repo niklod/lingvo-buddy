@@ -19,6 +19,12 @@ enum DictionaryLabels {
         }
     }
 
+    /// The "/ipa/ · noun" line of a my word, as the quiz card shows it; `nil` when nothing is known.
+    static func details(of row: WordRow) -> String? {
+        let parts = [row.ipa, row.partOfSpeech?.label].compactMap { $0 }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
+    }
+
     static func lastAnswer(_ answer: LastAnswer?, now: Date) -> String {
         guard let answer else { return String(localized: "not yet") }
         return "\(outcome(answer.outcome)) · \(age(AnswerAge(of: answer.at, now: now)))"
