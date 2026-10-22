@@ -1,12 +1,14 @@
 """Builders for test word lists and batch files."""
 
+import io
 import itertools
 import json
 import string
 import tempfile
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from lingvo_dict.contract import batch_ranks, tier_for_rank
+from lingvo_dict.contract import batch_id, batch_ranks, tier_for_rank
 from lingvo_dict.wordlist_file import WordList
 
 NAMED = ("be", "big", "large", "house", "Monday")
@@ -15,6 +17,14 @@ NAMED = ("be", "big", "large", "house", "Monday")
 def generated_headwords(count):
     letters = itertools.product(string.ascii_lowercase, repeat=3)
     return ["w" + "".join(next(letters)) for _ in range(count)]
+
+
+def run_main(main, *args):
+    """Runs a CLI main(argv) and returns (exit code, stdout, stderr)."""
+    out, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(out), redirect_stderr(err):
+        code = main(list(args))
+    return code, out.getvalue(), err.getvalue()
 
 
 def make_word_list(size=1600):
@@ -80,7 +90,7 @@ class BatchFolder:
         self._tmp.cleanup()
 
     def write(self, number, entries, batch=None, name=None):
-        batch_name = batch or f"batch-{number:02d}"
+        batch_name = batch or batch_id(number)
         file = self.path / (name or f"{batch_name}.json")
         file.write_text(
             json.dumps({"batch": batch_name, "entries": entries}, ensure_ascii=False),

@@ -1,10 +1,10 @@
 import io
 import sqlite3
 import unittest
-from contextlib import closing, redirect_stderr, redirect_stdout
+from contextlib import closing, redirect_stderr
 
 from lingvo_dict import build
-from tests.support import BatchFolder, full_batch, lookup_entry, make_word_list, quiz_entry
+from tests.support import BatchFolder, full_batch, lookup_entry, make_word_list, quiz_entry, run_main
 
 
 class BuildTest(unittest.TestCase):
@@ -20,18 +20,14 @@ class BuildTest(unittest.TestCase):
         self.exclusions_path = self.folder.write_exclusions()
 
     def run_build(self, *args):
-        out, err = io.StringIO(), io.StringIO()
-        with redirect_stdout(out), redirect_stderr(err):
-            code = build.main(
-                [
-                    "--word-list", str(self.word_list_path),
-                    "--batches", str(self.folder.path),
-                    "--out", str(self.out),
-                    "--quiz-exclusions", str(self.exclusions_path),
-                    *args,
-                ]
-            )
-        return code, out.getvalue(), err.getvalue()
+        return run_main(
+            build.main,
+            "--word-list", str(self.word_list_path),
+            "--batches", str(self.folder.path),
+            "--out", str(self.out),
+            "--quiz-exclusions", str(self.exclusions_path),
+            *args,
+        )
 
     def query(self, sql, *params):
         with closing(sqlite3.connect(self.out)) as connection:
@@ -107,12 +103,24 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("coverage: missing ranks 501-1000", err)
 
+    def test_a_build_without_a_coverage_flag_is_refused(self):
+        self.folder.write(1, full_batch(self.word_list, 1))
+
+        with self.assertRaises(SystemExit) as raised, redirect_stderr(io.StringIO()) as err:
+            build.main(
+                ["--word-list", str(self.word_list_path), "--batches", str(self.folder.path), "--out", str(self.out)]
+            )
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("pass --full, --through RANK or --allow-partial", err.getvalue())
+        self.assertFalse(self.out.exists())
+
     def test_rebuilding_the_same_batches_gives_the_same_bytes(self):
         self.folder.write(1, full_batch(self.word_list, 1))
 
-        self.run_build()
+        self.run_build("--through", "500")
         first = self.out.read_bytes()
-        self.run_build()
+        self.run_build("--through", "500")
 
         self.assertEqual(self.out.read_bytes(), first)
 
