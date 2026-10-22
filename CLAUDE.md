@@ -1,3 +1,10 @@
+## Agent docs
+
+- Before you build, run, snapshot or click through the app: `docs/agents/running-the-app.md`.
+- Before you change windows, panels, the status item, hotkeys, Focus or sandbox settings: `docs/agents/macos-traps.md`.
+- Before you change dictionary batches, synonym groups, quiz exclusions or the dictionary schema: `docs/agents/dictionary-data.md`.
+- Before you plan or implement a ticket with parallel agents: `docs/agents/implementer-brief.md`.
+
 ## Agent skills
 
 ### Issue tracker
