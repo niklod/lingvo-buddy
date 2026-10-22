@@ -37,6 +37,7 @@ The JSON Schema is `tools/dictionary/batch.schema.json`. The validator checks mo
       "translations": ["большой", "крупный"],
       "ipa": "/lɑːdʒ/",
       "example": "They live in a large house near the river.",
+      "example_ru": "Они живут в большом доме у реки.",
       "synonym_group": "big"
     }
   ]
@@ -81,6 +82,12 @@ Use `determiner` for words like `this`, `every`, `some` before a noun, `numeral`
 - It must contain the headword or a regular form that starts with it: some word in the sentence must start with the headword (`house` → `houses`), or with the headword without a final `e`/`y` when the headword has four or more letters (`make` → `making`, `try` → `tried`). An irregular form does not count (`went` for `go`), so use the headword itself then.
 - Capital letter first, `.` `!` or `?` last. Plain ASCII letters, digits, spaces and the punctuation `, . ; : ! ? ' " ( ) -`.
 - No real people, brands, politics, violence or sex.
+
+**example_ru** (quiz tier only) — a natural Russian translation of `example`, as a Russian speaker would say it.
+- Translate the whole sentence. Use the first translation's meaning for the headword; the Russian word may be a form of it (`большом` for `большой`).
+- 1 to 180 characters, one sentence. Capital letter first, `.` `!` or `?` last (a closing `»` or `"` may follow).
+- Only Cyrillic letters, digits, spaces and the punctuation `, . ; : ! ? " ( ) « » - – —`. No Latin letters: write names and places in Cyrillic, and an English word in the translation would show the answer on the card.
+- Write it only together with `example`.
 
 **synonym_group** (quiz tier only) — prevents two correct answers in one quiz.
 - Look at the quiz-tier words of ranks 1–2000. If a word with a *lower* rank has the same main meaning, so that a learner could fairly pick either as the answer (`large` → `big`, `begin` → `start`, `kid` → `child`), write that word's headword.

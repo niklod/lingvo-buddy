@@ -22,6 +22,8 @@ public struct DictionaryEntry: Sendable, Equatable {
     public let partOfSpeech: PartOfSpeech
     public let ipa: String?
     public let example: String?
+    /// The Russian translation of `example`; only with an `example`.
+    public let russianExample: String?
     public let synonymGroup: String?
     public let tier: DictionaryTier
     /// Ordered by preference: the first translation is the one a card shows.
@@ -35,13 +37,15 @@ public struct DictionaryEntry: Sendable, Equatable {
         example: String?,
         synonymGroup: String?,
         tier: DictionaryTier,
-        translations: [Language: [String]]
+        translations: [Language: [String]],
+        russianExample: String? = nil
     ) {
         self.headword = headword
         self.rank = rank
         self.partOfSpeech = partOfSpeech
         self.ipa = ipa
         self.example = example
+        self.russianExample = russianExample
         self.synonymGroup = synonymGroup
         self.tier = tier
         self.translations = translations

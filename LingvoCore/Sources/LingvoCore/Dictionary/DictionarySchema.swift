@@ -3,7 +3,7 @@ import GRDB
 /// The bundled dictionary contract. tools/dictionary writes the real file with
 /// the same statements; `lingvo-dict check` fails when the two drift apart.
 enum DictionarySchema {
-    static let schemaVersion = 2
+    static let schemaVersion = 3
 
     static func create(in db: Database) throws {
         try db.execute(sql: """
@@ -14,6 +14,7 @@ enum DictionarySchema {
                 pos TEXT NOT NULL CHECK (pos IN (\(quotedList(PartOfSpeech.allCases.map(\.rawValue))))),
                 ipa TEXT NOT NULL,
                 example TEXT,
+                example_ru TEXT,
                 synonym_group TEXT,
                 tier TEXT NOT NULL CHECK (tier IN (\(quotedList(DictionaryTier.allCases.map(\.rawValue)))))
             );

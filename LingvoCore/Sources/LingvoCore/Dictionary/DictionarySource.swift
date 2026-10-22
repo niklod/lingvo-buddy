@@ -3,7 +3,7 @@ import Foundation
 /// One JSON source file of dictionary data (the sample, or one generated batch).
 ///
 /// Format: `{"meta": {"key": "value"}, "entries": [{"headword", "rank", "pos", "ipa",
-/// "example", "synonym_group", "tier", "translations": {"ru": ["…"]}}],
+/// "example", "example_ru", "synonym_group", "tier", "translations": {"ru": ["…"]}}],
 /// "quiz_exclusions": ["headword"]}`. `meta` and `quiz_exclusions` are optional.
 public struct DictionarySource: Sendable, Equatable {
     public let meta: [String: String]
@@ -59,12 +59,14 @@ private struct SourceEntry: Decodable {
     let pos: String
     let ipa: String?
     let example: String?
+    let exampleRu: String?
     let synonymGroup: String?
     let tier: String
     let translations: [String: [String]]
 
     enum CodingKeys: String, CodingKey {
         case headword, rank, pos, ipa, example, tier, translations
+        case exampleRu = "example_ru"
         case synonymGroup = "synonym_group"
     }
 
@@ -83,7 +85,8 @@ private struct SourceEntry: Decodable {
             example: example,
             synonymGroup: synonymGroup,
             tier: parsedTier,
-            translations: try parsedTranslations()
+            translations: try parsedTranslations(),
+            russianExample: exampleRu
         )
     }
 
