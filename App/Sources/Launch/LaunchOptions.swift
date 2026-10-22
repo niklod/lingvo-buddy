@@ -6,6 +6,7 @@ import LingvoCore
 /// otherwise reseed or redirect the learner's data with `open --args`.
 struct LaunchOptions: Equatable {
     /// `--user-db <name|path>`: a name resolves to `<Application Support>/LingvoBuddy/<name>.sqlite`.
+    /// A path must be inside the sandbox container, or launch fails.
     var userDatabase: String?
     /// `--seed-demo`: replace the user state with the design sample state.
     /// Needs a `--user-db` other than the learner's own database.
