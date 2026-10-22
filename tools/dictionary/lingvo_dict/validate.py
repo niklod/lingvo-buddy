@@ -10,7 +10,7 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any
 
-from lingvo_dict.contract import BATCH_COUNT, batch_ranks, is_quiz_rank, parse_batch_id
+from lingvo_dict.contract import BATCH_COUNT, batch_id, batch_of_rank, batch_ranks, is_quiz_rank, parse_batch_id
 from lingvo_dict.entry_rules import check_entry, is_rank
 from lingvo_dict.exclusions import read_exclusions
 from lingvo_dict.loaded_entry import LoadedEntry
@@ -24,7 +24,7 @@ from lingvo_dict.wordlist_file import WordList, WordListError, read_word_list
 class ValidationOptions:
     allow_partial: bool = False  # a batch may miss ranks of its range (work in progress)
     through_rank: int | None = None  # every rank 1..N must be present
-    full: bool = False  # every rank of the word list must be present
+    full: bool = False  # every rank up to the end of the last batch file must be present
 
 
 @dataclass(frozen=True)
@@ -33,6 +33,7 @@ class ValidationReport:
     entries: tuple[LoadedEntry, ...]
     batch_count: int
     quiz_exclusions: tuple[str, ...] = ()  # lookup-tier headwords that never become quiz cards
+    pending_batches: tuple[int, ...] = ()  # with full: batches after the last file, not generated yet
 
     @property
     def entry_count(self) -> int:
@@ -42,30 +43,39 @@ class ValidationReport:
 def validate_batches(paths: Sequence[Path], word_list: WordList, options: ValidationOptions) -> ValidationReport:
     errors: list[str] = []
     entries: list[LoadedEntry] = []
+    numbers: list[int] = []
     for path in paths:
-        batch_errors, batch_entries = _validate_file(path, word_list, options)
+        batch_errors, batch_entries, number = _validate_file(path, word_list, options)
         errors += batch_errors
         entries += batch_entries
+        numbers += [] if number is None else [number]
+    last_batch = max(numbers, default=None)
     errors += _check_duplicates(entries)
     errors += check_synonym_groups(entries, word_list, options.allow_partial)
-    errors += _check_coverage(entries, word_list, options)
-    return ValidationReport(errors=tuple(errors), entries=tuple(entries), batch_count=len(paths))
+    errors += _check_coverage(entries, word_list, options, last_batch)
+    return ValidationReport(
+        errors=tuple(errors),
+        entries=tuple(entries),
+        batch_count=len(paths),
+        pending_batches=_pending_batches(word_list, options, last_batch),
+    )
 
 
 def _validate_file(
     path: Path, word_list: WordList, options: ValidationOptions
-) -> tuple[list[str], list[LoadedEntry]]:
+) -> tuple[list[str], list[LoadedEntry], int | None]:
+    """Returns the errors, the loadable entries and the batch number (None when the header is broken)."""
     name = path.name
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
     except OSError as error:
-        return [f"{name}: cannot read file: {error}"], []
+        return [f"{name}: cannot read file: {error}"], [], None
     except (json.JSONDecodeError, UnicodeDecodeError) as error:
-        return [f"{name}: invalid JSON: {error}"], []
+        return [f"{name}: invalid JSON: {error}"], [], None
 
     header_errors, number = _check_header(document, name)
     if number is None:
-        return header_errors, []
+        return header_errors, [], None
 
     ranks = batch_ranks(number)
     batch = document["batch"]
@@ -85,7 +95,7 @@ def _validate_file(
             errors.append(
                 f"{name}: missing ranks {format_ranges(missing)} (use --allow-partial while the batch is in progress)"
             )
-    return errors, loaded
+    return errors, loaded, number
 
 
 def _is_loadable(entry: Any) -> bool:
@@ -140,8 +150,10 @@ def _check_duplicates(entries: Iterable[LoadedEntry]) -> list[str]:
     return errors
 
 
-def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options: ValidationOptions) -> list[str]:
-    through = word_list.size if options.full else options.through_rank
+def _check_coverage(
+    entries: Sequence[LoadedEntry], word_list: WordList, options: ValidationOptions, last_batch: int | None
+) -> list[str]:
+    through = _full_coverage_end(word_list, last_batch) if options.full else options.through_rank
     if through is None:
         return []
     if through > word_list.size:
@@ -150,6 +162,22 @@ def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options
     if missing:
         return [f"coverage: missing ranks {format_ranges(missing)} of 1-{through}"]
     return []
+
+
+def _full_coverage_end(word_list: WordList, last_batch: int | None) -> int:
+    """The word list grows ahead of the batches: ranks after the last batch file wait for new batches.
+
+    A gap before the last batch file still fails, so a lost file in the middle never ships a hole.
+    """
+    if last_batch is None:
+        return word_list.size
+    return min(word_list.size, batch_ranks(last_batch)[1])
+
+
+def _pending_batches(word_list: WordList, options: ValidationOptions, last_batch: int | None) -> tuple[int, ...]:
+    if not options.full or last_batch is None or word_list.size == 0:
+        return ()
+    return tuple(range(last_batch + 1, batch_of_rank(word_list.size) + 1))
 
 
 def format_ranges(numbers: Sequence[int], limit: int = 10) -> str:
@@ -187,7 +215,11 @@ def add_selection_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--allow-partial", action="store_true", help="accept batches that miss ranks")
     coverage = parser.add_mutually_exclusive_group()
     coverage.add_argument("--through", type=int, metavar="RANK", help="require every rank from 1 to RANK")
-    coverage.add_argument("--full", action="store_true", help="require every rank of the word list")
+    coverage.add_argument(
+        "--full",
+        action="store_true",
+        help="require every rank up to the end of the last batch file; later batches may not exist yet",
+    )
 
 
 def options_from(args: argparse.Namespace) -> ValidationOptions:
@@ -235,4 +267,14 @@ def main(argv: list[str]) -> int:
         f"OK: {plural(report.entry_count, 'entry')} in {plural(report.batch_count, 'batch')}, "
         f"{plural(len(report.quiz_exclusions), 'quiz exclusion')}"
     )
+    if report.pending_batches:
+        print(pending_note(report.pending_batches, word_list))
     return 0
+
+
+def pending_note(pending: Sequence[int], word_list: WordList) -> str:
+    first_rank = batch_ranks(pending[0])[0]
+    batches = batch_id(pending[0])
+    if len(pending) > 1:
+        batches += f" to {batch_id(pending[-1])}"
+    return f"ranks {first_rank}-{word_list.size} wait for {batches} (not generated yet)"
