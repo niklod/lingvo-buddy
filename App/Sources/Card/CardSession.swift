@@ -10,8 +10,8 @@ final class CardSession {
     private let tutor: Tutor
     private let onError: (Error) -> Void
 
-    init(card: Card, tutor: Tutor, onError: @escaping (Error) -> Void) {
-        self.state = QuizCardState(card: card, answer: nil)
+    init(card: Card, showsExampleTranslation: Bool, tutor: Tutor, onError: @escaping (Error) -> Void) {
+        self.state = QuizCardState(card: card, answer: nil, showsExampleTranslation: showsExampleTranslation)
         self.tutor = tutor
         self.onError = onError
     }
@@ -28,7 +28,11 @@ final class CardSession {
         guard !state.isAnswered else { return }
         do {
             let result = try operation()
-            state = QuizCardState(card: state.card, answer: .init(pickedIndex: pickedIndex, result: result))
+            state = QuizCardState(
+                card: state.card,
+                answer: .init(pickedIndex: pickedIndex, result: result),
+                showsExampleTranslation: state.showsExampleTranslation
+            )
             UserDataChanges.post()
         } catch {
             onError(error)

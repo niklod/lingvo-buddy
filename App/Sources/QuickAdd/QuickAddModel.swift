@@ -53,6 +53,7 @@ final class QuickAddModel {
 
     @ObservationIgnored private let lookup: (String) throws -> QuickAddPreview?
     @ObservationIgnored private let translator: MachineTranslator?
+    @ObservationIgnored let showsExampleTranslation: Bool
     @ObservationIgnored private var pendingLookup: Task<Void, Never>?
     @ObservationIgnored private var pendingTranslation: Task<Void, Never>?
     /// The request whose result may still be shown; any other result is stale.
@@ -62,11 +63,13 @@ final class QuickAddModel {
         text: String = "",
         example: String = "",
         translator: MachineTranslator? = nil,
+        showsExampleTranslation: Bool = false,
         lookup: @escaping (String) throws -> QuickAddPreview?
     ) {
         self.text = text
         self.example = example
         self.translator = translator
+        self.showsExampleTranslation = showsExampleTranslation
         self.lookup = lookup
         refreshPreview()
     }

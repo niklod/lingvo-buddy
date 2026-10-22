@@ -41,7 +41,11 @@ final class CardPanelController {
     /// a timed card appears without taking keyboard focus.
     func show(_ card: Card, under anchor: NSStatusBarButton?, focused: Bool) {
         dismiss()
-        let session = CardSession(card: card, tutor: tutor) { [errors] error in errors.show(error) }
+        let session = CardSession(
+            card: card,
+            showsExampleTranslation: tutor.settings.showsExampleTranslation,
+            tutor: tutor
+        ) { [errors] error in errors.show(error) }
         let panel = CardPanel()
         panel.setContent(CardSessionView(session: session, actions: actions(for: session)))
         panel.onKey = { [weak self] command in self?.handle(command) ?? false }

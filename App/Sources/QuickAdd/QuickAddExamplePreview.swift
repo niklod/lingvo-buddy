@@ -13,7 +13,8 @@ extension QuickAddModel {
     var examplePreview: DictionaryExample? {
         guard example.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               let english = candidate?.example else { return nil }
-        return DictionaryExample(english: english, russian: candidate?.russianExample)
+        let russian = showsExampleTranslation ? candidate?.russianExample : nil
+        return DictionaryExample(english: english, russian: russian)
     }
 }
 

@@ -115,7 +115,21 @@ private struct LearningSection: View {
                     step: 1
                 )
             }
+            SettingsDivider()
+            SettingsRow(
+                label: String(localized: "Show example translation"),
+                hint: String(localized: "The Russian line under the example, after the answer and in quick add.")
+            ) {
+                Toggle("", isOn: showsExampleTranslation).labelsHidden().toggleStyle(.switch).controlSize(.small)
+            }
         }
+    }
+
+    private var showsExampleTranslation: Binding<Bool> {
+        Binding(
+            get: { model.settings.showsExampleTranslation },
+            set: { isOn in model.update { $0.replacing(showsExampleTranslation: isOn) } }
+        )
     }
 
     private var direction: Binding<DirectionSetting> {

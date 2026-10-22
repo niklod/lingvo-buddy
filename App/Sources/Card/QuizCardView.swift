@@ -88,7 +88,7 @@ struct QuizCardView: View {
                     .font(.system(size: Theme.FontSize.body).italic())
                     .foregroundStyle(Theme.Palette.textBody)
             }
-            if let russianExample = state.card.russianExample {
+            if let russianExample = state.russianExample {
                 Text(verbatim: russianExample)
                     .font(.system(size: Theme.FontSize.body))
                     .foregroundStyle(Theme.Palette.textSecondary)

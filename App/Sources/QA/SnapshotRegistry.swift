@@ -36,13 +36,28 @@ enum QuizCardSnapshots {
             state("q8_top2000_word", DesignSamples.eventuallyTop2000, answer: nil),
             state("q9_long_options", DesignSamples.mediaLongOptions, answer: nil),
             state("q10_russian_example_unanswered", DesignSamples.althoughWithRussianExample, answer: nil),
-            state("q11_russian_example_correct", DesignSamples.althoughWithRussianExample, answer: DesignSamples.althoughCorrect),
+            state(
+                "q11_russian_example_correct",
+                DesignSamples.althoughWithRussianExample,
+                answer: DesignSamples.althoughCorrect,
+                showsExampleTranslation: true
+            ),
+            state("q12_russian_example_hidden", DesignSamples.althoughWithRussianExample, answer: DesignSamples.althoughCorrect),
         ]
     }
 
-    private static func state(_ name: String, _ card: Card, answer: QuizCardState.Answer?) -> SnapshotState {
+    private static func state(
+        _ name: String,
+        _ card: Card,
+        answer: QuizCardState.Answer?,
+        showsExampleTranslation: Bool = false
+    ) -> SnapshotState {
         SnapshotState(name: name) {
-            AnyView(QuizCardView(state: QuizCardState(card: card, answer: answer)))
+            AnyView(QuizCardView(state: QuizCardState(
+                card: card,
+                answer: answer,
+                showsExampleTranslation: showsExampleTranslation
+            )))
         }
     }
 }
