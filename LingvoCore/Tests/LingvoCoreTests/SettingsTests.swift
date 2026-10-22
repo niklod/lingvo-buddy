@@ -17,6 +17,7 @@ struct SettingsTests {
         #expect(settings.learning.reviewShare == 0.2)
         #expect(settings.learning.maxActiveNewWords == 10)
         #expect(!settings.showsExampleTranslation)
+        #expect(settings.youGlishAccent == .all)
     }
 
     @Test("changed settings are still there after the app restarts")
@@ -29,7 +30,8 @@ struct SettingsTests {
             cardInterval: 45 * Fixture.minute,
             quietHours: lunch,
             quietHoursEnabled: false,
-            showsExampleTranslation: true
+            showsExampleTranslation: true,
+            youGlishAccent: .uk
         )
         try Fixture.tutor(userDatabase: UserDatabase.open(at: url)).updateSettings(changed)
 

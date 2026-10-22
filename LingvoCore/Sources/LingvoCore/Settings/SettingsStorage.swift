@@ -14,6 +14,7 @@ extension UserDatabase {
         static let quietHoursStart = "quiet_hours_start"
         static let quietHoursEnd = "quiet_hours_end"
         static let showsExampleTranslation = "show_example_translation"
+        static let youGlishAccent = "youglish_accent"
     }
 
     func settings() throws -> TutorSettings {
@@ -46,6 +47,7 @@ extension UserDatabase {
             (Key.quietHoursStart, settings.quietHours.start.formatted),
             (Key.quietHoursEnd, settings.quietHours.end.formatted),
             (Key.showsExampleTranslation, settings.showsExampleTranslation ? "1" : "0"),
+            (Key.youGlishAccent, settings.youGlishAccent.rawValue),
         ]
     }
 
@@ -68,7 +70,9 @@ extension UserDatabase {
             quietHours: quietHours,
             quietHoursEnabled: stored[Key.quietHoursEnabled].flatMap(Self.flag) ?? defaults.quietHoursEnabled,
             showsExampleTranslation: stored[Key.showsExampleTranslation].flatMap(Self.flag)
-                ?? defaults.showsExampleTranslation
+                ?? defaults.showsExampleTranslation,
+            youGlishAccent: stored[Key.youGlishAccent].flatMap(YouGlishAccent.init(rawValue:))
+                ?? defaults.youGlishAccent
         )
     }
 }
