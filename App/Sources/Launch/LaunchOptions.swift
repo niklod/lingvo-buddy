@@ -16,6 +16,8 @@ struct LaunchOptions: Equatable {
     var snapshotDirectory: String?
     /// `--snapshot-filter <text>`: render only states whose name contains the text.
     var snapshotFilter: String?
+    /// `--check-panel-sizes`: measure every panel state as `FloatingPanel` does, then exit 1 if one is endless.
+    var checksPanelSizes = false
     /// `--open <view>`: open a view right after launch.
     var openView: OpenableView?
     /// `--prefill <text>`: the word `--open quick-add` starts with.
@@ -45,6 +47,7 @@ struct LaunchOptions: Equatable {
             case "--skip-onboarding": options.skipOnboarding = true
             case "--snapshot": options.snapshotDirectory = try value(for: argument, from: &remaining)
             case "--snapshot-filter": options.snapshotFilter = try value(for: argument, from: &remaining)
+            case "--check-panel-sizes": options.checksPanelSizes = true
             case "--open":
                 let name = try value(for: argument, from: &remaining)
                 guard let view = OpenableView(rawValue: name) else {

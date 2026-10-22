@@ -8,6 +8,8 @@ struct SnapshotState {
     let name: String
     /// Render in an offscreen window: needed for AppKit-backed controls.
     var usesWindow = false
+    /// Shown in a `FloatingPanel`: `--check-panel-sizes` measures it as the panel does.
+    var isPanel = false
     /// Async so a state can wait for work the view starts (the fake machine translator).
     let view: @MainActor () async -> AnyView
 }
@@ -52,7 +54,7 @@ enum QuizCardSnapshots {
         answer: QuizCardState.Answer?,
         showsExampleTranslation: Bool = false
     ) -> SnapshotState {
-        SnapshotState(name: name) {
+        SnapshotState(name: name, isPanel: true) {
             AnyView(QuizCardView(state: QuizCardState(
                 card: card,
                 answer: answer,

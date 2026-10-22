@@ -39,7 +39,7 @@ enum TrayMenuSnapshots {
             now: now
         )
         // The inline TextField is AppKit-backed: ImageRenderer would draw a placeholder.
-        return SnapshotState(name: name, usesWindow: true) {
+        return SnapshotState(name: name, usesWindow: true, isPanel: true) {
             AnyView(
                 TrayMenuView(state: tray, highlighted: highlighted) { TrayAddWordField { _ in } }
                     .background(Theme.Palette.desktop)

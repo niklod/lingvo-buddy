@@ -30,6 +30,18 @@ enum SnapshotRenderer {
         return urls
     }
 
+    /// The panel states whose content measures to an endless size, as "name: size".
+    static func endlessPanels(_ states: [SnapshotState]) async -> [String] {
+        var failures: [String] = []
+        for state in states where state.isPanel {
+            let size = FloatingPanel.fittingSize(of: NSHostingController(rootView: await state.view()))
+            if !size.isFinite {
+                failures.append("\(state.name): \(size)")
+            }
+        }
+        return failures
+    }
+
     /// A relative path lands in the app's temporary folder: the sandbox allows
     /// writes only inside the app container.
     static func directoryURL(_ path: String) -> URL {
