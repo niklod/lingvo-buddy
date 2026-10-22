@@ -3,8 +3,8 @@ import LingvoCore
 extension QuickAddModel {
     /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000".
     var metaLine: String {
-        guard let preview else { return String(localized: "Type an English word") }
-        guard let lookup = preview.lookup else {
+        guard let candidate else { return String(localized: "Type an English or Russian word") }
+        guard let lookup = candidate.lookup else {
             return String(localized: "Not in the dictionary: type your own translation")
         }
         let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]
@@ -20,6 +20,9 @@ extension QuickAddModel {
     }
 
     var footerIsWarning: Bool { message != nil }
+
+    /// The panel follows the typed script; there is no direction toggle.
+    var directionLabel: String { isRussianInput ? "RU → EN" : "EN → RU" }
 
     private static func tierLabel(_ lookup: WordLookup) -> String {
         switch lookup.membership {
