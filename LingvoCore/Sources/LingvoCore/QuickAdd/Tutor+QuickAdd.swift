@@ -11,12 +11,18 @@ extension Tutor {
             return preview
         }
         let lookup = try lookup(query)
-        let headword = try lookup?.entry.headword ?? userDatabase.myWord(ignoringCase: query)?.headword ?? query
+        // Russian text the dictionaries do not know is an English word to type, not an English headword.
+        let extended = lookup == nil && !isRussian ? try extendedDictionary?.entry(headword: query) : nil
+        let headword = try lookup?.entry.headword
+            ?? userDatabase.myWord(ignoringCase: query)?.headword
+            ?? extended?.headword
+            ?? query
         return QuickAddPreview(
             headword: headword,
             lookup: lookup,
             standing: try standing(of: headword),
-            isRussianInput: isRussian
+            isRussianInput: isRussian,
+            extended: extended
         )
     }
 
@@ -30,7 +36,8 @@ extension Tutor {
         try userDatabase.insert(MyWord(
             headword: preview.headword,
             translation: word.translation,
-            example: word.example,
+            // The extended example is a dictionary example: it goes on the card like the bundled one does.
+            example: word.example ?? preview.candidates[0].extended?.example,
             addedAt: clock.now()
         ))
         return .added(headword: preview.headword)
