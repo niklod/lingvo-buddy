@@ -9,7 +9,7 @@ struct QuickAddActions {
 /// The Spotlight-like quick-add panel from the design (`design/src/3_quick_add.html`).
 struct QuickAddView: View {
     enum Field: Hashable {
-        case word, custom, example
+        case word, custom, englishWord, example
     }
 
     @Bindable var model: QuickAddModel
@@ -23,7 +23,9 @@ struct QuickAddView: View {
                 Text(verbatim: model.metaLine)
                     .font(.system(size: Theme.FontSize.caption))
                     .foregroundStyle(Theme.Palette.textSecondary)
-                if model.isRussianInput {
+                if model.needsEnglishWord {
+                    englishWordSection
+                } else if model.isRussianInput {
                     candidateSection
                 } else if model.preview != nil {
                     translationSection
@@ -95,6 +97,20 @@ struct QuickAddView: View {
             if model.showsCustomField {
                 QuickAddField(placeholder: String(localized: "Your translation"), text: $model.customTranslation)
                     .focused($focus, equals: .custom)
+                MachineSuggestionNote(machine: model.machine, fieldText: model.customTranslation) {
+                    model.downloadLanguagePack()
+                }
+            }
+        }
+    }
+
+    /// Russian text the dictionary does not know: the typed text is the translation.
+    private var englishWordSection: some View {
+        section(String(localized: "English word for the card")) {
+            QuickAddField(placeholder: String(localized: "English word"), text: $model.englishWord)
+                .focused($focus, equals: .englishWord)
+            MachineSuggestionNote(machine: model.machine, fieldText: model.englishWord) {
+                model.downloadLanguagePack()
             }
         }
     }

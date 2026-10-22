@@ -8,7 +8,8 @@ struct SnapshotState {
     let name: String
     /// Render in an offscreen window: needed for AppKit-backed controls.
     var usesWindow = false
-    let view: @MainActor () -> AnyView
+    /// Async so a state can wait for work the view starts (the fake machine translator).
+    let view: @MainActor () async -> AnyView
 }
 
 /// Every UI slice registers its designed states here.

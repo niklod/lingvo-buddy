@@ -25,7 +25,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let options = try LaunchOptions.parse(CommandLine.arguments)
             #if DEBUG
             if let directory = options.snapshotDirectory {
-                renderSnapshotsAndExit(to: directory, filter: options.snapshotFilter)
+                Task { await renderSnapshotsAndExit(to: directory, filter: options.snapshotFilter) }
+                return
             }
             #endif
             try start(with: options)
@@ -261,10 +262,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     #if DEBUG
-    private func renderSnapshotsAndExit(to path: String, filter: String?) -> Never {
+    private func renderSnapshotsAndExit(to path: String, filter: String?) async -> Never {
         let states = SnapshotRegistry.all.filter { state in filter.map { state.name.contains($0) } ?? true }
         do {
-            let files = try SnapshotRenderer.render(states, to: SnapshotRenderer.directoryURL(path))
+            let files = try await SnapshotRenderer.render(states, to: SnapshotRenderer.directoryURL(path))
             files.forEach { print($0.path) }
             exit(0)
         } catch {
