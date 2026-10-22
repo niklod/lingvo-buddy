@@ -100,13 +100,17 @@ struct QuickAddView: View {
                     .focused($focus, equals: .custom)
                 MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
             }
-            if let hint = model.definitionHint {
-                Text(verbatim: hint)
-                    .font(.system(size: Theme.FontSize.small))
-                    .foregroundStyle(Theme.Palette.textSecondary)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            definitionHint
+        }
+    }
+
+    @ViewBuilder private var definitionHint: some View {
+        if let hint = model.definitionHint {
+            Text(verbatim: hint)
+                .font(.system(size: Theme.FontSize.small))
+                .foregroundStyle(Theme.Palette.textSecondary)
+                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -124,6 +128,7 @@ struct QuickAddView: View {
                     .focused($focus, equals: .englishWord)
                 MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
             }
+            definitionHint
         }
     }
 
@@ -159,6 +164,7 @@ struct QuickAddView: View {
                     }
                 }
             }
+            definitionHint
         }
     }
 

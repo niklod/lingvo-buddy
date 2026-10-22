@@ -12,8 +12,8 @@ extension QuickAddModel {
     /// learner types; blank text still gives the dictionary example, so it does not.
     var examplePreview: DictionaryExample? {
         guard example.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              let english = candidate?.example else { return nil }
-        let russian = showsExampleTranslation ? candidate?.russianExample : nil
+              let english = details?.example else { return nil }
+        let russian = showsExampleTranslation ? details?.russianExample : nil
         return DictionaryExample(english: english, russian: russian)
     }
 }

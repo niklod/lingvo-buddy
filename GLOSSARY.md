@@ -183,7 +183,7 @@ The panel under the menu-bar icon with the streak, progress, today's stats, paus
 _Avoid_: popover, dropdown
 
 **Quick add**:
-The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. For a word the bundled dictionary lacks it shows the extended dictionary's translations as bubbles, with IPA, part of speech and example; the system dictionary fills the IPA, part of speech and example the extended one lacks and adds the definition hint; the machine translation bubble appears only when the extended dictionary has no translation. Code: `QuickAdd*`.
+The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. For a word the bundled dictionary lacks it shows the extended dictionary's translations as bubbles, with IPA, part of speech and example; the system dictionary fills the IPA, part of speech and example the extended one lacks and adds the definition hint; the machine translation bubble appears only when the extended dictionary has no translation. For Russian input, the details of the English word on the card (IPA, part of speech, example, definition hint) are looked up again whenever that word changes: a picked bubble, a typed word or a machine translation. Code: `QuickAdd*`, `Tutor.englishDetails`.
 
 **Example preview**:
 The read-only dictionary example, with its Russian example, that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `QuickAddPreview.russianExample`, `ExamplePreview`.

@@ -20,7 +20,7 @@ enum SnapshotRegistry {
     static var all: [SnapshotState] {
         QuizCardSnapshots.states + StatusIconSnapshots.states + TrayMenuSnapshots.states
             + SettingsSnapshots.states + QuickAddSnapshots.states + OnboardingSnapshots.states + DictionarySnapshots.states
-            + SystemDictionarySnapshots.states
+            + SystemDictionarySnapshots.states + ChainedLookupSnapshots.states
     }
 }
 

@@ -5,19 +5,24 @@ extension QuickAddModel {
     /// translation fills the bubble: the "type your own" hint shows only when there is none.
     var metaLine: String {
         guard let candidate else { return String(localized: "Type an English or Russian word") }
+        let line = Self.infoLine(of: details ?? candidate)
+        if !line.isEmpty { return line }
         if needsEnglishWord {
             return machineBubble == nil ? String(localized: "Not in the dictionary: type the English word") : ""
         }
-        guard let lookup = candidate.lookup else {
-            // Wiktionary and system data have no rank or tier, so the line is only the transcription and the part of speech.
-            let details = [candidate.ipa, candidate.partOfSpeech?.label].compactMap { $0 }
-            if !details.isEmpty { return details.joined(separator: " · ") }
-            // An English candidate for Russian input is a real translation: the line is empty without details.
-            if isRussianInput { return "" }
-            return machineBubble == nil ? String(localized: "Not in the dictionary: type your own translation") : ""
+        // An English candidate for Russian input is a real translation: the line is empty without details.
+        if isRussianInput { return "" }
+        return machineBubble == nil ? Self.notInDictionaryLine : ""
+    }
+
+    /// A bundled word shows its tier or rank; Wiktionary and system data have none, so the line is
+    /// only the transcription and the part of speech.
+    private static func infoLine(of candidate: QuickAddCandidate) -> String {
+        if let lookup = candidate.lookup {
+            let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, tierLabel(lookup)]
+            return parts.compactMap { $0 }.joined(separator: " · ")
         }
-        let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]
-        return parts.compactMap { $0 }.joined(separator: " · ")
+        return [candidate.ipa, candidate.partOfSpeech?.label].compactMap { $0 }.joined(separator: " · ")
     }
 
     /// Details from a dictionary do not make a translation: the line stays until a bubble comes.
@@ -28,7 +33,7 @@ extension QuickAddModel {
     }
 
     /// The short English definition under the bubbles; it is a hint and never saved.
-    var definitionHint: String? { isRussianInput ? nil : candidate?.definitionHint }
+    var definitionHint: String? { details?.definitionHint }
 
     private static var notInDictionaryLine: String { String(localized: "Not in the dictionary: type your own translation") }
 
