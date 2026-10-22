@@ -6,9 +6,10 @@ import argparse
 import hashlib
 import sqlite3
 import sys
+from collections.abc import Sequence
 from contextlib import closing
 from pathlib import Path
-from typing import List, Optional, Sequence, Tuple
+from typing import Optional
 
 from lingvo_dict.contract import POS_VALUES, TIERS, TRANSLATION_LANG
 from lingvo_dict.paths import DEFAULT_DICTIONARY
@@ -64,8 +65,8 @@ INSERT_TRANSLATION = "INSERT INTO translations (entry_id, lang, ord, text) VALUE
 INSERT_EXCLUSION = "INSERT INTO quiz_exclusions (headword) VALUES (?)"
 INSERT_META = "INSERT INTO meta (key, value) VALUES (?, ?)"
 
-MetaRow = Tuple[str, str]
-EntryRow = Tuple[int, str, int, str, str, Optional[str], Optional[str], str]
+MetaRow = tuple[str, str]
+EntryRow = tuple[int, str, int, str, str, Optional[str], Optional[str], str]
 
 
 def write_dictionary(
@@ -127,7 +128,7 @@ def _entry_row(item: LoadedEntry) -> EntryRow:
 
 def build_meta(
     word_list: WordList, word_list_path: Path, paths: Sequence[Path], entries: Sequence[LoadedEntry]
-) -> List[MetaRow]:
+) -> list[MetaRow]:
     batch_names = ", ".join(path.stem for path in paths)
     batches_digest = hashlib.sha256()
     for path in paths:
@@ -144,7 +145,7 @@ def build_meta(
     ]
 
 
-def main(argv: List[str]) -> int:
+def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     add_selection_arguments(parser)
     parser.add_argument("--out", type=Path, default=DEFAULT_DICTIONARY, help="SQLite file to write")

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Set, Tuple
+from typing import Any
 
 from lingvo_dict.contract import (
     EXAMPLE_LENGTH,
@@ -26,7 +26,7 @@ def is_rank(value: Any) -> bool:
     return isinstance(value, int) and not isinstance(value, bool) and value >= 1
 
 
-def check_entry(entry: Any, word_list: WordList, ranks: Tuple[int, int], batch: str) -> List[str]:
+def check_entry(entry: Any, word_list: WordList, ranks: tuple[int, int], batch: str) -> list[str]:
     if not isinstance(entry, dict):
         return ["entry must be a JSON object"]
     rank = entry.get("rank")
@@ -55,20 +55,20 @@ def check_entry(entry: Any, word_list: WordList, ranks: Tuple[int, int], batch: 
     return errors
 
 
-def _check_fields(entry: Dict[str, Any], fields: Tuple[str, ...]) -> List[str]:
+def _check_fields(entry: dict[str, Any], fields: tuple[str, ...]) -> list[str]:
     missing = [f"missing field '{name}'" for name in fields if name not in entry]
     unknown = [f"unknown field '{name}' for this tier" for name in entry if name not in fields]
     return missing + unknown
 
 
-def _check_rank(rank: int, ranks: Tuple[int, int], batch: str) -> List[str]:
+def _check_rank(rank: int, ranks: tuple[int, int], batch: str) -> list[str]:
     first, last = ranks
     if first <= rank <= last:
         return []
     return [f"rank {rank} is outside {batch} ranks {first}-{last}"]
 
 
-def _check_headword(entry: Dict[str, Any], rank: int, word_list: WordList) -> List[str]:
+def _check_headword(entry: dict[str, Any], rank: int, word_list: WordList) -> list[str]:
     if "headword" not in entry:
         return []
     expected = word_list.headword_at(rank)
@@ -79,14 +79,14 @@ def _check_headword(entry: Dict[str, Any], rank: int, word_list: WordList) -> Li
     return []
 
 
-def check_translations(translations: Any, limits: Tuple[int, int]) -> List[str]:
+def check_translations(translations: Any, limits: tuple[int, int]) -> list[str]:
     if not isinstance(translations, list):
         return ["translations must be a list of strings"]
     low, high = limits
-    errors: List[str] = []
+    errors: list[str] = []
     if not low <= len(translations) <= high:
         errors.append(f"needs {low} to {high} translations, got {len(translations)}")
-    seen: Set[str] = set()
+    seen: set[str] = set()
     for text in translations:
         if not isinstance(text, str) or not TRANSLATION_PATTERN.fullmatch(text):
             errors.append(f"translation {text!r} must be Cyrillic words separated by single spaces or hyphens")
@@ -99,7 +99,7 @@ def check_translations(translations: Any, limits: Tuple[int, int]) -> List[str]:
     return errors
 
 
-def check_ipa(ipa: Any) -> List[str]:
+def check_ipa(ipa: Any) -> list[str]:
     if not isinstance(ipa, str) or not IPA_PATTERN.fullmatch(ipa):
         return [f"ipa {ipa!r} must be a British IPA transcription between slashes, e.g. '/ˈwɜːd/'"]
     if ipa.count("ˈ") > 1:
@@ -110,7 +110,7 @@ def check_ipa(ipa: Any) -> List[str]:
     return []
 
 
-def check_example(example: Any, headword: str) -> List[str]:
+def check_example(example: Any, headword: str) -> list[str]:
     if not isinstance(example, str):
         return ["example must be a string"]
     low, high = EXAMPLE_LENGTH

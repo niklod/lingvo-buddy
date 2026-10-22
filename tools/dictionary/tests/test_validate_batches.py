@@ -181,7 +181,12 @@ class CommandLineTest(unittest.TestCase):
 
     def run_cli(self, *args):
         return run_main(
-            validate.main, "--word-list", str(self.word_list_path), "--quiz-exclusions", str(self.exclusions_path), *args
+            validate.main,
+            "--word-list",
+            str(self.word_list_path),
+            "--quiz-exclusions",
+            str(self.exclusions_path),
+            *args,
         )
 
     def test_exit_code_is_two_when_the_word_list_cannot_be_read(self):
@@ -241,7 +246,8 @@ class CommandLineTest(unittest.TestCase):
         self.assertIn(f"quiz-exclusions.txt:3 '{lookup_word}': listed twice", err)
         self.assertIn("quiz-exclusions.txt:4 'nosuchword': not a headword of the word list", err)
         self.assertIn("quiz-exclusions.txt:5 'large': rank 3 is in the Top-1000", err)
-        self.assertIn(f"quiz-exclusions.txt:6 '{self.word_list.headword_at(2001)}': rank 2001 is past the Top-2000", err)
+        past_top = self.word_list.headword_at(2001)
+        self.assertIn(f"quiz-exclusions.txt:6 '{past_top}': rank 2001 is past the Top-2000", err)
 
     def test_valid_quiz_exclusions_are_counted(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))

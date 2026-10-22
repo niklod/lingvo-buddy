@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import argparse
 import sys
+from collections.abc import Mapping, Sequence
 from importlib.metadata import version
 from pathlib import Path
-from typing import Dict, FrozenSet, List, Mapping, Optional, Sequence
 
 from lingvo_dict.paths import WORDLIST_DIR
 from lingvo_dict.text_lines import content_lines
@@ -29,7 +29,7 @@ LEMMA_POS_ORDER = ("VERB", "NOUN", "ADJ", "ADV", "AUX")
 REQUIREMENTS = "tools/dictionary/requirements-export.txt"
 
 
-def read_lines(path: Path) -> List[str]:
+def read_lines(path: Path) -> list[str]:
     try:
         text = path.read_text(encoding="utf-8")
     except UnicodeDecodeError as error:
@@ -37,12 +37,12 @@ def read_lines(path: Path) -> List[str]:
     return [line for _, line in content_lines(text)]
 
 
-def read_set(path: Path, lowercase: bool) -> FrozenSet[str]:
+def read_set(path: Path, lowercase: bool) -> frozenset[str]:
     return frozenset(line.lower() if lowercase else line for line in read_lines(path))
 
 
-def read_overrides(path: Path) -> Dict[str, str]:
-    overrides: Dict[str, str] = {}
+def read_overrides(path: Path) -> dict[str, str]:
+    overrides: dict[str, str] = {}
     for line in read_lines(path):
         parts = [part.strip() for part in line.split("\t")]
         if len(parts) != 2 or not all(parts):
@@ -62,7 +62,7 @@ def load_rules(folder: Path) -> ExportRules:
     )
 
 
-def main(argv: List[str]) -> int:
+def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=WORDLIST_DIR, help="word list folder")
     args = parser.parse_args(argv)
@@ -120,7 +120,7 @@ def make_lemmatizer() -> Lemmatize:
     import simplemma
     from lemminflect import getAllLemmas
 
-    def lemmatize(form: str) -> Optional[str]:
+    def lemmatize(form: str) -> str | None:
         if not simplemma.is_known(form, lang=LANGUAGE):
             return None
         lemma: str = simplemma.lemmatize(form, lang=LANGUAGE)
@@ -136,5 +136,5 @@ def _is_lemma(word: str, lemmas: Mapping[str, Sequence[str]]) -> bool:
     return any(word in candidates for candidates in lemmas.values())
 
 
-def _first_lemma(lemmas: Mapping[str, Sequence[str]]) -> Optional[str]:
+def _first_lemma(lemmas: Mapping[str, Sequence[str]]) -> str | None:
     return next((lemmas[pos][0] for pos in LEMMA_POS_ORDER if pos in lemmas), None)

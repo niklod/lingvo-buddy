@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional, Tuple
 
 
 class WordListError(ValueError):
@@ -13,22 +12,22 @@ class WordListError(ValueError):
 
 @dataclass(frozen=True)
 class WordList:
-    headwords: Tuple[str, ...]  # index 0 is rank 1
-    header: Tuple[Tuple[str, str], ...] = ()
+    headwords: tuple[str, ...]  # index 0 is rank 1
+    header: tuple[tuple[str, str], ...] = ()
 
     @property
     def size(self) -> int:
         return len(self.headwords)
 
-    def headword_at(self, rank: int) -> Optional[str]:
+    def headword_at(self, rank: int) -> str | None:
         if 1 <= rank <= self.size:
             return self.headwords[rank - 1]
         return None
 
-    def ranks(self) -> Dict[str, int]:
+    def ranks(self) -> dict[str, int]:
         return {word: index + 1 for index, word in enumerate(self.headwords)}
 
-    def header_value(self, key: str) -> Optional[str]:
+    def header_value(self, key: str) -> str | None:
         return dict(self.header).get(key)
 
 
