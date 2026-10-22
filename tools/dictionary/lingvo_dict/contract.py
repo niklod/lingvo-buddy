@@ -46,8 +46,9 @@ EXAMPLE_RU_PATTERN = re.compile(r"[А-ЯЁ0-9«\"][А-Яа-яЁё0-9 ,.;:!?\"()�
 
 QUIZ_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa", "example", "synonym_group")
 LOOKUP_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa")
-# Optional until every quiz entry has one; then it joins QUIZ_FIELDS.
+# Optional until every entry of the tier has them; then they join the tier's fields.
 QUIZ_OPTIONAL_FIELDS = ("example_ru",)
+LOOKUP_OPTIONAL_FIELDS = ("example", "example_ru")
 
 
 @dataclass(frozen=True)
@@ -65,7 +66,7 @@ class TierRules:
 TIER_RULES = MappingProxyType(
     {
         "quiz": TierRules(fields=QUIZ_FIELDS, translations=QUIZ_TRANSLATIONS, optional=QUIZ_OPTIONAL_FIELDS),
-        "lookup": TierRules(fields=LOOKUP_FIELDS, translations=LOOKUP_TRANSLATIONS),
+        "lookup": TierRules(fields=LOOKUP_FIELDS, translations=LOOKUP_TRANSLATIONS, optional=LOOKUP_OPTIONAL_FIELDS),
     }
 )
 TIERS = tuple(TIER_RULES)
@@ -124,13 +125,14 @@ def json_schema() -> dict[str, object]:
             },
             "ipa": {"type": "string", "pattern": _anchored(IPA_PATTERN)},
         }
-        if "example" in rules.fields:
+        if "example" in rules.allowed:
             properties["example"] = {
                 "type": "string",
                 "minLength": EXAMPLE_LENGTH[0],
                 "maxLength": EXAMPLE_LENGTH[1],
                 "pattern": _anchored(EXAMPLE_PATTERN),
             }
+        if "synonym_group" in rules.fields:
             properties["synonym_group"] = {
                 "type": "string",
                 "description": (

@@ -77,6 +77,21 @@ class BuildTest(unittest.TestCase):
         self.assertIn("CC BY-SA 4.0", meta["license"])
         self.assertIn("batch-01, batch-05", meta["built_from"])
 
+    def test_lookup_entry_examples_go_into_the_dictionary(self):
+        headword = self.word_list.headword_at(2001)
+        self.folder.write(
+            5,
+            [lookup_entry(self.word_list, 2001, example=f"The {headword} stands here.", example_ru="Он стоит здесь.")],
+        )
+
+        code, _, err = self.run_build("--allow-partial")
+
+        self.assertEqual(code, 0, err)
+        self.assertEqual(
+            self.query("SELECT example, example_ru, tier FROM entries WHERE rank = 2001"),
+            [(f"The {headword} stands here.", "Он стоит здесь.", "lookup")],
+        )
+
     def test_quiz_exclusions_of_built_words_go_into_the_dictionary(self):
         self.folder.write(3, [quiz_entry(self.word_list, 1001), quiz_entry(self.word_list, 1002)])
         excluded = self.word_list.headword_at(1002)

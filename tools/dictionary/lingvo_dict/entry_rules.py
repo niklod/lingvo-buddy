@@ -49,9 +49,9 @@ def check_entry(entry: Any, word_list: WordList, ranks: tuple[int, int], batch: 
         errors += check_translations(entry["translations"], rules.translations)
     if "ipa" in entry:
         errors += check_ipa(entry["ipa"])
-    if tier == "quiz" and "example" in entry and isinstance(entry.get("headword"), str):
+    # Where a tier does not allow a field, _check_fields already reports it.
+    if "example" in entry and "example" in rules.allowed and isinstance(entry.get("headword"), str):
         errors += check_example(entry["example"], entry["headword"])
-    # On a tier without example_ru, _check_fields already reports the field.
     if "example_ru" in entry and "example_ru" in rules.allowed:
         errors += check_example_ru(entry["example_ru"], has_example="example" in entry)
     if tier == "quiz" and "synonym_group" in entry:

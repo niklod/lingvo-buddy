@@ -44,10 +44,19 @@ The JSON Schema is `tools/dictionary/batch.schema.json`. The validator checks mo
 }
 ```
 
-A lookup-tier entry has only `rank`, `headword`, `tier`, `pos`, `translations` and `ipa`:
+A lookup-tier entry has the same fields except `synonym_group`:
 
 ```json
-{"rank": 2001, "headword": "gender", "tier": "lookup", "pos": "noun", "translations": ["пол", "род"], "ipa": "/ˈdʒendə/"}
+{
+  "rank": 2001,
+  "headword": "gender",
+  "tier": "lookup",
+  "pos": "noun",
+  "translations": ["пол", "род"],
+  "ipa": "/ˈdʒendə/",
+  "example": "Please write your name and gender on the form.",
+  "example_ru": "Пожалуйста, укажите в анкете своё имя и пол."
+}
 ```
 
 One entry per rank, sorted by rank, no gaps. Use UTF-8 and write Cyrillic and IPA characters as they are (no `\u` escapes needed).
@@ -77,13 +86,13 @@ Use `determiner` for words like `this`, `every`, `some` before a noun, `numeral`
 - Use the strong form of function words (`/ænd/`, `/fɔː/`, `/æt/`).
 - No American symbols (`ɚ`, `ɝ`, `ɹ`, `ɾ`, `oʊ`), no spaces, no brackets, no optional sounds.
 
-**example** (quiz tier only) — one natural English sentence that shows the meaning of the first translation.
+**example** (both tiers) — one natural English sentence that shows the meaning of the first translation.
 - 4 to 14 words, simple everyday vocabulary (A2–B1), 10 to 140 characters.
 - It must contain the headword or a regular form that starts with it: some word in the sentence must start with the headword (`house` → `houses`), or with the headword without a final `e`/`y` when the headword has four or more letters (`make` → `making`, `try` → `tried`). An irregular form does not count (`went` for `go`), so use the headword itself then.
 - Capital letter first, `.` `!` or `?` last. Plain ASCII letters, digits, spaces and the punctuation `, . ; : ! ? ' " ( ) -`.
 - No real people, brands, politics, violence or sex.
 
-**example_ru** (quiz tier only) — a natural Russian translation of `example`, as a Russian speaker would say it.
+**example_ru** (both tiers) — a natural Russian translation of `example`, as a Russian speaker would say it.
 - Translate the whole sentence. Use the first translation's meaning for the headword; the Russian word may be a form of it (`большом` for `большой`).
 - 1 to 180 characters, one sentence. Capital letter first, `.` `!` or `?` last (a closing `»` or `"` may follow).
 - Only Cyrillic letters, digits, spaces and the punctuation `, . ; : ! ? " ( ) « » - – —`. No Latin letters: write names and places in Cyrillic, and an English word in the translation would show the answer on the card.

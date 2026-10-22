@@ -170,13 +170,10 @@ class EntryRulesTest(unittest.TestCase):
 
         self.assertEqual(self.errors_for(1, [entry]), ())
 
-    def test_lookup_entry_must_not_carry_quiz_fields(self):
-        entry = lookup_entry(self.word_list, 2001, example="Some example here.", synonym_group="be")
+    def test_lookup_entry_must_not_carry_a_synonym_group(self):
+        entry = lookup_entry(self.word_list, 2001, synonym_group="be")
 
-        errors = self.errors_for(5, [entry])
-
-        self.assertEqual(len(errors), 2, errors)
-        self.assertTrue(all("unknown field" in e for e in errors))
+        self.assert_one_error(self.errors_for(5, [entry]), "unknown field 'synonym_group'")
 
     def test_rank_1000_is_quiz_tier_and_needs_a_synonym_group(self):
         entry = quiz_entry(self.word_list, 1000)
@@ -251,10 +248,49 @@ class EntryRulesTest(unittest.TestCase):
         self.assertTrue(any("missing field 'example'" in e for e in errors), errors)
         self.assertTrue(any("example_ru needs an English example" in e for e in errors), errors)
 
-    def test_lookup_entry_must_not_carry_a_russian_example(self):
-        entry = lookup_entry(self.word_list, 2001, example_ru="Этот дом очень старый.")
+    def test_lookup_entry_may_carry_an_example_and_a_russian_example(self):
+        entry = lookup_entry(
+            self.word_list, 2001, example="The wcyt stands near the river.", example_ru="Он стоит у реки."
+        )
 
-        self.assert_one_error(self.errors_for(5, [entry]), "unknown field 'example_ru'")
+        self.assertEqual(self.errors_for(5, [entry]), ())
+
+    def test_lookup_entry_may_have_no_examples_yet(self):
+        self.assertEqual(self.errors_for(5, [lookup_entry(self.word_list, 2001)]), ())
+
+    def test_lookup_example_must_be_an_english_sentence_with_the_headword(self):
+        entries = [
+            lookup_entry(self.word_list, 2001, example="The cat sleeps on the sofa."),
+            lookup_entry(self.word_list, 2002, example="the wcyu is old"),
+            lookup_entry(self.word_list, 2003, example="Short."),
+        ]
+
+        errors = self.errors_for(5, entries)
+
+        self.assertEqual(len(errors), 3, errors)
+        self.assertIn("example must contain 'wcyt'", errors[0])
+        self.assertIn("must be one English sentence", errors[1])
+        self.assertIn("example must have 10 to 140 characters, got 6", errors[2])
+
+    def test_lookup_russian_example_must_be_a_cyrillic_sentence_within_the_limit(self):
+        example = "The wcyt stands near the river."
+        entries = [
+            lookup_entry(self.word_list, 2001, example=example, example_ru="Этот house стоит у реки."),
+            lookup_entry(self.word_list, 2002, example="A wcyu stands here.", example_ru=""),
+            lookup_entry(self.word_list, 2003, example="A wcyv stands here.", example_ru="Это " + "д" * 176 + "."),
+        ]
+
+        errors = self.errors_for(5, entries)
+
+        self.assertEqual(len(errors), 3, errors)
+        self.assertIn("Russian sentence", errors[0])
+        self.assertIn("example_ru must not be empty", errors[1])
+        self.assertIn("example_ru must have at most 180 characters, got 181", errors[2])
+
+    def test_lookup_russian_example_needs_an_english_example(self):
+        entry = lookup_entry(self.word_list, 2001, example_ru="Он стоит у реки.")
+
+        self.assert_one_error(self.errors_for(5, [entry]), "example_ru needs an English example")
 
 
 if __name__ == "__main__":
