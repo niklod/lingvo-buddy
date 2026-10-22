@@ -110,13 +110,11 @@ struct QuickAddView: View {
                 .foregroundStyle(model.footerIsWarning ? Theme.Palette.wrongText : Theme.Palette.textSecondary)
                 .lineLimit(2)
             Spacer(minLength: 8)
-            FooterButton(title: "Esc", action: actions.cancel)
-            FooterButton(
-                title: String(localized: "Add ↵"),
-                isPrimary: true,
-                isEnabled: model.canSubmit,
-                action: actions.submit
-            )
+            Button(action: actions.cancel) { Text(verbatim: "Esc") }
+                .buttonStyle(.footer(.secondary))
+            Button(String(localized: "Add ↵"), action: actions.submit)
+                .buttonStyle(.footer(.primary))
+                .disabled(!model.canSubmit)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)

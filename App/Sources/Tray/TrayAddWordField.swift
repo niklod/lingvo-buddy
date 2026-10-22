@@ -20,25 +20,15 @@ struct TrayAddWordField: View {
                 ) {
                     Text("Add word")
                 }
-                .textFieldStyle(.plain)
                 .font(.system(size: Theme.FontSize.body))
                 .foregroundStyle(Theme.Palette.textPrimary)
-                .padding(.horizontal, 10)
-                .frame(height: Self.height)
-                .background(RoundedRectangle(cornerRadius: Theme.Radius.button).fill(QuickAddTheme.fieldBackground))
-                .overlay(
-                    RoundedRectangle(cornerRadius: Theme.Radius.button).strokeBorder(Theme.Palette.border, lineWidth: 1)
-                )
+                .insetField(height: Self.height)
                 .onSubmit(submit)
                 Button(action: submit) {
                     Image(systemName: "plus")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Theme.Palette.textStrong)
-                        .frame(width: Self.height, height: Self.height)
-                        .background(RoundedRectangle(cornerRadius: Theme.Radius.button).fill(Theme.Palette.accent))
-                        .contentShape(Rectangle())
+                        .frame(width: Self.height)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.theme(height: Self.height, horizontalPadding: 0))
                 .accessibilityLabel(Text("Add"))
             }
         }

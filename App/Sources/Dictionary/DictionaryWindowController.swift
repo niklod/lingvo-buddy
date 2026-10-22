@@ -11,6 +11,8 @@ final class DictionaryWindowController: NSObject, NSWindowDelegate {
     private let actions: DictionaryActions
     private var window: NSWindow?
     private var changesObserver: NSObjectProtocol?
+    /// A change came while nobody could see the window: reload when it shows again.
+    private var isStale = true
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "dictionary")
 
     init(model: DictionaryModel, settings: SettingsModel, actions: DictionaryActions) {
@@ -19,26 +21,38 @@ final class DictionaryWindowController: NSObject, NSWindowDelegate {
         self.actions = actions
         super.init()
         // Cards and quick add change words while the window stays open behind them.
+        // A row action already reloaded the model that posted it.
+        let modelID = ObjectIdentifier(model)
         changesObserver = NotificationCenter.default.addObserver(
             forName: UserDataChanges.notification, object: nil, queue: .main
-        ) { [weak self] _ in
-            MainActor.assumeIsolated { self?.reloadIfShowing() }
+        ) { [weak self] note in
+            let isOwnChange = (note.object as AnyObject?).map(ObjectIdentifier.init) == modelID
+            MainActor.assumeIsolated {
+                if !isOwnChange { self?.reloadIfVisible() }
+            }
         }
     }
-
-    var isShowing: Bool { window?.isVisible == true }
 
     func show() {
         let window = window ?? makeWindow()
         self.window = window
-        model.reload()
+        // Becoming key reloads; this covers a window that stays behind (refused activation).
         ForegroundWindows.show(window)
+        if isStale {
+            reload()
+        }
         logger.notice("dictionary shown, active: \(NSApp.isActive)")
     }
 
     func windowDidBecomeKey(_ notification: Notification) {
-        // Onboarding or another window may have changed progress meanwhile.
-        model.reload()
+        // The "12 min" ages move with the clock, so a return to the window refreshes them.
+        reload()
+    }
+
+    func windowDidChangeOcclusionState(_ notification: Notification) {
+        if isStale {
+            reloadIfVisible()
+        }
     }
 
     func windowWillClose(_ notification: Notification) {
@@ -46,9 +60,19 @@ final class DictionaryWindowController: NSObject, NSWindowDelegate {
         ForegroundWindows.willClose(window)
     }
 
-    private func reloadIfShowing() {
-        guard isShowing else { return }
+    /// `isVisible` is also true for a window fully covered by others; only an
+    /// unoccluded window is worth a full rebuild on each answer.
+    private func reloadIfVisible() {
+        guard let window, window.isVisible, window.occlusionState.contains(.visible) else {
+            isStale = true
+            return
+        }
+        reload()
+    }
+
+    private func reload() {
         model.reload()
+        isStale = false
     }
 
     private func makeWindow() -> NSWindow {
@@ -57,21 +81,16 @@ final class DictionaryWindowController: NSObject, NSWindowDelegate {
                 minWidth: DictionaryLayout.minimumSize.width, idealWidth: DictionaryLayout.windowSize.width,
                 minHeight: DictionaryLayout.minimumSize.height, idealHeight: DictionaryLayout.windowSize.height
             )
-        let host = NSHostingController(rootView: root)
-        host.sizingOptions = [.minSize]
-        let window = NSWindow(contentViewController: host)
-        window.title = String(localized: "Dictionary")
-        window.titleVisibility = .hidden
-        window.titlebarAppearsTransparent = true
-        window.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
-        window.backgroundColor = NSColor(Theme.Palette.panel)
-        window.appearance = NSAppearance(named: .darkAqua)
-        window.isReleasedWhenClosed = false
+        let window = NSWindow.themed(
+            root,
+            title: String(localized: "Dictionary"),
+            style: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+            sizing: [.minSize],
+            hidesTitle: true,
+            contentSize: DictionaryLayout.windowSize,
+            autosaveName: "LingvoBuddyDictionary"
+        )
         window.delegate = self
-        window.setContentSize(DictionaryLayout.windowSize)
-        window.center()
-        // Restores the last size and position, if there are any.
-        window.setFrameAutosaveName("LingvoBuddyDictionary")
         return window
     }
 }

@@ -57,9 +57,9 @@ private struct KindBadge: View {
 
     private var colors: (background: Color, foreground: Color) {
         switch kind {
-        case .new: (Color(hex: 0x0A84FF).opacity(0.18), Color(hex: 0x64D2FF))
+        case .new: (Theme.Palette.accent.opacity(0.18), Color(hex: 0x64D2FF))
         case .review: (Color(hex: 0x5E5CE6).opacity(0.22), Color(hex: 0xB7B5FF))
-        case .mine: (Color(hex: 0xFF9F0A).opacity(0.18), Color(hex: 0xFFC56B))
+        case .mine: (Theme.Palette.wrong.opacity(0.18), Color(hex: 0xFFC56B))
         }
     }
 }
@@ -161,33 +161,18 @@ struct QuizCardFooter: View {
             }
             Spacer(minLength: 0)
             if state.isAnswered {
-                Button(action: next) {
-                    Text("Next ↵")
-                        .font(.system(size: Theme.FontSize.body, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 14)
-                        .frame(height: 32)
-                        .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: Theme.Radius.button))
-                }
-                .buttonStyle(.plain)
+                Button("Next ↵", action: next)
+                    .buttonStyle(.theme())
             } else {
-                Button(action: dontKnow) {
-                    Text("Don't know")
-                        .font(.system(size: Theme.FontSize.body))
-                        .foregroundStyle(Theme.Palette.textBody)
-                        .padding(.horizontal, 12)
-                        .frame(height: 32)
-                        .overlay(RoundedRectangle(cornerRadius: Theme.Radius.button).strokeBorder(Theme.Palette.border))
-                        .contentShape(Rectangle())
-                }
-                .buttonStyle(.plain)
+                Button("Don't know", action: dontKnow)
+                    .buttonStyle(.theme(.secondary))
             }
         }
     }
 }
 
 struct MasteryDots: View {
-    static let total = 4
+    static let total = WordRow.masteryGoal
     let filled: Int
 
     var body: some View {

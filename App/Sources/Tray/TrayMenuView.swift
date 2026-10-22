@@ -2,9 +2,7 @@ import SwiftUI
 
 struct TrayMenuActions {
     var showWordNow: () -> Void = {}
-    /// Opens the interval submenu next to the row.
     var chooseInterval: () -> Void = {}
-    /// Opens the pause-length submenu next to the row.
     var choosePause: () -> Void = {}
     var resume: () -> Void = {}
     var openDictionary: () -> Void = {}
@@ -25,7 +23,6 @@ struct TrayMenuView<AddWordField: View>: View {
     var actions = TrayMenuActions()
     /// Snapshots show the design's highlighted first row; the app starts with none.
     @State var highlighted: TrayRow?
-    /// Quick add (#19) puts the inline "Add word" field here.
     @ViewBuilder var addWordField: () -> AddWordField
 
     var body: some View {
@@ -85,14 +82,12 @@ struct TrayMenuView<AddWordField: View>: View {
                 .dictionary,
                 title: String(localized: "Open Dictionary…"),
                 detail: "⌘D",
-                enabled: state.canOpenDictionary,
                 action: actions.openDictionary
             )
             row(
                 .settings,
                 title: String(localized: "Settings…"),
                 detail: "⌘,",
-                enabled: state.canOpenSettings,
                 action: actions.openSettings
             )
         }
@@ -102,14 +97,12 @@ struct TrayMenuView<AddWordField: View>: View {
         _ row: TrayRow,
         title: String,
         detail: String,
-        enabled: Bool = true,
         action: @escaping () -> Void
     ) -> some View {
         TrayMenuRow(
             title: title,
             detail: detail,
-            isEnabled: enabled,
-            isHighlighted: enabled && highlighted == row,
+            isHighlighted: highlighted == row,
             action: action
         )
         .onHover { hovering in
@@ -140,11 +133,5 @@ struct TrayMenuView<AddWordField: View>: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-    }
-}
-
-extension TrayMenuView where AddWordField == EmptyView {
-    init(state: TrayMenuState, actions: TrayMenuActions = TrayMenuActions(), highlighted: TrayRow? = nil) {
-        self.init(state: state, actions: actions, highlighted: highlighted, addWordField: { EmptyView() })
     }
 }

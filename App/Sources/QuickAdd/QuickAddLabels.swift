@@ -1,6 +1,5 @@
 import LingvoCore
 
-/// The texts of the quick-add panel, built from the model.
 extension QuickAddModel {
     /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000".
     var metaLine: String {
@@ -35,7 +34,7 @@ extension QuickAddModel {
         switch standing {
         case .notAdded: String(localized: "I'll show it in one of the next cards")
         case .mine: String(localized: "Already in My words")
-        case .learning(let mastery): String(localized: "Already in Learning (\(mastery)/4)")
+        case .learning(let mastery): String(localized: "Already in Learning (\(mastery)/\(WordRow.masteryGoal))")
         case .learned: String(localized: "Already learned")
         }
     }

@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 import SwiftUI
 
@@ -20,6 +21,8 @@ enum DictionarySnapshots {
                 let model = DictionaryModel(store: try seededTutor(), errors: nil)
                 model.list = list
                 model.search = search
+                // A snapshot cannot wait for the typing pause of the search field.
+                model.reload()
                 return AnyView(WindowChrome {
                     DictionaryView(model: model, settings: SettingsModel(store: InMemorySettingsStore(), errors: nil))
                 })
@@ -66,3 +69,4 @@ private struct WindowChrome<Content: View>: View {
         .padding(.leading, 16)
     }
 }
+#endif

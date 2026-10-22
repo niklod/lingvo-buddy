@@ -8,7 +8,6 @@ enum SettingsLayout {
     static let sectionSpacing: CGFloat = 16
     static let rowSpacing: CGFloat = 10
     static let sectionRadius: CGFloat = 10
-    static let sectionBackground = Color(hex: 0x1A1A1C)
 }
 
 struct SettingsSection<Content: View>: View {
@@ -27,7 +26,7 @@ struct SettingsSection<Content: View>: View {
             }
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(SettingsLayout.sectionBackground, in: RoundedRectangle(cornerRadius: SettingsLayout.sectionRadius))
+            .background(Theme.Palette.sidebar, in: RoundedRectangle(cornerRadius: SettingsLayout.sectionRadius))
             .overlay(
                 RoundedRectangle(cornerRadius: SettingsLayout.sectionRadius)
                     .strokeBorder(Theme.Palette.border, lineWidth: 1)

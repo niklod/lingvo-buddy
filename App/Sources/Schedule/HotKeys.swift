@@ -6,7 +6,6 @@ extension KeyboardShortcuts.Name {
     @MainActor
     static let showWordNow = Self("showWordNow", initial: .init(.w, modifiers: [.option, .command]))
 
-    /// ⌥⌘L opens the quick-add panel from any app.
     @MainActor
     static let quickAdd = Self("quickAdd", initial: .init(.l, modifiers: [.option, .command]))
 }

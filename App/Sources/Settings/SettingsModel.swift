@@ -47,6 +47,12 @@ final class SettingsModel {
         listeners.forEach { $0(previous, updated) }
     }
 
+    /// The card interval in whole minutes, the unit of the Settings stepper and the onboarding picker.
+    var intervalMinutes: Int {
+        get { Int((settings.cardInterval / 60).rounded()) }
+        set { update { $0.replacing(cardInterval: TimeInterval(newValue) * 60) } }
+    }
+
     func updateLearning(
         direction: DirectionSetting? = nil,
         reviewShare: Double? = nil,

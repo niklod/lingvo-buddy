@@ -1,3 +1,4 @@
+#if DEBUG
 import AppKit
 import SwiftUI
 
@@ -18,7 +19,6 @@ enum SnapshotRenderer {
         }
     }
 
-    /// Writes one PNG per state and returns the written files.
     static func render(_ states: [SnapshotState], to directory: URL) throws -> [URL] {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         return try states.map { state in
@@ -96,3 +96,4 @@ enum SnapshotRenderer {
         return bitmap
     }
 }
+#endif

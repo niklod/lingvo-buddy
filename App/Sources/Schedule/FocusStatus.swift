@@ -28,19 +28,7 @@ final class SystemFocusStatus: FocusStatusReading {
     }
 
     func requestAccessIfNeeded() {
-        guard isAvailable else {
-            logger.notice("Focus status is off: the build has no \(Self.entitlement, privacy: .public) entitlement")
-            return
-        }
-        let center = INFocusStatusCenter.default
-        guard center.authorizationStatus == .notDetermined else {
-            logger.info("Focus status authorization: \(center.authorizationStatus.rawValue)")
-            return
-        }
-        let logger = logger
-        center.requestAuthorization { status in
-            logger.info("Focus status authorization answered: \(status.rawValue)")
-        }
+        requestAccess { _ in }
     }
 }
 
@@ -51,18 +39,24 @@ extension SystemFocusStatus: FocusAccessRequesting {
     }
 
     func requestAccess(_ answered: @escaping @MainActor (FocusAccess) -> Void) {
-        guard access == .notAsked else {
-            answered(access)
+        let current = access
+        guard current == .notAsked else {
+            logger.info("Focus status access: \(String(describing: current), privacy: .public)")
+            answered(current)
             return
         }
         let logger = logger
-        INFocusStatusCenter.default.requestAuthorization { status in
+        // Intents calls back on its own queue. Without @Sendable the closure would
+        // inherit this class's main-actor isolation, and Swift 6 traps when it
+        // runs off the main thread; the hop to main is explicit instead.
+        INFocusStatusCenter.default.requestAuthorization { @Sendable status in
             logger.notice("Focus status authorization answered: \(status.rawValue)")
-            Task { @MainActor in answered(Self.access(for: status)) }
+            let access = SystemFocusStatus.access(for: status)
+            Task { @MainActor in answered(access) }
         }
     }
 
-    private static func access(for status: INFocusStatusAuthorizationStatus) -> FocusAccess {
+    private nonisolated static func access(for status: INFocusStatusAuthorizationStatus) -> FocusAccess {
         switch status {
         case .authorized: .allowed
         case .denied, .restricted: .denied

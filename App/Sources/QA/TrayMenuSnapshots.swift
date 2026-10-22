@@ -1,3 +1,4 @@
+#if DEBUG
 import Foundation
 import LingvoCore
 import SwiftUI
@@ -32,11 +33,10 @@ enum TrayMenuSnapshots {
             schedule: TrayScheduleInfo(
                 nextCardAt: now.addingTimeInterval(7 * 60),
                 interval: CardScheduleSettings.defaultInterval,
-                pausedUntil: pausedUntil
+                pausedUntil: pausedUntil,
+                hold: nil
             ),
-            now: now,
-            canOpenDictionary: true,
-            canOpenSettings: true
+            now: now
         )
         // The inline TextField is AppKit-backed: ImageRenderer would draw a placeholder.
         return SnapshotState(name: name, usesWindow: true) {
@@ -47,3 +47,4 @@ enum TrayMenuSnapshots {
         }
     }
 }
+#endif

@@ -75,7 +75,7 @@ final class QuickAddController {
                 model.show(.standing(standing))
             }
         } catch {
-            logger.error("quick add failed: \(error.localizedDescription, privacy: .public)")
+            logger.error("quick add failed: \(String(describing: error), privacy: .private)")
             model.show(.error(error.localizedDescription))
         }
     }

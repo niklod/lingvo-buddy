@@ -5,6 +5,10 @@ enum Theme {
     enum Palette {
         static let panel = Color(hex: 0x1E1E20)
         static let raised = Color(hex: 0x2C2C2E)
+        /// Dictionary sidebar and Settings sections: a step darker than the panel.
+        static let sidebar = Color(hex: 0x1A1A1C)
+        /// The inside of text fields.
+        static let inset = Color(hex: 0x141416)
         static let border = Color(hex: 0x3A3A3C)
         static let hairline = Color.white.opacity(0.10)
         static let accent = Color(hex: 0x0A84FF)

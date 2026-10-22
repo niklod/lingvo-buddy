@@ -7,7 +7,8 @@ struct ErrorPresenter {
     private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "errors")
 
     func show(_ error: Error, title: String = String(localized: "Something went wrong")) {
-        logger.error("\(String(describing: error), privacy: .public)")
+        // Error text can carry the learner's words, CSV cells and SQL: only the type is public.
+        logger.error("\(String(describing: type(of: error)), privacy: .public): \(String(describing: error), privacy: .private)")
         present(title: title, message: error.localizedDescription)
     }
 

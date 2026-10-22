@@ -55,7 +55,7 @@ enum DictionaryLabels {
     /// The read-only "Rules" block: label and value per line.
     static func rules(_ settings: TutorSettings) -> [(label: String, value: String)] {
         [
-            (String(localized: "Interval"), String(localized: "\(Int(settings.cardInterval / 60)) min")),
+            (String(localized: "Interval"), TrayMenuState.durationText(settings.cardInterval)),
             (String(localized: "Learned after"), String(localized: "\(WordRow.masteryGoal) in a row")),
             (String(localized: "Reviews"), String(localized: "\(Int((settings.learning.reviewShare * 100).rounded()))% of cards")),
             (String(localized: "Quiet hours"), quietHours(settings)),

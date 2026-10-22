@@ -104,6 +104,7 @@ final class CSVTransferController {
         do {
             let summary = try store.importCSV(try Self.readLimited(url))
             logger.notice("imported \(summary.words) words, \(summary.myWords) my words")
+            UserDataChanges.post(staleCards: .all)
             errors.inform(Self.message(for: summary))
         } catch {
             errors.show(error, title: String(localized: "Cannot import this file"))

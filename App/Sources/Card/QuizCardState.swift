@@ -83,6 +83,6 @@ extension QuizCardState {
     var feedbackIsPositive: Bool { answer?.result.outcome == .correct }
 
     var masteryLabel: String {
-        String(localized: "Mastery \(mastery)/4")
+        String(localized: "Mastery \(mastery)/\(WordRow.masteryGoal)")
     }
 }

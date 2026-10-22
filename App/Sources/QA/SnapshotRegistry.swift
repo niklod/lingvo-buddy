@@ -1,3 +1,4 @@
+#if DEBUG
 import LingvoCore
 import SwiftUI
 
@@ -47,6 +48,8 @@ enum QuizCardSnapshots {
 @MainActor
 enum StatusIconSnapshots {
     private static let zoom: CGFloat = 4
+    /// A dark menu bar behind the icon, as macOS draws it.
+    private static let menuBar = Color(hex: 0x2B2B2E)
 
     static var states: [SnapshotState] {
         [state("menubar_icon", waiting: false), state("menubar_icon_waiting", waiting: true)]
@@ -62,8 +65,9 @@ enum StatusIconSnapshots {
                     .foregroundStyle(.white)
                     .frame(width: image.size.width * zoom, height: image.size.height * zoom)
                     .padding(8 * zoom)
-                    .background(Color(hex: 0x2B2B2E))
+                    .background(Self.menuBar)
             )
         }
     }
 }
+#endif

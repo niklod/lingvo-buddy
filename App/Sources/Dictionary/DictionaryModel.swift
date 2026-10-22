@@ -26,11 +26,14 @@ enum RowAction {
 @MainActor
 @Observable
 final class DictionaryModel {
+    /// One read rebuilds every list, so typing waits for a short pause before it.
+    private static let searchDelay: Duration = .milliseconds(150)
+
     var list: WordList = .learning {
         didSet { if list != oldValue { reload() } }
     }
     var search = "" {
-        didSet { if search != oldValue { reload() } }
+        didSet { if search != oldValue { scheduleSearch() } }
     }
     private(set) var page = WordListPage(
         counts: Dictionary(uniqueKeysWithValues: WordList.allCases.map { ($0, 0) }),
@@ -43,15 +46,18 @@ final class DictionaryModel {
     @ObservationIgnored private let store: any WordListStore
     @ObservationIgnored private let errors: ErrorPresenter?
     @ObservationIgnored private let now: () -> Date
+    @ObservationIgnored private var pendingSearch: Task<Void, Never>?
 
+    /// Reads nothing yet: the window loads the page when it first shows.
     init(store: any WordListStore, errors: ErrorPresenter?, now: @escaping () -> Date = Date.init) {
         self.store = store
         self.errors = errors
         self.now = now
-        reload()
     }
 
     func reload() {
+        pendingSearch?.cancel()
+        pendingSearch = nil
         do {
             page = try store.wordList(list, search: search)
             loadedAt = now()
@@ -68,10 +74,20 @@ final class DictionaryModel {
             case .delete: try store.deleteWord(row.headword)
             case .editTranslation(let text): try store.editTranslation(row.headword, to: text)
             }
+            UserDataChanges.post(staleCards: .words([row.headword]), sender: self)
         } catch {
             errors?.show(error)
         }
         reload()
+    }
+
+    private func scheduleSearch() {
+        pendingSearch?.cancel()
+        pendingSearch = Task { [weak self] in
+            try? await Task.sleep(for: Self.searchDelay)
+            guard !Task.isCancelled else { return }
+            self?.reload()
+        }
     }
 
     /// The search text, for "+ Word" when the search found nothing: the learner

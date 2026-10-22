@@ -3,10 +3,16 @@ import LingvoCore
 
 /// The schedule facts the tray menu shows next to the stats.
 struct TrayScheduleInfo: Equatable {
+    /// Before the schedule exists (or after it is gone): no countdown to show.
+    static let idle = TrayScheduleInfo(
+        nextCardAt: nil, interval: CardScheduleSettings.defaultInterval, pausedUntil: nil, hold: nil
+    )
+
     /// `nil` while a card is on screen: the countdown starts when it closes.
     let nextCardAt: Date?
     let interval: TimeInterval
     let pausedUntil: Date?
+    let hold: ScheduleHold?
 }
 
 /// Everything the tray menu shows. A value, so snapshot states are plain data.
@@ -14,9 +20,6 @@ struct TrayMenuState: Equatable {
     let stats: TutorStats
     let schedule: TrayScheduleInfo
     let now: Date
-    /// `false` greys out the item until its slice lands.
-    let canOpenDictionary: Bool
-    let canOpenSettings: Bool
 
     var isPaused: Bool { schedule.pausedUntil != nil }
 
@@ -54,6 +57,9 @@ struct TrayMenuState: Equatable {
         guard let next = schedule.nextCardAt else {
             return String(localized: "Next after this card")
         }
+        if let hold = schedule.hold {
+            return Self.holdLabel(hold)
+        }
         let minutes = max(Int((next.timeIntervalSince(now) / 60).rounded(.up)), 1)
         return String(localized: "Next in \(minutes) min")
     }
@@ -75,6 +81,17 @@ struct TrayMenuState: Equatable {
 
     var reviewsLabel: String {
         String(localized: "Reviews left today: \(stats.reviewsLeftToday)")
+    }
+
+    private static func holdLabel(_ hold: ScheduleHold) -> String {
+        switch hold {
+        case .quietHours(let until):
+            String(localized: "Quiet hours until \(until.formatted(date: .omitted, time: .shortened))")
+        case .focus:
+            String(localized: "On hold while Focus is on")
+        case .fullScreen:
+            String(localized: "On hold while an app is full screen")
+        }
     }
 
     /// Whole minutes for the Settings range; QA runs use seconds.
