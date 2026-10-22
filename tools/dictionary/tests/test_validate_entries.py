@@ -66,8 +66,45 @@ class EntryRulesTest(unittest.TestCase):
         self.assertEqual(len(errors), 3, errors)
         self.assertTrue(all("must be Cyrillic" in e for e in errors), errors)
 
+    def test_a_latin_letter_inside_a_cyrillic_word_is_rejected(self):
+        errors = self.errors_for(1, [quiz_entry(self.word_list, 4, translations=["дoм"])])
+
+        self.assert_one_error(errors, "translation 'дoм' must be Cyrillic")
+
+    def test_translations_must_not_have_extra_spaces(self):
+        errors = self.errors_for(1, [quiz_entry(self.word_list, 4, translations=["дом ", "в  течение"])])
+
+        self.assertEqual(len(errors), 2, errors)
+        self.assertTrue(all("must be Cyrillic" in e for e in errors), errors)
+
+    def test_a_translation_has_at_most_forty_characters(self):
+        longest = "д" * 40
+        entries = [
+            quiz_entry(self.word_list, 3, translations=[longest]),
+            quiz_entry(self.word_list, 4, translations=[longest + "д"]),
+        ]
+
+        errors = self.errors_for(1, entries)
+
+        self.assert_one_error(errors, "is longer than 40 characters")
+        self.assertIn("rank 4", errors[0])
+
+    def test_example_has_ten_to_one_hundred_forty_characters(self):
+        entries = [
+            quiz_entry(self.word_list, 1, example="To be " + "very " * 26 + "fine."),
+            quiz_entry(self.word_list, 2, example="Big cats."),
+            quiz_entry(self.word_list, 3, example="Big large."),
+            quiz_entry(self.word_list, 4, example="This house " + "very " * 25 + "old."),
+        ]
+
+        errors = self.errors_for(1, entries)
+
+        self.assertEqual(len(errors), 2, errors)
+        self.assertIn("rank 1 'be': example must have 10 to 140 characters, got 141", errors[0])
+        self.assertIn("rank 2 'big': example must have 10 to 140 characters, got 9", errors[1])
+
     def test_translations_allow_spaces_hyphens_and_capitals(self):
-        entry = quiz_entry(self.word_list, 5, translations=["понедельник", "что-нибудь", "в течение"])
+        entry = quiz_entry(self.word_list, 5, translations=["что-нибудь", "в течение", "Москва"])
 
         self.assertEqual(self.errors_for(1, [entry]), ())
 
@@ -139,6 +176,17 @@ class EntryRulesTest(unittest.TestCase):
 
         self.assertEqual(len(errors), 2, errors)
         self.assertTrue(all("unknown field" in e for e in errors))
+
+    def test_rank_1000_is_quiz_tier_and_needs_a_synonym_group(self):
+        entry = quiz_entry(self.word_list, 1000)
+        del entry["synonym_group"]
+
+        self.assert_one_error(self.errors_for(2, [entry]), "missing field 'synonym_group'")
+
+    def test_rank_1001_is_lookup_tier_and_takes_no_quiz_fields(self):
+        errors = self.errors_for(3, [quiz_entry(self.word_list, 1001)])
+
+        self.assertIn("tier must be 'lookup' for rank 1001, got 'quiz'", " ".join(errors))
 
     def test_quiz_entry_needs_a_synonym_group(self):
         entry = quiz_entry(self.word_list, 4)

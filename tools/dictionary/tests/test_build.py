@@ -1,10 +1,10 @@
 import io
 import sqlite3
 import unittest
-from contextlib import closing, redirect_stderr, redirect_stdout
+from contextlib import closing, redirect_stderr
 
 from lingvo_dict import build
-from tests.support import BatchFolder, full_batch, lookup_entry, make_word_list, quiz_entry
+from tests.support import BatchFolder, full_batch, lookup_entry, make_word_list, quiz_entry, run_main
 
 
 class BuildTest(unittest.TestCase):
@@ -20,18 +20,14 @@ class BuildTest(unittest.TestCase):
         self.exclusions_path = self.folder.write_exclusions()
 
     def run_build(self, *args):
-        out, err = io.StringIO(), io.StringIO()
-        with redirect_stdout(out), redirect_stderr(err):
-            code = build.main(
-                [
-                    "--word-list", str(self.word_list_path),
-                    "--batches", str(self.folder.path),
-                    "--out", str(self.out),
-                    "--quiz-exclusions", str(self.exclusions_path),
-                    *args,
-                ]
-            )
-        return code, out.getvalue(), err.getvalue()
+        return run_main(
+            build.main,
+            "--word-list", str(self.word_list_path),
+            "--batches", str(self.folder.path),
+            "--out", str(self.out),
+            "--quiz-exclusions", str(self.exclusions_path),
+            *args,
+        )
 
     def query(self, sql, *params):
         with closing(sqlite3.connect(self.out)) as connection:
