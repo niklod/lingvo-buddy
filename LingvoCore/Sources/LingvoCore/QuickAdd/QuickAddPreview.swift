@@ -21,12 +21,22 @@ public struct QuickAddCandidate: Sendable, Equatable {
     /// What the extended dictionary knows of a word the bundled one lacks. Never set together with `lookup`:
     /// bundled data always wins.
     public let extended: ExtendedEntry?
+    /// What the system dictionary says of a word the bundled one lacks. Fills only the fields the
+    /// extended entry leaves empty, and gives the definition hint.
+    public let system: SystemEntry?
 
-    public init(headword: String, lookup: WordLookup?, standing: WordStanding, extended: ExtendedEntry? = nil) {
+    public init(
+        headword: String,
+        lookup: WordLookup?,
+        standing: WordStanding,
+        extended: ExtendedEntry? = nil,
+        system: SystemEntry? = nil
+    ) {
         self.headword = headword
         self.lookup = lookup
         self.standing = standing
         self.extended = lookup == nil ? extended : nil
+        self.system = lookup == nil ? system : nil
     }
 
     public var canAdd: Bool { standing == .notAdded }
@@ -35,8 +45,24 @@ public struct QuickAddCandidate: Sendable, Equatable {
     /// has the word: only then the panel asks the machine translation.
     public var translations: [String] { lookup?.entry.translations[.russian] ?? extended?.translations ?? [] }
 
+    /// The transcription the panel shows: the bundled one, else the extended one, else the system one.
+    public var ipa: String? { lookup.map(\.entry.ipa) ?? extended?.ipa ?? system?.ipa }
+
+    public var partOfSpeech: PartOfSpeech? { lookup?.entry.partOfSpeech ?? extended?.partOfSpeech ?? system?.partOfSpeech }
+
     /// The dictionary example that goes on the card when "Where I saw it" stays empty.
-    public var example: String? { lookup.map(\.entry.example) ?? extended?.example }
+    public var example: String? { lookup.map(\.entry.example) ?? extended?.example ?? system?.example }
+
+    /// The example a word outside the bundled dictionary puts on its card; a bundled word keeps its own.
+    public var fallbackExample: String? { extended?.example ?? system?.example }
+
+    /// The transcription and part of speech a my word saves; a bundled word keeps its own entry.
+    public var fallbackIPA: String? { extended?.ipa ?? system?.ipa }
+    public var fallbackPartOfSpeech: PartOfSpeech? { extended?.partOfSpeech ?? system?.partOfSpeech }
+
+    /// The first English definition, shown small under the bubbles so the learner can judge a translation.
+    /// Never saved with the word.
+    public var definitionHint: String? { system?.definition }
 
     /// The Russian translation of `example`; the card shows it only with the dictionary example.
     public var russianExample: String? { lookup.map(\.entry.russianExample) ?? extended?.russianExample }
@@ -63,9 +89,12 @@ public struct QuickAddPreview: Sendable, Equatable {
         lookup: WordLookup?,
         standing: WordStanding,
         isRussianInput: Bool = false,
-        extended: ExtendedEntry? = nil
+        extended: ExtendedEntry? = nil,
+        system: SystemEntry? = nil
     ) {
-        self.candidates = [QuickAddCandidate(headword: headword, lookup: lookup, standing: standing, extended: extended)]
+        self.candidates = [QuickAddCandidate(
+            headword: headword, lookup: lookup, standing: standing, extended: extended, system: system
+        )]
         self.russianText = nil
         self.isRussianInput = isRussianInput
     }

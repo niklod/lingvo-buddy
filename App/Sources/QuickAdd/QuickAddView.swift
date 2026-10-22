@@ -25,6 +25,11 @@ struct QuickAddView: View {
                         .font(.system(size: Theme.FontSize.caption))
                         .foregroundStyle(Theme.Palette.textSecondary)
                 }
+                if let note = model.missingTranslationNote {
+                    Text(verbatim: note)
+                        .font(.system(size: Theme.FontSize.caption))
+                        .foregroundStyle(Theme.Palette.textSecondary)
+                }
                 if model.needsEnglishWord {
                     englishWordSection
                 } else if model.isRussianInput {
@@ -94,6 +99,13 @@ struct QuickAddView: View {
                 QuickAddField(placeholder: String(localized: "Your translation"), text: $model.customTranslation)
                     .focused($focus, equals: .custom)
                 MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
+            }
+            if let hint = model.definitionHint {
+                Text(verbatim: hint)
+                    .font(.system(size: Theme.FontSize.small))
+                    .foregroundStyle(Theme.Palette.textSecondary)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }

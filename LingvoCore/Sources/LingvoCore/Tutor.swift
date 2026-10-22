@@ -6,6 +6,8 @@ public final class Tutor: Sendable {
     let dictionary: DictionaryStore
     /// Words the bundled dictionary lacks; `nil` leaves quick add as it is without it.
     let extendedDictionary: ExtendedDictionary?
+    /// The macOS dictionary, asked for words the bundled one lacks; `nil` leaves quick add without it.
+    let systemDictionary: (any SystemDictionary)?
     let userDatabase: UserDatabase
     let clock: any TutorClock
     let random: any RandomSource
@@ -18,10 +20,12 @@ public final class Tutor: Sendable {
         userDatabase: UserDatabase,
         clock: any TutorClock = SystemClock(),
         random: any RandomSource = SystemRandomSource(),
-        extendedDictionary: ExtendedDictionary? = nil
+        extendedDictionary: ExtendedDictionary? = nil,
+        systemDictionary: (any SystemDictionary)? = nil
     ) throws {
         self.dictionary = dictionary
         self.extendedDictionary = extendedDictionary
+        self.systemDictionary = systemDictionary
         self.userDatabase = userDatabase
         self.clock = clock
         self.random = random

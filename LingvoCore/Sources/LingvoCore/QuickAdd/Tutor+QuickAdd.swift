@@ -22,7 +22,8 @@ extension Tutor {
             lookup: lookup,
             standing: try standing(of: headword),
             isRussianInput: isRussian,
-            extended: extended
+            extended: extended,
+            system: lookup == nil && !isRussian ? systemEntry(for: headword) : nil
         )
     }
 
@@ -33,15 +34,15 @@ extension Tutor {
         let word = try word.validated()
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
-        let extended = preview.candidates[0].extended
+        let candidate = preview.candidates[0]
         try userDatabase.insert(MyWord(
             headword: preview.headword,
             translation: word.translation,
-            // The extended example is a dictionary example: it goes on the card like the bundled one does.
-            example: word.example ?? extended?.example,
+            // The extended or system example is a dictionary example: it goes on the card like the bundled one does.
+            example: word.example ?? candidate.fallbackExample,
             addedAt: clock.now(),
-            ipa: extended?.ipa,
-            partOfSpeech: extended?.partOfSpeech
+            ipa: candidate.fallbackIPA,
+            partOfSpeech: candidate.fallbackPartOfSpeech
         ))
         return .added(headword: preview.headword)
     }
@@ -65,6 +66,10 @@ extension Tutor {
             )
         }
         return QuickAddPreview(russianText: query, candidates: candidates)
+    }
+
+    private func systemEntry(for headword: String) -> SystemEntry? {
+        systemDictionary?.definition(of: headword).flatMap { SystemEntry.parse($0, for: headword) }
     }
 
     /// Bundled Russian candidates always win, so this runs only for Russian text the bundled dictionary lacks.

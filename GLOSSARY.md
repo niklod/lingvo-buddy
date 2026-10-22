@@ -25,6 +25,13 @@ _Avoid_: word list (the export input it is built from), database
 A second bundled read-only SQLite file of cleaned Wiktionary data (CC BY-SA 4.0, modified) for words outside the bundled dictionary: English words with up to five short Russian translations, IPA, part of speech and an example, and Russian words with short English translations. It has no rank or tier and never feeds quizzes or distractors. Built by `make dictionary` from the committed text source `data/extended/extended-dictionary.txt`, which `tools/dictionary/import_wiktionary.py` refreshes by hand. Code: `ExtendedDictionary`, `ExtendedEntry`.
 _Avoid_: Wiktionary dictionary, second dictionary
 
+**System dictionary**:
+The macOS dictionary, read through the public Dictionary Services call and the default dictionary set. For a word the bundled dictionary lacks, it fills the IPA, part of speech and example that the extended dictionary leaves empty, and it gives the definition hint. It has no translations. Its text is parsed in LingvoCore; the app provides the live lookup. Code: `SystemDictionary`, `SystemEntry`, `LiveSystemDictionary`.
+_Avoid_: Apple dictionary, Oxford dictionary
+
+**Definition hint**:
+The first English definition of a word from the system dictionary, shown small under the translation bubbles in quick add so the learner can judge a translation. It is never saved with the word. Code: `QuickAddCandidate.definitionHint`.
+
 **Quiz entry**:
 A dictionary entry with full card data: an example, its Russian example and a synonym group. Ranks 1–2000. Code: `DictionaryTier.quiz`.
 
@@ -176,7 +183,7 @@ The panel under the menu-bar icon with the streak, progress, today's stats, paus
 _Avoid_: popover, dropdown
 
 **Quick add**:
-The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. For a word the bundled dictionary lacks it shows the extended dictionary's translations as bubbles, with IPA, part of speech and example; the machine translation bubble appears only when the extended dictionary has no translation. Code: `QuickAdd*`.
+The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. For a word the bundled dictionary lacks it shows the extended dictionary's translations as bubbles, with IPA, part of speech and example; the system dictionary fills the IPA, part of speech and example the extended one lacks and adds the definition hint; the machine translation bubble appears only when the extended dictionary has no translation. Code: `QuickAdd*`.
 
 **Example preview**:
 The read-only dictionary example, with its Russian example, that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `QuickAddPreview.russianExample`, `ExamplePreview`.
