@@ -3,7 +3,7 @@ import LingvoCore
 import SwiftUI
 
 /// Quick add with the design's sample word (`design/screenshots/quick_add.png`)
-/// and the duplicate, unknown-word, example-preview and Russian-input states.
+/// and the duplicate, unknown-word, example-preview, Russian-input and machine translation states.
 @MainActor
 enum QuickAddSnapshots {
     static let reluctant = DictionaryEntry(
@@ -43,7 +43,22 @@ enum QuickAddSnapshots {
             state("quick_add_unknown", text: "kubernetes", example: "", standing: .notAdded),
             state("quick_add_example", text: "provide", example: "", standing: .notAdded),
             russianState("quick_add_russian", text: "сомнение"),
+            machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
+            machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
+            machineState("quick_add_machine_missing_pack", text: "serendipity", answer: .languagePackMissing),
+            machineState("quick_add_machine_error", text: "serendipity", answer: .failed),
         ]
+    }
+
+    /// A word the dictionary lacks, with the translator's answer already in.
+    private static func machineState(_ name: String, text: String, answer: MachineTranslation) -> SnapshotState {
+        SnapshotState(name: name, usesWindow: true) {
+            let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
+                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query == "медленно")
+            }
+            await model.machineTranslationSettled()
+            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+        }
     }
 
     private static func russianState(_ name: String, text: String) -> SnapshotState {
@@ -83,5 +98,21 @@ enum QuickAddSnapshots {
             return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
         }
     }
+}
+
+/// Answers every request the same way, at once.
+@MainActor
+final class FakeMachineTranslator: MachineTranslator {
+    private let answer: MachineTranslation
+
+    init(answer: MachineTranslation) {
+        self.answer = answer
+    }
+
+    func translate(_ request: MachineTranslationRequest) async -> MachineTranslation {
+        answer
+    }
+
+    func downloadLanguagePack(for direction: MachineTranslationDirection) async {}
 }
 #endif

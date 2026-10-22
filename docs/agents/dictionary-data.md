@@ -1,6 +1,6 @@
 # Dictionary data
 
-The bundled dictionary is built from `data/batches/batch-NN.json` (20 batches of 500 ranks) by `tools/dictionary/` (Python standard library only, 3.9+). `make test` runs the tool tests, `validate.py --full`, the build and `lingvo-dict check`. The field rules live in `tools/dictionary/prompts/generate-batch.md`: that prompt is the single source for what a good entry is.
+The bundled dictionary is built from `data/batches/batch-NN.json` (60 batches of 500 ranks for the 30,000 ranks of the word list; batches 21–60 do not exist yet) by `tools/dictionary/` (Python standard library only, 3.9+). `make test` runs the tool tests, `validate.py --full`, the build and `lingvo-dict check`. `--full` requires every rank up to the end of the last batch file, so a missing batch in the middle fails, and it names the batches after the last file that are not generated yet. The field rules live in `tools/dictionary/prompts/generate-batch.md`: that prompt is the single source for what a good entry is.
 
 ## The contract has two sides
 
@@ -14,7 +14,7 @@ A contract change also touches:
 
 ## Ranks are fixed
 
-Every batch entry is tied to its rank in `data/wordlist/wordlist.tsv`. A new run of `export_wordlist.py` shifts ranks and breaks every batch, so leave the word list as it is. A bad headword goes on one of two lists:
+Every batch entry is tied to its rank in `data/wordlist/wordlist.tsv`. The export ranks the lemmas of the top 60,000 `wordfreq` forms first (ranks 1–24,494), then appends new lemmas of the top 100,000 forms up to rank 30,000; one pass over all forms would move ranks from 180 on. A new run of `export_wordlist.py` with changed rule files shifts ranks and breaks every batch after the change, so leave the word list as it is. A bad headword goes on one of two lists:
 
 - `data/quiz-exclusions.txt`: ranks 1001–2000 only. The word stays in the dictionary for quick-add lookup but never becomes a card or a distractor. Use it for names, clippings, inflected forms, slang and vulgar main senses. Such an entry still needs its example and synonym group, in the lookup sense.
 - `data/wordlist/exclusions.txt`: drops the word from the word list itself. It takes effect only on a new export, so it is for a full rebuild only.

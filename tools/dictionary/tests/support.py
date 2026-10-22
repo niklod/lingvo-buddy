@@ -15,7 +15,8 @@ NAMED = ("be", "big", "large", "house", "Monday")
 
 
 def generated_headwords(count):
-    letters = itertools.product(string.ascii_lowercase, repeat=3)
+    # Four letters: three give only 17,576 words, fewer than a full word list.
+    letters = itertools.product(string.ascii_lowercase, repeat=4)
     return ["w" + "".join(next(letters)) for _ in range(count)]
 
 

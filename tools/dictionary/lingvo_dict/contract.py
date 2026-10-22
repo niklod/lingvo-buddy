@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from types import MappingProxyType
 
 BATCH_SIZE = 500
-BATCH_COUNT = 20
+BATCH_COUNT = 60
 # Top-1000 and Top-2000 words become quiz cards; the rest is for quick-add lookup only.
 TOP_1000_MAX_RANK = 1000
 QUIZ_MAX_RANK = 2000
@@ -83,6 +83,10 @@ def tier_for_rank(rank: int) -> str:
 def batch_ranks(number: int) -> tuple[int, int]:
     first = (number - 1) * BATCH_SIZE + 1
     return first, first + BATCH_SIZE - 1
+
+
+def batch_of_rank(rank: int) -> int:
+    return (rank - 1) // BATCH_SIZE + 1
 
 
 def batch_id(number: int) -> str:

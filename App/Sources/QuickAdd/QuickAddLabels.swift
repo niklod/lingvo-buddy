@@ -4,6 +4,9 @@ extension QuickAddModel {
     /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000".
     var metaLine: String {
         guard let candidate else { return String(localized: "Type an English or Russian word") }
+        if needsEnglishWord {
+            return String(localized: "Not in the dictionary: type the English word")
+        }
         guard let lookup = candidate.lookup else {
             return String(localized: "Not in the dictionary: type your own translation")
         }

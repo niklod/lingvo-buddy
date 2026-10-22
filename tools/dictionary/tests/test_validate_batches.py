@@ -79,7 +79,7 @@ class BatchRulesTest(unittest.TestCase):
     def test_bad_batch_headers_are_errors_not_crashes(self):
         documents = {
             "top level must be an object": [],
-            "'batch' must be batch-01 to batch-20, got 'batch-21'": {"batch": "batch-21", "entries": []},
+            "'batch' must be batch-01 to batch-60, got 'batch-61'": {"batch": "batch-61", "entries": []},
             "'entries' must be a list": {"batch": "batch-01", "entries": {}},
             "unknown top-level field 'note'": {"batch": "batch-01", "entries": [], "note": "x"},
             "entry 5: entry must be a JSON object": {"batch": "batch-01", "entries": [5]},
@@ -159,13 +159,59 @@ class BatchRulesTest(unittest.TestCase):
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("coverage: missing ranks 501-1000", errors[0])
 
-    def test_full_coverage_needs_the_whole_word_list(self):
+    def test_the_last_batch_holds_lookup_ranks_up_to_30000(self):
+        word_list = make_word_list(30000)
+        path = self.folder.write(60, full_batch(word_list, 60))
+
+        report = validate_batches([path], word_list, ValidationOptions())
+
+        self.assertEqual(report.errors, ())
+        self.assertEqual([report.entries[0].rank, report.entries[-1].rank], [29501, 30000])
+        self.assertEqual({item.data["tier"] for item in report.entries}, {"lookup"})
+
+    def test_a_quiz_tier_entry_past_rank_2000_is_an_error(self):
+        word_list = make_word_list(30000)
+        entries = [quiz_entry(word_list, 29999)]
+        path = self.folder.write(60, entries)
+
+        errors = validate_batches([path], word_list, PARTIAL).errors
+
+        self.assertTrue(any("tier must be 'lookup' for rank 29999" in e for e in errors), errors)
+
+    def test_full_coverage_waits_for_batches_after_the_last_batch_file(self):
         paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in (1, 2, 3)]
 
-        errors = validate_batches(paths, self.word_list, ValidationOptions(full=True)).errors
+        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+
+        self.assertEqual(report.errors, ())
+        self.assertEqual(report.pending_batches, (4, 5, 6))
+
+    def test_full_coverage_has_no_pending_batches_when_the_last_batch_ends_the_word_list(self):
+        paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in range(1, 6)]
+        paths.append(self.folder.write(6, full_batch(self.word_list, 6)[:100]))
+
+        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+
+        self.assertEqual(report.errors, ())
+        self.assertEqual(report.pending_batches, ())
+
+    def test_full_coverage_fails_on_a_missing_batch_before_the_last_one(self):
+        paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in (1, 3)]
+
+        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+
+        self.assertEqual(len(report.errors), 1, report.errors)
+        self.assertIn("coverage: missing ranks 501-1000 of 1-1500", report.errors[0])
+        self.assertEqual(report.pending_batches, (4, 5, 6))
+
+    def test_full_coverage_fails_on_missing_ranks_of_the_last_batch(self):
+        paths = [self.folder.write(1, full_batch(self.word_list, 1))]
+        paths.append(self.folder.write(2, full_batch(self.word_list, 2)[:-2]))
+
+        errors = validate_batches(paths, self.word_list, ValidationOptions(full=True, allow_partial=True)).errors
 
         self.assertEqual(len(errors), 1, errors)
-        self.assertIn("coverage: missing ranks 1501-2600", errors[0])
+        self.assertIn("coverage: missing ranks 999-1000 of 1-1000", errors[0])
 
 
 class CommandLineTest(unittest.TestCase):
@@ -227,6 +273,25 @@ class CommandLineTest(unittest.TestCase):
 
         self.assertEqual(code, 0)
         self.assertIn("OK: 1000 entries in 2 batches", out)
+
+    def test_full_coverage_names_the_batches_that_do_not_exist_yet(self):
+        self.folder.write(1, full_batch(self.word_list, 1))
+        self.folder.write(2, full_batch(self.word_list, 2))
+
+        code, out, err = self.run_cli("--batches", str(self.folder.path), "--full")
+
+        self.assertEqual(code, 0, err)
+        self.assertIn("OK: 1000 entries in 2 batches", out)
+        self.assertIn("ranks 1001-2600 wait for batch-03 to batch-06", out)
+
+    def test_one_pending_batch_is_named_alone(self):
+        for number in range(1, 6):
+            self.folder.write(number, full_batch(self.word_list, number))
+
+        code, out, err = self.run_cli("--batches", str(self.folder.path), "--full")
+
+        self.assertEqual(code, 0, err)
+        self.assertIn("ranks 2501-2600 wait for batch-06 (not generated yet)", out)
 
     def test_quiz_exclusions_must_be_known_top_2000_headwords_listed_once(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))
