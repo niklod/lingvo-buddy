@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Dict, FrozenSet, List, Mapping, Optional, Sequence
 
 from lingvo_dict.paths import WORDLIST_DIR
+from lingvo_dict.text_lines import content_lines
 from lingvo_dict.wordlist import (
     ExportRules,
     Lemmatize,
@@ -32,12 +33,7 @@ def read_lines(path: Path) -> List[str]:
         text = path.read_text(encoding="utf-8")
     except UnicodeDecodeError as error:
         raise ValueError(f"{path}: not UTF-8 text: {error}") from error
-    lines = []
-    for raw in text.splitlines():
-        line = raw.split("#", 1)[0].strip()
-        if line:
-            lines.append(line)
-    return lines
+    return [line for _, line in content_lines(text)]
 
 
 def read_set(path: Path, lowercase: bool) -> FrozenSet[str]:

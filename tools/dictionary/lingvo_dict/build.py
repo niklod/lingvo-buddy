@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import os
 import sqlite3
 import sys
+from contextlib import closing
 from pathlib import Path
-from typing import List, Sequence
+from typing import List, Optional, Sequence, Tuple
 
 from lingvo_dict.contract import POS_VALUES, TIERS, TRANSLATION_LANG
 from lingvo_dict.paths import DEFAULT_DICTIONARY
@@ -57,49 +57,61 @@ PRAGMA user_version = {SCHEMA_VERSION};
 """
 
 
+INSERT_ENTRY = (
+    "INSERT INTO entries (id, headword, rank, pos, ipa, example, synonym_group, tier) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+)
+INSERT_TRANSLATION = "INSERT INTO translations (entry_id, lang, ord, text) VALUES (?, ?, ?, ?)"
+INSERT_EXCLUSION = "INSERT INTO quiz_exclusions (headword) VALUES (?)"
+INSERT_META = "INSERT INTO meta (key, value) VALUES (?, ?)"
+
+MetaRow = Tuple[str, str]
+EntryRow = Tuple[int, str, int, str, str, Optional[str], Optional[str], str]
+
+
 def write_dictionary(
-    entries: Sequence[LoadedEntry], meta: Sequence[tuple], out: Path, quiz_exclusions: Sequence[str] = ()
+    entries: Sequence[LoadedEntry], meta: Sequence[MetaRow], out: Path, quiz_exclusions: Sequence[str] = ()
 ) -> None:
     """Writes to a temporary file first so a failed build never leaves a half-written dictionary."""
     out.parent.mkdir(parents=True, exist_ok=True)
     temporary = out.with_name(out.name + ".tmp")
-    if temporary.exists():
-        temporary.unlink()
-    connection = sqlite3.connect(temporary)
+    temporary.unlink(missing_ok=True)
     try:
-        with connection:
-            connection.executescript(SCHEMA)
-            ordered = sorted(entries, key=lambda item: item.rank)
-            connection.executemany(
-                "INSERT INTO entries (id, headword, rank, pos, ipa, example, synonym_group, tier)"
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                [_entry_row(item) for item in ordered],
-            )
-            connection.executemany(
-                "INSERT INTO translations (entry_id, lang, ord, text) VALUES (?, ?, ?, ?)",
-                [
-                    (item.rank, TRANSLATION_LANG, index, text)
-                    for item in ordered
-                    for index, text in enumerate(item.data["translations"])
-                ],
-            )
-            # A partial build (--through 1000) holds only some ranks; skip exclusions of words it lacks.
-            built = {item.headword for item in ordered}
-            connection.executemany(
-                "INSERT INTO quiz_exclusions (headword) VALUES (?)",
-                [(headword,) for headword in sorted(quiz_exclusions) if headword in built],
-            )
-            connection.executemany("INSERT INTO meta (key, value) VALUES (?, ?)", list(meta))
-        # The app opens the file read-only inside its signed bundle, where SQLite
-        # cannot create -wal/-shm files, so the file must stay in rollback-journal mode.
-        connection.execute("PRAGMA journal_mode=DELETE")
-        connection.execute("VACUUM")
-    finally:
-        connection.close()
-    os.replace(temporary, out)
+        with closing(sqlite3.connect(temporary)) as connection:
+            with connection:
+                _insert_all(connection, sorted(entries, key=lambda item: item.rank), meta, quiz_exclusions)
+            # The app opens the file read-only inside its signed bundle, where SQLite
+            # cannot create -wal/-shm files, so the file must stay in rollback-journal mode.
+            connection.execute("PRAGMA journal_mode=DELETE")
+            connection.execute("VACUUM")
+        temporary.replace(out)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
 
 
-def _entry_row(item: LoadedEntry) -> tuple:
+def _insert_all(
+    connection: sqlite3.Connection,
+    ordered: Sequence[LoadedEntry],
+    meta: Sequence[MetaRow],
+    quiz_exclusions: Sequence[str],
+) -> None:
+    connection.executescript(SCHEMA)
+    connection.executemany(INSERT_ENTRY, [_entry_row(item) for item in ordered])
+    connection.executemany(
+        INSERT_TRANSLATION,
+        [
+            (item.rank, TRANSLATION_LANG, index, text)
+            for item in ordered
+            for index, text in enumerate(item.data["translations"])
+        ],
+    )
+    # A partial build (--through 1000) holds only some ranks; skip exclusions of words it lacks.
+    built = {item.headword for item in ordered}
+    connection.executemany(INSERT_EXCLUSION, [(headword,) for headword in sorted(quiz_exclusions) if headword in built])
+    connection.executemany(INSERT_META, meta)
+
+
+def _entry_row(item: LoadedEntry) -> EntryRow:
     data = item.data
     return (
         item.rank,  # id equals rank so ids stay stable when batches are rebuilt
@@ -113,7 +125,9 @@ def _entry_row(item: LoadedEntry) -> tuple:
     )
 
 
-def build_meta(word_list: WordList, word_list_path: Path, paths: Sequence[Path], entries: Sequence[LoadedEntry]) -> List[tuple]:
+def build_meta(
+    word_list: WordList, word_list_path: Path, paths: Sequence[Path], entries: Sequence[LoadedEntry]
+) -> List[MetaRow]:
     batch_names = ", ".join(path.stem for path in paths)
     batches_digest = hashlib.sha256()
     for path in paths:

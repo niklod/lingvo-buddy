@@ -111,7 +111,9 @@ class BuildTest(unittest.TestCase):
         self.folder.write(1, full_batch(self.word_list, 1))
 
         with self.assertRaises(SystemExit) as raised, redirect_stderr(io.StringIO()) as err:
-            build.main(["--word-list", str(self.word_list_path), "--batches", str(self.folder.path), "--out", str(self.out)])
+            build.main(
+                ["--word-list", str(self.word_list_path), "--batches", str(self.folder.path), "--out", str(self.out)]
+            )
 
         self.assertEqual(raised.exception.code, 2)
         self.assertIn("pass --full, --through RANK or --allow-partial", err.getvalue())

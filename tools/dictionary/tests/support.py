@@ -8,7 +8,7 @@ import tempfile
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from lingvo_dict.contract import batch_ranks, tier_for_rank
+from lingvo_dict.contract import batch_id, batch_ranks, tier_for_rank
 from lingvo_dict.wordlist_file import WordList
 
 NAMED = ("be", "big", "large", "house", "Monday")
@@ -90,7 +90,7 @@ class BatchFolder:
         self._tmp.cleanup()
 
     def write(self, number, entries, batch=None, name=None):
-        batch_name = batch or f"batch-{number:02d}"
+        batch_name = batch or batch_id(number)
         file = self.path / (name or f"{batch_name}.json")
         file.write_text(
             json.dumps({"batch": batch_name, "entries": entries}, ensure_ascii=False),

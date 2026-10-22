@@ -10,11 +10,8 @@ from lingvo_dict.contract import (
     EXAMPLE_PATTERN,
     IPA_PATTERN,
     IPA_VOWELS,
-    LOOKUP_FIELDS,
-    LOOKUP_TRANSLATIONS,
     POS_VALUES,
-    QUIZ_FIELDS,
-    QUIZ_TRANSLATIONS,
+    TIER_RULES,
     TRANSLATION_MAX_LENGTH,
     TRANSLATION_PATTERN,
     tier_for_rank,
@@ -24,15 +21,21 @@ from lingvo_dict.wordlist_file import WordList
 WORD_TOKEN = re.compile(r"[a-z]+")
 
 
+def is_rank(value: Any) -> bool:
+    # bool is a subclass of int, so True would pass as rank 1.
+    return isinstance(value, int) and not isinstance(value, bool) and value >= 1
+
+
 def check_entry(entry: Any, word_list: WordList, ranks: Tuple[int, int], batch: str) -> List[str]:
     if not isinstance(entry, dict):
         return ["entry must be a JSON object"]
     rank = entry.get("rank")
-    if not isinstance(rank, int) or isinstance(rank, bool) or rank < 1:
+    if not is_rank(rank):
         return [f"rank must be a positive integer, got {rank!r}"]
 
     tier = tier_for_rank(rank)
-    errors = _check_fields(entry, QUIZ_FIELDS if tier == "quiz" else LOOKUP_FIELDS)
+    rules = TIER_RULES[tier]
+    errors = _check_fields(entry, rules.fields)
     errors += _check_rank(rank, ranks, batch)
     errors += _check_headword(entry, rank, word_list)
     if "tier" in entry and entry["tier"] != tier:
@@ -40,8 +43,7 @@ def check_entry(entry: Any, word_list: WordList, ranks: Tuple[int, int], batch: 
     if "pos" in entry and entry["pos"] not in POS_VALUES:
         errors.append(f"pos {entry['pos']!r} must be one of: {', '.join(POS_VALUES)}")
     if "translations" in entry:
-        limits = QUIZ_TRANSLATIONS if tier == "quiz" else LOOKUP_TRANSLATIONS
-        errors += check_translations(entry["translations"], limits)
+        errors += check_translations(entry["translations"], rules.translations)
     if "ipa" in entry:
         errors += check_ipa(entry["ipa"])
     if tier == "quiz" and "example" in entry and isinstance(entry.get("headword"), str):

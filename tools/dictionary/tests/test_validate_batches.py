@@ -34,6 +34,16 @@ class BatchRulesTest(unittest.TestCase):
         self.assertIn("missing ranks 499-500", strict.errors[0])
         self.assertEqual(partial.errors, ())
 
+    def test_a_boolean_rank_does_not_count_as_rank_one(self):
+        entries = [{**quiz_entry(self.word_list, 1), "rank": True}] + full_batch(self.word_list, 1)[1:]
+        path = self.folder.write(1, entries)
+
+        errors = validate_batches([path], self.word_list, ValidationOptions()).errors
+
+        self.assertEqual(len(errors), 2, errors)
+        self.assertIn("rank must be a positive integer, got True", errors[0])
+        self.assertIn("missing ranks 1 ", errors[1])
+
     def test_entries_must_be_sorted_by_rank(self):
         path = self.folder.write(1, [quiz_entry(self.word_list, 4), quiz_entry(self.word_list, 3)])
 

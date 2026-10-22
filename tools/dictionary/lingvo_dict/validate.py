@@ -9,8 +9,8 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
-from lingvo_dict.contract import BATCH_COUNT, BATCH_ID_PATTERN, QUIZ_MAX_RANK, batch_ranks
-from lingvo_dict.entry_rules import check_entry
+from lingvo_dict.contract import BATCH_COUNT, batch_ranks, is_quiz_rank, parse_batch_id
+from lingvo_dict.entry_rules import check_entry, is_rank
 from lingvo_dict.exclusions import read_exclusions
 from lingvo_dict.paths import BATCHES_DIR, QUIZ_EXCLUSIONS_FILE, WORDLIST_FILE
 from lingvo_dict.wordlist_file import WordList, WordListError, read_word_list
@@ -79,19 +79,26 @@ def _validate_file(
     for entry in document["entries"]:
         label = _label(name, entry)
         errors += [f"{label}: {message}" for message in check_entry(entry, word_list, ranks, batch)]
-        if isinstance(entry, dict) and isinstance(entry.get("rank"), int) and isinstance(entry.get("headword"), str):
-            group = entry.get("synonym_group") if entry["rank"] <= QUIZ_MAX_RANK else None
+        if _is_loadable(entry):
+            group = entry.get("synonym_group") if is_quiz_rank(entry["rank"]) else None
             loaded.append(LoadedEntry(name, entry["rank"], entry["headword"], group, entry))
 
     errors += _check_order(name, [item.rank for item in loaded])
     if not options.allow_partial:
-        last = min(ranks[1], word_list.size)
-        missing = sorted(set(range(ranks[0], last + 1)) - {item.rank for item in loaded})
+        missing = _missing_ranks(ranks[0], min(ranks[1], word_list.size), loaded)
         if missing:
             errors.append(
                 f"{name}: missing ranks {format_ranges(missing)} (use --allow-partial while the batch is in progress)"
             )
     return errors, loaded
+
+
+def _is_loadable(entry: Any) -> bool:
+    return isinstance(entry, dict) and is_rank(entry.get("rank")) and isinstance(entry.get("headword"), str)
+
+
+def _missing_ranks(first: int, last: int, entries: Iterable[LoadedEntry]) -> List[int]:
+    return sorted(set(range(first, last + 1)) - {item.rank for item in entries})
 
 
 def _check_header(document: Any, name: str) -> Tuple[List[str], Optional[int]]:
@@ -100,14 +107,14 @@ def _check_header(document: Any, name: str) -> Tuple[List[str], Optional[int]]:
     unknown = sorted(set(document) - {"batch", "entries"})
     errors = [f"{name}: unknown top-level field '{key}'" for key in unknown]
     batch = document.get("batch")
-    match = BATCH_ID_PATTERN.fullmatch(batch) if isinstance(batch, str) else None
-    if match is None or not 1 <= int(match.group(1)) <= BATCH_COUNT:
+    number = parse_batch_id(batch)
+    if number is None:
         return errors + [f"{name}: 'batch' must be batch-01 to batch-{BATCH_COUNT:02d}, got {batch!r}"], None
     if not isinstance(document.get("entries"), list):
         return errors + [f"{name}: 'entries' must be a list"], None
     if name != f"{batch}.json":
         errors.append(f"{name}: file name must be {batch}.json")
-    return errors, int(match.group(1))
+    return errors, number
 
 
 def _label(name: str, entry: Any) -> str:
@@ -147,7 +154,7 @@ def _check_synonym_groups(entries: Sequence[LoadedEntry], word_list: WordList) -
             continue
         label = f"{item.file}: rank {item.rank} '{item.headword}'"
         root_rank = ranks.get(group)
-        if root_rank is None or root_rank > QUIZ_MAX_RANK:
+        if root_rank is None or not is_quiz_rank(root_rank):
             errors.append(f"{label}: synonym_group '{group}' is not a quiz-tier headword")
         elif root_rank > item.rank:
             errors.append(
@@ -167,7 +174,7 @@ def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options
         return []
     if through > word_list.size:
         return [f"coverage: --through {through} is beyond the word list ({word_list.size} words)"]
-    missing = sorted(set(range(1, through + 1)) - {item.rank for item in entries})
+    missing = _missing_ranks(1, through, entries)
     if missing:
         return [f"coverage: missing ranks {format_ranges(missing)} of 1-{through}"]
     return []
