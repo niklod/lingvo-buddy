@@ -29,6 +29,16 @@ enum QuickAddSnapshots {
         russianExample: "Отель предоставляет бесплатный завтрак."
     )
 
+    /// A word only the extended dictionary (Wiktionary) has: several bubbles, IPA, part of speech and an example.
+    static let codswallop = ExtendedEntry(
+        headword: "codswallop",
+        partOfSpeech: .noun,
+        ipa: "/ˈkɒdzˌwɒləp/",
+        translations: ["чепуха", "ерунда", "ахинея", "абсурд"],
+        example: "That's a load of old codswallop.",
+        russianExample: "Это сплошная чепуха."
+    )
+
     /// English words for «сомнение»; the second one is already in My words.
     static let doubtCandidates = [
         candidate("doubt", rank: 2210, ipa: "/daʊt/", ru: ["сомнение", "сомневаться"], standing: .notAdded),
@@ -43,6 +53,9 @@ enum QuickAddSnapshots {
             state("quick_add_unknown", text: "kubernetes", example: "", standing: .notAdded),
             state("quick_add_example", text: "provide", example: "", standing: .notAdded),
             state("quick_add_example_translation", text: "provide", example: "", standing: .notAdded, showsExampleTranslation: true),
+            extendedState("quick_add_extended", text: "codswallop"),
+            extendedState("quick_add_extended_translation", text: "codswallop", showsExampleTranslation: true),
+            extendedState("quick_add_extended_with_translator", text: "codswallop", answer: .translated("не используется")),
             russianState("quick_add_russian", text: "сомнение"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
             machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
@@ -62,6 +75,23 @@ enum QuickAddSnapshots {
             }
             await model.machineTranslationSettled()
             if choosesCustom { model.choose(.custom) }
+            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+        }
+    }
+
+    /// The extended dictionary has the word. A translator that would answer shows no bubble: it is not asked.
+    private static func extendedState(
+        _ name: String, text: String, showsExampleTranslation: Bool = false, answer: MachineTranslation? = nil
+    ) -> SnapshotState {
+        SnapshotState(name: name, usesWindow: true) {
+            let model = QuickAddModel(
+                text: text,
+                translator: answer.map(FakeMachineTranslator.init(answer:)),
+                showsExampleTranslation: showsExampleTranslation
+            ) { query in
+                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, extended: codswallop)
+            }
+            await model.machineTranslationSettled()
             return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
         }
     }

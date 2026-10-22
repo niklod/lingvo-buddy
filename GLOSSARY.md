@@ -21,6 +21,10 @@ The position of a headword in the frequency list; 1 is the most frequent word.
 The read-only offline list of up to 30,000 ranked headwords with Russian translations, IPA and part of speech.
 _Avoid_: word list (the export input it is built from), database
 
+**Extended dictionary**:
+A second bundled read-only SQLite file of cleaned Wiktionary data (CC BY-SA 4.0, modified) for words outside the bundled dictionary: English words with up to five short Russian translations, IPA, part of speech and an example, and Russian words with short English translations. It has no rank or tier and never feeds quizzes or distractors. Built by `make dictionary` from the committed text source `data/extended/extended-dictionary.txt`, which `tools/dictionary/import_wiktionary.py` refreshes by hand. Code: `ExtendedDictionary`, `ExtendedEntry`.
+_Avoid_: Wiktionary dictionary, second dictionary
+
 **Quiz entry**:
 A dictionary entry with full card data: an example, its Russian example and a synonym group. Ranks 1–2000. Code: `DictionaryTier.quiz`.
 
@@ -172,7 +176,7 @@ The panel under the menu-bar icon with the streak, progress, today's stats, paus
 _Avoid_: popover, dropdown
 
 **Quick add**:
-The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. Code: `QuickAdd*`.
+The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. For a word the bundled dictionary lacks it shows the extended dictionary's translations as bubbles, with IPA, part of speech and example; the machine translation bubble appears only when the extended dictionary has no translation. Code: `QuickAdd*`.
 
 **Example preview**:
 The read-only dictionary example, with its Russian example, that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `QuickAddPreview.russianExample`, `ExamplePreview`.

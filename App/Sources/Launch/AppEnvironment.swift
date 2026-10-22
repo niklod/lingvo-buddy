@@ -7,12 +7,15 @@ enum AppEnvironment {
 
     enum SetupError: Error, LocalizedError {
         case missingBundledDictionary
+        case missingExtendedDictionary
         case seedDemoOnLearnerDatabase
 
         var errorDescription: String? {
             switch self {
             case .missingBundledDictionary:
                 "The bundled dictionary is missing. Run `make dictionary` and rebuild the app."
+            case .missingExtendedDictionary:
+                "The extended dictionary is missing. Run `make dictionary` and rebuild the app."
             case .seedDemoOnLearnerDatabase:
                 "--seed-demo would replace the learner's own database. Pass --user-db with a test database."
             }
@@ -23,10 +26,13 @@ enum AppEnvironment {
         let tutor: Tutor
         /// The bundled dictionary's `meta` table (source, licence) for About.
         let dictionaryMeta: [String: String]
+        /// The extended dictionary's `meta` table: the Wiktionary licence note for About.
+        let extendedMeta: [String: String]
     }
 
     static func makeServices(options: LaunchOptions) throws -> Services {
         let dictionary = try bundledDictionary()
+        let extended = try extendedDictionary()
         let userDatabaseURL = try userDatabaseURL(options.userDatabase)
         // A name check is not enough: `--user-db` with the full path names the same file.
         if options.seedDemo, try userDatabaseURL.standardizedFileURL == Self.userDatabaseURL(nil).standardizedFileURL {
@@ -37,8 +43,9 @@ enum AppEnvironment {
             try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
         }
         return Services(
-            tutor: try Tutor(dictionary: dictionary, userDatabase: userDatabase),
-            dictionaryMeta: try dictionary.meta()
+            tutor: try Tutor(dictionary: dictionary, userDatabase: userDatabase, extendedDictionary: extended),
+            dictionaryMeta: try dictionary.meta(),
+            extendedMeta: try extended.meta()
         )
     }
 
@@ -52,6 +59,13 @@ enum AppEnvironment {
             throw SetupError.missingBundledDictionary
         }
         return try DictionaryStore.open(at: url)
+    }
+
+    private static func extendedDictionary() throws -> ExtendedDictionary {
+        guard let url = Bundle.main.url(forResource: "extended-dictionary", withExtension: "sqlite") else {
+            throw SetupError.missingExtendedDictionary
+        }
+        return try ExtendedDictionary.open(at: url)
     }
 
     static func userDatabaseURL(_ nameOrPath: String?) throws -> URL {
