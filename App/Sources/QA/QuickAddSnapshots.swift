@@ -39,6 +39,15 @@ enum QuickAddSnapshots {
         russianExample: "Это сплошная чепуха."
     )
 
+    static let skedaddle = ExtendedEntry(
+        headword: "skedaddle",
+        partOfSpeech: .verb,
+        ipa: "/skɪˈdædəl/",
+        translations: ["улепётывать", "удирать"],
+        example: "The boys skedaddled when the farmer appeared.",
+        russianExample: "Мальчишки удрали, когда появился фермер."
+    )
+
     /// English words for «сомнение»; the second one is already in My words.
     static let doubtCandidates = [
         candidate("doubt", rank: 2210, ipa: "/daʊt/", ru: ["сомнение", "сомневаться"], standing: .notAdded),
@@ -57,6 +66,7 @@ enum QuickAddSnapshots {
             extendedState("quick_add_extended_translation", text: "codswallop", showsExampleTranslation: true),
             extendedState("quick_add_extended_with_translator", text: "codswallop", answer: .translated("не используется")),
             russianState("quick_add_russian", text: "сомнение"),
+            russianExtendedState("quick_add_russian_extended", text: "улепётывать"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
             machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
@@ -100,6 +110,21 @@ enum QuickAddSnapshots {
         SnapshotState(name: name, usesWindow: true, isPanel: true) {
             let model = QuickAddModel(text: text) { query in
                 QuickAddPreview(russianText: query, candidates: doubtCandidates)
+            }
+            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+        }
+    }
+
+    /// Russian text only the extended dictionary knows: English bubbles, the first with Wiktionary details.
+    private static func russianExtendedState(_ name: String, text: String) -> SnapshotState {
+        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+            let model = QuickAddModel(text: text) { query in
+                let candidates = [
+                    QuickAddCandidate(headword: "skedaddle", lookup: nil, standing: .notAdded, extended: skedaddle),
+                    QuickAddCandidate(headword: "scram", lookup: nil, standing: .notAdded),
+                    QuickAddCandidate(headword: "hightail", lookup: nil, standing: .notAdded),
+                ]
+                return QuickAddPreview(russianText: query, candidates: candidates)
             }
             return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
         }
