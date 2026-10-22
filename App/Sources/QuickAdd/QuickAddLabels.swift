@@ -9,6 +9,10 @@ extension QuickAddModel {
             return machineBubble == nil ? String(localized: "Not in the dictionary: type the English word") : ""
         }
         guard let lookup = candidate.lookup else {
+            // Wiktionary data has no rank or tier, so the line is only the transcription and the part of speech.
+            if let extended = candidate.extended {
+                return [extended.ipa, extended.partOfSpeech.label].compactMap { $0 }.joined(separator: " · ")
+            }
             return machineBubble == nil ? String(localized: "Not in the dictionary: type your own translation") : ""
         }
         let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]

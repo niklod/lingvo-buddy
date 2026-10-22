@@ -10,14 +10,36 @@ struct AboutInfo: Equatable {
     let attribution: String?
     /// `meta.source`: which word list the dictionary was built from.
     let source: String?
+    /// The extended dictionary's `meta.license`: the Wiktionary CC BY-SA 4.0 credit, with its link.
+    let wiktionaryCredit: String?
 
-    static func current(dictionaryMeta: [String: String], bundle: Bundle = .main) -> AboutInfo {
+    static func current(
+        dictionaryMeta: [String: String],
+        extendedMeta: [String: String],
+        bundle: Bundle = .main
+    ) -> AboutInfo {
         AboutInfo(
             version: bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?",
             build: bundle.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?",
             attribution: dictionaryMeta["license"],
-            source: dictionaryMeta["source"]
+            source: dictionaryMeta["source"],
+            wiktionaryCredit: extendedMeta["license"]
         )
+    }
+}
+
+extension AttributedString {
+    /// The text with every web address made clickable, for credits that carry a licence link.
+    init(linking text: String) {
+        self.init(text)
+        let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        let range = NSRange(text.startIndex..., in: text)
+        for match in detector?.matches(in: text, range: range) ?? [] {
+            if let url = match.url, let stringRange = Range(match.range, in: text),
+               let attributedRange = Range(stringRange, in: self) {
+                self[attributedRange].link = url
+            }
+        }
     }
 }
 
@@ -49,6 +71,13 @@ struct AboutView: View {
                     .foregroundStyle(Theme.Palette.textPrimary)
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
+                if let credit = info.wiktionaryCredit {
+                    Text(AttributedString(linking: credit))
+                        .font(.system(size: Theme.FontSize.body))
+                        .foregroundStyle(Theme.Palette.textPrimary)
+                        .textSelection(.enabled)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
                 if let source = info.source {
                     Text(String(localized: "Source: \(source)"))
                         .font(.system(size: 11))

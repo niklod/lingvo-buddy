@@ -34,6 +34,9 @@ targets:
       - path: App/Resources/dictionary.sqlite
         buildPhase: resources
         optional: true
+      - path: App/Resources/extended-dictionary.sqlite
+        buildPhase: resources
+        optional: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.niklod.LingvoBuddy

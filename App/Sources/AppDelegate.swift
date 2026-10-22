@@ -81,7 +81,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow = SettingsWindowController(
             model: settings,
             launchAtLogin: launchAtLogin,
-            about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta),
+            about: AboutInfo.current(dictionaryMeta: services.dictionaryMeta, extendedMeta: services.extendedMeta),
             errors: errors,
             transfer: csvTransfer.actions
         )

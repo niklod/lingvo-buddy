@@ -18,20 +18,28 @@ public struct QuickAddCandidate: Sendable, Equatable {
     /// `nil` when the dictionary does not know the word: a custom translation is then required.
     public let lookup: WordLookup?
     public let standing: WordStanding
+    /// What the extended dictionary knows of a word the bundled one lacks. Never set together with `lookup`:
+    /// bundled data always wins.
+    public let extended: ExtendedEntry?
 
-    public init(headword: String, lookup: WordLookup?, standing: WordStanding) {
+    public init(headword: String, lookup: WordLookup?, standing: WordStanding, extended: ExtendedEntry? = nil) {
         self.headword = headword
         self.lookup = lookup
         self.standing = standing
+        self.extended = lookup == nil ? extended : nil
     }
 
     public var canAdd: Bool { standing == .notAdded }
 
+    /// The Russian translations the panel shows as bubbles, best first. Empty when no dictionary
+    /// has the word: only then the panel asks the machine translation.
+    public var translations: [String] { lookup?.entry.translations[.russian] ?? extended?.translations ?? [] }
+
     /// The dictionary example that goes on the card when "Where I saw it" stays empty.
-    public var example: String? { lookup?.entry.example }
+    public var example: String? { lookup.map(\.entry.example) ?? extended?.example }
 
     /// The Russian translation of `example`; the card shows it only with the dictionary example.
-    public var russianExample: String? { lookup?.entry.russianExample }
+    public var russianExample: String? { lookup.map(\.entry.russianExample) ?? extended?.russianExample }
 }
 
 /// What the quick-add panel shows for the typed text, before the learner adds it.
@@ -50,8 +58,14 @@ public struct QuickAddPreview: Sendable, Equatable {
     /// English word for the card, not a translation, so the panel must know its language.
     public let isRussianInput: Bool
 
-    public init(headword: String, lookup: WordLookup?, standing: WordStanding, isRussianInput: Bool = false) {
-        self.candidates = [QuickAddCandidate(headword: headword, lookup: lookup, standing: standing)]
+    public init(
+        headword: String,
+        lookup: WordLookup?,
+        standing: WordStanding,
+        isRussianInput: Bool = false,
+        extended: ExtendedEntry? = nil
+    ) {
+        self.candidates = [QuickAddCandidate(headword: headword, lookup: lookup, standing: standing, extended: extended)]
         self.russianText = nil
         self.isRussianInput = isRussianInput
     }

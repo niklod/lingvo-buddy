@@ -97,7 +97,7 @@ final class QuickAddModel {
 
     var translations: [String] {
         guard !isRussianInput else { return [] }
-        return candidate?.lookup?.entry.translations[.russian] ?? []
+        return candidate?.translations ?? []
     }
 
     /// Words the dictionary lacks always need the custom field.
@@ -235,13 +235,14 @@ final class QuickAddModel {
         requestMachineTranslation()
     }
 
-    /// The dictionary has no match: an English word outside it, or Russian text with no candidates.
+    /// No dictionary has a match: an English word outside both, or Russian text with no candidates.
     private var neededMachineRequest: MachineTranslationRequest? {
         guard let preview, let candidate, preview.russianText == nil, candidate.lookup == nil else { return nil }
         if preview.isRussianInput {
             return MachineTranslationRequest(text: preview.headword, direction: .russianToEnglish)
         }
-        guard candidate.canAdd else { return nil }
+        // Reviewed or Wiktionary translations win: the machine is asked only when no dictionary has one.
+        guard candidate.canAdd, candidate.translations.isEmpty else { return nil }
         return MachineTranslationRequest(text: preview.headword, direction: .englishToRussian)
     }
 

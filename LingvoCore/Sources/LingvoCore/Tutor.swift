@@ -4,6 +4,8 @@ import Synchronization
 /// The single entry point the app uses for learning logic and persistence.
 public final class Tutor: Sendable {
     let dictionary: DictionaryStore
+    /// Words the bundled dictionary lacks; `nil` leaves quick add as it is without it.
+    let extendedDictionary: ExtendedDictionary?
     let userDatabase: UserDatabase
     let clock: any TutorClock
     let random: any RandomSource
@@ -15,9 +17,11 @@ public final class Tutor: Sendable {
         dictionary: DictionaryStore,
         userDatabase: UserDatabase,
         clock: any TutorClock = SystemClock(),
-        random: any RandomSource = SystemRandomSource()
+        random: any RandomSource = SystemRandomSource(),
+        extendedDictionary: ExtendedDictionary? = nil
     ) throws {
         self.dictionary = dictionary
+        self.extendedDictionary = extendedDictionary
         self.userDatabase = userDatabase
         self.clock = clock
         self.random = random

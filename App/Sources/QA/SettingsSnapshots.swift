@@ -11,7 +11,10 @@ enum SettingsSnapshots {
         build: "1",
         attribution: "Word frequencies: wordfreq by Robyn Speer, CC BY-SA 4.0, https://github.com/rspeer/wordfreq. "
             + "Translations, transcriptions and examples: LingvoBuddy.",
-        source: "wordfreq 3.1.1 (en)"
+        source: "wordfreq 3.1.1 (en)",
+        wiktionaryCredit: "Word translations, transcriptions and examples: Wiktionary contributors "
+            + "(en.wiktionary.org, ru.wiktionary.org), via kaikki.org, CC BY-SA 4.0, "
+            + "https://creativecommons.org/licenses/by-sa/4.0/. Modified: cleaned, shortened and merged."
     )
 
     static var states: [SnapshotState] {
