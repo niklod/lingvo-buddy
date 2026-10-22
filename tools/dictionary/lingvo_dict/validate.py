@@ -12,7 +12,10 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 from lingvo_dict.contract import BATCH_COUNT, batch_ranks, is_quiz_rank, parse_batch_id
 from lingvo_dict.entry_rules import check_entry, is_rank
 from lingvo_dict.exclusions import read_exclusions
+from lingvo_dict.loaded_entry import LoadedEntry
 from lingvo_dict.paths import BATCHES_DIR, QUIZ_EXCLUSIONS_FILE, WORDLIST_FILE
+from lingvo_dict.shared_translations import shared_translation_report
+from lingvo_dict.synonym_groups import check_synonym_groups
 from lingvo_dict.wordlist_file import WordList, WordListError, read_word_list
 
 
@@ -21,15 +24,6 @@ class ValidationOptions:
     allow_partial: bool = False  # a batch may miss ranks of its range (work in progress)
     through_rank: Optional[int] = None  # every rank 1..N must be present
     full: bool = False  # every rank of the word list must be present
-
-
-@dataclass(frozen=True)
-class LoadedEntry:
-    file: str
-    rank: int
-    headword: str
-    synonym_group: Optional[str]  # None for lookup-tier entries
-    data: Dict[str, Any]
 
 
 @dataclass(frozen=True)
@@ -52,7 +46,7 @@ def validate_batches(paths: Sequence[Path], word_list: WordList, options: Valida
         errors += batch_errors
         entries += batch_entries
     errors += _check_duplicates(entries)
-    errors += _check_synonym_groups(entries, word_list)
+    errors += check_synonym_groups(entries, word_list, options.allow_partial)
     errors += _check_coverage(entries, word_list, options)
     return ValidationReport(errors=tuple(errors), entries=tuple(entries), batch_count=len(paths))
 
@@ -144,30 +138,6 @@ def _check_duplicates(entries: Iterable[LoadedEntry]) -> List[str]:
     return errors
 
 
-def _check_synonym_groups(entries: Sequence[LoadedEntry], word_list: WordList) -> List[str]:
-    ranks = word_list.ranks()
-    group_of = {item.headword: item.synonym_group for item in entries if item.synonym_group is not None}
-    errors = []
-    for item in entries:
-        group = item.synonym_group
-        if not isinstance(group, str) or not group:
-            continue
-        label = f"{item.file}: rank {item.rank} '{item.headword}'"
-        root_rank = ranks.get(group)
-        if root_rank is None or not is_quiz_rank(root_rank):
-            errors.append(f"{label}: synonym_group '{group}' is not a quiz-tier headword")
-        elif root_rank > item.rank:
-            errors.append(
-                f"{label}: synonym_group '{group}' has a higher rank ({root_rank}) than the entry;"
-                " use the lowest-ranked word of the group"
-            )
-        elif group in group_of and group_of[group] != group:
-            errors.append(
-                f"{label}: synonym_group '{group}' belongs to group '{group_of[group]}'; use '{group_of[group]}'"
-            )
-    return errors
-
-
 def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options: ValidationOptions) -> List[str]:
     through = word_list.size if options.full else options.through_rank
     if through is None:
@@ -240,12 +210,19 @@ def main(argv: List[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("files", nargs="*", type=Path, help="batch files (default: every batch in --batches)")
     add_selection_arguments(parser)
+    parser.add_argument(
+        "--report-shared-translations",
+        action="store_true",
+        help="also list first translations shared across synonym groups or split inside one (review only)",
+    )
     args = parser.parse_args(argv)
 
     word_list, report = load_and_validate(args, args.files)
     if word_list is None:
         print(f"error: {report.errors[0]}", file=sys.stderr)
         return 2
+    if args.report_shared_translations:
+        print("\n".join(shared_translation_report(report.entries, report.quiz_exclusions)))
     if report.errors:
         for error in report.errors:
             print(error, file=sys.stderr)

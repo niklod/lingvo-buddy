@@ -30,9 +30,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
             try start(with: options)
         } catch {
-            errors.show(error)
-            NSApp.terminate(nil)
+            failLaunch(error)
         }
+    }
+
+    /// Scripts and agents start the binary directly and read stderr and the exit code;
+    /// a modal alert would block them. Finder and `open` launches (parent launchd) get the alert.
+    private func failLaunch(_ error: Error) -> Never {
+        FileHandle.standardError.write(Data("LingvoBuddy: \(error.localizedDescription)\n".utf8))
+        if getppid() == 1 {
+            errors.show(error)
+        }
+        exit(EXIT_FAILURE)
     }
 
     private func start(with options: LaunchOptions) throws {

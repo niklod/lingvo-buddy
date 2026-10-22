@@ -7,7 +7,8 @@ The Makefile targets and the QA launch options are in `Makefile` and `App/Source
 Other agents and the owner run LingvoBuddy on the same Mac at the same time. All builds share the bundle id `com.niklod.LingvoBuddy`, so they share one sandbox container.
 
 - Give every run its own user database: `--user-db <your-name>`. Without it the app opens the owner's real database (`user`). `--seed-demo` refuses the default database, but every other option writes to it.
-- The user databases live in `~/Library/Containers/com.niklod.LingvoBuddy/Data/Library/Application Support/LingvoBuddy/<name>.sqlite`. Open one with `sqlite3` to check what the app wrote.
+- The user databases live in `~/Library/Containers/com.niklod.LingvoBuddy/Data/Library/Application Support/LingvoBuddy/<name>.sqlite`. Open one with `sqlite3` to check what the app wrote. A `--user-db` path must be inside the container: a path such as `/tmp/x.sqlite` stops the launch with a message on stderr and exit code 1.
+- Launch errors go to stderr with exit code 1. An alert shows only when launchd is the parent (`open`, `make run`, Finder), so a binary started from a shell never blocks on a modal.
 - Start with `make run ARGS="--user-db <name> ..."`. It stops only the binary of your own checkout, then starts a new instance with `open -n`. If you start the app another way, record its PID and stop only that PID (`pgrep -f "user-db <name>"`). Never `pkill -x LingvoBuddy` or `killall`: that stops the apps of other agents.
 - UserDefaults are shared: hotkeys, the pause end. Restore every value you change.
 - A fresh `--user-db` opens onboarding at launch. Add `--skip-onboarding` when onboarding is not what you test.

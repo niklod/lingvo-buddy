@@ -55,11 +55,17 @@ enum AppEnvironment {
     }
 
     static func userDatabaseURL(_ nameOrPath: String?) throws -> URL {
-        let value = nameOrPath ?? defaultUserDatabaseName
-        if value.contains("/") {
-            return URL(fileURLWithPath: value)
-        }
-        return try applicationSupportFolder().appendingPathComponent(value).appendingPathExtension("sqlite")
+        try UserDatabaseLocation.resolve(
+            nameOrPath ?? defaultUserDatabaseName,
+            supportFolder: applicationSupportFolder(),
+            container: sandboxContainer()
+        )
+    }
+
+    /// In the sandbox the home folder is the container; the sandbox sets APP_SANDBOX_CONTAINER_ID.
+    private static func sandboxContainer() -> URL? {
+        guard ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] != nil else { return nil }
+        return URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
     }
 
     private static func applicationSupportFolder() throws -> URL {
