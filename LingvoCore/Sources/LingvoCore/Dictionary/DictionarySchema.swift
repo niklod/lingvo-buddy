@@ -1,7 +1,7 @@
 import GRDB
 
-/// The bundled dictionary contract. Every dictionary build (sample or real data)
-/// produces exactly these tables, so the app never depends on how the data was made.
+/// The bundled dictionary contract. tools/dictionary writes the real file with
+/// the same statements; `lingvo-dict check` fails when the two drift apart.
 enum DictionarySchema {
     static let schemaVersion = 2
 
@@ -12,10 +12,10 @@ enum DictionarySchema {
                 headword TEXT NOT NULL UNIQUE,
                 rank INTEGER NOT NULL UNIQUE,
                 pos TEXT NOT NULL CHECK (pos IN (\(quotedList(PartOfSpeech.allCases.map(\.rawValue))))),
-                ipa TEXT,
+                ipa TEXT NOT NULL,
                 example TEXT,
                 synonym_group TEXT,
-                tier TEXT NOT NULL CHECK (tier IN ('quiz', 'lookup'))
+                tier TEXT NOT NULL CHECK (tier IN (\(quotedList(DictionaryTier.allCases.map(\.rawValue)))))
             );
             CREATE TABLE translations (
                 entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,

@@ -4,76 +4,60 @@ import Testing
 
 @Suite("Bundled dictionary contract")
 struct DictionaryContractTests {
-    @Test("a built dictionary file opens read-only and keeps entries, translation order and meta")
-    func builtFileRoundTrips() throws {
-        let url = Fixture.temporaryDatabaseURL()
-        defer { try? FileManager.default.removeItem(at: url) }
-        let source = try DictionarySource.decode(json: Fixture.sampleDictionaryData())
-
-        try DictionaryBuilder.buildFile(from: source, at: url)
-        let store = try DictionaryStore.open(at: url)
-
-        let entry = try #require(try store.entry(headword: "reluctant"))
-        #expect(entry.rank == 4870)
-        #expect(entry.partOfSpeech == .adjective)
-        #expect(entry.ipa == "/rɪˈlʌktənt/")
-        #expect(entry.tier == .lookup)
-        #expect(entry.translations[.russian] == ["неохотный", "нежелающий", "сопротивляющийся"])
-        #expect(try store.meta()["built_from"] == "sample-dictionary.json")
+    private static func entryJSON(_ headword: String, rank: Int, pos: String = "verb", ipa: String = "\"/go/\"") -> String {
+        """
+        {"headword": "\(headword)", "rank": \(rank), "pos": "\(pos)", "ipa": \(ipa), "example": null,
+         "synonym_group": null, "tier": "lookup", "translations": {"ru": ["идти"]}}
+        """
     }
 
-    @Test("a tutor runs on a dictionary file built from the sample")
-    func tutorRunsOnBuiltFile() throws {
-        let url = Fixture.temporaryDatabaseURL()
-        defer { try? FileManager.default.removeItem(at: url) }
-        try DictionaryBuilder.buildFile(from: DictionarySource.decode(json: Fixture.sampleDictionaryData()), at: url)
-        let tutor = try Tutor(
-            dictionary: try DictionaryStore.open(at: url),
-            userDatabase: try UserDatabase.inMemory(),
-            clock: TestClock(Fixture.start),
-            random: SeededRandomSource(seed: 7)
-        )
+    private static func store(_ entries: [String], quizExclusions: [String] = []) throws -> DictionaryStore {
+        let exclusions = quizExclusions.map { "\"\($0)\"" }.joined(separator: ", ")
+        let json = "{\"entries\": [\(entries.joined(separator: ", "))], \"quiz_exclusions\": [\(exclusions)]}"
+        return try DictionaryStore.inMemory(fromJSON: [Data(json.utf8)])
+    }
 
-        let card = try #require(try tutor.nextCard().card)
+    @Test("a dictionary keeps every source entry with its translation order, and the meta")
+    func sourceRoundTrips() throws {
+        let source = try DictionarySource.decode(json: Fixture.sampleDictionaryData())
 
-        #expect(card.headword == "they")
+        let store = try DictionaryStore.inMemory(fromJSON: [Fixture.sampleDictionaryData()])
+
+        for expected in source.entries {
+            #expect(try store.entry(headword: expected.headword) == expected)
+        }
+        #expect(try store.meta() == source.meta)
+    }
+
+    @Test("the dictionary written for tests has exactly the contract schema")
+    func noSchemaDrift() throws {
+        #expect(try Fixture.dictionary().schemaDrift() == [])
     }
 
     @Test("a duplicate headword is rejected")
     func duplicateHeadwordIsRejected() throws {
-        let json = Data("""
-        {"entries": [
-          {"headword": "go", "rank": 1, "pos": "verb", "ipa": null, "example": null, "synonym_group": null,
-           "tier": "lookup", "translations": {"ru": ["идти"]}},
-          {"headword": "go", "rank": 2, "pos": "verb", "ipa": null, "example": null, "synonym_group": null,
-           "tier": "lookup", "translations": {"ru": ["ехать"]}}
-        ]}
-        """.utf8)
-
-        #expect(throws: LingvoCoreError.self) {
-            try DictionaryStore.inMemory(fromJSON: [json])
+        #expect(throws: LingvoCoreError.invalidDictionary("UNIQUE constraint failed: entries.headword")) {
+            try Self.store([Self.entryJSON("go", rank: 1), Self.entryJSON("go", rank: 2)])
         }
     }
 
-    @Test("a quiz exclusion of a word that is not in the dictionary is rejected")
-    func unknownQuizExclusionIsRejected() throws {
-        let json = Data("""
-        {"entries": [{"headword": "go", "rank": 1, "pos": "verb", "ipa": null, "example": null,
-          "synonym_group": null, "tier": "lookup", "translations": {"ru": ["идти"]}}],
-         "quiz_exclusions": ["dude"]}
-        """.utf8)
-
-        #expect(throws: LingvoCoreError.self) {
-            try DictionaryStore.inMemory(fromJSON: [json])
+    @Test("an entry without a transcription is rejected, as the Python build rejects it")
+    func missingIPAIsRejected() throws {
+        #expect(throws: LingvoCoreError.invalidDictionary("NOT NULL constraint failed: entries.ipa")) {
+            try Self.store([Self.entryJSON("go", rank: 1, ipa: "null")])
         }
+    }
+
+    @Test("a quiz exclusion of a word the source lacks is skipped, as in a partial Python build")
+    func unknownQuizExclusionIsSkipped() throws {
+        let store = try Self.store([Self.entryJSON("go", rank: 1)], quizExclusions: ["dude"])
+
+        #expect(try store.entry(headword: "go") != nil)
     }
 
     @Test("an unknown part of speech is rejected")
     func unknownPartOfSpeechIsRejected() throws {
-        let json = Data("""
-        {"entries": [{"headword": "go", "rank": 1, "pos": "gerund", "ipa": null, "example": null,
-          "synonym_group": null, "tier": "lookup", "translations": {"ru": ["идти"]}}]}
-        """.utf8)
+        let json = Data("{\"entries\": [\(Self.entryJSON("go", rank: 1, pos: "gerund"))]}".utf8)
 
         #expect(throws: LingvoCoreError.invalidDictionary("go: unknown part of speech \"gerund\"")) {
             try DictionarySource.decode(json: json)
@@ -82,8 +66,10 @@ struct DictionaryContractTests {
 
     @Test("opening a missing dictionary file fails with a clear error")
     func missingFileFails() throws {
-        #expect(throws: LingvoCoreError.self) {
-            try DictionaryStore.open(at: Fixture.temporaryDatabaseURL())
+        let url = Fixture.temporaryDatabaseURL()
+
+        #expect(throws: LingvoCoreError.invalidDictionary("no dictionary file at \(url.path)")) {
+            try DictionaryStore.open(at: url)
         }
     }
 }
