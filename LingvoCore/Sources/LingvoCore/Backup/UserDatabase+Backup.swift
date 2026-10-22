@@ -45,8 +45,11 @@ extension UserDatabase {
     // so a second export prints exactly the times of the first.
     private func insert(_ word: MyWord, into db: Database) throws {
         try db.execute(
-            sql: "INSERT INTO my_words (headword, translation, example, added_at) VALUES (?, ?, ?, ?)",
-            arguments: [word.headword, word.translation, word.example, Self.text(word.addedAt)]
+            sql: "INSERT INTO my_words (headword, translation, example, added_at, ipa, pos) VALUES (?, ?, ?, ?, ?, ?)",
+            arguments: [
+                word.headword, word.translation, word.example, Self.text(word.addedAt),
+                word.ipa, word.partOfSpeech?.rawValue,
+            ]
         )
     }
 

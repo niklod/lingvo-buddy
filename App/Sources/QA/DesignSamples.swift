@@ -116,6 +116,21 @@ enum DesignSamples {
         mastery: 0
     )
 
+    /// A my word from the extended dictionary, with the IPA and part of speech saved when it was added.
+    static let petrichorMine = Card(
+        headword: "petrichor",
+        prompt: "petrichor",
+        direction: .enToRu,
+        kind: .mine,
+        source: .mine,
+        ipa: "/ˈpetrɪkɔːr/",
+        partOfSpeech: .noun,
+        options: ["петрихор", "предлагать", "неохотный", "в конце концов"],
+        correctIndex: 0,
+        example: nil,
+        mastery: 0
+    )
+
     static let suggestMineWrong = QuizCardState.Answer(
         pickedIndex: 0,
         result: AnswerResult(

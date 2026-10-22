@@ -27,8 +27,10 @@ enum WordBackupColumn: String, CaseIterable, Sendable {
     case lastCountedCorrectAt = "last_counted_correct_at"
     /// Last, so files from before the Dictionary window keep their column order.
     case ownTranslation = "own_translation"
+    case ipa
+    case partOfSpeech = "pos"
 
-    static let myWordColumns: [WordBackupColumn] = [.translation, .example, .addedAt]
+    static let myWordColumns: [WordBackupColumn] = [.translation, .example, .addedAt, .ipa, .partOfSpeech]
     static let progressColumns: [WordBackupColumn] = [
         .mastery, .enToRuCorrect, .ruToEnCorrect, .reviewStage,
         .dueAt, .lastResult, .lastAnsweredAt, .lastCountedCorrectAt,
@@ -57,6 +59,8 @@ extension WordBackupRow {
         case .lastAnsweredAt: Self.text(progress?.lastAnsweredAt)
         case .lastCountedCorrectAt: Self.text(progress?.lastCountedCorrectAt)
         case .ownTranslation: ownTranslation ?? ""
+        case .ipa: myWord?.ipa ?? ""
+        case .partOfSpeech: myWord?.partOfSpeech?.rawValue ?? ""
         }
     }
 

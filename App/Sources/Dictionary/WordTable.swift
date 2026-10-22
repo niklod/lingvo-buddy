@@ -151,9 +151,7 @@ struct WordTableRow: View {
 
     var body: some View {
         HStack(spacing: WordTableColumns.gap) {
-            Text(row.headword)
-                .fontWeight(.semibold)
-                .frame(width: columns.widths[0], alignment: .leading)
+            wordCell(width: columns.widths[0])
             Text(row.translation)
                 .foregroundStyle(Theme.Palette.textBody)
                 .frame(width: columns.widths[1], alignment: .leading)
@@ -178,6 +176,19 @@ struct WordTableRow: View {
             Rectangle().fill(DictionaryLayout.rowDivider).frame(height: 1)
         }
         .contentShape(Rectangle())
+    }
+
+    private func wordCell(width: CGFloat) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(row.headword)
+                .fontWeight(.semibold)
+            if let details = DictionaryLabels.details(of: row) {
+                Text(details)
+                    .font(.system(size: Theme.FontSize.small))
+                    .foregroundStyle(Theme.Palette.textSecondary)
+            }
+        }
+        .frame(width: width, alignment: .leading)
     }
 }
 

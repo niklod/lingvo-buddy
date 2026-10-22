@@ -49,7 +49,7 @@ A headword that can become a card: ranks 1–2000, minus the quiz exclusions. Co
 Quiz entries whose main meanings a learner could fairly swap as answers. It is named by the headword of its lowest-ranked member, and its members are never distractors for each other. Code: `synonym_group`.
 
 **My word**:
-A word the learner added with quick add, with the learner's translation and optional example. It comes before new dictionary words. Code: `MyWord`, `CardKind.mine`, `CardSource.mine`.
+A word the learner added with quick add, with the learner's translation and optional example, and the IPA and part of speech quick add showed (empty for older words and for words no dictionary knows). It comes before new dictionary words. Code: `MyWord`, `CardKind.mine`, `CardSource.mine`.
 _Avoid_: custom word, user word
 
 ### Cards

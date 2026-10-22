@@ -53,5 +53,10 @@ enum UserSchema {
             CREATE INDEX answers_headword_kind ON answers(headword, kind);
             CREATE INDEX my_words_headword_nocase ON my_words(headword COLLATE NOCASE);
             """),
+        // Nullable: my words added before this keep empty values and look as they did.
+        ("v8-my-word-details", """
+            ALTER TABLE my_words ADD COLUMN ipa TEXT;
+            ALTER TABLE my_words ADD COLUMN pos TEXT;
+            """),
     ]
 }
