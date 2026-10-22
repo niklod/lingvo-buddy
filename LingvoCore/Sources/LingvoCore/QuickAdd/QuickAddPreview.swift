@@ -26,4 +26,7 @@ public struct QuickAddPreview: Sendable, Equatable {
     }
 
     public var canAdd: Bool { standing == .notAdded }
+
+    /// The dictionary example that goes on the card when "Where I saw it" stays empty.
+    public var example: String? { lookup?.entry.example }
 }
