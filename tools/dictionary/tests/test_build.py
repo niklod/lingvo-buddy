@@ -48,6 +48,7 @@ class BuildTest(unittest.TestCase):
 
         code, out, err = self.run_build("--allow-partial")
 
+        lookup_headword = self.word_list.headword_at(2001)
         self.assertEqual(code, 0, err)
         self.assertIn("3 entries", out)
         self.assertEqual(
@@ -56,9 +57,12 @@ class BuildTest(unittest.TestCase):
                 " FROM entries ORDER BY rank"
             ),
             [
-                (2, "big", 2, "noun", "/haʊs/", "This big is very old.", None, "big", "quiz"),
+                (2, "big", 2, "noun", "/haʊs/", "This big is very old.", "Этот дом очень старый.", "big", "quiz"),
                 (3, "large", 3, "noun", "/haʊs/", "This large is very old.", "Это очень старый дом.", "big", "quiz"),
-                (2001, self.word_list.headword_at(2001), 2001, "noun", "/haʊs/", None, None, None, "lookup"),
+                (
+                    2001, lookup_headword, 2001, "noun", "/haʊs/",
+                    f"The {lookup_headword} stands near the river.", "Дом стоит у реки.", None, "lookup",
+                ),
             ],
         )
         self.assertEqual(
@@ -76,6 +80,21 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(meta["source"], "wordfreq 3.1.1 (en)")
         self.assertIn("CC BY-SA 4.0", meta["license"])
         self.assertIn("batch-01, batch-05", meta["built_from"])
+
+    def test_lookup_entry_examples_go_into_the_dictionary(self):
+        headword = self.word_list.headword_at(2001)
+        self.folder.write(
+            5,
+            [lookup_entry(self.word_list, 2001, example=f"The {headword} stands here.", example_ru="Он стоит здесь.")],
+        )
+
+        code, _, err = self.run_build("--allow-partial")
+
+        self.assertEqual(code, 0, err)
+        self.assertEqual(
+            self.query("SELECT example, example_ru, tier FROM entries WHERE rank = 2001"),
+            [(f"The {headword} stands here.", "Он стоит здесь.", "lookup")],
+        )
 
     def test_quiz_exclusions_of_built_words_go_into_the_dictionary(self):
         self.folder.write(3, [quiz_entry(self.word_list, 1001), quiz_entry(self.word_list, 1002)])

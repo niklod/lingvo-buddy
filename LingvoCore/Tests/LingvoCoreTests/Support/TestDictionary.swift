@@ -23,7 +23,7 @@ enum TestDictionary {
             self.tier = .quiz
         }
 
-        /// A lookup-tier word, as the real dictionary has above rank 2000: no example, no synonym group.
+        /// A lookup-tier word with no synonym group. It has no example, to cover a word the dictionary has none for.
         static func lookup(_ headword: String, rank: Int, pos: String, ru: [String]) -> Entry {
             Entry(headword, rank: rank, pos: pos, ru: ru, tier: .lookup)
         }
