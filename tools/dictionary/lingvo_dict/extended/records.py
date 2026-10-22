@@ -69,8 +69,12 @@ def russian_word_records(lines: Iterable[str]) -> Iterator[RussianRecord]:
 
 
 def _records(lines: Iterable[str], build: Callable[[Mapping[str, Any]], T | None]) -> Iterator[T]:
-    for line in lines:
-        record = build(json.loads(line))
+    for number, line in enumerate(lines, start=1):
+        try:
+            entry = json.loads(line)
+        except json.JSONDecodeError as error:
+            raise ValueError(f"line {number}: invalid JSON: {error}") from error
+        record = build(entry)
         if record is not None:
             yield record
 
@@ -87,13 +91,15 @@ def _english_record(
     if not ENGLISH_WORD.fullmatch(word) or len(word) < MIN_WORD_LENGTH or word in skip or _is_only_a_form(entry):
         return None
     examples = [example for sense in entry.get("senses", []) for example in sense.get("examples", [])]
-    return EnglishRecord(
+    record = EnglishRecord(
         word=word,
         pos=PARTS_OF_SPEECH.get(entry.get("pos", ""), "other"),
         translations=tuple(translations_of(entry)),
         ipa=None if translated_examples else pick_ipa(entry.get("sounds", [])),
         example=pick_example(examples, translated=translated_examples),
     )
+    # A record with no translation, IPA or example adds nothing to the merge; keeping it only costs memory.
+    return record if record.translations or record.ipa or record.example else None
 
 
 def _english_wiktionary_translations(entry: Mapping[str, Any]) -> Iterator[str]:

@@ -61,25 +61,25 @@ def parse_source(text: str) -> ExtendedData:
             if match := HEADER_LINE.fullmatch(line):
                 meta[match.group(1)] = match.group(2)
         elif line:
-            fields = line.split("\t")
             try:
-                _parse_line(fields, english, russian)
+                entry = _parse_line(line.split("\t"))
             except ValueError as error:
                 raise SourceError(f"line {number}: {error}") from error
+            if isinstance(entry, EnglishEntry):
+                english.append(entry)
+            else:
+                russian.append(entry)
     return ExtendedData(english=tuple(english), russian=tuple(russian), meta=meta)
 
 
-def _parse_line(fields: list[str], english: list[EnglishEntry], russian: list[RussianEntry]) -> None:
+def _parse_line(fields: list[str]) -> EnglishEntry | RussianEntry:
     kind = fields[0]
     if kind == "E" and len(fields) == ENGLISH_FIELDS:
         _, headword, pos, ipa, translations, example, example_ru = fields
-        english.append(
-            EnglishEntry(headword, pos, ipa or None, _split(translations), example or None, example_ru or None)
-        )
-    elif kind == "R" and len(fields) == RUSSIAN_FIELDS:
-        russian.append(RussianEntry(fields[1], _split(fields[2])))
-    else:
-        raise ValueError(f"expected an E line with {ENGLISH_FIELDS} fields or an R line with {RUSSIAN_FIELDS}")
+        return EnglishEntry(headword, pos, ipa or None, _split(translations), example or None, example_ru or None)
+    if kind == "R" and len(fields) == RUSSIAN_FIELDS:
+        return RussianEntry(fields[1], _split(fields[2]))
+    raise ValueError(f"expected an E line with {ENGLISH_FIELDS} fields or an R line with {RUSSIAN_FIELDS}")
 
 
 def _english_line(entry: EnglishEntry) -> str:
