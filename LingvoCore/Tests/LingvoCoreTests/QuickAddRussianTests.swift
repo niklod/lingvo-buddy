@@ -72,9 +72,9 @@ struct QuickAddRussianTests {
     @Test("each candidate has its own standing, and a word in learning is not added again")
     func standingPerCandidate() throws {
         let learner = try QuickAddTests.learner()
-        try learner.tutor.addMyWord(NewMyWord(text: "rapid", translation: "быстрый", example: nil))
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "rapid", translation: "быстрый", example: nil))
         try learner.answerNext()
-        try learner.tutor.addMyWord(NewMyWord(text: "swift", translation: "быстрый", example: nil))
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "swift", translation: "быстрый", example: nil))
 
         let preview = try #require(try learner.tutor.quickAddPreview("быстрый"))
         let outcome = try learner.tutor.addMyWord(NewMyWord(text: "rapid", translation: "быстрый", example: nil))
