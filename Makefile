@@ -24,8 +24,13 @@ XCODE_SETTINGS ?=
 # Extra launch arguments for `make run`, for example ARGS="--user-db demo --seed-demo --open card".
 ARGS ?=
 
+# `make pkg` stamps these into the app. The release workflow passes the tag and the run number.
+VERSION      ?= 0.0.0-dev
+BUILD_NUMBER ?= 1
+PKG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).pkg
+
 .PHONY: test test-core test-dictionary check lint lint-swift lint-python build-core-strict app-strict \
-	hooks dictionary project packages app run snapshots clean
+	hooks dictionary project packages app run snapshots pkg clean
 
 test: test-core test-dictionary
 
@@ -91,6 +96,13 @@ snapshots: app
 	set -o pipefail; $(APP_BINARY) --snapshot snapshots $(if $(FILTER),--snapshot-filter $(FILTER)) \
 		| while read -r file; do cp "$$file" $(BUILD_DIR)/snapshots/; done
 	@ls $(BUILD_DIR)/snapshots
+
+# Release build for Apple silicon only, wrapped into an installer for /Applications.
+# Xcode adds get-task-allow (a debugger may attach) to every build that is not an archive.
+pkg:
+	$(MAKE) app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
+		MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)"
+	tools/release/build-pkg.sh $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app $(VERSION) $(PKG)
 
 clean:
 	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) App/Info.plist App/LingvoBuddy.entitlements
