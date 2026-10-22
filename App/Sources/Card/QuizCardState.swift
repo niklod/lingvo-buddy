@@ -11,6 +11,8 @@ struct QuizCardState: Equatable {
 
     let card: Card
     let answer: Answer?
+    /// The learner's "Show example translation" setting, read when the card appears.
+    let showsExampleTranslation: Bool
 
     var isAnswered: Bool { answer != nil }
 
@@ -78,6 +80,10 @@ extension QuizCardState {
         case .dontKnow:
             return String(localized: "Answer: \(pair)")
         }
+    }
+
+    var russianExample: String? {
+        showsExampleTranslation ? card.russianExample : nil
     }
 
     var feedbackIsPositive: Bool { answer?.result.outcome == .correct }

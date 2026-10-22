@@ -83,6 +83,7 @@ struct MigrationTests {
             quietHours: QuietHours(start: try TimeOfDay(hour: 22, minute: 0), end: try TimeOfDay(hour: 8, minute: 0)),
             quietHoursEnabled: false
         ))
+        #expect(!tutor.settings.showsExampleTranslation)
         #expect(try tutor.stats().myWordsCount == 1)
         #expect(try tutor.nextCard().card?.correctAnswer == "кубернетес")
         #expect(try tutor.wordList(.queue).rows.first { $0.headword == "they" }?.translation == "они сами")
@@ -94,7 +95,8 @@ struct MigrationTests {
             INSERT INTO settings VALUES
                 ('direction', 'sideways'), ('review_share', 'abc'), ('max_active_new_words', 'many'),
                 ('card_interval_seconds', 'soon'), ('quiet_hours_enabled', 'yes'),
-                ('quiet_hours_start', '25:00'), ('quiet_hours_end', 'noon');
+                ('quiet_hours_start', '25:00'), ('quiet_hours_end', 'noon'),
+                ('show_example_translation', 'yes');
             """)
         defer { try? FileManager.default.removeItem(at: url) }
 

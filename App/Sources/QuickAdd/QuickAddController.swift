@@ -29,7 +29,8 @@ final class QuickAddController {
         let model = QuickAddModel(
             text: Self.cleaned(prefill),
             example: String(example.prefix(NewMyWord.maxExampleLength)),
-            translator: translator
+            translator: translator,
+            showsExampleTranslation: tutor.settings.showsExampleTranslation
         ) { try tutor.quickAddPreview($0) }
         let panel = QuickAddPanel()
         panel.setContent(QuickAddView(

@@ -42,6 +42,7 @@ enum QuickAddSnapshots {
             state("quick_add_learning", text: "reluctant", example: "", standing: .learning(mastery: 2)),
             state("quick_add_unknown", text: "kubernetes", example: "", standing: .notAdded),
             state("quick_add_example", text: "provide", example: "", standing: .notAdded),
+            state("quick_add_example_translation", text: "provide", example: "", standing: .notAdded, showsExampleTranslation: true),
             russianState("quick_add_russian", text: "сомнение"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
@@ -87,9 +88,15 @@ enum QuickAddSnapshots {
         return QuickAddCandidate(headword: headword, lookup: lookup, standing: standing)
     }
 
-    private static func state(_ name: String, text: String, example: String, standing: WordStanding) -> SnapshotState {
+    private static func state(
+        _ name: String,
+        text: String,
+        example: String,
+        standing: WordStanding,
+        showsExampleTranslation: Bool = false
+    ) -> SnapshotState {
         SnapshotState(name: name, usesWindow: true) {
-            let model = QuickAddModel(text: text, example: example) { query in
+            let model = QuickAddModel(text: text, example: example, showsExampleTranslation: showsExampleTranslation) { query in
                 let lookup = [reluctant, provide].first { $0.headword == query }.map { entry in
                     WordLookup(entry: entry, membership: entry.tier == .quiz ? .inside(.top1000) : .outside(.top1000))
                 }

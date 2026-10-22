@@ -13,6 +13,7 @@ extension UserDatabase {
         static let quietHoursEnabled = "quiet_hours_enabled"
         static let quietHoursStart = "quiet_hours_start"
         static let quietHoursEnd = "quiet_hours_end"
+        static let showsExampleTranslation = "show_example_translation"
     }
 
     func settings() throws -> TutorSettings {
@@ -44,6 +45,7 @@ extension UserDatabase {
             (Key.quietHoursEnabled, settings.quietHoursEnabled ? "1" : "0"),
             (Key.quietHoursStart, settings.quietHours.start.formatted),
             (Key.quietHoursEnd, settings.quietHours.end.formatted),
+            (Key.showsExampleTranslation, settings.showsExampleTranslation ? "1" : "0"),
         ]
     }
 
@@ -64,7 +66,9 @@ extension UserDatabase {
             learning: learning,
             cardInterval: stored[Key.cardInterval].flatMap(TimeInterval.init) ?? defaults.cardInterval,
             quietHours: quietHours,
-            quietHoursEnabled: stored[Key.quietHoursEnabled].flatMap(Self.flag) ?? defaults.quietHoursEnabled
+            quietHoursEnabled: stored[Key.quietHoursEnabled].flatMap(Self.flag) ?? defaults.quietHoursEnabled,
+            showsExampleTranslation: stored[Key.showsExampleTranslation].flatMap(Self.flag)
+                ?? defaults.showsExampleTranslation
         )
     }
 }
