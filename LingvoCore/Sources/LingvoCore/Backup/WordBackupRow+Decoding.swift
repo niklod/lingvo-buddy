@@ -3,8 +3,8 @@ import Foundation
 extension WordBackupRow {
     /// `now` stands in for an empty `added_at`, so a hand-made list of
     /// "headword,translation" lines imports as new my words.
-    init(reading reader: CSVFieldReader, now: Date) throws(CSVImportError) {
-        let headword = try reader.required(.headword, limit: NewMyWord.maxWordLength)
+    /// `headword` is the stored spelling of the line's headword (see `ImportHeadwords`).
+    init(reading reader: CSVFieldReader, headword: String, now: Date) throws(CSVImportError) {
         self.init(
             headword: headword,
             myWord: try Self.myWord(headword, reader: reader, now: now),

@@ -16,6 +16,8 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
     case invalidValue(line: Int, column: String, value: String, expected: String)
     case tooLong(line: Int, column: String, limit: Int)
     case duplicateWord(line: Int, headword: String)
+    /// Progress or an own translation for a word that is neither in the dictionary nor given a translation.
+    case unknownWord(line: Int, headword: String)
     /// A progress column has a value, but the word has no status.
     case progressWithoutStatus(line: Int, column: String)
     /// Neither a translation (my word) nor a status (progress).
@@ -49,6 +51,8 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
             "Line \(line): \"\(column)\" is too long: at most \(limit) characters."
         case .duplicateWord(let line, let headword):
             "Line \(line): \"\(headword)\" is already on an earlier line."
+        case .unknownWord(let line, let headword):
+            "Line \(line): \"\(headword)\" is not in the dictionary. Give it a translation to import it as one of your words."
         case .progressWithoutStatus(let line, let column):
             "Line \(line): \"\(column)\" has a value, but \"status\" is empty."
         case .nothingToImport(let line, let headword):

@@ -28,7 +28,11 @@ extension Tutor {
     /// words not in the file stay as they are.
     @discardableResult
     public func importCSV(_ data: Data) throws -> CSVImportSummary {
-        let rows = try WordBackupCSV.decode(data, now: clock.now())
+        let headwords = ImportHeadwords(
+            dictionarySpelling: { [dictionary] in try dictionary.lookupEntry($0)?.headword },
+            myWordSpelling: { [userDatabase] in try userDatabase.myWord(ignoringCase: $0)?.headword }
+        )
+        let rows = try WordBackupCSV.decode(data, now: clock.now(), headwords: headwords)
         try userDatabase.restore(rows)
         rows.forEach { forgetDeferral(of: $0.headword) }
         return CSVImportSummary(words: rows.count, myWords: rows.filter { $0.myWord != nil }.count)

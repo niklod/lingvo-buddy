@@ -68,6 +68,16 @@ struct CSVImportErrorTests {
             .duplicateWord(line: 3, headword: "eventually")
         ),
         BadFile(
+            "the same word twice in another case",
+            header + validLine + "Eventually,в итоге,,,\n",
+            .duplicateWord(line: 3, headword: "Eventually")
+        ),
+        BadFile(
+            "progress for a word that is neither in the dictionary nor a my word",
+            header + validLine + "zzzz,,learning,2,\n",
+            .unknownWord(line: 3, headword: "zzzz")
+        ),
+        BadFile(
             "progress without a status",
             header + validLine + "reluctant,,,2,\n",
             .progressWithoutStatus(line: 3, column: "mastery")
