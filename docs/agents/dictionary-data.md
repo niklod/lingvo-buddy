@@ -43,3 +43,11 @@ When existing entries need a new or changed field (for example examples and syno
 1. Write a context TSV of ranks 1–2000 (rank, headword, pos, translations, synonym_group) so each agent sees the existing keys.
 2. Give each sub-agent one range of about 250 ranks. It writes only a patch file outside the repo: `{"from": N, "to": M, "entries": [{"rank", "headword", <new fields>}]}`, one item per rank in order. It changes no other field, follows `generate-batch.md`, and self-checks: every rank once, headword equals the context file, every key has a rank at or below the entry's rank, no chains.
 3. The lead merges the patches into the batch files with a script that keeps the file layout (one entry per line, keys in `QUIZ_FIELDS` order), runs the synonym-group checks above, then `validate.py --full` and `make test`.
+
+## The extended dictionary
+
+`data/extended/extended-dictionary.txt` is the cleaned Wiktionary data for words outside the bundled dictionary. It is committed, sorted and deterministic, so a refresh is a reviewable diff. `make dictionary` builds `App/Resources/extended-dictionary.sqlite` from it with no network; the build validates the source first (`tools/dictionary/lingvo_dict/extended/validate.py`).
+
+- **Refresh by hand:** `make import-wiktionary WIKT_DIR=<new empty folder outside the repo>`. It downloads about 700 MB of kaikki.org extracts, runs the cleaning rules (`lingvo_dict/extended/clean.py`, tested in `tests/test_extended_clean.py`) and rewrites the source. Run Python on downloaded data with `python3 -I`, keep the scripts outside the download folder, and delete the downloads after the diff is reviewed.
+- **Schema twice, like the bundled one:** `lingvo_dict/extended/build.py` and `LingvoCore/.../Dictionary/ExtendedSchema.swift`. Change both in one commit and raise both versions; `lingvo-dict check <dictionary> <extended>` (in `make test`) fails when they drift.
+- A word of the bundled batches, or a Russian word that is a bundled translation, may not appear in the extended source; the build rejects it. When a new bundled batch adds such words, re-run the import.

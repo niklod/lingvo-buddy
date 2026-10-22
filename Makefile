@@ -10,6 +10,7 @@ PYTHON       ?= python3
 
 DICT_TOOLS   := tools/dictionary
 DICT_OUT     := App/Resources/dictionary.sqlite
+EXTENDED_OUT := App/Resources/extended-dictionary.sqlite
 
 # The app's package pins. When the generated project has no resolved file, Xcode writes the
 # app's pins (KeyboardShortcuts too) into the tracked LingvoCore/Package.resolved instead.
@@ -30,7 +31,7 @@ BUILD_NUMBER ?= 1
 PKG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).pkg
 
 .PHONY: test test-core test-dictionary check lint lint-swift lint-python build-core-strict app-strict \
-	hooks dictionary project packages app run snapshots pkg clean
+	hooks dictionary import-wiktionary project packages app run snapshots pkg clean
 
 test: test-core test-dictionary
 
@@ -43,7 +44,9 @@ test-dictionary:
 	$(PYTHON) -m unittest discover -s $(DICT_TOOLS)/tests -t $(DICT_TOOLS)
 	$(PYTHON) $(DICT_TOOLS)/validate.py --full
 	$(PYTHON) $(DICT_TOOLS)/build_dictionary.py --full --out $(BUILD_DIR)/dictionary/dictionary.sqlite
-	swift run --package-path $(CORE_DIR) lingvo-dict check $(BUILD_DIR)/dictionary/dictionary.sqlite
+	$(PYTHON) $(DICT_TOOLS)/build_extended_dictionary.py --out $(BUILD_DIR)/dictionary/extended-dictionary.sqlite
+	swift run --package-path $(CORE_DIR) lingvo-dict check $(BUILD_DIR)/dictionary/dictionary.sqlite \
+		$(BUILD_DIR)/dictionary/extended-dictionary.sqlite
 
 # The full gate before a push (the pre-push hook and CI run it). `make test` stays the fast loop.
 # The last step fails when a build changed a tracked file, or when work is not committed.
@@ -68,8 +71,16 @@ app-strict:
 hooks:
 	git config core.hooksPath .githooks
 
+# Both files come from committed sources and need no network. `make import-wiktionary` is the manual refresh.
 dictionary:
 	$(PYTHON) $(DICT_TOOLS)/build_dictionary.py --full --out $(DICT_OUT)
+	$(PYTHON) $(DICT_TOOLS)/build_extended_dictionary.py --out $(EXTENDED_OUT)
+
+# Downloads about 700 MB of kaikki.org extracts into WIKT_DIR (keep it outside the repository) and rewrites
+# data/extended/extended-dictionary.txt. Review the diff, then delete the downloads.
+import-wiktionary:
+	@test -n "$(WIKT_DIR)" || { echo "pass WIKT_DIR=<an empty folder outside the repository>"; exit 1; }
+	$(PYTHON) $(DICT_TOOLS)/import_wiktionary.py --download-dir "$(WIKT_DIR)"
 
 project:
 	xcodegen generate --quiet
@@ -105,5 +116,5 @@ pkg:
 	tools/release/build-pkg.sh $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app $(VERSION) $(PKG)
 
 clean:
-	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) App/Info.plist App/LingvoBuddy.entitlements
+	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist App/LingvoBuddy.entitlements
 	swift package --package-path $(CORE_DIR) clean

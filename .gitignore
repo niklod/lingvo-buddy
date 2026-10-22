@@ -10,4 +10,5 @@ __pycache__/
 App/Info.plist
 App/LingvoBuddy.entitlements
 App/Resources/dictionary.sqlite
+App/Resources/extended-dictionary.sqlite
 .claude/worktrees/
