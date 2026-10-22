@@ -16,6 +16,11 @@ struct CardScheduleTests {
         #expect(schedule.nextDeadline == start.addingTimeInterval(15 * minute))
     }
 
+    @Test("an interval that is not a positive finite number is refused", arguments: [0, -60, .infinity, .nan])
+    func invalidIntervalIsRefused(seconds: TimeInterval) {
+        #expect(throws: LingvoCoreError.self) { try CardScheduleSettings(interval: seconds) }
+    }
+
     @Test("no new card is due while a card is on screen")
     func noCardWhileShowing() throws {
         let card = try sampleCard()

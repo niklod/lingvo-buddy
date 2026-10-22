@@ -34,7 +34,11 @@ struct StreakCounter {
         lastDay = day
     }
 
+    /// Compares day numbers, not times: where daylight saving starts at
+    /// midnight, a day begins at 01:00 and is only 23 hours long.
     private func isDay(_ day: Date, before other: Date) -> Bool {
-        calendar.date(byAdding: .day, value: -1, to: other) == day
+        guard let dayNumber = calendar.ordinality(of: .day, in: .era, for: day),
+              let otherNumber = calendar.ordinality(of: .day, in: .era, for: other) else { return false }
+        return otherNumber - dayNumber == 1
     }
 }

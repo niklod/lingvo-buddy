@@ -49,11 +49,7 @@ extension UserDatabase {
 
     /// The answers log stays: it is the history behind streak and accuracy.
     func deleteMyWord(_ headword: String) throws {
-        try writer.write { db in
-            try db.execute(sql: "DELETE FROM my_words WHERE headword = ?", arguments: [headword])
-            try db.execute(sql: "DELETE FROM word_progress WHERE headword = ?", arguments: [headword])
-            try db.execute(sql: "DELETE FROM translation_overrides WHERE headword = ?", arguments: [headword])
-        }
+        try writer.write { db in try Self.deleteWordRows(headword, in: db) }
     }
 }
 

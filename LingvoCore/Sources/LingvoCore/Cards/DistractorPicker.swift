@@ -44,6 +44,9 @@ struct DistractorPicker {
 
     private func isAllowed(_ candidate: DictionaryEntry, against entry: DictionaryEntry) -> Bool {
         guard candidate.headword != entry.headword, candidate.primaryRussian != nil else { return false }
+        // Lookup-tier words have no synonym group, so the group check below
+        // cannot keep a synonym of a quiz word out of its wrong options.
+        if entry.tier == .quiz, candidate.tier != .quiz || candidate.synonymGroup == nil { return false }
         if let group = entry.synonymGroup, candidate.synonymGroup == group { return false }
         let answers = Set(entry.translations[.russian] ?? [])
         return answers.isDisjoint(with: candidate.translations[.russian] ?? [])

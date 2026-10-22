@@ -2,36 +2,14 @@ import Foundation
 import LingvoCore
 
 let usage = """
-    Usage: lingvo-dict build --out <dictionary.sqlite> <source.json> [<source.json> ...]
-      Merges JSON dictionary sources and writes the bundled SQLite dictionary.
     Usage: lingvo-dict check <dictionary.sqlite>
-      Opens a built dictionary read-only, as the app does, and prints the first quiz card.
+      Opens a built dictionary read-only, as the app does, checks its schema
+      against the app's contract and prints the first quiz card.
     """
 
 func fail(_ message: String) -> Never {
     FileHandle.standardError.write(Data("lingvo-dict: \(message)\n".utf8))
     exit(1)
-}
-
-func runBuild(_ arguments: [String]) throws {
-    guard let outFlag = arguments.firstIndex(of: "--out"), arguments.indices.contains(outFlag + 1) else {
-        fail("missing --out <path>\n\(usage)")
-    }
-    let output = URL(fileURLWithPath: arguments[outFlag + 1])
-    let inputs = arguments.enumerated()
-        .filter { $0.offset != outFlag && $0.offset != outFlag + 1 }
-        .map { URL(fileURLWithPath: $0.element) }
-    guard !inputs.isEmpty else {
-        fail("no source files\n\(usage)")
-    }
-    let sources = try inputs.map { try DictionarySource.decode(json: Data(contentsOf: $0)) }
-    let merged = DictionarySource.merged(sources)
-    try FileManager.default.createDirectory(
-        at: output.deletingLastPathComponent(),
-        withIntermediateDirectories: true
-    )
-    try DictionaryBuilder.buildFile(from: merged, at: output)
-    print("lingvo-dict: wrote \(merged.entries.count) entries to \(output.path)")
 }
 
 /// Proves that a dictionary from any builder (for example tools/dictionary) works with the app's reader.
@@ -40,6 +18,10 @@ func runCheck(_ arguments: [String]) throws {
         fail("check needs one dictionary file\n\(usage)")
     }
     let store = try DictionaryStore.open(at: URL(fileURLWithPath: arguments[0]))
+    let drift = try store.schemaDrift()
+    guard drift.isEmpty else {
+        fail("the schema differs from LingvoCore's DictionarySchema in:\n\(drift.joined(separator: "\n"))")
+    }
     guard let license = try store.meta()["license"], !license.isEmpty else {
         fail("meta has no license")
     }
@@ -72,8 +54,6 @@ func checkTiers(_ tutor: Tutor) throws {
 let arguments = Array(CommandLine.arguments.dropFirst())
 do {
     switch arguments.first {
-    case "build":
-        try runBuild(Array(arguments.dropFirst()))
     case "check":
         try runCheck(Array(arguments.dropFirst()))
     default:

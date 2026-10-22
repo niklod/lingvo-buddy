@@ -6,8 +6,6 @@ import Foundation
 /// truncates, and a `Date` rebuilt from milliseconds can sit a hair below its
 /// millisecond, so an export → import → export would lose 1 ms per pass.
 struct CSVTimestamp: Sendable, Equatable {
-    static let format = "YYYY-MM-DDTHH:MM:SS.sssZ (UTC)"
-
     let milliseconds: Int64
 
     init(_ date: Date) {

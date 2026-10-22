@@ -9,8 +9,26 @@ struct CSVRecord: Sendable, Equatable {
 /// RFC 4180 CSV: comma separated, fields with commas, quotes or line breaks in
 /// double quotes, a quote inside quotes doubled. Spreadsheets write CRLF, LF or CR.
 enum CSVCodec {
+    /// Characters that make Excel and Numbers run a cell as a formula, even
+    /// inside quotes. Text from web pages reaches the export through Services.
+    private static let formulaLeads: Set<Character> = ["=", "+", "-", "@", "\t", "\r"]
+
     static func encode(_ rows: [[String]]) -> String {
-        rows.map { $0.map(quoted).joined(separator: ",") + "\r\n" }.joined()
+        rows.map { $0.map { quoted(neutralized($0)) }.joined(separator: ",") + "\r\n" }.joined()
+    }
+
+    /// Undoes `neutralized`, so an export → import → export gives the same file.
+    static func restored(_ field: String) -> String {
+        guard field.first == "'", let next = field.dropFirst().first, formulaLeads.contains(next) else {
+            return field
+        }
+        return String(field.dropFirst())
+    }
+
+    /// A leading apostrophe makes spreadsheets show the cell as text.
+    private static func neutralized(_ field: String) -> String {
+        guard let first = field.first, formulaLeads.contains(first) else { return field }
+        return "'" + field
     }
 
     /// Blank lines are skipped.

@@ -58,8 +58,10 @@ public struct Card: Sendable, Equatable {
         self.mastery = mastery
     }
 
+    /// Empty for a card built with a `correctIndex` outside `options`; the
+    /// tutor refuses an answer to such a card.
     public var correctAnswer: String {
-        options[correctIndex]
+        options.indices.contains(correctIndex) ? options[correctIndex] : ""
     }
 }
 

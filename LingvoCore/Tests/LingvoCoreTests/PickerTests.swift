@@ -49,6 +49,22 @@ struct PickerTests {
         #expect(started.contains(next.headword))
     }
 
+    @Test("\"×\" or \"Later\" on the only active word does not start a new word over the limit")
+    func skippedWordStillCountsAsActive() throws {
+        let learner = try Learner(settings: LearningSettings(maxActiveNewWords: 1))
+        try learner.answerNext()
+
+        let fallback = try learner.nextCard()
+        learner.tutor.skip(fallback)
+        let afterSkip = try learner.nextCard()
+        learner.tutor.later(afterSkip)
+        let afterLater = try learner.nextCard()
+
+        #expect(fallback.headword == "they")
+        #expect(afterSkip.headword == "they")
+        #expect(afterLater.headword == "they")
+    }
+
     @Test("a learned word frees a place for a new word")
     func learnedWordFreesActivePlace() throws {
         let learner = try Learner(settings: LearningSettings(maxActiveNewWords: 1))

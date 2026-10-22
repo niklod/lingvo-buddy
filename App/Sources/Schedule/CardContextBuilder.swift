@@ -16,18 +16,21 @@ struct CardContextBuilder {
     func context(for trigger: CardContext.Trigger) -> CardContext {
         // An on-demand card ignores the signals, so do not query the system for them.
         guard trigger == .timer else { return CardContext(trigger: .onDemand) }
-        var context = CardContext.timer(
-            settings: settings.settings,
+        return CardContext(
+            trigger: .timer,
+            quietHours: quietHours,
             isFocusOn: focus.isFocusOn,
             isFullScreenAppFrontmost: fullScreen.isOtherAppFullScreen(),
             pausedUntil: pause.pausedUntil(),
             calendar: .current
         )
+    }
+
+    private var quietHours: QuietHours? {
         switch quietHoursOverride {
-        case nil: break
-        case .off: context.quietHours = nil
-        case .hours(let hours): context.quietHours = hours
+        case nil: settings.settings.activeQuietHours
+        case .off: nil
+        case .hours(let hours): hours
         }
-        return context
     }
 }

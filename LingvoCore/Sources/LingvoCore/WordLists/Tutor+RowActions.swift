@@ -10,6 +10,7 @@ extension Tutor {
         let current = try userDatabase.progress(for: headword) ?? .fresh(headword)
         guard current.status != .learned else { return }
         try userDatabase.save(current.markedLearned(at: clock.now()))
+        forgetDeferral(of: headword)
     }
 
     /// Forgets the progress: a dictionary word goes back to the queue, a my
@@ -17,6 +18,7 @@ extension Tutor {
     public func resetProgress(_ headword: String) throws {
         try requireKnown(headword)
         try userDatabase.deleteProgress(headword)
+        forgetDeferral(of: headword)
     }
 
     /// Removes a my word with its progress. A queued dictionary word that was
@@ -26,6 +28,7 @@ extension Tutor {
             throw LingvoCoreError.notMyWord(headword)
         }
         try userDatabase.deleteMyWord(headword)
+        forgetDeferral(of: headword)
     }
 
     /// Cards then ask for the new translation. Setting a dictionary word back
@@ -36,6 +39,7 @@ extension Tutor {
         guard translation.count <= NewMyWord.maxTranslationLength else {
             throw LingvoCoreError.tooLong(.translation, limit: NewMyWord.maxTranslationLength)
         }
+        defer { forgetDeferral(of: headword) }
         if try userDatabase.myWord(headword: headword) != nil {
             try userDatabase.updateMyWordTranslation(headword, to: translation)
             return

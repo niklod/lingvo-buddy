@@ -5,7 +5,7 @@ public enum PartOfSpeech: String, Sendable, Codable, CaseIterable {
     case determiner, numeral, interjection, other
 }
 
-public enum DictionaryTier: String, Sendable, Codable {
+public enum DictionaryTier: String, Sendable, Codable, CaseIterable {
     /// Full card data: example and synonym group are present.
     case quiz
     /// Quick-add lookup only: no example, no synonym group.

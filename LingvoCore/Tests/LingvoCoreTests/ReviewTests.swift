@@ -75,6 +75,21 @@ struct ReviewTests {
         #expect(kinds.filter { $0 == .review }.count == 2)
     }
 
+    @Test("reviews never take more than the review share setting", arguments: [0.25, 0.3, 0.4, 0.45])
+    func reviewShareIsNeverExceeded(share: Double) throws {
+        let learner = try Learner(settings: LearningSettings(reviewShare: share))
+        for _ in 0..<10 { try learner.learnNextWord() }
+        learner.clock.advance(by: 8 * Fixture.day)
+
+        // An hour between cards keeps learning words due, so the cap, not a lack of other cards, decides.
+        let kinds = try (0..<20).map { _ in
+            defer { learner.clock.advance(by: Fixture.hour) }
+            return try learner.answerNext().card.kind
+        }
+
+        #expect(kinds.filter { $0 == .review }.count <= Int(share * 20))
+    }
+
     @Test("a due review still comes when nothing else is left to practice")
     func reviewOverTheCapWhenNothingElse() throws {
         let tiny = try TestDictionary.make([

@@ -69,9 +69,32 @@ struct DistractorTests {
         #expect(Set(card.options).count == 4)
     }
 
-    private func firstCard(direction: DirectionSetting, seed: UInt64) throws -> Card {
+    @Test("a quiz-tier card takes options only from quiz-tier words, which have the synonym check data")
+    func quizCardSkipsLookupWords() throws {
+        let entries: [TestDictionary.Entry] = [
+            .init("begin", rank: 1, pos: "verb", ru: ["начинать"]),
+            .lookup("commence", rank: 2, pos: "verb", ru: ["приступать"]),
+            .lookup("launch", rank: 3, pos: "verb", ru: ["запускать"]),
+            .lookup("initiate", rank: 4, pos: "verb", ru: ["затевать"]),
+            .init("eat", rank: 50, pos: "verb", ru: ["есть"]),
+            .init("sleep", rank: 60, pos: "verb", ru: ["спать"]),
+            .init("run", rank: 70, pos: "verb", ru: ["бежать"]),
+        ]
+        for seed in 1...5 {
+            let card = try firstCard(direction: .ruToEn, seed: UInt64(seed), entries: entries)
+
+            #expect(card.headword == "begin")
+            #expect(Set(card.options) == ["begin", "eat", "sleep", "run"], "seed \(seed): \(card.options)")
+        }
+    }
+
+    private func firstCard(
+        direction: DirectionSetting,
+        seed: UInt64,
+        entries: [TestDictionary.Entry] = suggestFirst
+    ) throws -> Card {
         let tutor = try Fixture.tutor(
-            dictionary: TestDictionary.make(Self.suggestFirst),
+            dictionary: TestDictionary.make(entries),
             seed: seed,
             settings: LearningSettings(direction: direction)
         )

@@ -1,8 +1,8 @@
 import Foundation
 import Synchronization
 
-/// The source of every random choice (option order, later the direction mix),
-/// injected so tests and snapshots are reproducible.
+/// The source of every random choice (options, direction mix, level-check
+/// sample), injected so tests and snapshots are reproducible.
 public protocol RandomSource: Sendable {
     /// Returns a value in `0..<upperBound`. `upperBound` must be greater than zero.
     func nextInt(below upperBound: Int) -> Int
