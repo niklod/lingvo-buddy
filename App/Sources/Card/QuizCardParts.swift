@@ -79,10 +79,23 @@ private struct CloseGlyph: View {
 }
 
 struct QuizOptionButton: View {
+    private static let minHeight: CGFloat = 48
+    private static let maxLines = 3
+    private static let verticalPadding: CGFloat = 6
+    private static let compactFontSize: CGFloat = 13
+
     let key: Int
     let text: String
     let appearance: OptionAppearance
     let action: () -> Void
+
+    private func label(size: CGFloat, lines: Int) -> some View {
+        Text(verbatim: text)
+            .font(.system(size: size))
+            .foregroundStyle(Theme.Palette.textPrimary)
+            .multilineTextAlignment(.leading)
+            .lineLimit(lines)
+    }
 
     var body: some View {
         Button(action: action) {
@@ -92,15 +105,21 @@ struct QuizOptionButton: View {
                     .foregroundStyle(Theme.Palette.textSecondary)
                     .frame(width: 20, height: 20)
                     .background(Theme.Palette.keyBadge, in: RoundedRectangle(cornerRadius: Theme.Radius.keyBadge))
-                Text(verbatim: text)
-                    .font(.system(size: Theme.FontSize.option))
-                    .foregroundStyle(Theme.Palette.textPrimary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                // Some answers are long ("средства массовой информации"): a cut-off
+                // option could hide the right answer. One line first, like the design;
+                // a slightly smaller line next; wrapped lines only when neither fits.
+                ViewThatFits(in: .horizontal) {
+                    label(size: Theme.FontSize.option, lines: 1)
+                    label(size: Self.compactFontSize, lines: 1)
+                    label(size: Theme.FontSize.option, lines: Self.maxLines)
+                        .minimumScaleFactor(0.8)
+                }
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 12)
-            .frame(height: 48)
+            .padding(.vertical, Self.verticalPadding)
+            // Both options of a grid row take the taller one's height.
+            .frame(minHeight: Self.minHeight, maxHeight: .infinity)
             .background(fill, in: RoundedRectangle(cornerRadius: Theme.Radius.option))
             .overlay(RoundedRectangle(cornerRadius: Theme.Radius.option).strokeBorder(stroke, lineWidth: 1))
             .opacity(appearance == .faded ? 0.45 : 1)

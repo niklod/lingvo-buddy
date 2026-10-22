@@ -69,6 +69,21 @@ enum DesignSamples {
         mastery: 0
     )
 
+    /// The longest main translations of the bundled card words: no option may be cut off.
+    static let mediaLongOptions = Card(
+        headword: "media",
+        prompt: "media",
+        direction: .enToRu,
+        kind: .new,
+        source: .rank(516),
+        ipa: "/ˈmiːdiə/",
+        partOfSpeech: .noun,
+        options: ["средства массовой информации", "статистический показатель", "программное обеспечение", "вдруг"],
+        correctIndex: 0,
+        example: "The story was in all the media today.",
+        mastery: 0
+    )
+
     /// A word the learner added with quick add, before its first counted answer.
     static let suggestMine = Card(
         headword: "suggest",
