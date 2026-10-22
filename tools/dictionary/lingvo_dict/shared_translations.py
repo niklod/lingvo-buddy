@@ -8,7 +8,8 @@ wrong merge. Both can also be fine, so this never fails validation.
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Callable, Dict, Iterable, List, Optional, Sequence, Tuple
+from collections.abc import Iterable, Sequence
+from typing import Callable
 
 from lingvo_dict.loaded_entry import LoadedEntry
 
@@ -16,7 +17,7 @@ SPLIT_TITLE = "same first translation, different groups"
 MERGED_TITLE = "one group, different first translations"
 
 
-def shared_translation_report(entries: Sequence[LoadedEntry], quiz_exclusions: Iterable[str]) -> List[str]:
+def shared_translation_report(entries: Sequence[LoadedEntry], quiz_exclusions: Iterable[str]) -> list[str]:
     excluded = set(quiz_exclusions)
     cards = [item for item in entries if item.synonym_group is not None and item.headword not in excluded]
     firsts = {item.headword: first for item in cards if (first := _first_translation(item)) is not None}
@@ -30,8 +31,8 @@ def shared_translation_report(entries: Sequence[LoadedEntry], quiz_exclusions: I
 
 
 def _format(
-    title: str, sections: List[Tuple[str, List[LoadedEntry]]], detail: Callable[[LoadedEntry], str]
-) -> List[str]:
+    title: str, sections: list[tuple[str, list[LoadedEntry]]], detail: Callable[[LoadedEntry], str]
+) -> list[str]:
     lines = [f"{title}: {len(sections)}"]
     for name, members in sections:
         lines.append(f"  {name}: " + "; ".join(f"{m.headword}({m.rank}) {detail(m)}" for m in members))
@@ -40,17 +41,17 @@ def _format(
 
 def _sections(
     cards: Sequence[LoadedEntry],
-    bucket_of: Callable[[LoadedEntry], Optional[str]],
-    differs_by: Callable[[LoadedEntry], Optional[str]],
-) -> List[Tuple[str, List[LoadedEntry]]]:
+    bucket_of: Callable[[LoadedEntry], str | None],
+    differs_by: Callable[[LoadedEntry], str | None],
+) -> list[tuple[str, list[LoadedEntry]]]:
     """Buckets whose members disagree on differs_by, ordered by their lowest rank."""
-    buckets: Dict[str, List[LoadedEntry]] = defaultdict(list)
+    buckets: dict[str, list[LoadedEntry]] = defaultdict(list)
     for item in sorted(cards, key=lambda item: item.rank):
         buckets[str(bucket_of(item))].append(item)
     return [(name, members) for name, members in buckets.items() if len({differs_by(m) for m in members}) > 1]
 
 
-def _first_translation(item: LoadedEntry) -> Optional[str]:
+def _first_translation(item: LoadedEntry) -> str | None:
     translations = item.data.get("translations")
     if isinstance(translations, list) and translations and isinstance(translations[0], str):
         return translations[0]

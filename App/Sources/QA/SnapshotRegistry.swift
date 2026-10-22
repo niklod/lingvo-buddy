@@ -49,7 +49,7 @@ enum QuizCardSnapshots {
 enum StatusIconSnapshots {
     private static let zoom: CGFloat = 4
     /// A dark menu bar behind the icon, as macOS draws it.
-    private static let menuBar = Color(hex: 0x2B2B2E)
+    private static let menuBar = Theme.Palette.menuBar
 
     static var states: [SnapshotState] {
         [state("menubar_icon", waiting: false), state("menubar_icon_waiting", waiting: true)]

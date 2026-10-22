@@ -7,8 +7,9 @@ ranking rules are testable without wordfreq or simplemma installed.
 from __future__ import annotations
 
 import re
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from typing import Callable, Dict, Iterable, List, Mapping, Optional, Tuple
+from typing import Callable, Optional
 
 WORD_PATTERN = re.compile(r"[a-z]+")
 
@@ -37,26 +38,26 @@ class Exclusion:
 
 @dataclass(frozen=True)
 class WordListResult:
-    words: Tuple[RankedWord, ...]
-    excluded: Tuple[Exclusion, ...]
+    words: tuple[RankedWord, ...]
+    excluded: tuple[Exclusion, ...]
 
 
 @dataclass(frozen=True)
 class _Decision:
     key: str
     headword: str
-    reason: Optional[str]
+    reason: str | None
 
 
 def rank_lemmas(
-    forms: Iterable[Tuple[str, float]],  # most frequent first
+    forms: Iterable[tuple[str, float]],  # most frequent first
     lemmatize: Lemmatize,
     rules: ExportRules,
     limit: int,
 ) -> WordListResult:
     keep_by_key = {word.lower(): word for word in rules.keep}
-    totals: Dict[str, float] = {}
-    decisions: Dict[str, _Decision] = {}
+    totals: dict[str, float] = {}
+    decisions: dict[str, _Decision] = {}
 
     for form, frequency in forms:
         decision = _decide(form, lemmatize, rules, keep_by_key)
@@ -79,7 +80,7 @@ def rank_lemmas(
     return WordListResult(words=words, excluded=excluded)
 
 
-def _merge(previous: Optional[_Decision], current: _Decision) -> _Decision:
+def _merge(previous: _Decision | None, current: _Decision) -> _Decision:
     """The most frequent form decides for its lemma; the exclusion list always wins."""
     if previous is None or current.reason == "exclusion-list":
         return current
@@ -118,15 +119,15 @@ def _decide(
     return _Decision(key=key, headword=key, reason=None)
 
 
-def format_word_list(words: Iterable[RankedWord], header: List[str]) -> str:
+def format_word_list(words: Iterable[RankedWord], header: list[str]) -> str:
     return _format_tsv(header, ((word.rank, word.headword) for word in words))
 
 
-def format_exclusion_report(excluded: Iterable[Exclusion], header: List[str]) -> str:
+def format_exclusion_report(excluded: Iterable[Exclusion], header: list[str]) -> str:
     return _format_tsv(header, ((item.lemma, item.reason) for item in excluded))
 
 
-def _format_tsv(header: Iterable[str], rows: Iterable[Tuple[object, ...]]) -> str:
+def _format_tsv(header: Iterable[str], rows: Iterable[tuple[object, ...]]) -> str:
     lines = [f"# {line}" for line in header]
     lines += ["\t".join(str(cell) for cell in row) for row in rows]
     return "\n".join(lines) + "\n"

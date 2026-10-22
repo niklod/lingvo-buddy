@@ -87,7 +87,7 @@ final class OnboardingModel {
 
     func answer(knows: Bool) {
         guard let word = currentWord, case .levelWord(let index) = step else { return }
-        answers = answers + [LevelCheckAnswer(headword: word.headword, knows: knows)]
+        answers += [LevelCheckAnswer(headword: word.headword, knows: knows)]
         if index + 1 < (sample?.words.count ?? 0) {
             step = .levelWord(index: index + 1)
         } else {

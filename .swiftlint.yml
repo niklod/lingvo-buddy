@@ -1,0 +1,55 @@
+# `make lint-swift` runs `swiftlint lint --strict`: every warning fails the gate.
+included:
+  - App/Sources
+  - LingvoCore/Sources
+  - LingvoCore/Tests
+  - LingvoCore/Package.swift
+
+disabled_rules:
+  # Short names are the domain words here: `db` (GRDB), `x`/`y` (geometry), `.on`, `at:`.
+  - identifier_name
+  # Multi-line literals end with a comma, so a new element is a one-line diff.
+  - trailing_comma
+  # "Mastery" is the learning term of the app (card mastery, mastery goal), not "master".
+  - inclusive_language
+
+opt_in_rules:
+  - force_unwrapping
+
+line_length:
+  # SwiftUI modifier chains and test names run past 120; 150 still stops run-on lines.
+  warning: 150
+  ignores_comments: true
+
+function_body_length:
+  warning: 50
+  error: 60
+
+file_length:
+  warning: 400
+  error: 800
+
+cyclomatic_complexity:
+  # A flat `switch` over launch arguments or CSV columns reads fine, however many cases it has.
+  ignores_case_statements: true
+
+custom_rules:
+  hex_colour_outside_theme:
+    name: Hex colour outside Theme
+    regex: '0x[0-9A-Fa-f]{6}\b'
+    included: 'App/Sources/'
+    excluded: 'App/Sources/Theme/'
+    message: "Add the colour to Theme.Palette (App/Sources/Theme) and use it from there."
+    severity: error
+  logger_subsystem_literal:
+    name: Logger subsystem literal
+    regex: 'Logger\(subsystem: "'
+    excluded: 'App/Sources/Launch/AppLog.swift'
+    message: "Use Logger.app(category:) so the subsystem is written in one place."
+    severity: error
+  date_now_in_app:
+    name: Date() in the app
+    regex: '\bDate\(\)'
+    included: 'App/Sources/'
+    message: "Read the time from a TutorClock (SystemClock in production), so tests and QA can control it."
+    severity: error

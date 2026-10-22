@@ -1,14 +1,13 @@
 """Prints the ranks, headwords and tiers a batch must cover. Usage: python3 tools/dictionary/batch_words.py batch-03."""
 
 import sys
-from typing import List
 
 from lingvo_dict.contract import BATCH_COUNT, batch_ranks, parse_batch_id, tier_for_rank
 from lingvo_dict.paths import WORDLIST_FILE
 from lingvo_dict.wordlist_file import WordListError, read_word_list
 
 
-def main(argv: List[str]) -> int:
+def main(argv: list[str]) -> int:
     number = parse_batch_id(argv[0]) if len(argv) == 1 else None
     if number is None:
         print(f"usage: batch_words.py batch-NN (01 to {BATCH_COUNT:02d})", file=sys.stderr)

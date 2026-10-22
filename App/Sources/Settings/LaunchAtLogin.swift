@@ -22,7 +22,7 @@ protocol LaunchAtLoginControlling: AnyObject {
 /// App Store rule 2.4.5(iii): register only after the learner turns the toggle on.
 @MainActor
 final class SystemLaunchAtLogin: LaunchAtLoginControlling {
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "settings")
+    private let logger = Logger.app(category: "settings")
 
     var state: LaunchAtLoginState {
         switch SMAppService.mainApp.status {
@@ -58,7 +58,7 @@ enum LaunchAtLoginError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .changeFailed(let enabled, let underlying):
-            enabled
+            return enabled
                 ? String(localized: "LingvoBuddy could not add itself to the login items. \(underlying)")
                 : String(localized: "LingvoBuddy could not remove itself from the login items. \(underlying)")
         }

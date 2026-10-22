@@ -23,7 +23,7 @@ final class TrayMenuController {
     private let commands: TrayCommands
     private let errors: ErrorPresenter
     private let clock: any TutorClock
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "tray")
+    private let logger = Logger.app(category: "tray")
     private var panel: TrayPanel?
     private var outsideClickMonitor: Any?
     private var appSwitchObserver: NSObjectProtocol?
@@ -134,8 +134,7 @@ final class TrayMenuController {
     /// Clicks in other apps reach only a global monitor (no permission needed
     /// for mouse events); switching apps with ⌘⇥ also closes the menu.
     private func watchForDismissal() {
-        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) {
-            [weak self] _ in
+        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             MainActor.assumeIsolated { self?.closeUnlessOnIcon() }
         }
         appSwitchObserver = NSWorkspace.shared.notificationCenter.addObserver(

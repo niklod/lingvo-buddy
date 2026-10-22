@@ -13,7 +13,7 @@ final class DictionaryWindowController: NSObject, NSWindowDelegate {
     private var changesObserver: NSObjectProtocol?
     /// A change came while nobody could see the window: reload when it shows again.
     private var isStale = true
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "dictionary")
+    private let logger = Logger.app(category: "dictionary")
 
     init(model: DictionaryModel, settings: SettingsModel, actions: DictionaryActions) {
         self.model = model

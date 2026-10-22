@@ -7,7 +7,7 @@ enum QuickAddTheme {
     static let wordFontSize: CGFloat = 22
     static let pillHeight: CGFloat = 30
     static let fieldHeight: CGFloat = 34
-    static let footerBackground = Color(hex: 0x19191B)
+    static let footerBackground = Theme.Palette.quickAddFooter
     static let selectedFill = Theme.Palette.accent.opacity(0.18)
 }
 

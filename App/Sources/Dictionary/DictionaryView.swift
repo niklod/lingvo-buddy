@@ -12,8 +12,8 @@ enum DictionaryLayout {
     static let searchWidth: CGFloat = 260
     static let controlHeight: CGFloat = 30
     static let rowHeight: CGFloat = 44
-    static let headerBackground = Color(hex: 0x232325)
-    static let rowDivider = Color(hex: 0x2A2A2C)
+    static let headerBackground = Theme.Palette.dictionaryHeader
+    static let rowDivider = Theme.Palette.dictionaryRowDivider
     static let selectedList = Theme.Palette.accent.opacity(0.22)
 }
 

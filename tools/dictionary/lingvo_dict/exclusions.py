@@ -7,7 +7,6 @@ also after a headword ("dude  # slang"); blank lines are ignored.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Set, Tuple
 
 from lingvo_dict.contract import QUIZ_MAX_RANK, TOP_1000_MAX_RANK
 from lingvo_dict.text_lines import content_lines
@@ -16,12 +15,12 @@ from lingvo_dict.wordlist_file import WordList
 _EXCLUDABLE = f"only words of ranks {TOP_1000_MAX_RANK + 1}-{QUIZ_MAX_RANK} can be excluded"
 
 
-def parse_exclusions(text: str, word_list: WordList, name: str) -> Tuple[Tuple[str, ...], List[str]]:
+def parse_exclusions(text: str, word_list: WordList, name: str) -> tuple[tuple[str, ...], list[str]]:
     """Returns (headwords in file order, errors)."""
     ranks = word_list.ranks()
-    headwords: List[str] = []
-    seen: Set[str] = set()
-    errors: List[str] = []
+    headwords: list[str] = []
+    seen: set[str] = set()
+    errors: list[str] = []
     for number, headword in content_lines(text):
         label = f"{name}:{number} '{headword}'"
         rank = ranks.get(headword)
@@ -40,7 +39,7 @@ def parse_exclusions(text: str, word_list: WordList, name: str) -> Tuple[Tuple[s
     return tuple(headwords), errors
 
 
-def read_exclusions(path: Path, word_list: WordList) -> Tuple[Tuple[str, ...], List[str]]:
+def read_exclusions(path: Path, word_list: WordList) -> tuple[tuple[str, ...], list[str]]:
     try:
         text = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as error:

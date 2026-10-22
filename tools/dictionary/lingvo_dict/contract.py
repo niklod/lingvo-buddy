@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from types import MappingProxyType
-from typing import Dict, Optional, Tuple
 
 BATCH_SIZE = 500
 BATCH_COUNT = 20
@@ -47,8 +46,8 @@ LOOKUP_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa")
 
 @dataclass(frozen=True)
 class TierRules:
-    fields: Tuple[str, ...]
-    translations: Tuple[int, int]  # min and max count
+    fields: tuple[str, ...]
+    translations: tuple[int, int]  # min and max count
 
 
 # Ordered: json_schema emits oneOf in this order, and the committed schema file expects quiz first.
@@ -69,7 +68,7 @@ def tier_for_rank(rank: int) -> str:
     return "quiz" if is_quiz_rank(rank) else "lookup"
 
 
-def batch_ranks(number: int) -> Tuple[int, int]:
+def batch_ranks(number: int) -> tuple[int, int]:
     first = (number - 1) * BATCH_SIZE + 1
     return first, first + BATCH_SIZE - 1
 
@@ -78,7 +77,7 @@ def batch_id(number: int) -> str:
     return f"batch-{number:02d}"
 
 
-def parse_batch_id(text: object) -> Optional[int]:
+def parse_batch_id(text: object) -> int | None:
     """Returns NN of 'batch-NN' when it names one of the BATCH_COUNT batches, else None."""
     match = BATCH_ID_PATTERN.fullmatch(text) if isinstance(text, str) else None
     if match is None:
@@ -87,15 +86,18 @@ def parse_batch_id(text: object) -> Optional[int]:
     return number if 1 <= number <= BATCH_COUNT else None
 
 
-def _anchored(pattern: "re.Pattern[str]") -> str:
+def _anchored(pattern: re.Pattern[str]) -> str:
     return f"^{pattern.pattern}$"
 
 
-def json_schema() -> Dict[str, object]:
-    def entry(tier: str, rules: TierRules) -> Dict[str, object]:
-        properties: Dict[str, object] = {
+def json_schema() -> dict[str, object]:
+    def entry(tier: str, rules: TierRules) -> dict[str, object]:
+        properties: dict[str, object] = {
             "rank": {"type": "integer", "minimum": 1},
-            "headword": {"type": "string", "description": "Exactly the headword of this rank in data/wordlist/wordlist.tsv."},
+            "headword": {
+                "type": "string",
+                "description": "Exactly the headword of this rank in data/wordlist/wordlist.tsv.",
+            },
             "tier": {"const": tier},
             "pos": {"enum": list(POS_VALUES)},
             "translations": {
@@ -120,7 +122,10 @@ def json_schema() -> Dict[str, object]:
             }
             properties["synonym_group"] = {
                 "type": "string",
-                "description": "Headword of the lowest-ranked quiz-tier word with the same main meaning; the entry's own headword if none.",
+                "description": (
+                    "Headword of the lowest-ranked quiz-tier word with the same main meaning;"
+                    " the entry's own headword if none."
+                ),
             }
         return {
             "type": "object",

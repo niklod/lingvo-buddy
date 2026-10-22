@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from typing import Any
 
 
 @dataclass(frozen=True)
@@ -11,5 +11,5 @@ class LoadedEntry:
     file: str
     rank: int
     headword: str
-    synonym_group: Optional[str]  # None for lookup-tier entries
-    data: Dict[str, Any]
+    synonym_group: str | None  # None for lookup-tier entries
+    data: dict[str, Any]

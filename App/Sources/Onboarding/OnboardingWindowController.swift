@@ -11,7 +11,7 @@ final class OnboardingWindowController: NSObject, NSWindowDelegate {
     private let onFinish: () -> Void
     private var isFinished = false
     private var isClosing = false
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "onboarding")
+    private let logger = Logger.app(category: "onboarding")
 
     init(
         model: OnboardingModel,

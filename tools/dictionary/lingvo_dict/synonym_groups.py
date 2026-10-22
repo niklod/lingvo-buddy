@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Sequence, Set
+from collections.abc import Sequence
 
 from lingvo_dict.contract import BATCH_SIZE, batch_id, is_quiz_rank
 from lingvo_dict.loaded_entry import LoadedEntry
 from lingvo_dict.wordlist_file import WordList
 
 
-def check_synonym_groups(entries: Sequence[LoadedEntry], word_list: WordList, allow_partial: bool) -> List[str]:
+def check_synonym_groups(entries: Sequence[LoadedEntry], word_list: WordList, allow_partial: bool) -> list[str]:
     ranks = word_list.ranks()
     group_of = {item.headword: item.synonym_group for item in entries if item.synonym_group is not None}
     # A batch in progress may not have the key's entry yet; a complete batch must.
@@ -37,7 +37,7 @@ def check_synonym_groups(entries: Sequence[LoadedEntry], word_list: WordList, al
     return errors
 
 
-def _chain_advice(group: str, group_of: Dict[str, Optional[str]]) -> str:
+def _chain_advice(group: str, group_of: dict[str, str | None]) -> str:
     # Naming the final key, not the next link, makes one fix pass enough for every member of the group.
     final = _final_key(group, group_of)
     if final is None:
@@ -45,9 +45,9 @@ def _chain_advice(group: str, group_of: Dict[str, Optional[str]]) -> str:
     return f"belongs to group '{final}'; use '{final}'"
 
 
-def _final_key(group: str, group_of: Dict[str, Optional[str]]) -> Optional[str]:
+def _final_key(group: str, group_of: dict[str, str | None]) -> str | None:
     """Follows keys until a word that is its own key; None when the keys loop."""
-    seen: Set[str] = set()
+    seen: set[str] = set()
     current = group
     while current in group_of and group_of[current] != current:
         if current in seen:

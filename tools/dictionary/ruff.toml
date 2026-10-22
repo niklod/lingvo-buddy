@@ -1,0 +1,7 @@
+# The tools promise Python 3.9+ with the standard library only (CI installs nothing),
+# so pyupgrade must not suggest syntax newer than 3.9.
+target-version = "py39"
+line-length = 120
+
+[lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]

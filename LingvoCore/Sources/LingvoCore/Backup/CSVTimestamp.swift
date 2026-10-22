@@ -15,9 +15,7 @@ struct CSVTimestamp: Sendable, Equatable {
     /// `2026-10-15T06:00:00.250Z` or `2026-10-15T06:00:00Z`; UTC only.
     init?(iso text: String) {
         guard let match = text.wholeMatch(of: /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?Z/),
-              let fields = Self.fields(
-                  year: match.1, month: match.2, day: match.3, hour: match.4, minute: match.5, second: match.6
-              ),
+              let fields = Self.fields([match.1, match.2, match.3, match.4, match.5, match.6]),
               let seconds = Self.secondsSince1970(fields) else {
             return nil
         }
@@ -53,10 +51,9 @@ struct CSVTimestamp: Sendable, Equatable {
         )
     }
 
-    private static func fields(
-        year: Substring, month: Substring, day: Substring, hour: Substring, minute: Substring, second: Substring
-    ) -> Fields? {
-        let values = [year, month, day, hour, minute, second].compactMap { Int32($0) }
+    /// `parts`: year, month, day, hour, minute, second, in this order.
+    private static func fields(_ parts: [Substring]) -> Fields? {
+        let values = parts.compactMap { Int32($0) }
         guard values.count == 6 else { return nil }
         return Fields(year: values[0], month: values[1], day: values[2], hour: values[3], minute: values[4], second: values[5])
     }

@@ -19,7 +19,7 @@ protocol FocusStatusReading {
 final class SystemFocusStatus: FocusStatusReading {
     static let entitlement = "com.apple.developer.usernotifications.communication"
 
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "focus")
+    private let logger = Logger.app(category: "focus")
     private let isAvailable = SystemFocusStatus.hasEntitlement()
 
     var isFocusOn: Bool {

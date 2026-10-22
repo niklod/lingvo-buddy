@@ -41,7 +41,7 @@ final class DictionaryModel {
         rows: []
     )
     /// When the page was read: the "12 min" ages count from here.
-    private(set) var loadedAt = Date()
+    private(set) var loadedAt: Date
 
     @ObservationIgnored private let store: any WordListStore
     @ObservationIgnored private let errors: ErrorPresenter?
@@ -53,6 +53,7 @@ final class DictionaryModel {
         self.store = store
         self.errors = errors
         self.now = now
+        self.loadedAt = now()
     }
 
     func reload() {

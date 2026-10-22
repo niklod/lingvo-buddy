@@ -22,6 +22,16 @@ enum Theme {
         static let keyBadge = Color.white.opacity(0.08)
         static let desktop = Color(hex: 0x33404D)
         static let shadow = Color.black.opacity(0.45)
+        static let chipNewText = Color(hex: 0x64D2FF)
+        static let chipReview = Color(hex: 0x5E5CE6)
+        static let chipReviewText = Color(hex: 0xB7B5FF)
+        static let chipMineText = Color(hex: 0xFFC56B)
+        static let dictionaryHeader = Color(hex: 0x232325)
+        static let dictionaryRowDivider = Color(hex: 0x2A2A2C)
+        static let quickAddFooter = Color(hex: 0x19191B)
+        /// Snapshots only: a dark menu bar and the window buttons, as macOS draws them.
+        static let menuBar = Color(hex: 0x2B2B2E)
+        static let trafficLights = [Color(hex: 0xFF5F57), Color(hex: 0xFEBC2E), Color(hex: 0x28C840)]
     }
 
     enum Radius {

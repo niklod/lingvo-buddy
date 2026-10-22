@@ -38,7 +38,7 @@ enum DictionarySnapshots {
         }
         let dictionary = try DictionaryStore.open(at: url)
         let userDatabase = try UserDatabase.inMemory()
-        try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: Date())
+        try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
         return try Tutor(dictionary: dictionary, userDatabase: userDatabase)
     }
 }
@@ -61,8 +61,8 @@ private struct WindowChrome<Content: View>: View {
 
     private var trafficLights: some View {
         HStack(spacing: 8) {
-            ForEach([0xFF5F57, 0xFEBC2E, 0x28C840] as [UInt32], id: \.self) { color in
-                Circle().fill(Color(hex: color)).frame(width: 12, height: 12)
+            ForEach(Theme.Palette.trafficLights, id: \.self) { color in
+                Circle().fill(color).frame(width: 12, height: 12)
             }
         }
         .frame(height: DictionaryLayout.headerHeight)

@@ -5,9 +5,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, replace
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any
 
 from lingvo_dict.contract import BATCH_COUNT, batch_ranks, is_quiz_rank, parse_batch_id
 from lingvo_dict.entry_rules import check_entry, is_rank
@@ -22,16 +23,16 @@ from lingvo_dict.wordlist_file import WordList, WordListError, read_word_list
 @dataclass(frozen=True)
 class ValidationOptions:
     allow_partial: bool = False  # a batch may miss ranks of its range (work in progress)
-    through_rank: Optional[int] = None  # every rank 1..N must be present
+    through_rank: int | None = None  # every rank 1..N must be present
     full: bool = False  # every rank of the word list must be present
 
 
 @dataclass(frozen=True)
 class ValidationReport:
-    errors: Tuple[str, ...]
-    entries: Tuple[LoadedEntry, ...]
+    errors: tuple[str, ...]
+    entries: tuple[LoadedEntry, ...]
     batch_count: int
-    quiz_exclusions: Tuple[str, ...] = ()  # lookup-tier headwords that never become quiz cards
+    quiz_exclusions: tuple[str, ...] = ()  # lookup-tier headwords that never become quiz cards
 
     @property
     def entry_count(self) -> int:
@@ -39,8 +40,8 @@ class ValidationReport:
 
 
 def validate_batches(paths: Sequence[Path], word_list: WordList, options: ValidationOptions) -> ValidationReport:
-    errors: List[str] = []
-    entries: List[LoadedEntry] = []
+    errors: list[str] = []
+    entries: list[LoadedEntry] = []
     for path in paths:
         batch_errors, batch_entries = _validate_file(path, word_list, options)
         errors += batch_errors
@@ -53,7 +54,7 @@ def validate_batches(paths: Sequence[Path], word_list: WordList, options: Valida
 
 def _validate_file(
     path: Path, word_list: WordList, options: ValidationOptions
-) -> Tuple[List[str], List[LoadedEntry]]:
+) -> tuple[list[str], list[LoadedEntry]]:
     name = path.name
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
@@ -69,7 +70,7 @@ def _validate_file(
     ranks = batch_ranks(number)
     batch = document["batch"]
     errors = list(header_errors)
-    loaded: List[LoadedEntry] = []
+    loaded: list[LoadedEntry] = []
     for entry in document["entries"]:
         label = _label(name, entry)
         errors += [f"{label}: {message}" for message in check_entry(entry, word_list, ranks, batch)]
@@ -91,11 +92,11 @@ def _is_loadable(entry: Any) -> bool:
     return isinstance(entry, dict) and is_rank(entry.get("rank")) and isinstance(entry.get("headword"), str)
 
 
-def _missing_ranks(first: int, last: int, entries: Iterable[LoadedEntry]) -> List[int]:
+def _missing_ranks(first: int, last: int, entries: Iterable[LoadedEntry]) -> list[int]:
     return sorted(set(range(first, last + 1)) - {item.rank for item in entries})
 
 
-def _check_header(document: Any, name: str) -> Tuple[List[str], Optional[int]]:
+def _check_header(document: Any, name: str) -> tuple[list[str], int | None]:
     if not isinstance(document, dict):
         return [f"{name}: top level must be an object with 'batch' and 'entries'"], None
     unknown = sorted(set(document) - {"batch", "entries"})
@@ -117,28 +118,29 @@ def _label(name: str, entry: Any) -> str:
     return f"{name}: entry {entry!r}"
 
 
-def _check_order(name: str, ranks: List[int]) -> List[str]:
+def _check_order(name: str, ranks: list[int]) -> list[str]:
     for previous, current in zip(ranks, ranks[1:]):
         if current <= previous:
             return [f"{name}: entries must be sorted by rank (rank {current} after {previous})"]
     return []
 
 
-def _check_duplicates(entries: Iterable[LoadedEntry]) -> List[str]:
+def _check_duplicates(entries: Iterable[LoadedEntry]) -> list[str]:
     errors = []
-    seen_ranks: Dict[int, str] = {}
-    seen_headwords: Dict[str, str] = {}
+    seen_ranks: dict[int, str] = {}
+    seen_headwords: dict[str, str] = {}
     for item in entries:
         if item.rank in seen_ranks:
             errors.append(f"{item.file}: duplicate rank {item.rank} (also in {seen_ranks[item.rank]})")
         if item.headword in seen_headwords:
-            errors.append(f"{item.file}: duplicate headword '{item.headword}' (also in {seen_headwords[item.headword]})")
+            first_file = seen_headwords[item.headword]
+            errors.append(f"{item.file}: duplicate headword '{item.headword}' (also in {first_file})")
         seen_ranks.setdefault(item.rank, item.file)
         seen_headwords.setdefault(item.headword, item.file)
     return errors
 
 
-def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options: ValidationOptions) -> List[str]:
+def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options: ValidationOptions) -> list[str]:
     through = word_list.size if options.full else options.through_rank
     if through is None:
         return []
@@ -151,7 +153,7 @@ def _check_coverage(entries: Sequence[LoadedEntry], word_list: WordList, options
 
 
 def format_ranges(numbers: Sequence[int], limit: int = 10) -> str:
-    ranges: List[str] = []
+    ranges: list[str] = []
     start = previous = numbers[0]
     for number in list(numbers[1:]) + [None]:
         if number is not None and number == previous + 1:
@@ -172,7 +174,7 @@ def plural(count: int, noun: str) -> str:
     return f"{count} {noun}{'es' if noun.endswith('h') else 's'}"
 
 
-def batch_files(folder: Path) -> List[Path]:
+def batch_files(folder: Path) -> list[Path]:
     return sorted(folder.glob("batch-*.json"))
 
 
@@ -192,7 +194,7 @@ def options_from(args: argparse.Namespace) -> ValidationOptions:
     return ValidationOptions(allow_partial=args.allow_partial, through_rank=args.through, full=args.full)
 
 
-def load_and_validate(args: argparse.Namespace, files: Sequence[Path]) -> Tuple[Optional[WordList], ValidationReport]:
+def load_and_validate(args: argparse.Namespace, files: Sequence[Path]) -> tuple[WordList | None, ValidationReport]:
     """Returns (None, report) when the word list cannot be read."""
     try:
         word_list = read_word_list(args.word_list)
@@ -200,13 +202,14 @@ def load_and_validate(args: argparse.Namespace, files: Sequence[Path]) -> Tuple[
         return None, ValidationReport(errors=(str(error),), entries=(), batch_count=0)
     paths = list(files) or batch_files(args.batches)
     if not paths:
-        return word_list, ValidationReport(errors=(f"no batch-*.json files in {args.batches}",), entries=(), batch_count=0)
+        no_batches = (f"no batch-*.json files in {args.batches}",)
+        return word_list, ValidationReport(errors=no_batches, entries=(), batch_count=0)
     report = validate_batches(paths, word_list, options_from(args))
     exclusions, exclusion_errors = read_exclusions(args.quiz_exclusions, word_list)
     return word_list, replace(report, errors=report.errors + tuple(exclusion_errors), quiz_exclusions=exclusions)
 
 
-def main(argv: List[str]) -> int:
+def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("files", nargs="*", type=Path, help="batch files (default: every batch in --batches)")
     add_selection_arguments(parser)

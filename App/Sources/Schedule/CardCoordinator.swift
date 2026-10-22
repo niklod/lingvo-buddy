@@ -17,7 +17,7 @@ final class CardCoordinator {
     private let settings: SettingsModel
     private let errors: ErrorPresenter
     private let clock: any TutorClock
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "schedule")
+    private let logger = Logger.app(category: "schedule")
     private var schedule: CardSchedule
     /// The quiet rule that held the last timed card back.
     private var hold: ScheduleHold?
