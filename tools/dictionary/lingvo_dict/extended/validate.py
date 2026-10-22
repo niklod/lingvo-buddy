@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from collections.abc import Sequence
 
 from lingvo_dict.contract import IPA_PATTERN, POS_VALUES
@@ -19,13 +20,14 @@ from lingvo_dict.extended.merge import EnglishEntry, RussianEntry
 from lingvo_dict.extended.records import ENGLISH_WORD, RUSSIAN_WORD
 from lingvo_dict.extended.source import ExtendedData
 
+# A broken import can fail every entry; the first errors show the pattern, the count tells the rest.
+MAX_SHOWN_ERRORS = 50
+
 
 def validate_extended(data: ExtendedData, bundled: Bundled) -> list[str]:
-    errors: list[str] = []
-    if not data.meta.get("license"):
-        errors.append("header has no license note")
-    _check_order([entry.headword for entry in data.english], "English", errors)
-    _check_order([entry.word for entry in data.russian], "Russian", errors)
+    errors = [] if data.meta.get("license") else ["header has no license note"]
+    errors += _order_problems([entry.headword for entry in data.english], "English")
+    errors += _order_problems([entry.word for entry in data.russian], "Russian")
     for entry in data.english:
         errors += [f"{entry.headword}: {problem}" for problem in _english_problems(entry, bundled)]
     for russian in data.russian:
@@ -33,10 +35,17 @@ def validate_extended(data: ExtendedData, bundled: Bundled) -> list[str]:
     return errors
 
 
-def _check_order(keys: Sequence[str], kind: str, errors: list[str]) -> None:
-    for previous, key in zip(keys, keys[1:]):
-        if key <= previous:
-            errors.append(f"{kind} entry {key!r} is a duplicate or comes after {previous!r}: the source must be sorted")
+def print_errors(errors: Sequence[str], summary: str) -> None:
+    print("\n".join(errors[:MAX_SHOWN_ERRORS]), file=sys.stderr)
+    print(summary, file=sys.stderr)
+
+
+def _order_problems(keys: Sequence[str], kind: str) -> list[str]:
+    return [
+        f"{kind} entry {key!r} is a duplicate or comes after {previous!r}: the source must be sorted"
+        for previous, key in zip(keys, keys[1:])
+        if key <= previous
+    ]
 
 
 def _english_problems(entry: EnglishEntry, bundled: Bundled) -> list[str]:

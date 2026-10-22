@@ -43,7 +43,7 @@ def validate_batches(paths: Sequence[Path], word_list: WordList, options: Valida
     errors: list[str] = []
     entries: list[LoadedEntry] = []
     for path in paths:
-        batch_errors, batch_entries, _ = _validate_file(path, word_list, options)
+        batch_errors, batch_entries = _validate_file(path, word_list, options)
         errors += batch_errors
         entries += batch_entries
     errors += _check_duplicates(entries)
@@ -56,21 +56,19 @@ def validate_batches(paths: Sequence[Path], word_list: WordList, options: Valida
     )
 
 
-def _validate_file(
-    path: Path, word_list: WordList, options: ValidationOptions
-) -> tuple[list[str], list[LoadedEntry], int | None]:
-    """Returns the errors, the loadable entries and the batch number (None when the header is broken)."""
+def _validate_file(path: Path, word_list: WordList, options: ValidationOptions) -> tuple[list[str], list[LoadedEntry]]:
+    """Returns the errors and the loadable entries."""
     name = path.name
     try:
         document = json.loads(path.read_text(encoding="utf-8"))
     except OSError as error:
-        return [f"{name}: cannot read file: {error}"], [], None
+        return [f"{name}: cannot read file: {error}"], []
     except (json.JSONDecodeError, UnicodeDecodeError) as error:
-        return [f"{name}: invalid JSON: {error}"], [], None
+        return [f"{name}: invalid JSON: {error}"], []
 
     header_errors, number = _check_header(document, name)
     if number is None:
-        return header_errors, [], None
+        return header_errors, []
 
     ranks = batch_ranks(number)
     batch = document["batch"]
@@ -90,7 +88,7 @@ def _validate_file(
             errors.append(
                 f"{name}: missing ranks {format_ranges(missing)} (use --allow-partial while the batch is in progress)"
             )
-    return errors, loaded, number
+    return errors, loaded
 
 
 def _is_loadable(entry: Any) -> bool:
@@ -245,4 +243,3 @@ def main(argv: list[str]) -> int:
         f"{plural(len(report.quiz_exclusions), 'quiz exclusion')}"
     )
     return 0
-

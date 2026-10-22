@@ -77,10 +77,6 @@ def batch_ranks(number: int) -> tuple[int, int]:
     return first, first + BATCH_SIZE - 1
 
 
-def batch_of_rank(rank: int) -> int:
-    return (rank - 1) // BATCH_SIZE + 1
-
-
 def batch_id(number: int) -> str:
     return f"batch-{number:02d}"
 

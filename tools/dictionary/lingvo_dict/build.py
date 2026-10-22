@@ -7,12 +7,12 @@ import hashlib
 import sqlite3
 import sys
 from collections.abc import Sequence
-from contextlib import closing
 from pathlib import Path
 from typing import Optional
 
 from lingvo_dict.contract import POS_VALUES, TIERS, TRANSLATION_LANG
 from lingvo_dict.paths import DEFAULT_DICTIONARY
+from lingvo_dict.sqlite_file import atomic_database
 from lingvo_dict.validate import (
     LoadedEntry,
     add_selection_arguments,
@@ -80,22 +80,8 @@ EntryRow = tuple[int, str, int, str, str, Optional[str], Optional[str], Optional
 def write_dictionary(
     entries: Sequence[LoadedEntry], meta: Sequence[MetaRow], out: Path, quiz_exclusions: Sequence[str] = ()
 ) -> None:
-    """Writes to a temporary file first so a failed build never leaves a half-written dictionary."""
-    out.parent.mkdir(parents=True, exist_ok=True)
-    temporary = out.with_name(out.name + ".tmp")
-    temporary.unlink(missing_ok=True)
-    try:
-        with closing(sqlite3.connect(temporary)) as connection:
-            with connection:
-                _insert_all(connection, sorted(entries, key=lambda item: item.rank), meta, quiz_exclusions)
-            # The app opens the file read-only inside its signed bundle, where SQLite
-            # cannot create -wal/-shm files, so the file must stay in rollback-journal mode.
-            connection.execute("PRAGMA journal_mode=DELETE")
-            connection.execute("VACUUM")
-        temporary.replace(out)
-    except BaseException:
-        temporary.unlink(missing_ok=True)
-        raise
+    with atomic_database(out) as connection:
+        _insert_all(connection, sorted(entries, key=lambda item: item.rank), meta, quiz_exclusions)
 
 
 def _insert_all(
