@@ -113,10 +113,27 @@ extension UserDatabase {
         }
     }
 
-    func record(_ answer: AnswerRecord, updating progress: WordProgress) throws {
+    /// Writes a given progress with the answer, for seeded QA states.
+    func log(_ answer: AnswerRecord, saving progress: WordProgress) throws {
         try writer.write { db in
             try answer.insert(db)
             try progress.save(db)
+        }
+    }
+
+    /// Reads the progress, applies the answer and logs it in one transaction:
+    /// two answers at once must not both start from the same old progress.
+    /// A word outside the dictionary must be a my word.
+    func record(_ answer: AnswerRecord, inDictionary: Bool) throws -> (before: WordProgress, after: WordProgress) {
+        try writer.write { db in
+            guard try inDictionary || MyWord.fetchOne(db, key: answer.headword) != nil else {
+                throw LingvoCoreError.unknownWord(answer.headword)
+            }
+            let before = try WordProgress.fetchOne(db, key: answer.headword) ?? .fresh(answer.headword)
+            let after = before.applying(answer.result, direction: answer.direction, at: answer.answeredAt)
+            try answer.insert(db)
+            try after.save(db)
+            return (before, after)
         }
     }
 

@@ -15,7 +15,7 @@ public struct CardScheduleSettings: Sendable, Equatable {
 
     /// Any positive interval: QA runs use seconds; the Settings window keeps to `intervalRange`.
     public init(interval: TimeInterval) throws {
-        guard interval > 0 else { throw LingvoCoreError.invalidInterval(interval) }
+        guard interval.isFinite, interval > 0 else { throw LingvoCoreError.invalidInterval(interval) }
         self.interval = interval
     }
 

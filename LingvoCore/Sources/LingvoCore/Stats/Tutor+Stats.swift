@@ -11,7 +11,9 @@ extension Tutor {
         let recent = try userDatabase.answers(since: windowStart)
         let todays = recent.filter { $0.answeredAt >= today }
         let endOfToday = calendar.date(byAdding: .day, value: 1, to: today) ?? today
-        let words = try wordCounts(endOfToday: endOfToday)
+        // One read feeds both counts, so they come from the same snapshot.
+        let progress = try userDatabase.allProgress()
+        let words = Self.wordCounts(progress.values, endOfToday: endOfToday)
         var streak = StreakCounter(today: today, calendar: calendar)
         try userDatabase.walkAnswerDays(before: endOfToday, calendar: calendar) { streak.add($0) }
         return TutorStats(
@@ -20,7 +22,7 @@ extension Tutor {
             todayCorrect: todays.correctCount,
             accuracy: recent.isEmpty ? nil : Double(recent.correctCount) / Double(recent.count),
             reviewsLeftToday: words.reviewsDue,
-            tierProgress: try tierProgress(),
+            tierProgress: try tierProgress(progress: progress),
             learningCount: words.learning,
             myWordsCount: try userDatabase.myWordsCount()
         )
@@ -31,9 +33,12 @@ extension Tutor {
         var reviewsDue = 0
     }
 
-    private func wordCounts(endOfToday: Date) throws -> WordCounts {
+    private static func wordCounts(
+        _ allProgress: Dictionary<String, WordProgress>.Values,
+        endOfToday: Date
+    ) -> WordCounts {
         var counts = WordCounts()
-        for progress in try userDatabase.allProgress().values {
+        for progress in allProgress {
             switch progress.status {
             case .learning:
                 counts.learning += 1

@@ -7,7 +7,10 @@ extension Tutor {
     }
 
     public func tierProgress() throws -> TierProgress {
-        let progress = try userDatabase.allProgress()
+        try tierProgress(progress: userDatabase.allProgress())
+    }
+
+    func tierProgress(progress: [String: WordProgress]) throws -> TierProgress {
         let tier = try openTier(progress: progress)
         let words = dictionary.quizEntries.filter { $0.rank <= tier.maxRank }
         let learned = words.filter { progress[$0.headword]?.status == .learned }.count
