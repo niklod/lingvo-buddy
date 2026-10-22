@@ -107,12 +107,22 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("coverage: missing ranks 501-1000", err)
 
+    def test_a_build_without_a_coverage_flag_is_refused(self):
+        self.folder.write(1, full_batch(self.word_list, 1))
+
+        with self.assertRaises(SystemExit) as raised, redirect_stderr(io.StringIO()) as err:
+            build.main(["--word-list", str(self.word_list_path), "--batches", str(self.folder.path), "--out", str(self.out)])
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("pass --full, --through RANK or --allow-partial", err.getvalue())
+        self.assertFalse(self.out.exists())
+
     def test_rebuilding_the_same_batches_gives_the_same_bytes(self):
         self.folder.write(1, full_batch(self.word_list, 1))
 
-        self.run_build()
+        self.run_build("--through", "500")
         first = self.out.read_bytes()
-        self.run_build()
+        self.run_build("--through", "500")
 
         self.assertEqual(self.out.read_bytes(), first)
 

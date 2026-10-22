@@ -135,6 +135,9 @@ def main(argv: List[str]) -> int:
     add_selection_arguments(parser)
     parser.add_argument("--out", type=Path, default=DEFAULT_DICTIONARY, help="SQLite file to write")
     args = parser.parse_args(argv)
+    # Without a coverage rule a missing batch file would ship a dictionary with a hole in it.
+    if not (args.full or args.through is not None or args.allow_partial):
+        parser.error("pass --full, --through RANK or --allow-partial")
 
     paths = batch_files(args.batches)
     word_list, report = load_and_validate(args, paths)
