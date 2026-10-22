@@ -32,6 +32,7 @@ enum QuizCardSnapshots {
             state("q6_mine_unanswered", DesignSamples.suggestMine, answer: nil),
             state("q7_mine_wrong", DesignSamples.suggestMine, answer: DesignSamples.suggestMineWrong),
             state("q8_top2000_lookup_word", DesignSamples.eventuallyTop2000, answer: nil),
+            state("q9_long_options", DesignSamples.mediaLongOptions, answer: nil),
         ]
     }
 
