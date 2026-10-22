@@ -29,6 +29,7 @@
               "translations",
               "ipa",
               "example",
+              "example_ru",
               "synonym_group"
             ],
             "properties": {
@@ -101,7 +102,9 @@
               "tier",
               "pos",
               "translations",
-              "ipa"
+              "ipa",
+              "example",
+              "example_ru"
             ],
             "properties": {
               "rank": {
@@ -144,6 +147,19 @@
               "ipa": {
                 "type": "string",
                 "pattern": "^/[aeiuæɑɒɔəɜɛɪʊʌbdfghjklmnprstvwxzŋθðʃʒɡʔːˈˌ.]+/$"
+              },
+              "example": {
+                "type": "string",
+                "minLength": 10,
+                "maxLength": 140,
+                "pattern": "^[A-Z0-9\\\"'][A-Za-z0-9 ,.;:!?'\\\"()\\-–—’]*[.!?]$"
+              },
+              "example_ru": {
+                "type": "string",
+                "description": "A natural Russian translation of example, in the meaning of the first translation.",
+                "minLength": 1,
+                "maxLength": 180,
+                "pattern": "^[А-ЯЁ0-9«\\\"][А-Яа-яЁё0-9 ,.;:!?\\\"()«»\\-–—]*[.!?»\\\"]$"
               }
             }
           }

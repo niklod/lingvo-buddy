@@ -49,6 +49,7 @@ def quiz_entry(word_list, rank, **changes):
         "translations": ["дом"],
         "ipa": "/haʊs/",
         "example": f"This {headword} is very old.",
+        "example_ru": "Этот дом очень старый.",
         "synonym_group": headword,
     }
     entry.update(changes)
@@ -56,13 +57,16 @@ def quiz_entry(word_list, rank, **changes):
 
 
 def lookup_entry(word_list, rank, **changes):
+    headword = word_list.headword_at(rank)
     entry = {
         "rank": rank,
-        "headword": word_list.headword_at(rank),
+        "headword": headword,
         "tier": "lookup",
         "pos": "noun",
         "translations": ["дом", "здание"],
         "ipa": "/haʊs/",
+        "example": f"The {headword} stands near the river.",
+        "example_ru": "Дом стоит у реки.",
     }
     entry.update(changes)
     return entry

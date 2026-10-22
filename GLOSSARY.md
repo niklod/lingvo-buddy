@@ -22,10 +22,10 @@ The read-only offline list of up to 30,000 ranked headwords with Russian transla
 _Avoid_: word list (the export input it is built from), database
 
 **Quiz entry**:
-A dictionary entry with full card data: an example and a synonym group. Ranks 1–2000. Code: `DictionaryTier.quiz`.
+A dictionary entry with full card data: an example, its Russian example and a synonym group. Ranks 1–2000. Code: `DictionaryTier.quiz`.
 
 **Lookup entry**:
-A dictionary entry without example or synonym group, used only by quick add. Ranks 2001–30,000. Code: `DictionaryTier.lookup`.
+A dictionary entry with an example and its Russian example but no synonym group, used only by quick add. Ranks 2001–30,000. Code: `DictionaryTier.lookup`.
 
 **Tier**:
 A frequency band that new words come from: Top‑1000 (ranks 1–1000), then Top‑2000 (ranks 1001–2000). Code: `TopTier`. Not the same as quiz entry and lookup entry.
