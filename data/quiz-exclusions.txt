@@ -1,6 +1,7 @@
-# Quiz exclusions: lookup-tier headwords (rank > 1000) that never become quiz cards
-# or distractors when the Top-2000 tier opens. They stay in the dictionary for
-# quick-add lookup, and their ranks do not move.
+# Quiz exclusions: Top-2000 headwords (ranks 1001-2000) that never become quiz
+# cards or distractors when the Top-2000 tier opens. Their entries stay quiz tier
+# (example and synonym group in their lookup sense) for quick-add lookup, and
+# their ranks do not move.
 # Reasons: a name, a fragment or clipping, slang, or a vulgar main sense.
 # Format: one headword per line; '#' starts a comment. Checked by validate.py.
 

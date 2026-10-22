@@ -1,6 +1,6 @@
 # Review one quiz-tier dictionary batch
 
-You are the second agent on a quiz-tier batch (`batch-01` or `batch-02`) of the LingvoBuddy dictionary.
+You are the second agent on a quiz-tier batch (`batch-01` to `batch-04`) of the LingvoBuddy dictionary.
 Replace `{{BATCH}}` with the batch id you were given. Run all commands from the repository root.
 The generation rules are in `tools/dictionary/prompts/generate-batch.md`. Read them first: they are the standard you review against.
 
@@ -17,7 +17,7 @@ The generation rules are in `tools/dictionary/prompts/generate-batch.md`. Read t
 
 - Edit the entry in place. Do not add, remove or reorder entries, and do not change other files.
 - After your edits run `python3 tools/dictionary/validate.py data/batches/{{BATCH}}.json`. It must print `OK: 500 entries in 1 batch`.
-- If both quiz batches exist, also run `python3 tools/dictionary/validate.py --through 1000` to check synonym groups across them.
+- If all quiz batches exist, also run `python3 tools/dictionary/validate.py --through 2000` to check synonym groups across them.
 
 ## Report
 

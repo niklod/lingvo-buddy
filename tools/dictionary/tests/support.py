@@ -27,7 +27,7 @@ def run_main(main, *args):
     return code, out.getvalue(), err.getvalue()
 
 
-def make_word_list(size=1600):
+def make_word_list(size=2600):
     headwords = list(NAMED) + generated_headwords(size - len(NAMED))
     return WordList(
         headwords=tuple(headwords),

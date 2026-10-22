@@ -4,24 +4,40 @@ import Testing
 
 @Suite("Top‑2000 tier")
 struct TopTierTests {
-    /// Four Top‑1000 words; above them lookup-tier words like the real dictionary:
-    /// "dude" is on the quiz-exclusion list, "fox" is past rank 2000.
-    static func learner() throws -> Learner {
+    /// Four Top‑1000 words; above them Top‑2000 words with full card data like the
+    /// real dictionary: "large" shares the synonym group of "big", "dude" is on the
+    /// quiz-exclusion list. From "fox" on the words are past rank 2000 (lookup tier).
+    static func learner(direction: DirectionSetting = .mix) throws -> Learner {
         let dictionary = try TestDictionary.make([
             .init("cat", rank: 1, pos: "noun", ru: ["кошка"]),
             .init("dog", rank: 2, pos: "noun", ru: ["собака"]),
             .init("run", rank: 3, pos: "verb", ru: ["бегать"]),
             .init("big", rank: 4, pos: "adjective", ru: ["большой"]),
-            .lookup("dude", rank: 1001, pos: "noun", ru: ["чувак"]),
-            .lookup("horse", rank: 1002, pos: "noun", ru: ["лошадь"]),
-            .lookup("sing", rank: 1003, pos: "verb", ru: ["петь"]),
+            .init("dude", rank: 1001, pos: "noun", ru: ["чувак"], example: "That dude is my neighbour."),
+            .init("horse", rank: 1002, pos: "noun", ru: ["лошадь"], example: "The horse ran across the field."),
+            .init("sing", rank: 1003, pos: "verb", ru: ["петь"]),
+            .init("large", rank: 1004, pos: "adjective", ru: ["крупный"], synonymGroup: "big"),
             .lookup("fox", rank: 2001, pos: "noun", ru: ["лиса"]),
             .lookup("us", rank: 2002, pos: "pronoun", ru: ["нас"]),
             .lookup("US", rank: 2003, pos: "noun", ru: ["США"]),
             .lookup("reluctant", rank: 4870, pos: "adjective", ru: ["неохотный", "нежелающий"]),
         ], quizExclusions: ["dude"])
         let clock = TestClock(Fixture.start)
-        return Learner(tutor: try Fixture.tutor(dictionary: dictionary, clock: clock), clock: clock)
+        let tutor = try Fixture.tutor(
+            dictionary: dictionary, clock: clock, settings: LearningSettings(direction: direction)
+        )
+        return Learner(tutor: tutor, clock: clock)
+    }
+
+    /// Answers right until every card word is learned and nothing is due (at most 100 cards).
+    static func answerEveryCard(_ learner: Learner) throws -> [Card] {
+        var cards: [Card] = []
+        while cards.count < 100, let card = try learner.tutor.nextCard().card {
+            _ = try learner.tutor.answer(card, choice: card.correctIndex)
+            cards.append(card)
+            learner.clock.advance(by: Fixture.hour)
+        }
+        return cards
     }
 
     static func learnTop1000(_ learner: Learner) throws {
@@ -43,17 +59,33 @@ struct TopTierTests {
         #expect(card.kind == .new)
     }
 
-    @Test("a lookup-tier word makes a full card without an example or synonym group")
-    func lookupTierCardWorks() throws {
+    @Test("a Top‑2000 card shows the example sentence of its word")
+    func top2000CardShowsExample() throws {
         let learner = try Self.learner()
         try Self.learnTop1000(learner)
 
         let (card, result) = try learner.answerNext()
 
-        #expect(card.example == nil)
-        #expect(card.options.count == 4)
+        #expect(card.headword == "horse")
+        #expect(card.example == "The horse ran across the field.")
         #expect(Set(card.options).count == 4)
         #expect(result.outcome == .correct)
+    }
+
+    @Test("a Top‑2000 word and a Top‑1000 word of one synonym group never share a card")
+    func synonymGroupSpansBothTiers() throws {
+        for direction in [DirectionSetting.enToRu, .ruToEn] {
+            let learner = try Self.learner(direction: direction)
+            let cards = try Self.answerEveryCard(learner)
+
+            let large = try #require(cards.first { $0.headword == "large" })
+            #expect(large.source.topTier == .top2000)
+            for card in cards {
+                let options = Set(card.options)
+                #expect(!options.isSuperset(of: ["big", "large"]), "\(card.headword): \(card.options)")
+                #expect(!options.isSuperset(of: ["большой", "крупный"]), "\(card.headword): \(card.options)")
+            }
+        }
     }
 
     @Test("a Top‑1000 word still in learning keeps the tier closed")
@@ -79,7 +111,7 @@ struct TopTierTests {
         let after = try learner.tutor.tierProgress()
 
         #expect(before == TierProgress(tier: .top1000, learned: 0, total: 4))
-        #expect(after == TierProgress(tier: .top2000, learned: 4, total: 6))
+        #expect(after == TierProgress(tier: .top2000, learned: 4, total: 7))
     }
 
     @Test("the tier stays open when a Top‑1000 word fails its review")
@@ -99,18 +131,11 @@ struct TopTierTests {
     @Test("an excluded word and words past rank 2000 never show on a card")
     func excludedWordsNeverShow() throws {
         let learner = try Self.learner()
-        var cards: [Card] = []
-        // Answers until every allowed word is learned and nothing is due.
-        while cards.count < 100, let card = try learner.tutor.nextCard().card {
-            _ = try learner.tutor.answer(card, choice: card.correctIndex)
-            cards.append(card)
-            learner.clock.advance(by: Fixture.hour)
-        }
+        let cards = try Self.answerEveryCard(learner)
 
         let shown = Set(cards.flatMap { [$0.headword] + $0.options })
 
-        #expect(shown.contains("horse"))
-        #expect(shown.contains("sing"))
+        #expect(shown.isSuperset(of: ["horse", "sing", "large"]))
         #expect(cards.count < 100)
         #expect(shown.isDisjoint(with: ["dude", "чувак", "fox", "лиса", "reluctant", "неохотный"]))
     }

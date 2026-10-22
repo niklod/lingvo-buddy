@@ -10,18 +10,20 @@ enum TestDictionary {
         let pos: String
         let ru: [String]
         let synonymGroup: String?
+        let example: String?
         let tier: DictionaryTier
 
-        init(_ headword: String, rank: Int, pos: String, ru: [String], synonymGroup: String? = nil) {
+        init(_ headword: String, rank: Int, pos: String, ru: [String], synonymGroup: String? = nil, example: String? = nil) {
             self.headword = headword
             self.rank = rank
             self.pos = pos
             self.ru = ru
             self.synonymGroup = synonymGroup
+            self.example = example
             self.tier = .quiz
         }
 
-        /// A lookup-tier word, as the real dictionary has above rank 1000: no example, no synonym group.
+        /// A lookup-tier word, as the real dictionary has above rank 2000: no example, no synonym group.
         static func lookup(_ headword: String, rank: Int, pos: String, ru: [String]) -> Entry {
             Entry(headword, rank: rank, pos: pos, ru: ru, tier: .lookup)
         }
@@ -32,6 +34,7 @@ enum TestDictionary {
             self.pos = pos
             self.ru = ru
             self.synonymGroup = nil
+            self.example = nil
             self.tier = tier
         }
 
@@ -42,7 +45,7 @@ enum TestDictionary {
                 "rank": rank,
                 "pos": pos,
                 "ipa": "/\(headword)/",
-                "example": isQuiz ? "An example with \(headword)." : NSNull(),
+                "example": isQuiz ? (example ?? "An example with \(headword).") : NSNull(),
                 "synonym_group": isQuiz ? (synonymGroup ?? headword) : NSNull(),
                 "tier": tier.rawValue,
                 "translations": ["ru": ru],

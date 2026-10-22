@@ -109,8 +109,8 @@ class BatchRulesTest(unittest.TestCase):
         self.assertIn("batch-01.json: invalid JSON", errors[0])
 
     def test_synonym_group_must_point_at_a_quiz_tier_headword(self):
-        lookup_word = self.word_list.headword_at(1001)
-        path = self.folder.write(2, [quiz_entry(self.word_list, 1000, synonym_group=lookup_word)])
+        lookup_word = self.word_list.headword_at(2001)
+        path = self.folder.write(4, [quiz_entry(self.word_list, 2000, synonym_group=lookup_word)])
 
         errors = validate_batches([path], self.word_list, PARTIAL).errors
 
@@ -165,7 +165,7 @@ class BatchRulesTest(unittest.TestCase):
         errors = validate_batches(paths, self.word_list, ValidationOptions(full=True)).errors
 
         self.assertEqual(len(errors), 1, errors)
-        self.assertIn("coverage: missing ranks 1501-1600", errors[0])
+        self.assertIn("coverage: missing ranks 1501-2600", errors[0])
 
 
 class CommandLineTest(unittest.TestCase):
@@ -223,7 +223,7 @@ class CommandLineTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("OK: 1000 entries in 2 batches", out)
 
-    def test_quiz_exclusions_must_be_known_lookup_tier_headwords_listed_once(self):
+    def test_quiz_exclusions_must_be_known_top_2000_headwords_listed_once(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))
         lookup_word = self.word_list.headword_at(1200)
         self.folder.write_exclusions(
@@ -232,6 +232,7 @@ class CommandLineTest(unittest.TestCase):
             f"{lookup_word}",
             "nosuchword",
             self.word_list.headword_at(3),
+            self.word_list.headword_at(2001),
         )
 
         code, _, err = self.run_cli(str(path))
@@ -239,7 +240,8 @@ class CommandLineTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn(f"quiz-exclusions.txt:3 '{lookup_word}': listed twice", err)
         self.assertIn("quiz-exclusions.txt:4 'nosuchword': not a headword of the word list", err)
-        self.assertIn("quiz-exclusions.txt:5 'large': rank 3 is quiz tier", err)
+        self.assertIn("quiz-exclusions.txt:5 'large': rank 3 is in the Top-1000", err)
+        self.assertIn(f"quiz-exclusions.txt:6 '{self.word_list.headword_at(2001)}': rank 2001 is past the Top-2000", err)
 
     def test_valid_quiz_exclusions_are_counted(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))

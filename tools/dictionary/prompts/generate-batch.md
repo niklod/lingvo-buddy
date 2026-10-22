@@ -7,14 +7,14 @@ Run all commands from the repository root. They need only `python3` (3.9 or late
 ## Scope
 
 - `batch-NN` covers ranks `(NN-1)*500+1` to `NN*500`: `batch-01` = 1–500, `batch-02` = 501–1000, `batch-20` = 9501–10000.
-- Ranks 1–1000 are the **quiz tier** (`batch-01`, `batch-02`). Ranks 1001–10000 are the **lookup tier**.
+- Ranks 1–2000 are the **quiz tier** (`batch-01` to `batch-04`: Top-1000 and Top-2000). Ranks 2001–10000 are the **lookup tier**.
 - Write exactly one file: `data/batches/{{BATCH}}.json`.
 - Do not change any other file: not the word list, not other batches, not the tools.
 
 ## Steps
 
 1. Print your words: `python3 tools/dictionary/batch_words.py {{BATCH}}`. Each line is `rank<TAB>headword<TAB>tier`.
-2. Quiz tier only: also print ranks 1–1000 (`batch_words.py batch-01` and `batch_words.py batch-02`). You need them for `synonym_group`.
+2. Quiz tier only: also print ranks 1–2000 (`batch_words.py batch-01` to `batch_words.py batch-04`). You need them for `synonym_group`.
 3. Write the entries in chunks of about 100, in rank order. After each chunk run
    `python3 tools/dictionary/validate.py data/batches/{{BATCH}}.json --allow-partial` and fix every error.
 4. When all 500 entries are in, run `python3 tools/dictionary/validate.py data/batches/{{BATCH}}.json`.
@@ -46,7 +46,7 @@ The JSON Schema is `tools/dictionary/batch.schema.json`. The validator checks mo
 A lookup-tier entry has only `rank`, `headword`, `tier`, `pos`, `translations` and `ipa`:
 
 ```json
-{"rank": 1001, "headword": "beginning", "tier": "lookup", "pos": "noun", "translations": ["начало"], "ipa": "/bɪˈɡɪnɪŋ/"}
+{"rank": 2001, "headword": "gender", "tier": "lookup", "pos": "noun", "translations": ["пол", "род"], "ipa": "/ˈdʒendə/"}
 ```
 
 One entry per rank, sorted by rank, no gaps. Use UTF-8 and write Cyrillic and IPA characters as they are (no `\u` escapes needed).
@@ -55,7 +55,7 @@ One entry per rank, sorted by rank, no gaps. Use UTF-8 and write Cyrillic and IP
 
 **rank, headword** — copy them exactly from `batch_words.py` (case too: `Monday`, `English`, `TV`).
 
-**tier** — `"quiz"` for ranks up to 1000, `"lookup"` above.
+**tier** — `"quiz"` for ranks up to 2000, `"lookup"` above.
 
 **pos** — the part of speech of the most frequent everyday meaning. One of:
 `noun`, `verb`, `adjective`, `adverb`, `pronoun`, `preposition`, `conjunction`, `determiner`, `numeral`, `interjection`, `other`.
@@ -83,7 +83,7 @@ Use `determiner` for words like `this`, `every`, `some` before a noun, `numeral`
 - No real people, brands, politics, violence or sex.
 
 **synonym_group** (quiz tier only) — prevents two correct answers in one quiz.
-- Look at the quiz-tier words of ranks 1–1000. If a word with a *lower* rank has the same main meaning, so that a learner could fairly pick either as the answer (`large` → `big`, `begin` → `start`, `kid` → `child`), write that word's headword.
+- Look at the quiz-tier words of ranks 1–2000. If a word with a *lower* rank has the same main meaning, so that a learner could fairly pick either as the answer (`large` → `big`, `begin` → `start`, `kid` → `child`), write that word's headword.
 - Always use the lowest-ranked word of the group. That word's own `synonym_group` is its own headword. Never point at a word with a higher rank, and never chain: if `large` → `big`, then `huge` → `big`, not `large`.
 - If no lower-ranked word has the same meaning, write the entry's own headword.
 - Be conservative: only true near-synonyms. Related words (`hot` / `warm`, `buy` / `sell`) are not a group.

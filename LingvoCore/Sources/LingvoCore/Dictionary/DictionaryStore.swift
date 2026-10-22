@@ -4,8 +4,8 @@ import GRDB
 /// Read-only access to a dictionary that follows the bundled contract.
 public struct DictionaryStore: Sendable {
     let reader: any DatabaseReader
-    /// Every word that can be a quiz card: ranks up to the last `TopTier`, quiz and
-    /// lookup tier alike, minus the quiz-exclusion list (names, fragments, vulgar
+    /// Every word that can be a quiz card: ranks up to the last `TopTier` (quiz tier
+    /// in the bundled data), minus the quiz-exclusion list (names, fragments, vulgar
     /// words). Small (2k rows) and never changes at runtime, so it is loaded once;
     /// the picker and distractor rules then work without SQL.
     let quizEntries: [DictionaryEntry]

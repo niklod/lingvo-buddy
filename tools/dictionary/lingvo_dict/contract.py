@@ -9,7 +9,9 @@ from typing import Dict, Optional, Tuple
 
 BATCH_SIZE = 500
 BATCH_COUNT = 20
-QUIZ_MAX_RANK = 1000
+# Top-1000 and Top-2000 words become quiz cards; the rest is for quick-add lookup only.
+TOP_1000_MAX_RANK = 1000
+QUIZ_MAX_RANK = 2000
 TRANSLATION_LANG = "ru"
 
 POS_VALUES = (

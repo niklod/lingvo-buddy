@@ -55,7 +55,7 @@ enum DesignSamples {
         )
     )
 
-    /// A Top‑2000 card for a lookup-tier word: it has no example sentence.
+    /// A Top‑2000 card: since ranks 1001–2000 are quiz tier it has an example too.
     static let eventuallyTop2000 = Card(
         headword: "eventually",
         prompt: "eventually",
@@ -66,7 +66,7 @@ enum DesignSamples {
         partOfSpeech: .adverb,
         options: ["немедленно", "в конце концов", "почти", "очевидно"],
         correctIndex: 1,
-        example: nil,
+        example: "We waited for an hour, but eventually the bus came.",
         mastery: 0
     )
 

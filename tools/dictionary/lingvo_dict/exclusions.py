@@ -1,4 +1,4 @@
-"""Reads the quiz-exclusion list: lookup-tier headwords that never become quiz cards.
+"""Reads the quiz-exclusion list: Top-2000 headwords (ranks 1001-2000) that never become quiz cards.
 
 Format (data/quiz-exclusions.txt): one headword per line; '#' starts a comment,
 also after a headword ("dude  # slang"); blank lines are ignored.
@@ -9,9 +9,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import List, Set, Tuple
 
-from lingvo_dict.contract import QUIZ_MAX_RANK, is_quiz_rank
+from lingvo_dict.contract import QUIZ_MAX_RANK, TOP_1000_MAX_RANK
 from lingvo_dict.text_lines import content_lines
 from lingvo_dict.wordlist_file import WordList
+
+_EXCLUDABLE = f"only words of ranks {TOP_1000_MAX_RANK + 1}-{QUIZ_MAX_RANK} can be excluded"
 
 
 def parse_exclusions(text: str, word_list: WordList, name: str) -> Tuple[Tuple[str, ...], List[str]]:
@@ -25,9 +27,11 @@ def parse_exclusions(text: str, word_list: WordList, name: str) -> Tuple[Tuple[s
         rank = ranks.get(headword)
         if rank is None:
             errors.append(f"{label}: not a headword of the word list")
-        elif is_quiz_rank(rank):
-            # Quiz-tier words were reviewed with examples; drop them from the word list instead.
-            errors.append(f"{label}: rank {rank} is quiz tier; only lookup-tier words (rank > {QUIZ_MAX_RANK}) can be excluded")
+        elif rank <= TOP_1000_MAX_RANK:
+            # Top-1000 words were reviewed as cards; drop them from the word list instead.
+            errors.append(f"{label}: rank {rank} is in the Top-1000; {_EXCLUDABLE}")
+        elif rank > QUIZ_MAX_RANK:
+            errors.append(f"{label}: rank {rank} is past the Top-2000 and never becomes a card; {_EXCLUDABLE}")
         elif headword in seen:
             errors.append(f"{label}: listed twice")
         else:

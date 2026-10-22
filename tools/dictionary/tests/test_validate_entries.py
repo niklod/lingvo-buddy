@@ -23,7 +23,8 @@ class EntryRulesTest(unittest.TestCase):
 
     def test_valid_quiz_and_lookup_entries_pass(self):
         self.assertEqual(self.errors_for(1, [quiz_entry(self.word_list, 4)]), ())
-        self.assertEqual(self.errors_for(3, [lookup_entry(self.word_list, 1001)]), ())
+        self.assertEqual(self.errors_for(3, [quiz_entry(self.word_list, 1001)]), ())
+        self.assertEqual(self.errors_for(5, [lookup_entry(self.word_list, 2001)]), ())
 
     def test_headword_must_match_the_word_list_rank(self):
         errors = self.errors_for(1, [quiz_entry(self.word_list, 4, headword="home", example="This home is very old.")])
@@ -46,7 +47,7 @@ class EntryRulesTest(unittest.TestCase):
         self.assertTrue(any("unknown field 'note'" in e for e in errors))
 
     def test_tier_must_follow_the_rank(self):
-        errors = self.errors_for(3, [lookup_entry(self.word_list, 1001, tier="quiz")])
+        errors = self.errors_for(5, [lookup_entry(self.word_list, 2001, tier="quiz")])
 
         self.assertTrue(any("tier must be 'lookup'" in e for e in errors), errors)
 
@@ -118,9 +119,9 @@ class EntryRulesTest(unittest.TestCase):
         self.assertTrue(all("1 to 3 translations" in e for e in errors))
 
     def test_lookup_tier_allows_up_to_five_translations(self):
-        entry = lookup_entry(self.word_list, 1001, translations=["а", "б", "в", "г", "д"])
+        entry = lookup_entry(self.word_list, 2001, translations=["а", "б", "в", "г", "д"])
 
-        self.assertEqual(self.errors_for(3, [entry]), ())
+        self.assertEqual(self.errors_for(5, [entry]), ())
 
     def test_translations_must_be_unique_within_an_entry(self):
         errors = self.errors_for(1, [quiz_entry(self.word_list, 4, translations=["дом", "дом"])])
@@ -170,9 +171,9 @@ class EntryRulesTest(unittest.TestCase):
         self.assertEqual(self.errors_for(1, [entry]), ())
 
     def test_lookup_entry_must_not_carry_quiz_fields(self):
-        entry = lookup_entry(self.word_list, 1001, example="Some example here.", synonym_group="be")
+        entry = lookup_entry(self.word_list, 2001, example="Some example here.", synonym_group="be")
 
-        errors = self.errors_for(3, [entry])
+        errors = self.errors_for(5, [entry])
 
         self.assertEqual(len(errors), 2, errors)
         self.assertTrue(all("unknown field" in e for e in errors))
@@ -183,10 +184,21 @@ class EntryRulesTest(unittest.TestCase):
 
         self.assert_one_error(self.errors_for(2, [entry]), "missing field 'synonym_group'")
 
-    def test_rank_1001_is_lookup_tier_and_takes_no_quiz_fields(self):
-        errors = self.errors_for(3, [quiz_entry(self.word_list, 1001)])
+    def test_rank_2000_of_the_top_2000_is_quiz_tier_and_needs_an_example(self):
+        entry = quiz_entry(self.word_list, 2000)
+        del entry["example"]
 
-        self.assertIn("tier must be 'lookup' for rank 1001, got 'quiz'", " ".join(errors))
+        self.assert_one_error(self.errors_for(4, [entry]), "missing field 'example'")
+
+    def test_rank_1001_must_not_stay_lookup_tier(self):
+        errors = self.errors_for(3, [lookup_entry(self.word_list, 1001)])
+
+        self.assertIn("tier must be 'quiz' for rank 1001, got 'lookup'", " ".join(errors))
+
+    def test_rank_2001_is_lookup_tier_and_takes_no_quiz_fields(self):
+        errors = self.errors_for(5, [quiz_entry(self.word_list, 2001)])
+
+        self.assertIn("tier must be 'lookup' for rank 2001, got 'quiz'", " ".join(errors))
 
     def test_quiz_entry_needs_a_synonym_group(self):
         entry = quiz_entry(self.word_list, 4)
