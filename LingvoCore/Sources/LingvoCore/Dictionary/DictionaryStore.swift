@@ -14,20 +14,29 @@ public struct DictionaryStore: Sendable {
     /// has only a case-sensitive index; this map lets a case-insensitive lookup
     /// use that index instead of scanning all entries on each keystroke.
     private let headwordsByLowercase: [String: [String]]
+    /// Headwords by their Russian translations in `RussianText.normalized` form,
+    /// best rank first. The stored translations keep «ё» and their case, so the
+    /// translations index cannot answer a normalized match by itself.
+    private let headwordsByRussian: [String: [String]]
 
     init(reader: any DatabaseReader) throws {
         self.reader = reader
-        let (entries, headwords) = try reader.read { db in
+        let (entries, headwords, russian) = try reader.read { db in
             try Self.checkSchemaVersion(in: db)
             let entries = try Self.fetchEntries(
                 where: "e.rank <= ? AND e.headword NOT IN (SELECT headword FROM quiz_exclusions)",
                 arguments: [TopTier.last.maxRank],
                 in: db
             )
-            return (entries, try String.fetchAll(db, sql: "SELECT headword FROM entries"))
+            return (
+                entries,
+                try String.fetchAll(db, sql: "SELECT headword FROM entries"),
+                try Self.headwordsByRussian(in: db)
+            )
         }
         self.quizEntries = entries.filter { $0.primaryRussian != nil }
         self.headwordsByLowercase = Dictionary(grouping: headwords) { $0.lowercased() }
+        self.headwordsByRussian = russian
         self.tierGate = TierGate(cardEntries: quizEntries)
     }
 
@@ -67,13 +76,45 @@ public struct DictionaryStore: Sendable {
     func lookupEntry(_ text: String) throws -> DictionaryEntry? {
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let candidates = headwordsByLowercase[query.lowercased()] else { return nil }
-        let placeholders = Array(repeating: "?", count: candidates.count).joined(separator: ", ")
-        let matches = try reader.read { db in
+        let matches = try entries(headwords: candidates)
+        return matches.first { $0.headword == query } ?? matches.first
+    }
+
+    /// Entries with a Russian translation equal to the text after
+    /// `RussianText.normalized`, best rank first. Dictionary forms only: no morphology.
+    func russianLookupEntries(_ text: String, limit: Int) throws -> [DictionaryEntry] {
+        guard let headwords = headwordsByRussian[RussianText.normalized(text)] else { return [] }
+        return try entries(headwords: Array(headwords.prefix(limit)))
+    }
+
+    /// Ordered by rank.
+    private func entries(headwords: [String]) throws -> [DictionaryEntry] {
+        let placeholders = Array(repeating: "?", count: headwords.count).joined(separator: ", ")
+        return try reader.read { db in
             try Self.fetchEntries(
-                where: "e.headword IN (\(placeholders))", arguments: StatementArguments(candidates), in: db
+                where: "e.headword IN (\(placeholders))", arguments: StatementArguments(headwords), in: db
             )
         }
-        return matches.first { $0.headword == query } ?? matches.first
+    }
+
+    private static func headwordsByRussian(in db: Database) throws -> [String: [String]] {
+        let rows = try Row.fetchCursor(db, sql: """
+            SELECT t.text, e.headword
+            FROM translations t
+            JOIN entries e ON e.id = t.entry_id
+            WHERE t.lang = ?
+            ORDER BY e.rank, t.ord
+            """, arguments: [Language.russian.rawValue])
+        var result: [String: [String]] = [:]
+        while let row = try rows.next() {
+            let headword: String = row["headword"]
+            let key = RussianText.normalized(row["text"])
+            // «ещё» and «еще» on one entry would list its headword twice.
+            if result[key]?.last != headword {
+                result[key, default: []].append(headword)
+            }
+        }
+        return result
     }
 
     /// A file built for an older contract lacks tables this code reads; fail with

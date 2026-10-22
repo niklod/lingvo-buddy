@@ -1,12 +1,12 @@
 import SwiftUI
 
 extension QuickAddModel {
-    /// The dictionary example the card gets if "Where I saw it" stays empty.
+    /// The dictionary example of the selected word, which the card gets if "Where I saw it" stays empty.
     /// Own text replaces it on the card, so the preview hides as soon as the
     /// learner types; blank text still gives the dictionary example, so it does not.
     var examplePreview: String? {
         guard example.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return nil }
-        return preview?.example
+        return candidate?.example
     }
 }
 

@@ -36,12 +36,7 @@ final class QuickAddController {
                 cancel: { [weak self] in self?.close() }
             )
         ))
-        panel.onKey = { [weak self] command in
-            switch command {
-            case .submit: self?.submit()
-            case .cancel: self?.close()
-            }
-        }
+        panel.onKey = { [weak self] command in self?.handle(command) ?? false }
         panel.onResignKey = { [weak self] in self?.close() }
         panel.setFrameOrigin(Self.origin(for: panel.frame.size))
         panel.makeKeyAndOrderFront(nil)
@@ -61,6 +56,16 @@ final class QuickAddController {
             NSEvent.removeMonitor(outsideClickMonitor)
         }
         outsideClickMonitor = nil
+    }
+
+    private func handle(_ command: QuickAddKeyCommand) -> Bool {
+        switch command {
+        case .submit: submit()
+        case .cancel: close()
+        case .previousCandidate: return model?.moveCandidate(by: -1) ?? false
+        case .nextCandidate: return model?.moveCandidate(by: 1) ?? false
+        }
+        return true
     }
 
     private func submit() {
