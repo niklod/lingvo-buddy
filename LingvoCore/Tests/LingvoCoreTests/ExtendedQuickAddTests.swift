@@ -39,13 +39,9 @@ struct ExtendedQuickAddTests {
 
         let preview = try #require(try learner.tutor.quickAddPreview("  Petrichor "))
 
-        #expect(preview.headword == "petrichor")
-        #expect(preview.lookup == nil)
-        #expect(preview.candidates[0].extended == Self.petrichor)
-        #expect(preview.candidates[0].translations == ["петрихор", "запах дождя"])
-        #expect(preview.example == "The petrichor rose after the storm.")
-        #expect(preview.russianExample == "Запах земли поднялся после грозы.")
-        #expect(preview.canAdd)
+        #expect(preview == QuickAddPreview(
+            headword: "petrichor", lookup: nil, standing: .notAdded, extended: Self.petrichor
+        ))
     }
 
     @Test("an extended word without IPA or example shows only what it has")

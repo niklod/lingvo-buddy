@@ -25,6 +25,33 @@ struct SystemDictionaryQuickAddTests {
         )
     }
 
+    /// What the panel shows of a candidate once the dictionaries are merged.
+    private struct Merged: Equatable {
+        let ipa: String?
+        let partOfSpeech: PartOfSpeech?
+        let example: String?
+        let definitionHint: String?
+        let translations: [String]
+
+        init(ipa: String?, partOfSpeech: PartOfSpeech?, example: String?, definitionHint: String?, translations: [String]) {
+            self.ipa = ipa
+            self.partOfSpeech = partOfSpeech
+            self.example = example
+            self.definitionHint = definitionHint
+            self.translations = translations
+        }
+
+        init(_ candidate: QuickAddCandidate) {
+            self.init(
+                ipa: candidate.ipa,
+                partOfSpeech: candidate.partOfSpeech,
+                example: candidate.example,
+                definitionHint: candidate.definitionHint,
+                translations: candidate.translations
+            )
+        }
+    }
+
     private func candidate(_ word: String, in tutor: Tutor) throws -> QuickAddCandidate {
         try #require(try tutor.quickAddPreview(word)).candidates[0]
     }
@@ -33,22 +60,18 @@ struct SystemDictionaryQuickAddTests {
     func systemOnly() throws {
         let candidate = try candidate("skedaddle", in: try Self.tutor())
 
-        #expect(candidate.ipa == "/skəˈdædəl/")
-        #expect(candidate.partOfSpeech == .verb)
-        #expect(candidate.example == "when he saw us, he skedaddled.")
-        #expect(candidate.russianExample == nil)
-        #expect(candidate.definitionHint == "depart quickly or hurriedly; run away")
-        #expect(candidate.translations.isEmpty)
+        #expect(candidate == QuickAddCandidate(
+            headword: "skedaddle", lookup: nil, standing: .notAdded, system: SystemSamples.skedaddleEntry
+        ))
     }
 
     @Test("a definition without an example gives no example")
     func noExample() throws {
         let candidate = try candidate("mumpsimus", in: try Self.tutor())
 
-        #expect(candidate.ipa == "/ˈmʌmpsəməs/")
-        #expect(candidate.partOfSpeech == .noun)
-        #expect(candidate.example == nil)
-        #expect(candidate.definitionHint == "a traditional custom or notion adhered to although shown to be unreasonable")
+        #expect(candidate == QuickAddCandidate(
+            headword: "mumpsimus", lookup: nil, standing: .notAdded, system: SystemSamples.mumpsimusEntry
+        ))
     }
 
     @Test("region and register labels do not start the hint")
@@ -58,21 +81,21 @@ struct SystemDictionaryQuickAddTests {
         let persnickety = try candidate("persnickety", in: tutor)
         let codswallop = try candidate("codswallop", in: tutor)
 
-        #expect(persnickety.definitionHint == "placing too much emphasis on trivial or minor details; fussy")
-        #expect(persnickety.example == "she's very persnickety about her food.")
-        #expect(persnickety.ipa == "/pɚˈsnɪkədi/")
-        #expect(codswallop.definitionHint == "nonsense")
-        #expect(codswallop.ipa == "/ˈkɑdzˌwɑləp/")
+        #expect(persnickety == QuickAddCandidate(
+            headword: "persnickety", lookup: nil, standing: .notAdded, system: SystemSamples.persnicketyEntry
+        ))
+        #expect(codswallop == QuickAddCandidate(
+            headword: "codswallop", lookup: nil, standing: .notAdded, system: SystemSamples.codswallopEntry
+        ))
     }
 
     @Test("a bracketed grammar note before the first sense does not start the hint")
     func bracketedNotesAreSkipped() throws {
         let candidate = try candidate("run", in: try Self.tutor())
 
-        #expect(candidate.ipa == "/rʌn/")
-        #expect(candidate.partOfSpeech == .verb)
-        #expect(candidate.definitionHint == "move at a speed faster than a walk, never having both or all the feet on the ground at the same time")
-        #expect(candidate.example == "the dog ran across the road")
+        #expect(candidate == QuickAddCandidate(
+            headword: "run", lookup: nil, standing: .notAdded, system: SystemSamples.runEntry
+        ))
     }
 
     @Test("text that is not an entry for the word gives nothing, not an error")
@@ -82,21 +105,15 @@ struct SystemDictionaryQuickAddTests {
         let garbage = try candidate("garbage", in: tutor)
         let mismatch = try candidate("colour", in: tutor)
 
-        for candidate in [garbage, mismatch] {
-            #expect(candidate.ipa == nil)
-            #expect(candidate.partOfSpeech == nil)
-            #expect(candidate.example == nil)
-            #expect(candidate.definitionHint == nil)
-        }
+        #expect(garbage == QuickAddCandidate(headword: "garbage", lookup: nil, standing: .notAdded))
+        #expect(mismatch == QuickAddCandidate(headword: "colour", lookup: nil, standing: .notAdded))
     }
 
     @Test("a word the system dictionary lacks shows nothing from it")
     func unknownToSystem() throws {
         let candidate = try candidate("Kubernetes", in: try Self.tutor())
 
-        #expect(candidate.ipa == nil)
-        #expect(candidate.partOfSpeech == nil)
-        #expect(candidate.definitionHint == nil)
+        #expect(candidate == QuickAddCandidate(headword: "Kubernetes", lookup: nil, standing: .notAdded))
     }
 
     @Test("extended data wins per field; the system dictionary fills what is missing")
@@ -111,11 +128,21 @@ struct SystemDictionaryQuickAddTests {
         )
         let candidate = try candidate("petrichor", in: try Self.tutor(extended: [extended]))
 
-        #expect(candidate.ipa == "/ˈpɛtraɪˌkɔr/")
-        #expect(candidate.partOfSpeech == .adjective)
-        #expect(candidate.example?.hasPrefix("other than the petrichor emanating") == true)
-        #expect(candidate.definitionHint?.hasPrefix("a pleasant smell that frequently accompanies the first rain") == true)
-        #expect(candidate.translations == ["петрихор"])
+        #expect(candidate == QuickAddCandidate(
+            headword: "petrichor",
+            lookup: nil,
+            standing: .notAdded,
+            extended: extended,
+            system: SystemSamples.petrichorEntry
+        ))
+        // The merge: the extended entry has no IPA and no example, so the system ones show.
+        #expect(Merged(candidate) == Merged(
+            ipa: "/ˈpɛtraɪˌkɔr/",
+            partOfSpeech: .adjective,
+            example: SystemSamples.petrichorEntry.example,
+            definitionHint: SystemSamples.petrichorEntry.definition,
+            translations: ["петрихор"]
+        ))
     }
 
     @Test("extended IPA and example beat the system ones")
@@ -130,11 +157,21 @@ struct SystemDictionaryQuickAddTests {
         )
         let candidate = try candidate("skedaddle", in: try Self.tutor(extended: [extended]))
 
-        #expect(candidate.ipa == "/extended/")
-        #expect(candidate.partOfSpeech == .noun)
-        #expect(candidate.example == "He will skedaddle.")
-        #expect(candidate.russianExample == "Он удерёт.")
-        #expect(candidate.definitionHint == "depart quickly or hurriedly; run away")
+        #expect(candidate == QuickAddCandidate(
+            headword: "skedaddle",
+            lookup: nil,
+            standing: .notAdded,
+            extended: extended,
+            system: SystemSamples.skedaddleEntry
+        ))
+        // The merge: the extended IPA, part of speech and example hide the system ones.
+        #expect(Merged(candidate) == Merged(
+            ipa: "/extended/",
+            partOfSpeech: .noun,
+            example: "He will skedaddle.",
+            definitionHint: "depart quickly or hurriedly; run away",
+            translations: ["удирать"]
+        ))
     }
 
     @Test("a bundled word looks as it did, whatever the system dictionary says")
@@ -237,16 +274,24 @@ struct SystemEntryTests {
     func exampleAfterNote() throws {
         let entry = try #require(SystemEntry.parse(SystemSamples.reluctant, for: "reluctant"))
 
-        #expect(entry.definition == "unwilling and hesitant; disinclined")
-        #expect(entry.example == "she seemed reluctant to discuss the matter.")
+        #expect(entry == SystemEntry(
+            ipa: "/rəˈlʌktənt/",
+            partOfSpeech: .adjective,
+            definition: "unwilling and hesitant; disinclined",
+            example: "she seemed reluctant to discuss the matter."
+        ))
     }
 
     @Test("a numbered first sense and a qualifier in parentheses do not start the definition")
     func numberedSense() throws {
         let entry = try #require(SystemEntry.parse(SystemSamples.moon, for: "moon"))
 
-        #expect(entry.definition == "the natural satellite of the earth, visible (chiefly at night) by reflected light from the sun")
-        #expect(entry.example == "there was no moon.")
+        #expect(entry == SystemEntry(
+            ipa: "/mun/",
+            partOfSpeech: .noun,
+            definition: "the natural satellite of the earth, visible (chiefly at night) by reflected light from the sun",
+            example: "there was no moon."
+        ))
     }
 
     @Test("the word is matched case-insensitively")
