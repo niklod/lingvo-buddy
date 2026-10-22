@@ -1,0 +1,6443 @@
+{
+  "batch": "batch-22",
+  "entries": [
+    {
+      "rank": 10501,
+      "headword": "piggy",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "поросёнок",
+        "свинка"
+      ],
+      "ipa": "/ˈpɪɡi/",
+      "example": "The little piggy ran around the farm.",
+      "example_ru": "Маленький поросёнок бегал по ферме."
+    },
+    {
+      "rank": 10502,
+      "headword": "repute",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "репутация",
+        "слава"
+      ],
+      "ipa": "/rɪˈpjuːt/",
+      "example": "He is a doctor of good repute in our town.",
+      "example_ru": "Он врач с хорошей репутацией в нашем городе."
+    },
+    {
+      "rank": 10503,
+      "headword": "pallet",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "поддон",
+        "паллета"
+      ],
+      "ipa": "/ˈpælət/",
+      "example": "The boxes were stacked on a wooden pallet.",
+      "example_ru": "Коробки были сложены на деревянном поддоне."
+    },
+    {
+      "rank": 10504,
+      "headword": "thumbnail",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "миниатюра",
+        "эскиз"
+      ],
+      "ipa": "/ˈθʌmneɪl/",
+      "example": "Click the thumbnail to see the full picture.",
+      "example_ru": "Нажмите на миниатюру, чтобы увидеть полное изображение."
+    },
+    {
+      "rank": 10505,
+      "headword": "urn",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "урна",
+        "ваза"
+      ],
+      "ipa": "/ɜːn/",
+      "example": "Her ashes were kept in a small urn.",
+      "example_ru": "Её прах хранили в маленькой урне."
+    },
+    {
+      "rank": 10506,
+      "headword": "whistleblower",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "информатор",
+        "разоблачитель"
+      ],
+      "ipa": "/ˈwɪslˌbləʊə/",
+      "example": "The whistleblower told the newspaper about the problem.",
+      "example_ru": "Информатор рассказал газете о проблеме."
+    },
+    {
+      "rank": 10507,
+      "headword": "huddle",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "сбиваться в кучу",
+        "жаться друг к другу",
+        "ютиться"
+      ],
+      "ipa": "/ˈhʌdl/",
+      "example": "The children huddled together to keep warm.",
+      "example_ru": "Дети жались друг к другу, чтобы согреться."
+    },
+    {
+      "rank": 10508,
+      "headword": "decimal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "десятичный"
+      ],
+      "ipa": "/ˈdesɪml/",
+      "example": "We learned decimal numbers at school today.",
+      "example_ru": "Сегодня в школе мы изучали десятичные числа."
+    },
+    {
+      "rank": 10509,
+      "headword": "snare",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "силок",
+        "ловушка",
+        "западня"
+      ],
+      "ipa": "/sneə/",
+      "example": "The hunter set a snare for rabbits.",
+      "example_ru": "Охотник поставил силок на кроликов."
+    },
+    {
+      "rank": 10510,
+      "headword": "stratum",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "слой",
+        "пласт"
+      ],
+      "ipa": "/ˈstrɑːtəm/",
+      "example": "Each stratum of rock tells us about the past.",
+      "example_ru": "Каждый слой породы рассказывает нам о прошлом."
+    },
+    {
+      "rank": 10511,
+      "headword": "raffle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "лотерея",
+        "розыгрыш"
+      ],
+      "ipa": "/ˈræfl/",
+      "example": "She won a bike in the school raffle.",
+      "example_ru": "Она выиграла велосипед в школьной лотерее."
+    },
+    {
+      "rank": 10512,
+      "headword": "scammer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мошенник",
+        "аферист"
+      ],
+      "ipa": "/ˈskæmə/",
+      "example": "The scammer asked for my bank details.",
+      "example_ru": "Мошенник попросил данные моей банковской карты."
+    },
+    {
+      "rank": 10513,
+      "headword": "cheetah",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гепард"
+      ],
+      "ipa": "/ˈtʃiːtə/",
+      "example": "The cheetah is the fastest animal on land.",
+      "example_ru": "Гепард - самое быстрое животное на суше."
+    },
+    {
+      "rank": 10514,
+      "headword": "conveyor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "конвейер",
+        "транспортёр"
+      ],
+      "ipa": "/kənˈveɪə/",
+      "example": "The bags moved slowly along the conveyor.",
+      "example_ru": "Сумки медленно двигались по конвейеру."
+    },
+    {
+      "rank": 10515,
+      "headword": "devolve",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "передавать",
+        "делегировать"
+      ],
+      "ipa": "/dɪˈvɒlv/",
+      "example": "The government will devolve power to local councils.",
+      "example_ru": "Правительство передаст власть местным советам."
+    },
+    {
+      "rank": 10516,
+      "headword": "afar",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "издалека",
+        "вдали"
+      ],
+      "ipa": "/əˈfɑː/",
+      "example": "We watched the fireworks from afar.",
+      "example_ru": "Мы смотрели на салют издалека."
+    },
+    {
+      "rank": 10517,
+      "headword": "affectionate",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "ласковый",
+        "нежный",
+        "любящий"
+      ],
+      "ipa": "/əˈfekʃənət/",
+      "example": "Our cat is very affectionate with children.",
+      "example_ru": "Наша кошка очень ласковая с детьми."
+    },
+    {
+      "rank": 10518,
+      "headword": "authentication",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "аутентификация",
+        "проверка подлинности"
+      ],
+      "ipa": "/ɔːˌθentɪˈkeɪʃn/",
+      "example": "The app needs authentication before you can log in.",
+      "example_ru": "Приложению нужна аутентификация, прежде чем вы сможете войти."
+    },
+    {
+      "rank": 10519,
+      "headword": "azure",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "лазурный",
+        "голубой"
+      ],
+      "ipa": "/ˈæʒə/",
+      "example": "We swam in the azure sea.",
+      "example_ru": "Мы плавали в лазурном море."
+    },
+    {
+      "rank": 10520,
+      "headword": "bedside",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "место у кровати",
+        "изголовье"
+      ],
+      "ipa": "/ˈbedsaɪd/",
+      "example": "She sat at his bedside all night.",
+      "example_ru": "Она всю ночь сидела у его кровати."
+    },
+    {
+      "rank": 10521,
+      "headword": "byzantine",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "запутанный",
+        "византийский"
+      ],
+      "ipa": "/bɪˈzæntaɪn/",
+      "example": "The rules of the club are byzantine.",
+      "example_ru": "Правила клуба очень запутанные."
+    },
+    {
+      "rank": 10522,
+      "headword": "catfish",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сом"
+      ],
+      "ipa": "/ˈkætfɪʃ/",
+      "example": "My grandfather caught a big catfish in the river.",
+      "example_ru": "Мой дедушка поймал в реке большого сома."
+    },
+    {
+      "rank": 10523,
+      "headword": "clerical",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "канцелярский",
+        "конторский"
+      ],
+      "ipa": "/ˈklerɪkl/",
+      "example": "She does clerical work at a hospital.",
+      "example_ru": "Она выполняет канцелярскую работу в больнице."
+    },
+    {
+      "rank": 10524,
+      "headword": "complimentary",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бесплатный",
+        "хвалебный"
+      ],
+      "ipa": "/ˌkɒmplɪˈmentri/",
+      "example": "The hotel gives guests complimentary breakfast.",
+      "example_ru": "Отель предлагает гостям бесплатный завтрак."
+    },
+    {
+      "rank": 10525,
+      "headword": "conspicuous",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "заметный",
+        "бросающийся в глаза"
+      ],
+      "ipa": "/kənˈspɪkjuəs/",
+      "example": "He felt conspicuous in his bright red coat.",
+      "example_ru": "В ярко-красном пальто он чувствовал себя слишком заметным."
+    },
+    {
+      "rank": 10526,
+      "headword": "continual",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "постоянный",
+        "непрерывный"
+      ],
+      "ipa": "/kənˈtɪnjuəl/",
+      "example": "I am tired of the continual noise from the street.",
+      "example_ru": "Я устал от постоянного шума с улицы."
+    },
+    {
+      "rank": 10527,
+      "headword": "crackdown",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "жёсткие меры",
+        "облава"
+      ],
+      "ipa": "/ˈkrækdaʊn/",
+      "example": "The police started a crackdown on fast drivers.",
+      "example_ru": "Полиция начала принимать жёсткие меры против лихачей."
+    },
+    {
+      "rank": 10528,
+      "headword": "cybersecurity",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кибербезопасность"
+      ],
+      "ipa": "/ˌsaɪbəsɪˈkjʊərəti/",
+      "example": "Our company spends a lot on cybersecurity.",
+      "example_ru": "Наша компания много тратит на кибербезопасность."
+    },
+    {
+      "rank": 10529,
+      "headword": "davenport",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "диван",
+        "письменный стол"
+      ],
+      "ipa": "/ˈdævnpɔːt/",
+      "example": "Grandma sat on the old davenport and read.",
+      "example_ru": "Бабушка сидела на старом диване и читала."
+    },
+    {
+      "rank": 10530,
+      "headword": "deli",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кулинария",
+        "гастроном"
+      ],
+      "ipa": "/ˈdeli/",
+      "example": "I bought a sandwich at the deli.",
+      "example_ru": "Я купил бутерброд в кулинарии."
+    },
+    {
+      "rank": 10531,
+      "headword": "exceedingly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "чрезвычайно",
+        "крайне"
+      ],
+      "ipa": "/ɪkˈsiːdɪŋli/",
+      "example": "The test was exceedingly difficult.",
+      "example_ru": "Тест был чрезвычайно трудным."
+    },
+    {
+      "rank": 10532,
+      "headword": "excessively",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "чрезмерно",
+        "слишком"
+      ],
+      "ipa": "/ɪkˈsesɪvli/",
+      "example": "He worries excessively about small things.",
+      "example_ru": "Он чрезмерно переживает из-за мелочей."
+    },
+    {
+      "rank": 10533,
+      "headword": "fiercely",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "яростно",
+        "свирепо",
+        "ожесточённо"
+      ],
+      "ipa": "/ˈfɪəsli/",
+      "example": "The dog barked fiercely at the stranger.",
+      "example_ru": "Собака яростно лаяла на незнакомца."
+    },
+    {
+      "rank": 10534,
+      "headword": "fourteenth",
+      "tier": "lookup",
+      "pos": "numeral",
+      "translations": [
+        "четырнадцатый"
+      ],
+      "ipa": "/ˌfɔːˈtiːnθ/",
+      "example": "Her birthday is on the fourteenth of May.",
+      "example_ru": "Её день рождения четырнадцатого мая."
+    },
+    {
+      "rank": 10535,
+      "headword": "frontline",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "передовая",
+        "линия фронта"
+      ],
+      "ipa": "/ˈfrʌntlaɪn/",
+      "example": "Nurses work on the frontline of health care.",
+      "example_ru": "Медсёстры работают на передовой здравоохранения."
+    },
+    {
+      "rank": 10536,
+      "headword": "geographically",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "географически"
+      ],
+      "ipa": "/ˌdʒiːəˈɡræfɪkli/",
+      "example": "The two towns are geographically close.",
+      "example_ru": "Эти два города географически близки."
+    },
+    {
+      "rank": 10537,
+      "headword": "goggles",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "защитные очки",
+        "очки для плавания"
+      ],
+      "ipa": "/ˈɡɒɡlz/",
+      "example": "Wear goggles when you swim in the pool.",
+      "example_ru": "Надевай очки для плавания, когда плаваешь в бассейне."
+    },
+    {
+      "rank": 10538,
+      "headword": "grammatical",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "грамматический"
+      ],
+      "ipa": "/ɡrəˈmætɪkl/",
+      "example": "Your essay has a few grammatical mistakes.",
+      "example_ru": "В твоём сочинении есть несколько грамматических ошибок."
+    },
+    {
+      "rank": 10539,
+      "headword": "graphite",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "графит"
+      ],
+      "ipa": "/ˈɡræfaɪt/",
+      "example": "Pencils are made with graphite, not lead.",
+      "example_ru": "Карандаши делают из графита, а не из свинца."
+    },
+    {
+      "rank": 10540,
+      "headword": "Haitian",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "гаитянский"
+      ],
+      "ipa": "/ˈheɪʃn/",
+      "example": "We ate Haitian food at a small cafe.",
+      "example_ru": "Мы ели гаитянскую еду в маленьком кафе."
+    },
+    {
+      "rank": 10541,
+      "headword": "herpes",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "герпес"
+      ],
+      "ipa": "/ˈhɜːpiːz/",
+      "example": "Herpes can cause small sores on the lips.",
+      "example_ru": "Герпес может вызывать маленькие язвочки на губах."
+    },
+    {
+      "rank": 10542,
+      "headword": "hipster",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "хипстер"
+      ],
+      "ipa": "/ˈhɪpstə/",
+      "example": "A young hipster opened a coffee shop here.",
+      "example_ru": "Молодой хипстер открыл здесь кофейню."
+    },
+    {
+      "rank": 10543,
+      "headword": "impoverish",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "обеднять",
+        "разорять"
+      ],
+      "ipa": "/ɪmˈpɒvərɪʃ/",
+      "example": "The long war impoverished the whole country.",
+      "example_ru": "Долгая война разорила всю страну."
+    },
+    {
+      "rank": 10544,
+      "headword": "improperly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "неправильно",
+        "ненадлежащим образом"
+      ],
+      "ipa": "/ɪmˈprɒpəli/",
+      "example": "The machine broke because it was used improperly.",
+      "example_ru": "Машина сломалась, потому что ею пользовались неправильно."
+    },
+    {
+      "rank": 10545,
+      "headword": "ingenious",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "гениальный",
+        "изобретательный",
+        "остроумный"
+      ],
+      "ipa": "/ɪnˈdʒiːniəs/",
+      "example": "That is an ingenious idea!",
+      "example_ru": "Это гениальная идея!"
+    },
+    {
+      "rank": 10546,
+      "headword": "inquisition",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "инквизиция",
+        "допрос"
+      ],
+      "ipa": "/ˌɪŋkwɪˈzɪʃn/",
+      "example": "We read about the inquisition in history class.",
+      "example_ru": "Мы читали об инквизиции на уроке истории."
+    },
+    {
+      "rank": 10547,
+      "headword": "marxism",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "марксизм"
+      ],
+      "ipa": "/ˈmɑːksɪzəm/",
+      "example": "He wrote a book about marxism.",
+      "example_ru": "Он написал книгу о марксизме."
+    },
+    {
+      "rank": 10548,
+      "headword": "masonry",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "каменная кладка",
+        "кладка"
+      ],
+      "ipa": "/ˈmeɪsnri/",
+      "example": "The old masonry of the bridge is still strong.",
+      "example_ru": "Старая каменная кладка моста всё ещё прочная."
+    },
+    {
+      "rank": 10549,
+      "headword": "mechanically",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "механически",
+        "машинально"
+      ],
+      "ipa": "/məˈkænɪkli/",
+      "example": "She answered the questions mechanically.",
+      "example_ru": "Она машинально отвечала на вопросы."
+    },
+    {
+      "rank": 10550,
+      "headword": "oily",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "жирный",
+        "масляный"
+      ],
+      "ipa": "/ˈɔɪli/",
+      "example": "I do not like oily food.",
+      "example_ru": "Я не люблю жирную еду."
+    },
+    {
+      "rank": 10551,
+      "headword": "ostensibly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "якобы",
+        "предположительно"
+      ],
+      "ipa": "/ɒˈstensəbli/",
+      "example": "He came, ostensibly to help, but just ate.",
+      "example_ru": "Он пришёл якобы помочь, но только поел."
+    },
+    {
+      "rank": 10552,
+      "headword": "outspoken",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "откровенный",
+        "прямой"
+      ],
+      "ipa": "/aʊtˈspəʊkən/",
+      "example": "My aunt is very outspoken about everything.",
+      "example_ru": "Моя тётя очень откровенно высказывается обо всём."
+    },
+    {
+      "rank": 10553,
+      "headword": "palate",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "нёбо",
+        "вкус"
+      ],
+      "ipa": "/ˈpælət/",
+      "example": "The hot soup burned my palate.",
+      "example_ru": "Горячий суп обжёг мне нёбо."
+    },
+    {
+      "rank": 10554,
+      "headword": "parkway",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "шоссе",
+        "бульвар"
+      ],
+      "ipa": "/ˈpɑːkweɪ/",
+      "example": "We drove home along the parkway.",
+      "example_ru": "Мы ехали домой по шоссе."
+    },
+    {
+      "rank": 10555,
+      "headword": "pedigree",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "родословная",
+        "происхождение"
+      ],
+      "ipa": "/ˈpedɪɡriː/",
+      "example": "The puppy has a long pedigree.",
+      "example_ru": "У щенка длинная родословная."
+    },
+    {
+      "rank": 10556,
+      "headword": "phony",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "фальшивый",
+        "поддельный"
+      ],
+      "ipa": "/ˈfəʊni/",
+      "example": "He gave the police a phony name.",
+      "example_ru": "Он назвал полиции фальшивое имя."
+    },
+    {
+      "rank": 10557,
+      "headword": "pleasantly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "приятно"
+      ],
+      "ipa": "/ˈplezntli/",
+      "example": "I was pleasantly surprised by the result.",
+      "example_ru": "Я был приятно удивлён результатом."
+    },
+    {
+      "rank": 10558,
+      "headword": "prowess",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мастерство",
+        "доблесть"
+      ],
+      "ipa": "/ˈpraʊəs/",
+      "example": "Everyone admired his prowess on the football field.",
+      "example_ru": "Все восхищались его мастерством на футбольном поле."
+    },
+    {
+      "rank": 10559,
+      "headword": "psychologically",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "психологически"
+      ],
+      "ipa": "/ˌsaɪkəˈlɒdʒɪkli/",
+      "example": "The job is psychologically hard.",
+      "example_ru": "Эта работа психологически тяжёлая."
+    },
+    {
+      "rank": 10560,
+      "headword": "saliva",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "слюна"
+      ],
+      "ipa": "/səˈlaɪvə/",
+      "example": "Saliva helps us to digest food.",
+      "example_ru": "Слюна помогает нам переваривать пищу."
+    },
+    {
+      "rank": 10561,
+      "headword": "senseless",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бессмысленный"
+      ],
+      "ipa": "/ˈsensləs/",
+      "example": "It was a senseless argument.",
+      "example_ru": "Это был бессмысленный спор."
+    },
+    {
+      "rank": 10562,
+      "headword": "seventeenth",
+      "tier": "lookup",
+      "pos": "numeral",
+      "translations": [
+        "семнадцатый"
+      ],
+      "ipa": "/ˌsevnˈtiːnθ/",
+      "example": "The house was built in the seventeenth century.",
+      "example_ru": "Дом был построен в семнадцатом веке."
+    },
+    {
+      "rank": 10563,
+      "headword": "takeoff",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "взлёт"
+      ],
+      "ipa": "/ˈteɪkɒf/",
+      "example": "Please fasten your seat belt before takeoff.",
+      "example_ru": "Пожалуйста, пристегните ремень перед взлётом."
+    },
+    {
+      "rank": 10564,
+      "headword": "taxable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "облагаемый налогом"
+      ],
+      "ipa": "/ˈtæksəbl/",
+      "example": "Is this income taxable?",
+      "example_ru": "Облагается ли этот доход налогом?"
+    },
+    {
+      "rank": 10565,
+      "headword": "unavoidable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "неизбежный"
+      ],
+      "ipa": "/ˌʌnəˈvɔɪdəbl/",
+      "example": "The delay was unavoidable because of the snow.",
+      "example_ru": "Задержка была неизбежной из-за снега."
+    },
+    {
+      "rank": 10566,
+      "headword": "unilateral",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "односторонний"
+      ],
+      "ipa": "/ˌjuːnɪˈlætrəl/",
+      "example": "It was a unilateral decision.",
+      "example_ru": "Это было одностороннее решение."
+    },
+    {
+      "rank": 10567,
+      "headword": "yin",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "инь"
+      ],
+      "ipa": "/jɪn/",
+      "example": "Yin and yang are two sides of one whole.",
+      "example_ru": "Инь и ян - две стороны одного целого."
+    },
+    {
+      "rank": 10568,
+      "headword": "rancher",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "владелец ранчо",
+        "фермер"
+      ],
+      "ipa": "/ˈrɑːntʃə/",
+      "example": "The rancher has two hundred cows.",
+      "example_ru": "У владельца ранчо двести коров."
+    },
+    {
+      "rank": 10569,
+      "headword": "dishwasher",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "посудомоечная машина",
+        "посудомойка"
+      ],
+      "ipa": "/ˈdɪʃwɒʃə/",
+      "example": "Please put the plates in the dishwasher.",
+      "example_ru": "Пожалуйста, поставь тарелки в посудомоечную машину."
+    },
+    {
+      "rank": 10570,
+      "headword": "maniac",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "маньяк",
+        "безумец"
+      ],
+      "ipa": "/ˈmeɪniæk/",
+      "example": "He drives like a maniac.",
+      "example_ru": "Он водит как безумец."
+    },
+    {
+      "rank": 10571,
+      "headword": "negate",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "сводить на нет",
+        "отрицать"
+      ],
+      "ipa": "/nɪˈɡeɪt/",
+      "example": "One mistake can negate all your hard work.",
+      "example_ru": "Одна ошибка может свести на нет весь твой труд."
+    },
+    {
+      "rank": 10572,
+      "headword": "housekeeper",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "экономка",
+        "домработница"
+      ],
+      "ipa": "/ˈhaʊskiːpə/",
+      "example": "The housekeeper cleans the rooms every morning.",
+      "example_ru": "Экономка каждое утро убирает комнаты."
+    },
+    {
+      "rank": 10573,
+      "headword": "increment",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "прирост",
+        "приращение",
+        "шаг"
+      ],
+      "ipa": "/ˈɪŋkrəmənt/",
+      "example": "The price goes up in small increments.",
+      "example_ru": "Цена растёт небольшими шагами."
+    },
+    {
+      "rank": 10574,
+      "headword": "tenet",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "принцип",
+        "догмат"
+      ],
+      "ipa": "/ˈtenɪt/",
+      "example": "Honesty is a basic tenet of our school.",
+      "example_ru": "Честность - основной принцип нашей школы."
+    },
+    {
+      "rank": 10575,
+      "headword": "platter",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "блюдо",
+        "поднос"
+      ],
+      "ipa": "/ˈplætə/",
+      "example": "She brought a platter of fruit to the table.",
+      "example_ru": "Она принесла на стол блюдо с фруктами."
+    },
+    {
+      "rank": 10576,
+      "headword": "sprite",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "эльф",
+        "фея",
+        "дух"
+      ],
+      "ipa": "/spraɪt/",
+      "example": "The story is about a little water sprite.",
+      "example_ru": "Эта сказка о маленьком водяном духе."
+    },
+    {
+      "rank": 10577,
+      "headword": "shipwreck",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кораблекрушение",
+        "обломки корабля"
+      ],
+      "ipa": "/ˈʃɪprek/",
+      "example": "Only two sailors survived the shipwreck.",
+      "example_ru": "Только два моряка выжили после кораблекрушения."
+    },
+    {
+      "rank": 10578,
+      "headword": "conqueror",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "завоеватель",
+        "победитель"
+      ],
+      "ipa": "/ˈkɒŋkərə/",
+      "example": "The conqueror built a castle on the hill.",
+      "example_ru": "Завоеватель построил замок на холме."
+    },
+    {
+      "rank": 10579,
+      "headword": "fallacy",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "заблуждение",
+        "ошибка"
+      ],
+      "ipa": "/ˈfæləsi/",
+      "example": "It is a fallacy that money brings happiness.",
+      "example_ru": "То, что деньги приносят счастье, - заблуждение."
+    },
+    {
+      "rank": 10580,
+      "headword": "leech",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пиявка"
+      ],
+      "ipa": "/liːtʃ/",
+      "example": "A leech was stuck to my leg after the swim.",
+      "example_ru": "После купания у меня на ноге была пиявка."
+    },
+    {
+      "rank": 10581,
+      "headword": "pensioner",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пенсионер"
+      ],
+      "ipa": "/ˈpenʃənə/",
+      "example": "The pensioner walks in the park every day.",
+      "example_ru": "Пенсионер каждый день гуляет в парке."
+    },
+    {
+      "rank": 10582,
+      "headword": "drool",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "пускать слюни",
+        "истекать слюной"
+      ],
+      "ipa": "/druːl/",
+      "example": "The baby drools when new teeth come in.",
+      "example_ru": "Малыш пускает слюни, когда режутся новые зубы."
+    },
+    {
+      "rank": 10583,
+      "headword": "hydrocarbon",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "углеводород"
+      ],
+      "ipa": "/ˌhaɪdrəˈkɑːbən/",
+      "example": "Oil is a mix of different hydrocarbons.",
+      "example_ru": "Нефть - это смесь разных углеводородов."
+    },
+    {
+      "rank": 10584,
+      "headword": "firewall",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "брандмауэр",
+        "межсетевой экран"
+      ],
+      "ipa": "/ˈfaɪəwɔːl/",
+      "example": "The firewall blocks dangerous websites.",
+      "example_ru": "Брандмауэр блокирует опасные сайты."
+    },
+    {
+      "rank": 10585,
+      "headword": "afflict",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "поражать",
+        "мучить",
+        "беспокоить"
+      ],
+      "ipa": "/əˈflɪkt/",
+      "example": "The disease afflicts many old people.",
+      "example_ru": "Эта болезнь поражает многих пожилых людей."
+    },
+    {
+      "rank": 10586,
+      "headword": "subside",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "утихать",
+        "спадать",
+        "ослабевать"
+      ],
+      "ipa": "/səbˈsaɪd/",
+      "example": "We waited for the storm to subside.",
+      "example_ru": "Мы ждали, пока утихнет буря."
+    },
+    {
+      "rank": 10587,
+      "headword": "overshadow",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "затмевать",
+        "омрачать"
+      ],
+      "ipa": "/ˌəʊvəˈʃædəʊ/",
+      "example": "Her success overshadowed her brother.",
+      "example_ru": "Её успех затмил её брата."
+    },
+    {
+      "rank": 10588,
+      "headword": "partake",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "принимать участие",
+        "отведать"
+      ],
+      "ipa": "/pɑːˈteɪk/",
+      "example": "Everyone can partake in the games.",
+      "example_ru": "Каждый может принять участие в играх."
+    },
+    {
+      "rank": 10589,
+      "headword": "lifeboat",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "спасательная шлюпка"
+      ],
+      "ipa": "/ˈlaɪfbəʊt/",
+      "example": "The passengers got into the lifeboat.",
+      "example_ru": "Пассажиры сели в спасательную шлюпку."
+    },
+    {
+      "rank": 10590,
+      "headword": "vertebra",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "позвонок"
+      ],
+      "ipa": "/ˈvɜːtɪbrə/",
+      "example": "He broke a vertebra when he fell.",
+      "example_ru": "Он сломал позвонок при падении."
+    },
+    {
+      "rank": 10591,
+      "headword": "windmill",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ветряная мельница",
+        "ветряк"
+      ],
+      "ipa": "/ˈwɪndmɪl/",
+      "example": "There is an old windmill near the village.",
+      "example_ru": "Около деревни стоит старая ветряная мельница."
+    },
+    {
+      "rank": 10592,
+      "headword": "soybean",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "соя",
+        "соевый боб"
+      ],
+      "ipa": "/ˈsɔɪbiːn/",
+      "example": "Farmers here grow soybeans and corn.",
+      "example_ru": "Фермеры здесь выращивают сою и кукурузу."
+    },
+    {
+      "rank": 10593,
+      "headword": "daredevil",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сорвиголова",
+        "смельчак"
+      ],
+      "ipa": "/ˈdeədevl/",
+      "example": "My brother was a daredevil as a child.",
+      "example_ru": "В детстве мой брат был сорвиголовой."
+    },
+    {
+      "rank": 10594,
+      "headword": "amplitude",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "амплитуда",
+        "размах"
+      ],
+      "ipa": "/ˈæmplɪtjuːd/",
+      "example": "The amplitude of the wave is very small.",
+      "example_ru": "Амплитуда волны очень мала."
+    },
+    {
+      "rank": 10595,
+      "headword": "bureaucrat",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "бюрократ",
+        "чиновник"
+      ],
+      "ipa": "/ˈbjʊərəkræt/",
+      "example": "A bureaucrat sent me to another office.",
+      "example_ru": "Чиновник отправил меня в другой кабинет."
+    },
+    {
+      "rank": 10596,
+      "headword": "hookup",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "подключение",
+        "соединение"
+      ],
+      "ipa": "/ˈhʊkʌp/",
+      "example": "The campsite has a water hookup for each tent.",
+      "example_ru": "В кемпинге у каждой палатки есть подключение к воде."
+    },
+    {
+      "rank": 10597,
+      "headword": "smite",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "поражать",
+        "ударять",
+        "разить"
+      ],
+      "ipa": "/smaɪt/",
+      "example": "In the old story, the hero smites the dragon.",
+      "example_ru": "В старой сказке герой поражает дракона."
+    },
+    {
+      "rank": 10598,
+      "headword": "remaster",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "переиздавать",
+        "восстанавливать запись"
+      ],
+      "ipa": "/ˌriːˈmɑːstə/",
+      "example": "They remastered the old album last year.",
+      "example_ru": "В прошлом году старый альбом переиздали в улучшенном качестве."
+    },
+    {
+      "rank": 10599,
+      "headword": "triad",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "триада",
+        "тройка"
+      ],
+      "ipa": "/ˈtraɪæd/",
+      "example": "The song uses a simple triad of notes.",
+      "example_ru": "В песне используется простая триада нот."
+    },
+    {
+      "rank": 10600,
+      "headword": "blacksmith",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кузнец"
+      ],
+      "ipa": "/ˈblæksmɪθ/",
+      "example": "The blacksmith made a new gate for the farm.",
+      "example_ru": "Кузнец сделал для фермы новые ворота."
+    },
+    {
+      "rank": 10601,
+      "headword": "excise",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "акциз",
+        "акцизный сбор"
+      ],
+      "ipa": "/ˈeksaɪz/",
+      "example": "The government raised the excise on cigarettes.",
+      "example_ru": "Правительство повысило акциз на сигареты."
+    },
+    {
+      "rank": 10602,
+      "headword": "kinase",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "киназа"
+      ],
+      "ipa": "/ˈkaɪneɪz/",
+      "example": "This kinase helps cells use energy.",
+      "example_ru": "Эта киназа помогает клеткам использовать энергию."
+    },
+    {
+      "rank": 10603,
+      "headword": "outperform",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "превосходить",
+        "опережать"
+      ],
+      "ipa": "/ˌaʊtpəˈfɔːm/",
+      "example": "Our team outperformed all the others this year.",
+      "example_ru": "В этом году наша команда превзошла все остальные."
+    },
+    {
+      "rank": 10604,
+      "headword": "sorority",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "женское студенческое общество"
+      ],
+      "ipa": "/səˈrɒrəti/",
+      "example": "She joined a sorority in her first year at college.",
+      "example_ru": "На первом курсе она вступила в женское студенческое общество."
+    },
+    {
+      "rank": 10605,
+      "headword": "instigate",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "затевать",
+        "подстрекать",
+        "инициировать"
+      ],
+      "ipa": "/ˈɪnstɪɡeɪt/",
+      "example": "Who instigated the fight?",
+      "example_ru": "Кто затеял драку?"
+    },
+    {
+      "rank": 10606,
+      "headword": "sweatshirt",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "толстовка",
+        "свитшот"
+      ],
+      "ipa": "/ˈswetʃɜːt/",
+      "example": "He wore a grey sweatshirt to the gym.",
+      "example_ru": "Он надел в спортзал серую толстовку."
+    },
+    {
+      "rank": 10607,
+      "headword": "transporter",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "транспортёр",
+        "перевозчик"
+      ],
+      "ipa": "/trænˈspɔːtə/",
+      "example": "The transporter carried ten new cars.",
+      "example_ru": "Транспортёр перевёз десять новых машин."
+    },
+    {
+      "rank": 10608,
+      "headword": "hiss",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "шипеть"
+      ],
+      "ipa": "/hɪs/",
+      "example": "The cat hissed at the dog.",
+      "example_ru": "Кошка зашипела на собаку."
+    },
+    {
+      "rank": 10609,
+      "headword": "laud",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "восхвалять",
+        "превозносить"
+      ],
+      "ipa": "/lɔːd/",
+      "example": "Critics lauded the new film.",
+      "example_ru": "Критики восхваляли новый фильм."
+    },
+    {
+      "rank": 10610,
+      "headword": "rebuke",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "упрекать",
+        "делать выговор"
+      ],
+      "ipa": "/rɪˈbjuːk/",
+      "example": "The teacher rebuked him for being late.",
+      "example_ru": "Учитель упрекнул его за опоздание."
+    },
+    {
+      "rank": 10611,
+      "headword": "deactivate",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "отключать",
+        "деактивировать"
+      ],
+      "ipa": "/diˈæktɪveɪt/",
+      "example": "Please deactivate the alarm when you come in.",
+      "example_ru": "Пожалуйста, отключите сигнализацию, когда войдёте."
+    },
+    {
+      "rank": 10612,
+      "headword": "gleam",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "блестеть",
+        "сверкать",
+        "мерцать"
+      ],
+      "ipa": "/ɡliːm/",
+      "example": "The new car gleamed in the sun.",
+      "example_ru": "Новая машина блестела на солнце."
+    },
+    {
+      "rank": 10613,
+      "headword": "warlord",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "полевой командир",
+        "военачальник"
+      ],
+      "ipa": "/ˈwɔːlɔːd/",
+      "example": "The warlord controlled the whole region.",
+      "example_ru": "Полевой командир контролировал весь регион."
+    },
+    {
+      "rank": 10614,
+      "headword": "concerto",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "концерт"
+      ],
+      "ipa": "/kənˈtʃɜːtəʊ/",
+      "example": "She played a piano concerto at the festival.",
+      "example_ru": "На фестивале она исполнила фортепианный концерт."
+    },
+    {
+      "rank": 10615,
+      "headword": "acidic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "кислотный",
+        "кислый"
+      ],
+      "ipa": "/əˈsɪdɪk/",
+      "example": "Lemon juice is very acidic.",
+      "example_ru": "Лимонный сок очень кислый."
+    },
+    {
+      "rank": 10616,
+      "headword": "adherence",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "соблюдение",
+        "приверженность"
+      ],
+      "ipa": "/ədˈhɪərəns/",
+      "example": "Strict adherence to the rules is important here.",
+      "example_ru": "Здесь важно строгое соблюдение правил."
+    },
+    {
+      "rank": 10617,
+      "headword": "amnesia",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "амнезия",
+        "потеря памяти"
+      ],
+      "ipa": "/æmˈniːziə/",
+      "example": "After the accident he had amnesia.",
+      "example_ru": "После аварии у него была амнезия."
+    },
+    {
+      "rank": 10618,
+      "headword": "angrily",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "сердито",
+        "гневно"
+      ],
+      "ipa": "/ˈæŋɡrəli/",
+      "example": "She closed the door angrily.",
+      "example_ru": "Она сердито закрыла дверь."
+    },
+    {
+      "rank": 10619,
+      "headword": "appellate",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "апелляционный"
+      ],
+      "ipa": "/əˈpelət/",
+      "example": "The case went to the appellate court.",
+      "example_ru": "Дело передали в апелляционный суд."
+    },
+    {
+      "rank": 10620,
+      "headword": "armoured",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бронированный"
+      ],
+      "ipa": "/ˈɑːməd/",
+      "example": "The money was carried in an armoured van.",
+      "example_ru": "Деньги перевозили в бронированном фургоне."
+    },
+    {
+      "rank": 10621,
+      "headword": "ascension",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "восхождение",
+        "вознесение"
+      ],
+      "ipa": "/əˈsenʃn/",
+      "example": "His ascension to the top job was fast.",
+      "example_ru": "Его восхождение на высшую должность было быстрым."
+    },
+    {
+      "rank": 10622,
+      "headword": "aspirin",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "аспирин"
+      ],
+      "ipa": "/ˈæsprɪn/",
+      "example": "Take an aspirin for your headache.",
+      "example_ru": "Прими аспирин от головной боли."
+    },
+    {
+      "rank": 10623,
+      "headword": "benevolent",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "доброжелательный",
+        "благосклонный"
+      ],
+      "ipa": "/bəˈnevələnt/",
+      "example": "The old king was kind and benevolent.",
+      "example_ru": "Старый король был добрым и доброжелательным."
+    },
+    {
+      "rank": 10624,
+      "headword": "bombardment",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "бомбардировка",
+        "обстрел"
+      ],
+      "ipa": "/bɒmˈbɑːdmənt/",
+      "example": "The city was destroyed by heavy bombardment.",
+      "example_ru": "Город был разрушен сильной бомбардировкой."
+    },
+    {
+      "rank": 10625,
+      "headword": "borderline",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "пограничный",
+        "сомнительный"
+      ],
+      "ipa": "/ˈbɔːdəlaɪn/",
+      "example": "His test score was borderline.",
+      "example_ru": "Его результат теста был пограничным."
+    },
+    {
+      "rank": 10626,
+      "headword": "calibration",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "калибровка",
+        "настройка"
+      ],
+      "ipa": "/ˌkælɪˈbreɪʃn/",
+      "example": "The scale needs calibration once a year.",
+      "example_ru": "Весам нужна калибровка раз в год."
+    },
+    {
+      "rank": 10627,
+      "headword": "charisma",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "харизма",
+        "обаяние"
+      ],
+      "ipa": "/kəˈrɪzmə/",
+      "example": "Our new teacher has a lot of charisma.",
+      "example_ru": "У нашего нового учителя много харизмы."
+    },
+    {
+      "rank": 10628,
+      "headword": "cognition",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "познание",
+        "мышление"
+      ],
+      "ipa": "/kɒɡˈnɪʃn/",
+      "example": "Sleep is important for cognition and memory.",
+      "example_ru": "Сон важен для мышления и памяти."
+    },
+    {
+      "rank": 10629,
+      "headword": "coupe",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "купе"
+      ],
+      "ipa": "/kuːp/",
+      "example": "He bought a red two-door coupe.",
+      "example_ru": "Он купил красное двухдверное купе."
+    },
+    {
+      "rank": 10630,
+      "headword": "cylindrical",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "цилиндрический"
+      ],
+      "ipa": "/səˈlɪndrɪkl/",
+      "example": "The tower has a cylindrical shape.",
+      "example_ru": "Башня имеет цилиндрическую форму."
+    },
+    {
+      "rank": 10631,
+      "headword": "deceptive",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "обманчивый",
+        "вводящий в заблуждение"
+      ],
+      "ipa": "/dɪˈseptɪv/",
+      "example": "Looks can be deceptive.",
+      "example_ru": "Внешность бывает обманчива."
+    },
+    {
+      "rank": 10632,
+      "headword": "devastation",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "опустошение",
+        "разорение",
+        "разрушение"
+      ],
+      "ipa": "/ˌdevəˈsteɪʃn/",
+      "example": "The storm left devastation along the coast.",
+      "example_ru": "Шторм оставил после себя опустошение вдоль побережья."
+    },
+    {
+      "rank": 10633,
+      "headword": "devout",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "набожный",
+        "благочестивый",
+        "преданный"
+      ],
+      "ipa": "/dɪˈvaʊt/",
+      "example": "My grandmother is a devout woman.",
+      "example_ru": "Моя бабушка - набожная женщина."
+    },
+    {
+      "rank": 10634,
+      "headword": "disproportionate",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "несоразмерный",
+        "непропорциональный"
+      ],
+      "ipa": "/ˌdɪsprəˈpɔːʃənət/",
+      "example": "The punishment was disproportionate to the crime.",
+      "example_ru": "Наказание было несоразмерно проступку."
+    },
+    {
+      "rank": 10635,
+      "headword": "divisive",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "вызывающий разногласия",
+        "спорный"
+      ],
+      "ipa": "/dɪˈvaɪsɪv/",
+      "example": "Money is a divisive topic in many families.",
+      "example_ru": "Деньги - тема, вызывающая разногласия во многих семьях."
+    },
+    {
+      "rank": 10636,
+      "headword": "ebony",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "эбеновое дерево",
+        "чёрное дерево"
+      ],
+      "ipa": "/ˈebəni/",
+      "example": "The piano keys were made of ebony.",
+      "example_ru": "Клавиши пианино были сделаны из эбенового дерева."
+    },
+    {
+      "rank": 10637,
+      "headword": "embroider",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "вышивать"
+      ],
+      "ipa": "/ɪmˈbrɔɪdə/",
+      "example": "She embroidered flowers on the pillow.",
+      "example_ru": "Она вышила цветы на подушке."
+    },
+    {
+      "rank": 10638,
+      "headword": "erratic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "непредсказуемый",
+        "беспорядочный",
+        "неустойчивый"
+      ],
+      "ipa": "/ɪˈrætɪk/",
+      "example": "His behaviour has become erratic lately.",
+      "example_ru": "В последнее время его поведение стало непредсказуемым."
+    },
+    {
+      "rank": 10639,
+      "headword": "fiesta",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фиеста",
+        "праздник"
+      ],
+      "ipa": "/fiˈestə/",
+      "example": "The whole town came to the summer fiesta.",
+      "example_ru": "Весь город пришёл на летнюю фиесту."
+    },
+    {
+      "rank": 10640,
+      "headword": "foreseeable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "предсказуемый",
+        "обозримый"
+      ],
+      "ipa": "/fɔːˈsiːəbl/",
+      "example": "Prices will stay high for the foreseeable future.",
+      "example_ru": "Цены останутся высокими в обозримом будущем."
+    },
+    {
+      "rank": 10641,
+      "headword": "highness",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "высочество"
+      ],
+      "ipa": "/ˈhaɪnəs/",
+      "example": "Thank you, Your Highness.",
+      "example_ru": "Благодарю вас, ваше высочество."
+    },
+    {
+      "rank": 10642,
+      "headword": "hindsight",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ретроспектива",
+        "взгляд в прошлое"
+      ],
+      "ipa": "/ˈhaɪndsaɪt/",
+      "example": "In hindsight, I should have left earlier.",
+      "example_ru": "Оглядываясь назад, я понимаю, что мне нужно было уйти раньше."
+    },
+    {
+      "rank": 10643,
+      "headword": "homophobia",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гомофобия"
+      ],
+      "ipa": "/ˌhəʊməˈfəʊbiə/",
+      "example": "The school has a clear policy against homophobia.",
+      "example_ru": "В школе есть чёткие правила против гомофобии."
+    },
+    {
+      "rank": 10644,
+      "headword": "indifference",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "безразличие",
+        "равнодушие"
+      ],
+      "ipa": "/ɪnˈdɪfrəns/",
+      "example": "His indifference to our problems hurt me.",
+      "example_ru": "Его безразличие к нашим проблемам меня задело."
+    },
+    {
+      "rank": 10645,
+      "headword": "indispensable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "незаменимый",
+        "необходимый"
+      ],
+      "ipa": "/ˌɪndɪˈspensəbl/",
+      "example": "A good map is indispensable on this trip.",
+      "example_ru": "Хорошая карта необходима в этой поездке."
+    },
+    {
+      "rank": 10646,
+      "headword": "infirmary",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "лазарет",
+        "больница",
+        "медпункт"
+      ],
+      "ipa": "/ɪnˈfɜːməri/",
+      "example": "The boy was taken to the school infirmary.",
+      "example_ru": "Мальчика отвели в школьный медпункт."
+    },
+    {
+      "rank": 10647,
+      "headword": "innovator",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "новатор"
+      ],
+      "ipa": "/ˈɪnəveɪtə/",
+      "example": "She is a true innovator in fashion.",
+      "example_ru": "Она настоящий новатор в моде."
+    },
+    {
+      "rank": 10648,
+      "headword": "insanely",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "безумно",
+        "невероятно"
+      ],
+      "ipa": "/ɪnˈseɪnli/",
+      "example": "The new phone is insanely expensive.",
+      "example_ru": "Новый телефон безумно дорогой."
+    },
+    {
+      "rank": 10649,
+      "headword": "intellectually",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "интеллектуально"
+      ],
+      "ipa": "/ˌɪntəˈlektʃuəli/",
+      "example": "The book is intellectually challenging.",
+      "example_ru": "Эта книга интеллектуально сложная."
+    },
+    {
+      "rank": 10650,
+      "headword": "interstellar",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "межзвёздный"
+      ],
+      "ipa": "/ˌɪntəˈstelə/",
+      "example": "The film is about interstellar travel.",
+      "example_ru": "Фильм о межзвёздных путешествиях."
+    },
+    {
+      "rank": 10651,
+      "headword": "involuntary",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "непроизвольный",
+        "невольный"
+      ],
+      "ipa": "/ɪnˈvɒləntri/",
+      "example": "Sneezing is an involuntary action.",
+      "example_ru": "Чихание - непроизвольное действие."
+    },
+    {
+      "rank": 10652,
+      "headword": "issuance",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "выдача",
+        "выпуск"
+      ],
+      "ipa": "/ˈɪʃuːəns/",
+      "example": "The issuance of new passports takes two weeks.",
+      "example_ru": "Выдача новых паспортов занимает две недели."
+    },
+    {
+      "rank": 10653,
+      "headword": "itchy",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "зудящий",
+        "колючий"
+      ],
+      "ipa": "/ˈɪtʃi/",
+      "example": "My skin feels itchy after the swim.",
+      "example_ru": "После купания у меня зудит кожа."
+    },
+    {
+      "rank": 10654,
+      "headword": "junta",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "хунта"
+      ],
+      "ipa": "/ˈdʒʌntə/",
+      "example": "A military junta took power in the country.",
+      "example_ru": "В стране к власти пришла военная хунта."
+    },
+    {
+      "rank": 10655,
+      "headword": "libel",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "клевета"
+      ],
+      "ipa": "/ˈlaɪbl/",
+      "example": "The newspaper was sued for libel.",
+      "example_ru": "На газету подали в суд за клевету."
+    },
+    {
+      "rank": 10656,
+      "headword": "lofty",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "возвышенный",
+        "высокий",
+        "благородный"
+      ],
+      "ipa": "/ˈlɒfti/",
+      "example": "She has lofty goals for her life.",
+      "example_ru": "У неё высокие цели в жизни."
+    },
+    {
+      "rank": 10657,
+      "headword": "ludicrous",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "нелепый",
+        "смехотворный"
+      ],
+      "ipa": "/ˈluːdɪkrəs/",
+      "example": "That is a ludicrous idea.",
+      "example_ru": "Это нелепая идея."
+    },
+    {
+      "rank": 10658,
+      "headword": "maize",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кукуруза"
+      ],
+      "ipa": "/meɪz/",
+      "example": "Farmers in this area grow maize.",
+      "example_ru": "Фермеры в этом районе выращивают кукурузу."
+    },
+    {
+      "rank": 10659,
+      "headword": "malice",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "злоба",
+        "злой умысел"
+      ],
+      "ipa": "/ˈmælɪs/",
+      "example": "He did it without any malice.",
+      "example_ru": "Он сделал это без всякой злобы."
+    },
+    {
+      "rank": 10660,
+      "headword": "marginalize",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "вытеснять на обочину",
+        "маргинализировать"
+      ],
+      "ipa": "/ˈmɑːdʒɪnəlaɪz/",
+      "example": "We must not marginalize older workers.",
+      "example_ru": "Нельзя вытеснять на обочину пожилых работников."
+    },
+    {
+      "rank": 10661,
+      "headword": "myrtle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мирт"
+      ],
+      "ipa": "/ˈmɜːtl/",
+      "example": "A myrtle grows in front of our house.",
+      "example_ru": "Перед нашим домом растёт мирт."
+    },
+    {
+      "rank": 10662,
+      "headword": "nemesis",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "заклятый враг",
+        "возмездие"
+      ],
+      "ipa": "/ˈneməsɪs/",
+      "example": "The spelling test was my nemesis at school.",
+      "example_ru": "Диктант был моим заклятым врагом в школе."
+    },
+    {
+      "rank": 10663,
+      "headword": "originality",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "оригинальность",
+        "самобытность"
+      ],
+      "ipa": "/əˌrɪdʒəˈnæləti/",
+      "example": "The judges liked the originality of her design.",
+      "example_ru": "Судьям понравилась оригинальность её дизайна."
+    },
+    {
+      "rank": 10664,
+      "headword": "oriole",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "иволга"
+      ],
+      "ipa": "/ˈɔːriəʊl/",
+      "example": "An oriole was singing in the tree.",
+      "example_ru": "На дереве пела иволга."
+    },
+    {
+      "rank": 10665,
+      "headword": "ornamental",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "декоративный"
+      ],
+      "ipa": "/ˌɔːnəˈmentl/",
+      "example": "They have an ornamental pond in the garden.",
+      "example_ru": "У них в саду есть декоративный пруд."
+    },
+    {
+      "rank": 10666,
+      "headword": "pancreatic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "панкреатический",
+        "поджелудочный"
+      ],
+      "ipa": "/ˌpæŋkriˈætɪk/",
+      "example": "He was treated for pancreatic disease.",
+      "example_ru": "Его лечили от болезни поджелудочной железы."
+    },
+    {
+      "rank": 10667,
+      "headword": "paraphrase",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "пересказывать",
+        "перефразировать"
+      ],
+      "ipa": "/ˈpærəfreɪz/",
+      "example": "Can you paraphrase the story in your own words?",
+      "example_ru": "Можешь пересказать историю своими словами?"
+    },
+    {
+      "rank": 10668,
+      "headword": "perseverance",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "настойчивость",
+        "упорство"
+      ],
+      "ipa": "/ˌpɜːsɪˈvɪərəns/",
+      "example": "Learning a language takes perseverance.",
+      "example_ru": "Изучение языка требует упорства."
+    },
+    {
+      "rank": 10669,
+      "headword": "picky",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "разборчивый",
+        "привередливый"
+      ],
+      "ipa": "/ˈpɪki/",
+      "example": "My son is a picky eater.",
+      "example_ru": "Мой сын очень разборчив в еде."
+    },
+    {
+      "rank": 10670,
+      "headword": "populace",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "население",
+        "народ"
+      ],
+      "ipa": "/ˈpɒpjələs/",
+      "example": "The populace was tired of the high prices.",
+      "example_ru": "Население устало от высоких цен."
+    },
+    {
+      "rank": 10671,
+      "headword": "propagation",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "распространение",
+        "размножение"
+      ],
+      "ipa": "/ˌprɒpəˈɡeɪʃn/",
+      "example": "The book explains the propagation of plants.",
+      "example_ru": "В книге объясняется размножение растений."
+    },
+    {
+      "rank": 10672,
+      "headword": "psychedelic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "психоделический"
+      ],
+      "ipa": "/ˌsaɪkəˈdelɪk/",
+      "example": "The poster had bright psychedelic colours.",
+      "example_ru": "На плакате были яркие психоделические цвета."
+    },
+    {
+      "rank": 10673,
+      "headword": "randomize",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "рандомизировать",
+        "перемешивать"
+      ],
+      "ipa": "/ˈrændəmaɪz/",
+      "example": "The app randomizes the order of the questions.",
+      "example_ru": "Приложение перемешивает порядок вопросов."
+    },
+    {
+      "rank": 10674,
+      "headword": "rector",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ректор",
+        "настоятель"
+      ],
+      "ipa": "/ˈrektə/",
+      "example": "The rector gave a speech to the new students.",
+      "example_ru": "Ректор выступил с речью перед новыми студентами."
+    },
+    {
+      "rank": 10675,
+      "headword": "relativity",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "относительность"
+      ],
+      "ipa": "/ˌreləˈtɪvəti/",
+      "example": "We studied the theory of relativity in physics.",
+      "example_ru": "На физике мы изучали теорию относительности."
+    },
+    {
+      "rank": 10676,
+      "headword": "sheen",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "блеск",
+        "глянец"
+      ],
+      "ipa": "/ʃiːn/",
+      "example": "Her hair had a lovely sheen.",
+      "example_ru": "У её волос был красивый блеск."
+    },
+    {
+      "rank": 10677,
+      "headword": "sincerity",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "искренность"
+      ],
+      "ipa": "/sɪnˈserəti/",
+      "example": "I never doubted his sincerity.",
+      "example_ru": "Я никогда не сомневался в его искренности."
+    },
+    {
+      "rank": 10678,
+      "headword": "sinful",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "грешный",
+        "греховный"
+      ],
+      "ipa": "/ˈsɪnfl/",
+      "example": "Some people think that being lazy is sinful.",
+      "example_ru": "Некоторые считают, что лениться грешно."
+    },
+    {
+      "rank": 10679,
+      "headword": "sleek",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "гладкий",
+        "лоснящийся",
+        "элегантный"
+      ],
+      "ipa": "/sliːk/",
+      "example": "The cat had sleek black fur.",
+      "example_ru": "У кошки была гладкая чёрная шерсть."
+    },
+    {
+      "rank": 10680,
+      "headword": "socioeconomic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "социально-экономический"
+      ],
+      "ipa": "/ˌsəʊsiəʊˌiːkəˈnɒmɪk/",
+      "example": "The study looks at socioeconomic problems in cities.",
+      "example_ru": "Исследование рассматривает социально-экономические проблемы городов."
+    },
+    {
+      "rank": 10681,
+      "headword": "spontaneously",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "спонтанно",
+        "самопроизвольно"
+      ],
+      "ipa": "/spɒnˈteɪniəsli/",
+      "example": "The crowd spontaneously started to sing.",
+      "example_ru": "Толпа спонтанно начала петь."
+    },
+    {
+      "rank": 10682,
+      "headword": "sturgeon",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "осётр"
+      ],
+      "ipa": "/ˈstɜːdʒən/",
+      "example": "The sturgeon is a large fish.",
+      "example_ru": "Осётр - большая рыба."
+    },
+    {
+      "rank": 10683,
+      "headword": "syllabus",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "учебная программа",
+        "программа курса"
+      ],
+      "ipa": "/ˈsɪləbəs/",
+      "example": "The teacher gave us the syllabus for the year.",
+      "example_ru": "Учитель дал нам учебную программу на год."
+    },
+    {
+      "rank": 10684,
+      "headword": "Taiwanese",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "тайваньский"
+      ],
+      "ipa": "/ˌtaɪwəˈniːz/",
+      "example": "We tried Taiwanese tea at the market.",
+      "example_ru": "На рынке мы попробовали тайваньский чай."
+    },
+    {
+      "rank": 10685,
+      "headword": "textual",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "текстовый",
+        "текстуальный"
+      ],
+      "ipa": "/ˈtekstʃuəl/",
+      "example": "The editor made some textual changes.",
+      "example_ru": "Редактор внёс несколько текстовых правок."
+    },
+    {
+      "rank": 10686,
+      "headword": "unaffected",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "незатронутый",
+        "естественный"
+      ],
+      "ipa": "/ˌʌnəˈfektɪd/",
+      "example": "Our town was unaffected by the flood.",
+      "example_ru": "Наш город не был затронут наводнением."
+    },
+    {
+      "rank": 10687,
+      "headword": "undeniable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "неоспоримый",
+        "бесспорный"
+      ],
+      "ipa": "/ˌʌndɪˈnaɪəbl/",
+      "example": "Her talent is undeniable.",
+      "example_ru": "Её талант неоспорим."
+    },
+    {
+      "rank": 10688,
+      "headword": "upstate",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "в северной части штата"
+      ],
+      "ipa": "/ˌʌpˈsteɪt/",
+      "example": "They moved upstate to live near the lake.",
+      "example_ru": "Они переехали на север штата, чтобы жить у озера."
+    },
+    {
+      "rank": 10689,
+      "headword": "vigilant",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бдительный",
+        "внимательный"
+      ],
+      "ipa": "/ˈvɪdʒɪlənt/",
+      "example": "Stay vigilant when you walk home at night.",
+      "example_ru": "Будь бдителен, когда идёшь домой ночью."
+    },
+    {
+      "rank": 10690,
+      "headword": "worldly",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "мирской",
+        "земной",
+        "опытный"
+      ],
+      "ipa": "/ˈwɜːldli/",
+      "example": "He gave away all his worldly goods.",
+      "example_ru": "Он раздал все свои мирские блага."
+    },
+    {
+      "rank": 10691,
+      "headword": "passer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "прохожий"
+      ],
+      "ipa": "/ˈpɑːsə/",
+      "example": "A passer stopped to help the old woman.",
+      "example_ru": "Прохожий остановился, чтобы помочь пожилой женщине."
+    },
+    {
+      "rank": 10692,
+      "headword": "appease",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "умиротворять",
+        "успокаивать",
+        "задабривать"
+      ],
+      "ipa": "/əˈpiːz/",
+      "example": "He bought flowers to appease his angry wife.",
+      "example_ru": "Он купил цветы, чтобы успокоить рассерженную жену."
+    },
+    {
+      "rank": 10693,
+      "headword": "testicle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "яичко"
+      ],
+      "ipa": "/ˈtestɪkl/",
+      "example": "The doctor checked for pain in the testicle.",
+      "example_ru": "Врач проверил, нет ли боли в яичке."
+    },
+    {
+      "rank": 10694,
+      "headword": "decompose",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "разлагаться",
+        "гнить"
+      ],
+      "ipa": "/ˌdiːkəmˈpəʊz/",
+      "example": "Leaves decompose slowly in winter.",
+      "example_ru": "Зимой листья разлагаются медленно."
+    },
+    {
+      "rank": 10695,
+      "headword": "distillery",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "винокуренный завод",
+        "ликёро-водочный завод"
+      ],
+      "ipa": "/dɪˈstɪləri/",
+      "example": "We visited an old whisky distillery.",
+      "example_ru": "Мы посетили старый винокуренный завод."
+    },
+    {
+      "rank": 10696,
+      "headword": "brim",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "край",
+        "поля"
+      ],
+      "ipa": "/brɪm/",
+      "example": "The glass was full to the brim.",
+      "example_ru": "Стакан был полон до краёв."
+    },
+    {
+      "rank": 10697,
+      "headword": "unplug",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "отключать от сети",
+        "выдёргивать вилку"
+      ],
+      "ipa": "/ˌʌnˈplʌɡ/",
+      "example": "Unplug the iron when you finish.",
+      "example_ru": "Выключи утюг из розетки, когда закончишь."
+    },
+    {
+      "rank": 10698,
+      "headword": "minimise",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "минимизировать",
+        "сводить к минимуму",
+        "преуменьшать"
+      ],
+      "ipa": "/ˈmɪnɪmaɪz/",
+      "example": "We want to minimise the risk.",
+      "example_ru": "Мы хотим свести риск к минимуму."
+    },
+    {
+      "rank": 10699,
+      "headword": "watercolor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "акварель"
+      ],
+      "ipa": "/ˈwɔːtəkʌlə/",
+      "example": "She painted the lake in watercolor.",
+      "example_ru": "Она нарисовала озеро акварелью."
+    },
+    {
+      "rank": 10700,
+      "headword": "wannabe",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "подражатель",
+        "позёр"
+      ],
+      "ipa": "/ˈwɒnəbi/",
+      "example": "He is just a rock star wannabe.",
+      "example_ru": "Он всего лишь подражатель рок-звёзд."
+    },
+    {
+      "rank": 10701,
+      "headword": "carer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сиделка",
+        "опекун"
+      ],
+      "ipa": "/ˈkeərə/",
+      "example": "She works as a carer for an old man.",
+      "example_ru": "Она работает сиделкой у пожилого мужчины."
+    },
+    {
+      "rank": 10702,
+      "headword": "cede",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "уступать",
+        "передавать"
+      ],
+      "ipa": "/siːd/",
+      "example": "The country had to cede land to its neighbour.",
+      "example_ru": "Стране пришлось уступить землю соседу."
+    },
+    {
+      "rank": 10703,
+      "headword": "quarterfinal",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "четвертьфинал"
+      ],
+      "ipa": "/ˌkwɔːtəˈfaɪnl/",
+      "example": "Our team lost in the quarterfinal.",
+      "example_ru": "Наша команда проиграла в четвертьфинале."
+    },
+    {
+      "rank": 10704,
+      "headword": "feces",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кал",
+        "экскременты"
+      ],
+      "ipa": "/ˈfiːsiːz/",
+      "example": "The vet checked the dog's feces.",
+      "example_ru": "Ветеринар проверил кал собаки."
+    },
+    {
+      "rank": 10705,
+      "headword": "smuggler",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "контрабандист"
+      ],
+      "ipa": "/ˈsmʌɡlə/",
+      "example": "The police caught a smuggler at the border.",
+      "example_ru": "Полиция поймала контрабандиста на границе."
+    },
+    {
+      "rank": 10706,
+      "headword": "identifier",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "идентификатор"
+      ],
+      "ipa": "/aɪˈdentɪfaɪə/",
+      "example": "Each user has a unique identifier.",
+      "example_ru": "У каждого пользователя есть уникальный идентификатор."
+    },
+    {
+      "rank": 10707,
+      "headword": "compost",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "компост"
+      ],
+      "ipa": "/ˈkɒmpɒst/",
+      "example": "We put old vegetables on the compost.",
+      "example_ru": "Мы кладём старые овощи в компост."
+    },
+    {
+      "rank": 10708,
+      "headword": "topple",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "опрокидывать",
+        "свергать",
+        "падать"
+      ],
+      "ipa": "/ˈtɒpl/",
+      "example": "The wind toppled the old tree.",
+      "example_ru": "Ветер опрокинул старое дерево."
+    },
+    {
+      "rank": 10709,
+      "headword": "dissect",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "препарировать",
+        "вскрывать",
+        "разбирать"
+      ],
+      "ipa": "/daɪˈsekt/",
+      "example": "In biology class we dissected a frog.",
+      "example_ru": "На уроке биологии мы препарировали лягушку."
+    },
+    {
+      "rank": 10710,
+      "headword": "skit",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сценка",
+        "пародия",
+        "скетч"
+      ],
+      "ipa": "/skɪt/",
+      "example": "The children performed a funny skit.",
+      "example_ru": "Дети показали смешную сценку."
+    },
+    {
+      "rank": 10711,
+      "headword": "casket",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гроб",
+        "шкатулка"
+      ],
+      "ipa": "/ˈkɑːskɪt/",
+      "example": "They carried the casket into the church.",
+      "example_ru": "Они внесли гроб в церковь."
+    },
+    {
+      "rank": 10712,
+      "headword": "worldview",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мировоззрение"
+      ],
+      "ipa": "/ˈwɜːldvjuː/",
+      "example": "Travel changed my worldview.",
+      "example_ru": "Путешествия изменили моё мировоззрение."
+    },
+    {
+      "rank": 10713,
+      "headword": "jeopardize",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "ставить под угрозу",
+        "подвергать опасности"
+      ],
+      "ipa": "/ˈdʒepədaɪz/",
+      "example": "Do not jeopardize your health for money.",
+      "example_ru": "Не ставь здоровье под угрозу ради денег."
+    },
+    {
+      "rank": 10714,
+      "headword": "blunder",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "грубая ошибка",
+        "промах"
+      ],
+      "ipa": "/ˈblʌndə/",
+      "example": "Forgetting her name was a terrible blunder.",
+      "example_ru": "Забыть её имя было ужасной ошибкой."
+    },
+    {
+      "rank": 10715,
+      "headword": "sift",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "просеивать",
+        "отсеивать"
+      ],
+      "ipa": "/sɪft/",
+      "example": "Sift the flour before you add the eggs.",
+      "example_ru": "Просейте муку, прежде чем добавлять яйца."
+    },
+    {
+      "rank": 10716,
+      "headword": "crochet",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "вязать крючком"
+      ],
+      "ipa": "/ˈkrəʊʃeɪ/",
+      "example": "My grandmother crochets warm hats.",
+      "example_ru": "Моя бабушка вяжет крючком тёплые шапки."
+    },
+    {
+      "rank": 10717,
+      "headword": "quay",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пристань",
+        "причал",
+        "набережная"
+      ],
+      "ipa": "/kiː/",
+      "example": "The boat was tied up at the quay.",
+      "example_ru": "Лодка была привязана у пристани."
+    },
+    {
+      "rank": 10718,
+      "headword": "fundamentalist",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фундаменталист"
+      ],
+      "ipa": "/ˌfʌndəˈmentəlɪst/",
+      "example": "He is a religious fundamentalist.",
+      "example_ru": "Он религиозный фундаменталист."
+    },
+    {
+      "rank": 10719,
+      "headword": "boa",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "удав",
+        "боа"
+      ],
+      "ipa": "/ˈbəʊə/",
+      "example": "We saw a huge boa at the zoo.",
+      "example_ru": "В зоопарке мы видели огромного удава."
+    },
+    {
+      "rank": 10720,
+      "headword": "keel",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "киль"
+      ],
+      "ipa": "/kiːl/",
+      "example": "The boat has a heavy keel.",
+      "example_ru": "У лодки тяжёлый киль."
+    },
+    {
+      "rank": 10721,
+      "headword": "cavern",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пещера"
+      ],
+      "ipa": "/ˈkævən/",
+      "example": "We explored a dark cavern under the hill.",
+      "example_ru": "Мы исследовали тёмную пещеру под холмом."
+    },
+    {
+      "rank": 10722,
+      "headword": "gnome",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гном"
+      ],
+      "ipa": "/nəʊm/",
+      "example": "There is a small garden gnome by the door.",
+      "example_ru": "У двери стоит маленький садовый гном."
+    },
+    {
+      "rank": 10723,
+      "headword": "shingle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "черепица",
+        "галька",
+        "кровельная дранка"
+      ],
+      "ipa": "/ˈʃɪŋɡl/",
+      "example": "The wind blew a shingle off the roof.",
+      "example_ru": "Ветер сорвал с крыши черепицу."
+    },
+    {
+      "rank": 10724,
+      "headword": "sprinter",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "спринтер",
+        "бегун"
+      ],
+      "ipa": "/ˈsprɪntə/",
+      "example": "The sprinter won the race easily.",
+      "example_ru": "Спринтер легко выиграл забег."
+    },
+    {
+      "rank": 10725,
+      "headword": "stag",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "олень",
+        "самец оленя"
+      ],
+      "ipa": "/stæɡ/",
+      "example": "A big stag stood in the forest.",
+      "example_ru": "В лесу стоял большой олень."
+    },
+    {
+      "rank": 10726,
+      "headword": "influencer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "блогер",
+        "инфлюенсер"
+      ],
+      "ipa": "/ˈɪnfluənsə/",
+      "example": "She is a popular influencer with many followers.",
+      "example_ru": "Она популярный блогер с множеством подписчиков."
+    },
+    {
+      "rank": 10727,
+      "headword": "dogma",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "догма",
+        "догмат"
+      ],
+      "ipa": "/ˈdɒɡmə/",
+      "example": "He does not follow any dogma.",
+      "example_ru": "Он не следует никакой догме."
+    },
+    {
+      "rank": 10728,
+      "headword": "deletion",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "удаление",
+        "стирание"
+      ],
+      "ipa": "/dɪˈliːʃn/",
+      "example": "The deletion of the file cannot be undone.",
+      "example_ru": "Удаление файла нельзя отменить."
+    },
+    {
+      "rank": 10729,
+      "headword": "overlie",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "покрывать",
+        "лежать поверх"
+      ],
+      "ipa": "/ˌəʊvəˈlaɪ/",
+      "example": "A thin layer of soil overlies the rock.",
+      "example_ru": "Тонкий слой почвы покрывает скалу."
+    },
+    {
+      "rank": 10730,
+      "headword": "redhead",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "рыжий",
+        "рыжеволосый человек"
+      ],
+      "ipa": "/ˈredhed/",
+      "example": "Her sister is a pretty redhead.",
+      "example_ru": "Её сестра - симпатичная рыжая девушка."
+    },
+    {
+      "rank": 10731,
+      "headword": "lengthen",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "удлинять",
+        "продлевать"
+      ],
+      "ipa": "/ˈleŋθən/",
+      "example": "The days lengthen in spring.",
+      "example_ru": "Весной дни удлиняются."
+    },
+    {
+      "rank": 10732,
+      "headword": "nourish",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "питать",
+        "кормить"
+      ],
+      "ipa": "/ˈnʌrɪʃ/",
+      "example": "Good food nourishes the body.",
+      "example_ru": "Хорошая еда питает тело."
+    },
+    {
+      "rank": 10733,
+      "headword": "realist",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "реалист"
+      ],
+      "ipa": "/ˈriːəlɪst/",
+      "example": "I am a realist, not a dreamer.",
+      "example_ru": "Я реалист, а не мечтатель."
+    },
+    {
+      "rank": 10734,
+      "headword": "spearhead",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "возглавлять",
+        "быть во главе"
+      ],
+      "ipa": "/ˈspɪəhed/",
+      "example": "She spearheaded the campaign to clean the park.",
+      "example_ru": "Она возглавила кампанию по уборке парка."
+    },
+    {
+      "rank": 10735,
+      "headword": "underwrite",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "гарантировать",
+        "страховать",
+        "финансировать"
+      ],
+      "ipa": "/ˌʌndəˈraɪt/",
+      "example": "The bank agreed to underwrite the loan.",
+      "example_ru": "Банк согласился гарантировать кредит."
+    },
+    {
+      "rank": 10736,
+      "headword": "walkway",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "дорожка",
+        "переход",
+        "проход"
+      ],
+      "ipa": "/ˈwɔːkweɪ/",
+      "example": "A covered walkway joins the two buildings.",
+      "example_ru": "Крытый переход соединяет два здания."
+    },
+    {
+      "rank": 10737,
+      "headword": "accolade",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "награда",
+        "похвала",
+        "признание"
+      ],
+      "ipa": "/ˈækəleɪd/",
+      "example": "The film received every accolade possible.",
+      "example_ru": "Фильм получил все возможные награды."
+    },
+    {
+      "rank": 10738,
+      "headword": "adept",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "искусный",
+        "умелый"
+      ],
+      "ipa": "/əˈdept/",
+      "example": "She is adept at solving problems.",
+      "example_ru": "Она умело решает проблемы."
+    },
+    {
+      "rank": 10739,
+      "headword": "advantageous",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "выгодный",
+        "благоприятный"
+      ],
+      "ipa": "/ˌædvənˈteɪdʒəs/",
+      "example": "The new deal is advantageous for both sides.",
+      "example_ru": "Новая сделка выгодна обеим сторонам."
+    },
+    {
+      "rank": 10740,
+      "headword": "afloat",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "на плаву"
+      ],
+      "ipa": "/əˈfləʊt/",
+      "example": "We kept the business afloat for ten years.",
+      "example_ru": "Мы держали бизнес на плаву десять лет."
+    },
+    {
+      "rank": 10741,
+      "headword": "agility",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ловкость",
+        "проворство",
+        "гибкость"
+      ],
+      "ipa": "/əˈdʒɪləti/",
+      "example": "Cats are known for their agility.",
+      "example_ru": "Кошки славятся своей ловкостью."
+    },
+    {
+      "rank": 10742,
+      "headword": "airbus",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "аэробус"
+      ],
+      "ipa": "/ˈeəbʌs/",
+      "example": "We flew to the coast on a large airbus.",
+      "example_ru": "Мы летели к побережью на большом аэробусе."
+    },
+    {
+      "rank": 10743,
+      "headword": "ante",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ставка",
+        "взнос"
+      ],
+      "ipa": "/ˈænti/",
+      "example": "Each player puts in an ante before the game.",
+      "example_ru": "Каждый игрок делает ставку перед игрой."
+    },
+    {
+      "rank": 10744,
+      "headword": "archipelago",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "архипелаг"
+      ],
+      "ipa": "/ˌɑːkɪˈpeləɡəʊ/",
+      "example": "The archipelago has more than fifty islands.",
+      "example_ru": "Архипелаг насчитывает более пятидесяти островов."
+    },
+    {
+      "rank": 10745,
+      "headword": "bullpen",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "загон для быков",
+        "зона разминки питчеров"
+      ],
+      "ipa": "/ˈbʊlpen/",
+      "example": "The new pitcher warmed up in the bullpen.",
+      "example_ru": "Новый питчер разминался в зоне разминки."
+    },
+    {
+      "rank": 10746,
+      "headword": "carver",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "резчик"
+      ],
+      "ipa": "/ˈkɑːvə/",
+      "example": "The carver made a beautiful wooden bird.",
+      "example_ru": "Резчик сделал красивую деревянную птицу."
+    },
+    {
+      "rank": 10747,
+      "headword": "causal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "причинный",
+        "причинно-следственный"
+      ],
+      "ipa": "/ˈkɔːzl/",
+      "example": "There is a causal link between smoking and illness.",
+      "example_ru": "Между курением и болезнями есть причинная связь."
+    },
+    {
+      "rank": 10748,
+      "headword": "centrally",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "в центре",
+        "централизованно"
+      ],
+      "ipa": "/ˈsentrəli/",
+      "example": "The hotel is centrally located.",
+      "example_ru": "Отель расположен в центре."
+    },
+    {
+      "rank": 10749,
+      "headword": "citadel",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "цитадель",
+        "крепость"
+      ],
+      "ipa": "/ˈsɪtədəl/",
+      "example": "The old citadel stands above the town.",
+      "example_ru": "Старая цитадель возвышается над городом."
+    },
+    {
+      "rank": 10750,
+      "headword": "colonialism",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "колониализм"
+      ],
+      "ipa": "/kəˈləʊniəlɪzəm/",
+      "example": "The book is about the history of colonialism.",
+      "example_ru": "Книга об истории колониализма."
+    },
+    {
+      "rank": 10751,
+      "headword": "crayon",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "цветной карандаш",
+        "мелок"
+      ],
+      "ipa": "/ˈkreɪən/",
+      "example": "The child drew a sun with a yellow crayon.",
+      "example_ru": "Ребёнок нарисовал солнце жёлтым карандашом."
+    },
+    {
+      "rank": 10752,
+      "headword": "dashboard",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "приборная панель",
+        "панель управления"
+      ],
+      "ipa": "/ˈdæʃbɔːd/",
+      "example": "A red light came on on the dashboard.",
+      "example_ru": "На приборной панели загорелась красная лампочка."
+    },
+    {
+      "rank": 10753,
+      "headword": "deficient",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "недостаточный",
+        "испытывающий недостаток"
+      ],
+      "ipa": "/dɪˈfɪʃnt/",
+      "example": "Her diet is deficient in iron.",
+      "example_ru": "В её рационе недостаточно железа."
+    },
+    {
+      "rank": 10754,
+      "headword": "demonic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "демонический",
+        "дьявольский"
+      ],
+      "ipa": "/diˈmɒnɪk/",
+      "example": "The film has a demonic laugh in it.",
+      "example_ru": "В фильме звучит демонический смех."
+    },
+    {
+      "rank": 10755,
+      "headword": "deterrent",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сдерживающий фактор",
+        "средство устрашения"
+      ],
+      "ipa": "/dɪˈterənt/",
+      "example": "High fines are a good deterrent.",
+      "example_ru": "Высокие штрафы - хороший сдерживающий фактор."
+    },
+    {
+      "rank": 10756,
+      "headword": "disdain",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "презрение",
+        "пренебрежение"
+      ],
+      "ipa": "/dɪsˈdeɪn/",
+      "example": "She looked at the cheap shoes with disdain.",
+      "example_ru": "Она посмотрела на дешёвые туфли с презрением."
+    },
+    {
+      "rank": 10757,
+      "headword": "disgraceful",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "позорный",
+        "постыдный"
+      ],
+      "ipa": "/dɪsˈɡreɪsfl/",
+      "example": "His behaviour at the party was disgraceful.",
+      "example_ru": "Его поведение на вечеринке было позорным."
+    },
+    {
+      "rank": 10758,
+      "headword": "dole",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пособие по безработице"
+      ],
+      "ipa": "/dəʊl/",
+      "example": "He has been on the dole for a year.",
+      "example_ru": "Он уже год живёт на пособие по безработице."
+    },
+    {
+      "rank": 10759,
+      "headword": "eerie",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "жуткий",
+        "зловещий"
+      ],
+      "ipa": "/ˈɪəri/",
+      "example": "The empty house was eerie at night.",
+      "example_ru": "Ночью пустой дом был жутким."
+    },
+    {
+      "rank": 10760,
+      "headword": "enrage",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "приводить в ярость",
+        "бесить"
+      ],
+      "ipa": "/ɪnˈreɪdʒ/",
+      "example": "His words enraged the crowd.",
+      "example_ru": "Его слова привели толпу в ярость."
+    },
+    {
+      "rank": 10761,
+      "headword": "exponential",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "экспоненциальный",
+        "стремительный"
+      ],
+      "ipa": "/ˌekspəˈnenʃl/",
+      "example": "The company saw exponential growth.",
+      "example_ru": "Компания показала экспоненциальный рост."
+    },
+    {
+      "rank": 10762,
+      "headword": "farce",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фарс",
+        "комедия"
+      ],
+      "ipa": "/fɑːs/",
+      "example": "The meeting was a complete farce.",
+      "example_ru": "Собрание было полным фарсом."
+    },
+    {
+      "rank": 10763,
+      "headword": "fatally",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "смертельно"
+      ],
+      "ipa": "/ˈfeɪtəli/",
+      "example": "Two people were fatally injured.",
+      "example_ru": "Два человека получили смертельные травмы."
+    },
+    {
+      "rank": 10764,
+      "headword": "frantic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "неистовый",
+        "отчаянный",
+        "лихорадочный"
+      ],
+      "ipa": "/ˈfræntɪk/",
+      "example": "There was a frantic search for the lost child.",
+      "example_ru": "Шли отчаянные поиски потерявшегося ребёнка."
+    },
+    {
+      "rank": 10765,
+      "headword": "fudge",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "помадка",
+        "ириска"
+      ],
+      "ipa": "/fʌdʒ/",
+      "example": "Grandma makes chocolate fudge at Christmas.",
+      "example_ru": "На Рождество бабушка делает шоколадную помадку."
+    },
+    {
+      "rank": 10766,
+      "headword": "grossly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "грубо",
+        "крайне"
+      ],
+      "ipa": "/ˈɡrəʊsli/",
+      "example": "The report was grossly unfair.",
+      "example_ru": "Отчёт был крайне несправедливым."
+    },
+    {
+      "rank": 10767,
+      "headword": "handwritten",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "рукописный",
+        "написанный от руки"
+      ],
+      "ipa": "/ˌhændˈrɪtn/",
+      "example": "I got a handwritten letter from my friend.",
+      "example_ru": "Я получил от друга письмо, написанное от руки."
+    },
+    {
+      "rank": 10768,
+      "headword": "heartless",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бессердечный",
+        "жестокий"
+      ],
+      "ipa": "/ˈhɑːtləs/",
+      "example": "How can you be so heartless?",
+      "example_ru": "Как ты можешь быть таким бессердечным?"
+    },
+    {
+      "rank": 10769,
+      "headword": "hectic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "беспокойный",
+        "суматошный"
+      ],
+      "ipa": "/ˈhektɪk/",
+      "example": "It was a hectic day at work.",
+      "example_ru": "На работе был суматошный день."
+    },
+    {
+      "rank": 10770,
+      "headword": "holistic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "целостный",
+        "комплексный"
+      ],
+      "ipa": "/həʊˈlɪstɪk/",
+      "example": "We take a holistic approach to health.",
+      "example_ru": "Мы применяем комплексный подход к здоровью."
+    },
+    {
+      "rank": 10771,
+      "headword": "hormonal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "гормональный"
+      ],
+      "ipa": "/hɔːˈməʊnl/",
+      "example": "Teenagers go through many hormonal changes.",
+      "example_ru": "Подростки переживают много гормональных изменений."
+    },
+    {
+      "rank": 10772,
+      "headword": "intrusive",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "навязчивый",
+        "назойливый"
+      ],
+      "ipa": "/ɪnˈtruːsɪv/",
+      "example": "The questions were too intrusive.",
+      "example_ru": "Вопросы были слишком назойливыми."
+    },
+    {
+      "rank": 10773,
+      "headword": "jackass",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "осёл",
+        "болван"
+      ],
+      "ipa": "/ˈdʒækæs/",
+      "example": "Stop acting like a jackass.",
+      "example_ru": "Хватит вести себя как осёл."
+    },
+    {
+      "rank": 10774,
+      "headword": "joyous",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "радостный"
+      ],
+      "ipa": "/ˈdʒɔɪəs/",
+      "example": "The wedding was a joyous day.",
+      "example_ru": "Свадьба была радостным днём."
+    },
+    {
+      "rank": 10775,
+      "headword": "lunchtime",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "обеденное время",
+        "обед"
+      ],
+      "ipa": "/ˈlʌntʃtaɪm/",
+      "example": "I will call you at lunchtime.",
+      "example_ru": "Я позвоню тебе в обед."
+    },
+    {
+      "rank": 10776,
+      "headword": "lux",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "люкс"
+      ],
+      "ipa": "/lʌks/",
+      "example": "The light in this room is about five hundred lux.",
+      "example_ru": "Освещённость в этой комнате около пятисот люкс."
+    },
+    {
+      "rank": 10777,
+      "headword": "mace",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "булава",
+        "жезл"
+      ],
+      "ipa": "/meɪs/",
+      "example": "The knight carried a heavy mace.",
+      "example_ru": "Рыцарь носил тяжёлую булаву."
+    },
+    {
+      "rank": 10778,
+      "headword": "malignant",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "злокачественный",
+        "злобный"
+      ],
+      "ipa": "/məˈlɪɡnənt/",
+      "example": "The doctors found a malignant tumour.",
+      "example_ru": "Врачи обнаружили злокачественную опухоль."
+    },
+    {
+      "rank": 10779,
+      "headword": "mascara",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "тушь для ресниц",
+        "тушь"
+      ],
+      "ipa": "/mæˈskɑːrə/",
+      "example": "She put on some mascara before the party.",
+      "example_ru": "Перед вечеринкой она накрасила ресницы тушью."
+    },
+    {
+      "rank": 10780,
+      "headword": "matchmaking",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сватовство",
+        "подбор пары"
+      ],
+      "ipa": "/ˈmætʃmeɪkɪŋ/",
+      "example": "My aunt loves matchmaking.",
+      "example_ru": "Моя тётя обожает сватовство."
+    },
+    {
+      "rank": 10781,
+      "headword": "measles",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "корь"
+      ],
+      "ipa": "/ˈmiːzlz/",
+      "example": "Children get a shot against measles.",
+      "example_ru": "Детям делают прививку от кори."
+    },
+    {
+      "rank": 10782,
+      "headword": "microbial",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "микробный"
+      ],
+      "ipa": "/maɪˈkrəʊbiəl/",
+      "example": "The soil is full of microbial life.",
+      "example_ru": "Почва полна микробной жизни."
+    },
+    {
+      "rank": 10783,
+      "headword": "molten",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "расплавленный"
+      ],
+      "ipa": "/ˈməʊltən/",
+      "example": "Molten rock flowed down the mountain.",
+      "example_ru": "Расплавленная порода стекала с горы."
+    },
+    {
+      "rank": 10784,
+      "headword": "monsoon",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "муссон",
+        "сезон дождей"
+      ],
+      "ipa": "/ˌmɒnˈsuːn/",
+      "example": "The monsoon brings heavy rain every summer.",
+      "example_ru": "Муссон каждое лето приносит сильные дожди."
+    },
+    {
+      "rank": 10785,
+      "headword": "montage",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "монтаж",
+        "коллаж"
+      ],
+      "ipa": "/ˈmɒntɑːʒ/",
+      "example": "The film starts with a montage of old photos.",
+      "example_ru": "Фильм начинается с монтажа старых фотографий."
+    },
+    {
+      "rank": 10786,
+      "headword": "negligent",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "небрежный",
+        "халатный"
+      ],
+      "ipa": "/ˈneɡlɪdʒənt/",
+      "example": "The driver was negligent and caused the accident.",
+      "example_ru": "Водитель был небрежен и стал причиной аварии."
+    },
+    {
+      "rank": 10787,
+      "headword": "passionately",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "страстно",
+        "горячо"
+      ],
+      "ipa": "/ˈpæʃənətli/",
+      "example": "She spoke passionately about her work.",
+      "example_ru": "Она страстно говорила о своей работе."
+    },
+    {
+      "rank": 10788,
+      "headword": "persuasion",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "убеждение",
+        "уговоры"
+      ],
+      "ipa": "/pəˈsweɪʒn/",
+      "example": "After some persuasion, he agreed to come.",
+      "example_ru": "После некоторых уговоров он согласился прийти."
+    },
+    {
+      "rank": 10789,
+      "headword": "plaid",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "клетка",
+        "шотландка"
+      ],
+      "ipa": "/plæd/",
+      "example": "He wore a shirt in red plaid.",
+      "example_ru": "На нём была рубашка в красную клетку."
+    },
+    {
+      "rank": 10790,
+      "headword": "playback",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "воспроизведение"
+      ],
+      "ipa": "/ˈpleɪbæk/",
+      "example": "Press this button for playback.",
+      "example_ru": "Нажмите эту кнопку для воспроизведения."
+    },
+    {
+      "rank": 10791,
+      "headword": "plush",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "роскошный",
+        "плюшевый"
+      ],
+      "ipa": "/plʌʃ/",
+      "example": "They stayed in a plush hotel.",
+      "example_ru": "Они остановились в роскошном отеле."
+    },
+    {
+      "rank": 10792,
+      "headword": "positivity",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "позитив",
+        "позитивный настрой"
+      ],
+      "ipa": "/ˌpɒzəˈtɪvəti/",
+      "example": "Her positivity makes everyone happy.",
+      "example_ru": "Её позитив радует всех вокруг."
+    },
+    {
+      "rank": 10793,
+      "headword": "precedence",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "приоритет",
+        "первенство"
+      ],
+      "ipa": "/ˈpresɪdəns/",
+      "example": "Safety takes precedence over speed.",
+      "example_ru": "Безопасность имеет приоритет над скоростью."
+    },
+    {
+      "rank": 10794,
+      "headword": "pristine",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "безупречный",
+        "нетронутый",
+        "первозданный"
+      ],
+      "ipa": "/ˈprɪstiːn/",
+      "example": "The old car is in pristine condition.",
+      "example_ru": "Старая машина в безупречном состоянии."
+    },
+    {
+      "rank": 10795,
+      "headword": "prognosis",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "прогноз"
+      ],
+      "ipa": "/prɒɡˈnəʊsɪs/",
+      "example": "The doctor says the prognosis is good.",
+      "example_ru": "Врач говорит, что прогноз хороший."
+    },
+    {
+      "rank": 10796,
+      "headword": "realistically",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "реалистично",
+        "реально"
+      ],
+      "ipa": "/ˌriːəˈlɪstɪkli/",
+      "example": "Realistically, we cannot finish by Friday.",
+      "example_ru": "Реально мы не успеем закончить к пятнице."
+    },
+    {
+      "rank": 10797,
+      "headword": "reorganization",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "реорганизация",
+        "перестройка"
+      ],
+      "ipa": "/riˌɔːɡənaɪˈzeɪʃn/",
+      "example": "The reorganization of the office took a month.",
+      "example_ru": "Реорганизация офиса заняла месяц."
+    },
+    {
+      "rank": 10798,
+      "headword": "retrieval",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "извлечение",
+        "поиск",
+        "восстановление"
+      ],
+      "ipa": "/rɪˈtriːvl/",
+      "example": "The system makes data retrieval fast.",
+      "example_ru": "Система ускоряет извлечение данных."
+    },
+    {
+      "rank": 10799,
+      "headword": "saline",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "солевой",
+        "солёный"
+      ],
+      "ipa": "/ˈseɪlaɪn/",
+      "example": "The nurse cleaned the cut with saline water.",
+      "example_ru": "Медсестра промыла порез солевым раствором."
+    },
+    {
+      "rank": 10800,
+      "headword": "saviour",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "спаситель",
+        "избавитель"
+      ],
+      "ipa": "/ˈseɪvjə/",
+      "example": "The new coach was the saviour of the team.",
+      "example_ru": "Новый тренер стал спасителем команды."
+    },
+    {
+      "rank": 10801,
+      "headword": "scarcely",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "едва",
+        "едва ли",
+        "почти не"
+      ],
+      "ipa": "/ˈskeəsli/",
+      "example": "I could scarcely hear what she said.",
+      "example_ru": "Я едва слышал, что она сказала."
+    },
+    {
+      "rank": 10802,
+      "headword": "shipbuilding",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "судостроение"
+      ],
+      "ipa": "/ˈʃɪpbɪldɪŋ/",
+      "example": "The town was famous for shipbuilding.",
+      "example_ru": "Город славился судостроением."
+    },
+    {
+      "rank": 10803,
+      "headword": "signing",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "подписание"
+      ],
+      "ipa": "/ˈsaɪnɪŋ/",
+      "example": "The signing of the contract is on Monday.",
+      "example_ru": "Подписание договора состоится в понедельник."
+    },
+    {
+      "rank": 10804,
+      "headword": "smoky",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "дымный",
+        "прокуренный",
+        "копчёный"
+      ],
+      "ipa": "/ˈsməʊki/",
+      "example": "The kitchen was smoky after dinner.",
+      "example_ru": "После ужина на кухне было дымно."
+    },
+    {
+      "rank": 10805,
+      "headword": "temperate",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "умеренный"
+      ],
+      "ipa": "/ˈtempərət/",
+      "example": "The country has a temperate climate.",
+      "example_ru": "В стране умеренный климат."
+    },
+    {
+      "rank": 10806,
+      "headword": "thematic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "тематический"
+      ],
+      "ipa": "/θɪˈmætɪk/",
+      "example": "The museum has a thematic tour for kids.",
+      "example_ru": "В музее есть тематическая экскурсия для детей."
+    },
+    {
+      "rank": 10807,
+      "headword": "treble",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "утраивать",
+        "утраиваться"
+      ],
+      "ipa": "/ˈtrebl/",
+      "example": "The price of the house has trebled.",
+      "example_ru": "Цена дома утроилась."
+    },
+    {
+      "rank": 10808,
+      "headword": "turquoise",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "бирюзовый"
+      ],
+      "ipa": "/ˈtɜːkwɔɪz/",
+      "example": "She wore a turquoise dress.",
+      "example_ru": "На ней было бирюзовое платье."
+    },
+    {
+      "rank": 10809,
+      "headword": "ultraviolet",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "ультрафиолетовый"
+      ],
+      "ipa": "/ˌʌltrəˈvaɪələt/",
+      "example": "Sunscreen protects you from ultraviolet light.",
+      "example_ru": "Солнцезащитный крем защищает от ультрафиолетовых лучей."
+    },
+    {
+      "rank": 10810,
+      "headword": "unbiased",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "непредвзятый",
+        "беспристрастный"
+      ],
+      "ipa": "/ʌnˈbaɪəst/",
+      "example": "We need an unbiased opinion.",
+      "example_ru": "Нам нужно непредвзятое мнение."
+    },
+    {
+      "rank": 10811,
+      "headword": "uncanny",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "странный",
+        "жуткий",
+        "сверхъестественный"
+      ],
+      "ipa": "/ʌnˈkæni/",
+      "example": "She has an uncanny likeness to her aunt.",
+      "example_ru": "Она странно похожа на свою тётю."
+    },
+    {
+      "rank": 10812,
+      "headword": "ungrateful",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "неблагодарный"
+      ],
+      "ipa": "/ʌnˈɡreɪtfl/",
+      "example": "Do not be so ungrateful!",
+      "example_ru": "Не будь таким неблагодарным!"
+    },
+    {
+      "rank": 10813,
+      "headword": "untreated",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "необработанный",
+        "нелеченый"
+      ],
+      "ipa": "/ʌnˈtriːtɪd/",
+      "example": "Untreated water is not safe to drink.",
+      "example_ru": "Необработанную воду пить небезопасно."
+    },
+    {
+      "rank": 10814,
+      "headword": "usefulness",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "полезность",
+        "польза"
+      ],
+      "ipa": "/ˈjuːsflnəs/",
+      "example": "I doubt the usefulness of this meeting.",
+      "example_ru": "Я сомневаюсь в полезности этой встречи."
+    },
+    {
+      "rank": 10815,
+      "headword": "vandalism",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "вандализм"
+      ],
+      "ipa": "/ˈvændəlɪzəm/",
+      "example": "The bus stop was damaged by vandalism.",
+      "example_ru": "Остановка пострадала от вандализма."
+    },
+    {
+      "rank": 10816,
+      "headword": "voyager",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "путешественник",
+        "мореплаватель"
+      ],
+      "ipa": "/ˈvɔɪɪdʒə/",
+      "example": "The voyager sailed around the world alone.",
+      "example_ru": "Путешественник в одиночку проплыл вокруг света."
+    },
+    {
+      "rank": 10817,
+      "headword": "wrongful",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "незаконный",
+        "неправомерный"
+      ],
+      "ipa": "/ˈrɒŋfl/",
+      "example": "He sued the company for wrongful dismissal.",
+      "example_ru": "Он подал в суд на компанию за незаконное увольнение."
+    },
+    {
+      "rank": 10818,
+      "headword": "calamity",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "бедствие",
+        "катастрофа",
+        "несчастье"
+      ],
+      "ipa": "/kəˈlæməti/",
+      "example": "The flood was a calamity for the village.",
+      "example_ru": "Наводнение стало бедствием для деревни."
+    },
+    {
+      "rank": 10819,
+      "headword": "galley",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "камбуз",
+        "галера"
+      ],
+      "ipa": "/ˈɡæli/",
+      "example": "The cook works in the ship's galley.",
+      "example_ru": "Кок работает на камбузе корабля."
+    },
+    {
+      "rank": 10820,
+      "headword": "mismatch",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "несоответствие",
+        "несовпадение"
+      ],
+      "ipa": "/ˈmɪsmætʃ/",
+      "example": "There is a mismatch between the two lists.",
+      "example_ru": "Между двумя списками есть несоответствие."
+    },
+    {
+      "rank": 10821,
+      "headword": "anoint",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "помазывать",
+        "умащать",
+        "назначать"
+      ],
+      "ipa": "/əˈnɔɪnt/",
+      "example": "The priest anointed the new king.",
+      "example_ru": "Священник помазал нового короля."
+    },
+    {
+      "rank": 10822,
+      "headword": "itinerary",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "маршрут",
+        "план поездки"
+      ],
+      "ipa": "/aɪˈtɪnərəri/",
+      "example": "Our itinerary includes three cities.",
+      "example_ru": "Наш маршрут включает три города."
+    },
+    {
+      "rank": 10823,
+      "headword": "starship",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "звездолёт",
+        "космический корабль"
+      ],
+      "ipa": "/ˈstɑːʃɪp/",
+      "example": "The starship flew to a distant planet.",
+      "example_ru": "Звездолёт полетел к далёкой планете."
+    },
+    {
+      "rank": 10824,
+      "headword": "cyst",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "киста"
+      ],
+      "ipa": "/sɪst/",
+      "example": "The doctor removed a small cyst from his back.",
+      "example_ru": "Врач удалил у него со спины небольшую кисту."
+    },
+    {
+      "rank": 10825,
+      "headword": "giver",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "дающий",
+        "даритель"
+      ],
+      "ipa": "/ˈɡɪvə/",
+      "example": "She is a generous giver to charity.",
+      "example_ru": "Она щедро жертвует на благотворительность."
+    },
+    {
+      "rank": 10826,
+      "headword": "aroma",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "аромат",
+        "запах"
+      ],
+      "ipa": "/əˈrəʊmə/",
+      "example": "The aroma of fresh coffee filled the room.",
+      "example_ru": "Аромат свежего кофе наполнил комнату."
+    },
+    {
+      "rank": 10827,
+      "headword": "caress",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "ласкать",
+        "гладить"
+      ],
+      "ipa": "/kəˈres/",
+      "example": "She caressed the baby's soft hair.",
+      "example_ru": "Она гладила мягкие волосы малыша."
+    },
+    {
+      "rank": 10828,
+      "headword": "delicacy",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "деликатес",
+        "деликатность",
+        "хрупкость"
+      ],
+      "ipa": "/ˈdelɪkəsi/",
+      "example": "Snails are a delicacy in France.",
+      "example_ru": "Во Франции улитки - деликатес."
+    },
+    {
+      "rank": 10829,
+      "headword": "bellow",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "реветь",
+        "орать",
+        "рычать"
+      ],
+      "ipa": "/ˈbeləʊ/",
+      "example": "The coach bellowed at the players.",
+      "example_ru": "Тренер орал на игроков."
+    },
+    {
+      "rank": 10830,
+      "headword": "daze",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "оцепенение",
+        "ошеломление"
+      ],
+      "ipa": "/deɪz/",
+      "example": "After the news she walked around in a daze.",
+      "example_ru": "После этой новости она ходила в оцепенении."
+    },
+    {
+      "rank": 10831,
+      "headword": "tropic",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "тропик"
+      ],
+      "ipa": "/ˈtrɒpɪk/",
+      "example": "The island lies near the tropic of Cancer.",
+      "example_ru": "Остров лежит недалеко от тропика Рака."
+    },
+    {
+      "rank": 10832,
+      "headword": "electrolyte",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "электролит"
+      ],
+      "ipa": "/ɪˈlektrəlaɪt/",
+      "example": "Sports drinks contain electrolytes.",
+      "example_ru": "Спортивные напитки содержат электролиты."
+    },
+    {
+      "rank": 10833,
+      "headword": "nomad",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кочевник"
+      ],
+      "ipa": "/ˈnəʊmæd/",
+      "example": "The nomad moved his tent every few weeks.",
+      "example_ru": "Кочевник переносил свой шатёр каждые несколько недель."
+    },
+    {
+      "rank": 10834,
+      "headword": "tuft",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пучок",
+        "клок",
+        "хохолок"
+      ],
+      "ipa": "/tʌft/",
+      "example": "A tuft of grass grew between the stones.",
+      "example_ru": "Между камнями рос пучок травы."
+    },
+    {
+      "rank": 10835,
+      "headword": "junky",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "дрянной",
+        "никудышный"
+      ],
+      "ipa": "/ˈdʒʌŋki/",
+      "example": "He drives a junky old car.",
+      "example_ru": "Он ездит на дрянной старой машине."
+    },
+    {
+      "rank": 10836,
+      "headword": "canister",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "баллончик",
+        "канистра",
+        "банка"
+      ],
+      "ipa": "/ˈkænɪstə/",
+      "example": "Keep the gas canister away from fire.",
+      "example_ru": "Держите газовый баллончик подальше от огня."
+    },
+    {
+      "rank": 10837,
+      "headword": "consonant",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "согласный звук",
+        "согласная"
+      ],
+      "ipa": "/ˈkɒnsənənt/",
+      "example": "The word starts with a consonant.",
+      "example_ru": "Слово начинается с согласного звука."
+    },
+    {
+      "rank": 10838,
+      "headword": "cot",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "детская кроватка",
+        "раскладушка"
+      ],
+      "ipa": "/kɒt/",
+      "example": "The baby is sleeping in her cot.",
+      "example_ru": "Малышка спит в своей кроватке."
+    },
+    {
+      "rank": 10839,
+      "headword": "filament",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "нить",
+        "волокно",
+        "нить накаливания"
+      ],
+      "ipa": "/ˈfɪləmənt/",
+      "example": "The filament in the bulb broke.",
+      "example_ru": "В лампочке перегорела нить накаливания."
+    },
+    {
+      "rank": 10840,
+      "headword": "bystander",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "случайный свидетель",
+        "прохожий",
+        "очевидец"
+      ],
+      "ipa": "/ˈbaɪstændə/",
+      "example": "A bystander called the ambulance.",
+      "example_ru": "Случайный свидетель вызвал скорую помощь."
+    },
+    {
+      "rank": 10841,
+      "headword": "catheter",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "катетер"
+      ],
+      "ipa": "/ˈkæθɪtə/",
+      "example": "The nurse put in a catheter.",
+      "example_ru": "Медсестра поставила катетер."
+    },
+    {
+      "rank": 10842,
+      "headword": "heretic",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "еретик"
+      ],
+      "ipa": "/ˈherətɪk/",
+      "example": "In the past, a heretic could be put in prison.",
+      "example_ru": "В прошлом еретика могли посадить в тюрьму."
+    },
+    {
+      "rank": 10843,
+      "headword": "shard",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "осколок",
+        "черепок"
+      ],
+      "ipa": "/ʃɑːd/",
+      "example": "I cut my foot on a shard of glass.",
+      "example_ru": "Я порезал ногу об осколок стекла."
+    },
+    {
+      "rank": 10844,
+      "headword": "warhead",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "боеголовка"
+      ],
+      "ipa": "/ˈwɔːhed/",
+      "example": "The missile carried a large warhead.",
+      "example_ru": "Ракета несла крупную боеголовку."
+    },
+    {
+      "rank": 10845,
+      "headword": "webinar",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "вебинар"
+      ],
+      "ipa": "/ˈwebɪnɑː/",
+      "example": "I watched a webinar about saving money.",
+      "example_ru": "Я посмотрел вебинар о том, как экономить деньги."
+    },
+    {
+      "rank": 10846,
+      "headword": "videotape",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "видеокассета",
+        "видеозапись"
+      ],
+      "ipa": "/ˈvɪdiəʊteɪp/",
+      "example": "We found an old videotape of our wedding.",
+      "example_ru": "Мы нашли старую видеокассету с нашей свадьбой."
+    },
+    {
+      "rank": 10847,
+      "headword": "detergent",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "моющее средство",
+        "стиральный порошок"
+      ],
+      "ipa": "/dɪˈtɜːdʒənt/",
+      "example": "Use less detergent for small loads.",
+      "example_ru": "Для небольшой загрузки используй меньше моющего средства."
+    },
+    {
+      "rank": 10848,
+      "headword": "fingernail",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "ноготь"
+      ],
+      "ipa": "/ˈfɪŋɡəneɪl/",
+      "example": "She broke a fingernail at work.",
+      "example_ru": "На работе она сломала ноготь."
+    },
+    {
+      "rank": 10849,
+      "headword": "puma",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пума"
+      ],
+      "ipa": "/ˈpjuːmə/",
+      "example": "A puma was seen near the village.",
+      "example_ru": "Около деревни видели пуму."
+    },
+    {
+      "rank": 10850,
+      "headword": "crutch",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "костыль",
+        "опора"
+      ],
+      "ipa": "/krʌtʃ/",
+      "example": "He walked with a crutch after the accident.",
+      "example_ru": "После аварии он ходил с костылём."
+    },
+    {
+      "rank": 10851,
+      "headword": "energize",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "заряжать энергией",
+        "бодрить"
+      ],
+      "ipa": "/ˈenədʒaɪz/",
+      "example": "A short walk energizes me in the morning.",
+      "example_ru": "Короткая прогулка утром заряжает меня энергией."
+    },
+    {
+      "rank": 10852,
+      "headword": "aeroplane",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "самолёт"
+      ],
+      "ipa": "/ˈeərəpleɪn/",
+      "example": "The aeroplane landed on time.",
+      "example_ru": "Самолёт приземлился вовремя."
+    },
+    {
+      "rank": 10853,
+      "headword": "volley",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "залп",
+        "град",
+        "удар с лёта"
+      ],
+      "ipa": "/ˈvɒli/",
+      "example": "The soldiers fired a volley into the air.",
+      "example_ru": "Солдаты дали залп в воздух."
+    },
+    {
+      "rank": 10854,
+      "headword": "subgroup",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "подгруппа"
+      ],
+      "ipa": "/ˈsʌbɡruːp/",
+      "example": "The class was split into small subgroups.",
+      "example_ru": "Класс разделили на небольшие подгруппы."
+    },
+    {
+      "rank": 10855,
+      "headword": "jingle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "звон",
+        "позвякивание",
+        "рекламная песенка"
+      ],
+      "ipa": "/ˈdʒɪŋɡl/",
+      "example": "I heard the jingle of keys at the door.",
+      "example_ru": "Я услышал звон ключей у двери."
+    },
+    {
+      "rank": 10856,
+      "headword": "wrongdoing",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "правонарушение",
+        "проступок"
+      ],
+      "ipa": "/ˈrɒŋduːɪŋ/",
+      "example": "The company denied any wrongdoing.",
+      "example_ru": "Компания отрицала любые правонарушения."
+    },
+    {
+      "rank": 10857,
+      "headword": "invalidate",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "аннулировать",
+        "признавать недействительным",
+        "опровергать"
+      ],
+      "ipa": "/ɪnˈvælɪdeɪt/",
+      "example": "A small mistake can invalidate the whole form.",
+      "example_ru": "Маленькая ошибка может сделать всю анкету недействительной."
+    },
+    {
+      "rank": 10858,
+      "headword": "madman",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сумасшедший",
+        "безумец"
+      ],
+      "ipa": "/ˈmædmən/",
+      "example": "He drove like a madman.",
+      "example_ru": "Он ехал как сумасшедший."
+    },
+    {
+      "rank": 10859,
+      "headword": "stoppage",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "остановка",
+        "забастовка",
+        "прекращение"
+      ],
+      "ipa": "/ˈstɒpɪdʒ/",
+      "example": "The workers held a two-hour stoppage.",
+      "example_ru": "Рабочие устроили двухчасовую забастовку."
+    },
+    {
+      "rank": 10860,
+      "headword": "dupe",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "обманывать",
+        "надувать"
+      ],
+      "ipa": "/djuːp/",
+      "example": "They duped him into paying too much.",
+      "example_ru": "Его обманули и заставили переплатить."
+    },
+    {
+      "rank": 10861,
+      "headword": "shank",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "голень",
+        "стержень",
+        "рулька"
+      ],
+      "ipa": "/ʃæŋk/",
+      "example": "We cooked a lamb shank for dinner.",
+      "example_ru": "На ужин мы приготовили баранью голень."
+    },
+    {
+      "rank": 10862,
+      "headword": "grope",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "нащупывать",
+        "искать на ощупь"
+      ],
+      "ipa": "/ɡrəʊp/",
+      "example": "She groped for the light switch in the dark.",
+      "example_ru": "Она нащупывала в темноте выключатель."
+    },
+    {
+      "rank": 10863,
+      "headword": "connotation",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "оттенок значения",
+        "коннотация",
+        "подтекст"
+      ],
+      "ipa": "/ˌkɒnəˈteɪʃn/",
+      "example": "The word has a negative connotation.",
+      "example_ru": "У этого слова негативный оттенок."
+    },
+    {
+      "rank": 10864,
+      "headword": "cranberry",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "клюква"
+      ],
+      "ipa": "/ˈkrænbəri/",
+      "example": "She made a cranberry sauce for the turkey.",
+      "example_ru": "Она приготовила к индейке клюквенный соус."
+    },
+    {
+      "rank": 10865,
+      "headword": "cliche",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "клише",
+        "штамп",
+        "банальность"
+      ],
+      "ipa": "/ˈkliːʃeɪ/",
+      "example": "The film is full of cliches.",
+      "example_ru": "Фильм полон клише."
+    },
+    {
+      "rank": 10866,
+      "headword": "bookmark",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "закладка"
+      ],
+      "ipa": "/ˈbʊkmɑːk/",
+      "example": "I use an old ticket as a bookmark.",
+      "example_ru": "Я использую старый билет как закладку."
+    },
+    {
+      "rank": 10867,
+      "headword": "multiplier",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "множитель",
+        "мультипликатор"
+      ],
+      "ipa": "/ˈmʌltɪplaɪə/",
+      "example": "In this game the multiplier doubles your points.",
+      "example_ru": "В этой игре множитель удваивает твои очки."
+    },
+    {
+      "rank": 10868,
+      "headword": "synchronize",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "синхронизировать",
+        "согласовывать"
+      ],
+      "ipa": "/ˈsɪŋkrənaɪz/",
+      "example": "Let us synchronize our watches.",
+      "example_ru": "Давайте сверим часы."
+    },
+    {
+      "rank": 10869,
+      "headword": "debtor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "должник",
+        "дебитор"
+      ],
+      "ipa": "/ˈdetə/",
+      "example": "The debtor could not pay the bank.",
+      "example_ru": "Должник не смог заплатить банку."
+    },
+    {
+      "rank": 10870,
+      "headword": "importer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "импортёр"
+      ],
+      "ipa": "/ɪmˈpɔːtə/",
+      "example": "He is an importer of Italian wine.",
+      "example_ru": "Он импортёр итальянского вина."
+    },
+    {
+      "rank": 10871,
+      "headword": "scorn",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "презрение",
+        "пренебрежение"
+      ],
+      "ipa": "/skɔːn/",
+      "example": "She looked at him with scorn.",
+      "example_ru": "Она посмотрела на него с презрением."
+    },
+    {
+      "rank": 10872,
+      "headword": "baroque",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "барочный",
+        "вычурный"
+      ],
+      "ipa": "/bəˈrɒk/",
+      "example": "We listened to baroque music at the concert.",
+      "example_ru": "На концерте мы слушали музыку барокко."
+    },
+    {
+      "rank": 10873,
+      "headword": "behavioural",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "поведенческий"
+      ],
+      "ipa": "/bɪˈheɪvjərəl/",
+      "example": "The child has some behavioural problems.",
+      "example_ru": "У ребёнка есть некоторые поведенческие проблемы."
+    },
+    {
+      "rank": 10874,
+      "headword": "blindly",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "слепо",
+        "вслепую",
+        "безрассудно"
+      ],
+      "ipa": "/ˈblaɪndli/",
+      "example": "Do not blindly trust everything you read.",
+      "example_ru": "Не верь слепо всему, что читаешь."
+    },
+    {
+      "rank": 10875,
+      "headword": "brig",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "бриг",
+        "гауптвахта"
+      ],
+      "ipa": "/brɪɡ/",
+      "example": "The old brig sailed into the harbour.",
+      "example_ru": "Старый бриг вошёл в гавань."
+    },
+    {
+      "rank": 10876,
+      "headword": "canonical",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "канонический",
+        "общепринятый"
+      ],
+      "ipa": "/kəˈnɒnɪkl/",
+      "example": "This is the canonical version of the story.",
+      "example_ru": "Это каноническая версия истории."
+    },
+    {
+      "rank": 10877,
+      "headword": "cautiously",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "осторожно",
+        "с опаской"
+      ],
+      "ipa": "/ˈkɔːʃəsli/",
+      "example": "She cautiously opened the door.",
+      "example_ru": "Она осторожно открыла дверь."
+    },
+    {
+      "rank": 10878,
+      "headword": "ceasefire",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "прекращение огня",
+        "перемирие"
+      ],
+      "ipa": "/ˈsiːsfaɪə/",
+      "example": "Both sides agreed to a ceasefire.",
+      "example_ru": "Обе стороны согласились на прекращение огня."
+    },
+    {
+      "rank": 10879,
+      "headword": "celery",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сельдерей"
+      ],
+      "ipa": "/ˈseləri/",
+      "example": "Add some celery to the soup.",
+      "example_ru": "Добавь в суп немного сельдерея."
+    },
+    {
+      "rank": 10880,
+      "headword": "couture",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "высокая мода",
+        "кутюр"
+      ],
+      "ipa": "/kuˈtjʊə/",
+      "example": "She dreams of working in couture.",
+      "example_ru": "Она мечтает работать в сфере высокой моды."
+    },
+    {
+      "rank": 10881,
+      "headword": "Croatian",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "хорватский"
+      ],
+      "ipa": "/krəʊˈeɪʃn/",
+      "example": "We spent our holiday on the Croatian coast.",
+      "example_ru": "Мы провели отпуск на хорватском побережье."
+    },
+    {
+      "rank": 10882,
+      "headword": "crowdfund",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "собирать средства через краудфандинг"
+      ],
+      "ipa": "/ˈkraʊdfʌnd/",
+      "example": "They crowdfunded the money for their first film.",
+      "example_ru": "Они собрали деньги на свой первый фильм через краудфандинг."
+    },
+    {
+      "rank": 10883,
+      "headword": "dissatisfaction",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "недовольство",
+        "неудовлетворённость"
+      ],
+      "ipa": "/ˌdɪsˌsætɪsˈfækʃn/",
+      "example": "There is growing dissatisfaction with the service.",
+      "example_ru": "Растёт недовольство обслуживанием."
+    },
+    {
+      "rank": 10884,
+      "headword": "dodgy",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "сомнительный",
+        "подозрительный",
+        "ненадёжный"
+      ],
+      "ipa": "/ˈdɒdʒi/",
+      "example": "I bought a dodgy watch at the market.",
+      "example_ru": "Я купил на рынке сомнительные часы."
+    },
+    {
+      "rank": 10885,
+      "headword": "earthly",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "земной",
+        "мирской"
+      ],
+      "ipa": "/ˈɜːθli/",
+      "example": "He gave up all earthly pleasures.",
+      "example_ru": "Он отказался от всех земных удовольствий."
+    },
+    {
+      "rank": 10886,
+      "headword": "escalation",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "эскалация",
+        "обострение",
+        "рост"
+      ],
+      "ipa": "/ˌeskəˈleɪʃn/",
+      "example": "We must avoid any escalation of the conflict.",
+      "example_ru": "Мы должны избежать любой эскалации конфликта."
+    },
+    {
+      "rank": 10887,
+      "headword": "ethos",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "дух",
+        "принципы",
+        "этос"
+      ],
+      "ipa": "/ˈiːθɒs/",
+      "example": "The school has a friendly ethos.",
+      "example_ru": "В школе царит дружеский дух."
+    },
+    {
+      "rank": 10888,
+      "headword": "eureka",
+      "tier": "lookup",
+      "pos": "interjection",
+      "translations": [
+        "эврика"
+      ],
+      "ipa": "/juˈriːkə/",
+      "example": "Eureka! I found the missing key!",
+      "example_ru": "Эврика! Я нашёл потерянный ключ!"
+    },
+    {
+      "rank": 10889,
+      "headword": "fleeting",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "мимолётный",
+        "быстротечный"
+      ],
+      "ipa": "/ˈfliːtɪŋ/",
+      "example": "I had a fleeting thought of going home.",
+      "example_ru": "У меня мелькнула мимолётная мысль пойти домой."
+    },
+    {
+      "rank": 10890,
+      "headword": "fro",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "обратно",
+        "назад"
+      ],
+      "ipa": "/frəʊ/",
+      "example": "The children ran to and fro in the yard.",
+      "example_ru": "Дети бегали во дворе туда и обратно."
+    },
+    {
+      "rank": 10891,
+      "headword": "furnishings",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "обстановка",
+        "мебель"
+      ],
+      "ipa": "/ˈfɜːnɪʃɪŋz/",
+      "example": "The flat comes with all furnishings.",
+      "example_ru": "Квартира сдаётся со всей обстановкой."
+    },
+    {
+      "rank": 10892,
+      "headword": "gentile",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "нееврей",
+        "иноверец"
+      ],
+      "ipa": "/ˈdʒentaɪl/",
+      "example": "In the story, a gentile helps the old rabbi.",
+      "example_ru": "В этой истории нееврей помогает старому раввину."
+    },
+    {
+      "rank": 10893,
+      "headword": "hardcover",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "книга в твёрдой обложке",
+        "твёрдый переплёт"
+      ],
+      "ipa": "/ˈhɑːdkʌvə/",
+      "example": "I bought the novel in hardcover.",
+      "example_ru": "Я купил этот роман в твёрдом переплёте."
+    },
+    {
+      "rank": 10894,
+      "headword": "intestinal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "кишечный"
+      ],
+      "ipa": "/ɪnˈtestɪnl/",
+      "example": "He had an intestinal infection.",
+      "example_ru": "У него была кишечная инфекция."
+    },
+    {
+      "rank": 10895,
+      "headword": "mamma",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мама",
+        "мамочка"
+      ],
+      "ipa": "/ˈmæmə/",
+      "example": "The little girl ran to her mamma.",
+      "example_ru": "Маленькая девочка побежала к маме."
+    },
+    {
+      "rank": 10896,
+      "headword": "manic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "маниакальный",
+        "неистовый",
+        "безумный"
+      ],
+      "ipa": "/ˈmænɪk/",
+      "example": "There was a manic rush to buy tickets.",
+      "example_ru": "Началась безумная гонка за билетами."
+    },
+    {
+      "rank": 10897,
+      "headword": "measurable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "измеримый",
+        "ощутимый"
+      ],
+      "ipa": "/ˈmeʒərəbl/",
+      "example": "We want to see measurable results.",
+      "example_ru": "Мы хотим видеть измеримые результаты."
+    },
+    {
+      "rank": 10898,
+      "headword": "mojo",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "кураж",
+        "задор",
+        "обаяние"
+      ],
+      "ipa": "/ˈməʊdʒəʊ/",
+      "example": "After the holiday he got his mojo back.",
+      "example_ru": "После отпуска к нему вернулся кураж."
+    },
+    {
+      "rank": 10899,
+      "headword": "narration",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "повествование",
+        "рассказ",
+        "закадровый текст"
+      ],
+      "ipa": "/nəˈreɪʃn/",
+      "example": "The narration in the film is very calm.",
+      "example_ru": "Закадровый текст в фильме звучит очень спокойно."
+    },
+    {
+      "rank": 10900,
+      "headword": "oblivion",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "забвение",
+        "небытие"
+      ],
+      "ipa": "/əˈblɪviən/",
+      "example": "The old singer slowly faded into oblivion.",
+      "example_ru": "Старый певец постепенно канул в забвение."
+    },
+    {
+      "rank": 10901,
+      "headword": "oiler",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "маслёнка",
+        "нефтяник",
+        "танкер"
+      ],
+      "ipa": "/ˈɔɪlə/",
+      "example": "He used an oiler to grease the old machine.",
+      "example_ru": "Он смазал старую машину из маслёнки."
+    },
+    {
+      "rank": 10902,
+      "headword": "outpatient",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "амбулаторный больной"
+      ],
+      "ipa": "/ˈaʊtpeɪʃnt/",
+      "example": "She was treated as an outpatient.",
+      "example_ru": "Её лечили амбулаторно."
+    },
+    {
+      "rank": 10903,
+      "headword": "philanthropy",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "благотворительность",
+        "филантропия"
+      ],
+      "ipa": "/fɪˈlænθrəpi/",
+      "example": "He gave much of his money to philanthropy.",
+      "example_ru": "Он отдал большую часть своих денег на благотворительность."
+    },
+    {
+      "rank": 10904,
+      "headword": "preparedness",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "готовность",
+        "подготовленность"
+      ],
+      "ipa": "/prɪˈpeədnəs/",
+      "example": "The city is improving its flood preparedness.",
+      "example_ru": "Город повышает свою готовность к наводнениям."
+    },
+    {
+      "rank": 10905,
+      "headword": "primal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "первобытный",
+        "первичный",
+        "изначальный"
+      ],
+      "ipa": "/ˈpraɪml/",
+      "example": "Fear of the dark is a primal feeling.",
+      "example_ru": "Страх темноты - первобытное чувство."
+    },
+    {
+      "rank": 10906,
+      "headword": "quid",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фунт"
+      ],
+      "ipa": "/kwɪd/",
+      "example": "Can you lend me ten quid?",
+      "example_ru": "Можешь одолжить мне десять фунтов?"
+    },
+    {
+      "rank": 10907,
+      "headword": "receptive",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "восприимчивый",
+        "открытый"
+      ],
+      "ipa": "/rɪˈseptɪv/",
+      "example": "The students were receptive to new ideas.",
+      "example_ru": "Студенты были восприимчивы к новым идеям."
+    },
+    {
+      "rank": 10908,
+      "headword": "reelection",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "переизбрание"
+      ],
+      "ipa": "/ˌriːɪˈlekʃn/",
+      "example": "The mayor is running for reelection.",
+      "example_ru": "Мэр баллотируется на переизбрание."
+    },
+    {
+      "rank": 10909,
+      "headword": "reindeer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "северный олень"
+      ],
+      "ipa": "/ˈreɪndɪə/",
+      "example": "We rode in a sledge pulled by reindeer.",
+      "example_ru": "Мы катались на санях, запряжённых северными оленями."
+    },
+    {
+      "rank": 10910,
+      "headword": "rendezvous",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "встреча",
+        "свидание",
+        "место встречи"
+      ],
+      "ipa": "/ˈrɒndɪvuː/",
+      "example": "They arranged a rendezvous at the cafe.",
+      "example_ru": "Они назначили встречу в кафе."
+    },
+    {
+      "rank": 10911,
+      "headword": "reversible",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "обратимый",
+        "двусторонний"
+      ],
+      "ipa": "/rɪˈvɜːsəbl/",
+      "example": "The damage is reversible with treatment.",
+      "example_ru": "При лечении это повреждение обратимо."
+    },
+    {
+      "rank": 10912,
+      "headword": "rowan",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "рябина"
+      ],
+      "ipa": "/ˈrəʊən/",
+      "example": "A rowan with red berries grows by the gate.",
+      "example_ru": "У ворот растёт рябина с красными ягодами."
+    },
+    {
+      "rank": 10913,
+      "headword": "selectively",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "избирательно",
+        "выборочно"
+      ],
+      "ipa": "/sɪˈlektɪvli/",
+      "example": "He listens selectively when he is busy.",
+      "example_ru": "Когда он занят, он слушает избирательно."
+    },
+    {
+      "rank": 10914,
+      "headword": "simplistic",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "упрощённый",
+        "примитивный"
+      ],
+      "ipa": "/sɪmˈplɪstɪk/",
+      "example": "That is a very simplistic view of the problem.",
+      "example_ru": "Это очень упрощённый взгляд на проблему."
+    },
+    {
+      "rank": 10915,
+      "headword": "skincare",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "уход за кожей"
+      ],
+      "ipa": "/ˈskɪnkeə/",
+      "example": "She spends a lot of money on skincare.",
+      "example_ru": "Она тратит много денег на уход за кожей."
+    },
+    {
+      "rank": 10916,
+      "headword": "supervisory",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "надзорный",
+        "контролирующий"
+      ],
+      "ipa": "/ˈsuːpəvaɪzəri/",
+      "example": "She has a supervisory role in the team.",
+      "example_ru": "В команде у неё контролирующая роль."
+    },
+    {
+      "rank": 10917,
+      "headword": "synod",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "синод",
+        "собор"
+      ],
+      "ipa": "/ˈsɪnəd/",
+      "example": "The church synod meets once a year.",
+      "example_ru": "Церковный синод собирается раз в год."
+    },
+    {
+      "rank": 10918,
+      "headword": "treacherous",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "опасный",
+        "коварный",
+        "предательский"
+      ],
+      "ipa": "/ˈtretʃərəs/",
+      "example": "The icy roads are treacherous today.",
+      "example_ru": "Сегодня обледенелые дороги опасны."
+    },
+    {
+      "rank": 10919,
+      "headword": "untold",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "несметный",
+        "неисчислимый",
+        "нерассказанный"
+      ],
+      "ipa": "/ˌʌnˈtəʊld/",
+      "example": "The ship carried untold riches.",
+      "example_ru": "Корабль вёз несметные богатства."
+    },
+    {
+      "rank": 10920,
+      "headword": "versatility",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "универсальность",
+        "разносторонность"
+      ],
+      "ipa": "/ˌvɜːsəˈtɪləti/",
+      "example": "I love the versatility of this jacket.",
+      "example_ru": "Мне нравится универсальность этой куртки."
+    },
+    {
+      "rank": 10921,
+      "headword": "fathom",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "понимать",
+        "постигать"
+      ],
+      "ipa": "/ˈfæðəm/",
+      "example": "I cannot fathom why she left.",
+      "example_ru": "Не могу понять, почему она ушла."
+    },
+    {
+      "rank": 10922,
+      "headword": "linkage",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "связь",
+        "сцепление"
+      ],
+      "ipa": "/ˈlɪŋkɪdʒ/",
+      "example": "There is a linkage between diet and health.",
+      "example_ru": "Между питанием и здоровьем есть связь."
+    },
+    {
+      "rank": 10923,
+      "headword": "daydream",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "мечтать",
+        "грезить наяву"
+      ],
+      "ipa": "/ˈdeɪdriːm/",
+      "example": "He often daydreams in class.",
+      "example_ru": "Он часто мечтает на уроках."
+    },
+    {
+      "rank": 10924,
+      "headword": "housemate",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сосед по дому",
+        "сосед по квартире"
+      ],
+      "ipa": "/ˈhaʊsmeɪt/",
+      "example": "My housemate cooks dinner on Fridays.",
+      "example_ru": "Мой сосед по дому готовит ужин по пятницам."
+    },
+    {
+      "rank": 10925,
+      "headword": "circumvent",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "обходить",
+        "обманывать"
+      ],
+      "ipa": "/ˌsɜːkəmˈvent/",
+      "example": "They found a way to circumvent the rules.",
+      "example_ru": "Они нашли способ обойти правила."
+    },
+    {
+      "rank": 10926,
+      "headword": "schoolboy",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "школьник"
+      ],
+      "ipa": "/ˈskuːlbɔɪ/",
+      "example": "A schoolboy helped me carry my bags.",
+      "example_ru": "Школьник помог мне донести сумки."
+    },
+    {
+      "rank": 10927,
+      "headword": "streamer",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "стример",
+        "серпантин",
+        "вымпел"
+      ],
+      "ipa": "/ˈstriːmə/",
+      "example": "The streamer plays games online every night.",
+      "example_ru": "Стример каждый вечер играет в игры онлайн."
+    },
+    {
+      "rank": 10928,
+      "headword": "expedite",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "ускорять",
+        "торопить"
+      ],
+      "ipa": "/ˈekspədaɪt/",
+      "example": "Can you expedite my order?",
+      "example_ru": "Можете ускорить мой заказ?"
+    },
+    {
+      "rank": 10929,
+      "headword": "subsection",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "подраздел",
+        "пункт"
+      ],
+      "ipa": "/ˈsʌbsekʃn/",
+      "example": "Read subsection three of the contract.",
+      "example_ru": "Прочитайте подраздел три договора."
+    },
+    {
+      "rank": 10930,
+      "headword": "tremor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "дрожь",
+        "толчок",
+        "подземный толчок"
+      ],
+      "ipa": "/ˈtremə/",
+      "example": "We felt a small tremor last night.",
+      "example_ru": "Прошлой ночью мы почувствовали небольшой подземный толчок."
+    },
+    {
+      "rank": 10931,
+      "headword": "firefly",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "светлячок"
+      ],
+      "ipa": "/ˈfaɪəflaɪ/",
+      "example": "A firefly glowed in the dark garden.",
+      "example_ru": "В тёмном саду светился светлячок."
+    },
+    {
+      "rank": 10932,
+      "headword": "envisage",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "предусматривать",
+        "представлять себе"
+      ],
+      "ipa": "/ɪnˈvɪzɪdʒ/",
+      "example": "I cannot envisage living in a big city.",
+      "example_ru": "Я не представляю себе жизни в большом городе."
+    },
+    {
+      "rank": 10933,
+      "headword": "whisk",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "взбивать"
+      ],
+      "ipa": "/wɪsk/",
+      "example": "Whisk the eggs and sugar together.",
+      "example_ru": "Взбейте яйца с сахаром."
+    },
+    {
+      "rank": 10934,
+      "headword": "undress",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "раздеваться",
+        "раздевать"
+      ],
+      "ipa": "/ʌnˈdres/",
+      "example": "The child undressed and went to bed.",
+      "example_ru": "Ребёнок разделся и лёг спать."
+    },
+    {
+      "rank": 10935,
+      "headword": "serviceman",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "военнослужащий"
+      ],
+      "ipa": "/ˈsɜːvɪsmən/",
+      "example": "The serviceman came home after two years.",
+      "example_ru": "Военнослужащий вернулся домой через два года."
+    },
+    {
+      "rank": 10936,
+      "headword": "motorbike",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мотоцикл"
+      ],
+      "ipa": "/ˈməʊtəbaɪk/",
+      "example": "My brother rides a motorbike to work.",
+      "example_ru": "Мой брат ездит на работу на мотоцикле."
+    },
+    {
+      "rank": 10937,
+      "headword": "falter",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "колебаться",
+        "запинаться",
+        "ослабевать"
+      ],
+      "ipa": "/ˈfɔːltə/",
+      "example": "Her voice faltered when she spoke of her father.",
+      "example_ru": "Её голос дрогнул, когда она заговорила об отце."
+    },
+    {
+      "rank": 10938,
+      "headword": "truffle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "трюфель"
+      ],
+      "ipa": "/ˈtrʌfl/",
+      "example": "He gave her a box of chocolate truffles.",
+      "example_ru": "Он подарил ей коробку шоколадных трюфелей."
+    },
+    {
+      "rank": 10939,
+      "headword": "janitor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "уборщик",
+        "дворник",
+        "сторож"
+      ],
+      "ipa": "/ˈdʒænɪtə/",
+      "example": "The janitor cleans the school every evening.",
+      "example_ru": "Уборщик каждый вечер убирает школу."
+    },
+    {
+      "rank": 10940,
+      "headword": "chaser",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "запивка",
+        "преследователь"
+      ],
+      "ipa": "/ˈtʃeɪsə/",
+      "example": "He drank a glass of water as a chaser.",
+      "example_ru": "Он выпил стакан воды как запивку."
+    },
+    {
+      "rank": 10941,
+      "headword": "expend",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "тратить",
+        "расходовать"
+      ],
+      "ipa": "/ɪkˈspend/",
+      "example": "Do not expend too much energy on small things.",
+      "example_ru": "Не трать слишком много сил на мелочи."
+    },
+    {
+      "rank": 10942,
+      "headword": "tic",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "тик"
+      ],
+      "ipa": "/tɪk/",
+      "example": "He has a nervous tic in his eye.",
+      "example_ru": "У него нервный тик глаза."
+    },
+    {
+      "rank": 10943,
+      "headword": "naturalist",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "натуралист",
+        "естествоиспытатель"
+      ],
+      "ipa": "/ˈnætʃrəlɪst/",
+      "example": "The naturalist studied birds in the forest.",
+      "example_ru": "Натуралист изучал птиц в лесу."
+    },
+    {
+      "rank": 10944,
+      "headword": "retiree",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пенсионер"
+      ],
+      "ipa": "/rɪˌtaɪəˈriː/",
+      "example": "The retiree spends his days fishing.",
+      "example_ru": "Пенсионер проводит дни на рыбалке."
+    },
+    {
+      "rank": 10945,
+      "headword": "sidekick",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "напарник",
+        "помощник",
+        "приятель"
+      ],
+      "ipa": "/ˈsaɪdkɪk/",
+      "example": "The hero and his funny sidekick saved the town.",
+      "example_ru": "Герой и его забавный напарник спасли город."
+    },
+    {
+      "rank": 10946,
+      "headword": "corroborate",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "подтверждать",
+        "подкреплять"
+      ],
+      "ipa": "/kəˈrɒbəreɪt/",
+      "example": "Can anyone corroborate your story?",
+      "example_ru": "Может кто-нибудь подтвердить вашу историю?"
+    },
+    {
+      "rank": 10947,
+      "headword": "thong",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "шлёпанец",
+        "вьетнамка",
+        "ремешок"
+      ],
+      "ipa": "/θɒŋ/",
+      "example": "I lost one thong at the beach.",
+      "example_ru": "Я потерял один шлёпанец на пляже."
+    },
+    {
+      "rank": 10948,
+      "headword": "artefact",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "артефакт",
+        "предмет старины"
+      ],
+      "ipa": "/ˈɑːtɪfækt/",
+      "example": "The museum shows an old artefact from Egypt.",
+      "example_ru": "В музее выставлен древний артефакт из Египта."
+    },
+    {
+      "rank": 10949,
+      "headword": "chute",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "желоб",
+        "спуск",
+        "мусоропровод"
+      ],
+      "ipa": "/ʃuːt/",
+      "example": "The kids slid down the water chute.",
+      "example_ru": "Дети скатились по водяному желобу."
+    },
+    {
+      "rank": 10950,
+      "headword": "introvert",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "интроверт"
+      ],
+      "ipa": "/ˈɪntrəvɜːt/",
+      "example": "As an introvert, I like quiet evenings.",
+      "example_ru": "Как интроверт, я люблю тихие вечера."
+    },
+    {
+      "rank": 10951,
+      "headword": "mince",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фарш"
+      ],
+      "ipa": "/mɪns/",
+      "example": "Buy some beef mince for the pie.",
+      "example_ru": "Купи говяжьего фарша для пирога."
+    },
+    {
+      "rank": 10952,
+      "headword": "screech",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "визжать",
+        "скрипеть"
+      ],
+      "ipa": "/skriːtʃ/",
+      "example": "The car screeched to a stop.",
+      "example_ru": "Машина с визгом остановилась."
+    },
+    {
+      "rank": 10953,
+      "headword": "lien",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "право удержания",
+        "залоговое право"
+      ],
+      "ipa": "/ˈliːən/",
+      "example": "The bank has a lien on the house.",
+      "example_ru": "У банка есть залоговое право на дом."
+    },
+    {
+      "rank": 10954,
+      "headword": "tentacle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "щупальце"
+      ],
+      "ipa": "/ˈtentəkl/",
+      "example": "The octopus has eight long tentacles.",
+      "example_ru": "У осьминога восемь длинных щупалец."
+    },
+    {
+      "rank": 10955,
+      "headword": "imp",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "бесёнок",
+        "чертёнок",
+        "проказник"
+      ],
+      "ipa": "/ɪmp/",
+      "example": "Her little son is a real imp.",
+      "example_ru": "Её маленький сын - настоящий бесёнок."
+    },
+    {
+      "rank": 10956,
+      "headword": "moot",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "спорный",
+        "дискуссионный"
+      ],
+      "ipa": "/muːt/",
+      "example": "Whether he was right is a moot point.",
+      "example_ru": "Был ли он прав - спорный вопрос."
+    },
+    {
+      "rank": 10957,
+      "headword": "sitter",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "няня",
+        "сиделка",
+        "натурщик"
+      ],
+      "ipa": "/ˈsɪtə/",
+      "example": "We need a sitter for Saturday night.",
+      "example_ru": "Нам нужна няня на вечер субботы."
+    },
+    {
+      "rank": 10958,
+      "headword": "predictor",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "предсказатель",
+        "прогностический признак"
+      ],
+      "ipa": "/prɪˈdɪktə/",
+      "example": "Past grades are a good predictor of success.",
+      "example_ru": "Прошлые оценки - хороший предсказатель успеха."
+    },
+    {
+      "rank": 10959,
+      "headword": "dispensary",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "аптека",
+        "амбулатория",
+        "диспансер"
+      ],
+      "ipa": "/dɪˈspensəri/",
+      "example": "You can get your medicine at the dispensary.",
+      "example_ru": "Лекарство можно получить в аптеке."
+    },
+    {
+      "rank": 10960,
+      "headword": "alum",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "выпускник",
+        "квасцы"
+      ],
+      "ipa": "/əˈlʌm/",
+      "example": "She is an alum of our university.",
+      "example_ru": "Она выпускница нашего университета."
+    },
+    {
+      "rank": 10961,
+      "headword": "sauna",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "сауна",
+        "баня"
+      ],
+      "ipa": "/ˈsɔːnə/",
+      "example": "We relaxed in the sauna after swimming.",
+      "example_ru": "После плавания мы отдыхали в сауне."
+    },
+    {
+      "rank": 10962,
+      "headword": "attributable",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "объяснимый",
+        "связанный",
+        "приписываемый"
+      ],
+      "ipa": "/əˈtrɪbjətəbl/",
+      "example": "The delay was attributable to bad weather.",
+      "example_ru": "Задержка была связана с плохой погодой."
+    },
+    {
+      "rank": 10963,
+      "headword": "chunky",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "массивный",
+        "крупный",
+        "коренастый"
+      ],
+      "ipa": "/ˈtʃʌŋki/",
+      "example": "She wore a chunky wool sweater.",
+      "example_ru": "На ней был массивный шерстяной свитер."
+    },
+    {
+      "rank": 10964,
+      "headword": "cohesive",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "сплочённый",
+        "связный"
+      ],
+      "ipa": "/kəʊˈhiːsɪv/",
+      "example": "We are a small but cohesive team.",
+      "example_ru": "Мы небольшая, но сплочённая команда."
+    },
+    {
+      "rank": 10965,
+      "headword": "contentious",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "спорный",
+        "вызывающий споры"
+      ],
+      "ipa": "/kənˈtenʃəs/",
+      "example": "Money is a contentious issue in their family.",
+      "example_ru": "Деньги - спорный вопрос в их семье."
+    },
+    {
+      "rank": 10966,
+      "headword": "cosy",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "уютный"
+      ],
+      "ipa": "/ˈkəʊzi/",
+      "example": "They live in a cosy little flat.",
+      "example_ru": "Они живут в уютной маленькой квартире."
+    },
+    {
+      "rank": 10967,
+      "headword": "dehydration",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "обезвоживание"
+      ],
+      "ipa": "/ˌdiːhaɪˈdreɪʃn/",
+      "example": "Drink water to avoid dehydration.",
+      "example_ru": "Пейте воду, чтобы избежать обезвоживания."
+    },
+    {
+      "rank": 10968,
+      "headword": "digestion",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пищеварение"
+      ],
+      "ipa": "/daɪˈdʒestʃən/",
+      "example": "Fruit is good for digestion.",
+      "example_ru": "Фрукты полезны для пищеварения."
+    },
+    {
+      "rank": 10969,
+      "headword": "dissatisfy",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "не удовлетворять",
+        "вызывать недовольство"
+      ],
+      "ipa": "/dɪsˈsætɪsfaɪ/",
+      "example": "The new rules dissatisfied many workers.",
+      "example_ru": "Новые правила вызвали недовольство многих работников."
+    },
+    {
+      "rank": 10970,
+      "headword": "embargo",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "эмбарго",
+        "запрет"
+      ],
+      "ipa": "/ɪmˈbɑːɡəʊ/",
+      "example": "There is an embargo on the sale of oil.",
+      "example_ru": "На продажу нефти действует эмбарго."
+    },
+    {
+      "rank": 10971,
+      "headword": "embodiment",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "воплощение"
+      ],
+      "ipa": "/ɪmˈbɒdimənt/",
+      "example": "She is the embodiment of kindness.",
+      "example_ru": "Она - воплощение доброты."
+    },
+    {
+      "rank": 10972,
+      "headword": "entrench",
+      "tier": "lookup",
+      "pos": "verb",
+      "translations": [
+        "укреплять",
+        "закреплять",
+        "окапываться"
+      ],
+      "ipa": "/ɪnˈtrentʃ/",
+      "example": "Bad habits become entrenched over time.",
+      "example_ru": "Со временем вредные привычки закрепляются."
+    },
+    {
+      "rank": 10973,
+      "headword": "explanatory",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "пояснительный",
+        "объяснительный"
+      ],
+      "ipa": "/ɪkˈsplænətri/",
+      "example": "Read the explanatory notes first.",
+      "example_ru": "Сначала прочитайте пояснительные примечания."
+    },
+    {
+      "rank": 10974,
+      "headword": "extremism",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "экстремизм"
+      ],
+      "ipa": "/ɪkˈstriːmɪzəm/",
+      "example": "The book warns about the dangers of extremism.",
+      "example_ru": "Книга предупреждает об опасностях экстремизма."
+    },
+    {
+      "rank": 10975,
+      "headword": "filtration",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "фильтрация",
+        "очистка"
+      ],
+      "ipa": "/fɪlˈtreɪʃn/",
+      "example": "The pool has a new filtration system.",
+      "example_ru": "В бассейне новая система фильтрации."
+    },
+    {
+      "rank": 10976,
+      "headword": "fracking",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гидроразрыв пласта",
+        "фрекинг"
+      ],
+      "ipa": "/ˈfrækɪŋ/",
+      "example": "Many people in the village are against fracking.",
+      "example_ru": "Многие жители деревни против гидроразрыва пласта."
+    },
+    {
+      "rank": 10977,
+      "headword": "fungal",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "грибковый"
+      ],
+      "ipa": "/ˈfʌŋɡl/",
+      "example": "He has a fungal infection on his foot.",
+      "example_ru": "У него грибковая инфекция на ноге."
+    },
+    {
+      "rank": 10978,
+      "headword": "gloom",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "мрак",
+        "уныние",
+        "тоска"
+      ],
+      "ipa": "/ɡluːm/",
+      "example": "We could hardly see in the gloom of the cave.",
+      "example_ru": "Во мраке пещеры мы почти ничего не видели."
+    },
+    {
+      "rank": 10979,
+      "headword": "hex",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "проклятие",
+        "порча",
+        "заклятие"
+      ],
+      "ipa": "/heks/",
+      "example": "The witch put a hex on the prince.",
+      "example_ru": "Ведьма наложила проклятие на принца."
+    },
+    {
+      "rank": 10980,
+      "headword": "hydra",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "гидра"
+      ],
+      "ipa": "/ˈhaɪdrə/",
+      "example": "In the old story, the hydra had many heads.",
+      "example_ru": "В старой легенде у гидры было много голов."
+    },
+    {
+      "rank": 10981,
+      "headword": "hypocritical",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "лицемерный"
+      ],
+      "ipa": "/ˌhɪpəˈkrɪtɪkl/",
+      "example": "It is hypocritical to say one thing and do another.",
+      "example_ru": "Говорить одно, а делать другое - лицемерно."
+    },
+    {
+      "rank": 10982,
+      "headword": "illustrious",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "прославленный",
+        "знаменитый"
+      ],
+      "ipa": "/ɪˈlʌstriəs/",
+      "example": "The school has an illustrious history.",
+      "example_ru": "У школы славная история."
+    },
+    {
+      "rank": 10983,
+      "headword": "incidental",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "случайный",
+        "побочный",
+        "сопутствующий"
+      ],
+      "ipa": "/ˌɪnsɪˈdentl/",
+      "example": "The trip has some incidental costs.",
+      "example_ru": "У поездки есть некоторые побочные расходы."
+    },
+    {
+      "rank": 10984,
+      "headword": "indigo",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "индиго",
+        "тёмно-синий"
+      ],
+      "ipa": "/ˈɪndɪɡəʊ/",
+      "example": "She painted the wall a deep indigo colour.",
+      "example_ru": "Она покрасила стену в глубокий тёмно-синий цвет."
+    },
+    {
+      "rank": 10985,
+      "headword": "insurgency",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "повстанческое движение",
+        "мятеж"
+      ],
+      "ipa": "/ɪnˈsɜːdʒənsi/",
+      "example": "The insurgency in the north lasted ten years.",
+      "example_ru": "Повстанческое движение на севере длилось десять лет."
+    },
+    {
+      "rank": 10986,
+      "headword": "labyrinth",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "лабиринт"
+      ],
+      "ipa": "/ˈlæbərɪnθ/",
+      "example": "We got lost in the labyrinth of narrow streets.",
+      "example_ru": "Мы заблудились в лабиринте узких улиц."
+    },
+    {
+      "rank": 10987,
+      "headword": "latency",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "задержка",
+        "латентность"
+      ],
+      "ipa": "/ˈleɪtənsi/",
+      "example": "The game has high latency on my old phone.",
+      "example_ru": "На моём старом телефоне в игре большая задержка."
+    },
+    {
+      "rank": 10988,
+      "headword": "laureate",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "лауреат"
+      ],
+      "ipa": "/ˈlɒriət/",
+      "example": "The prize laureate gave a short speech.",
+      "example_ru": "Лауреат премии произнёс короткую речь."
+    },
+    {
+      "rank": 10989,
+      "headword": "limbo",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "неопределённость",
+        "подвешенное состояние"
+      ],
+      "ipa": "/ˈlɪmbəʊ/",
+      "example": "My plans are in limbo until I get the visa.",
+      "example_ru": "Мои планы в подвешенном состоянии, пока я не получу визу."
+    },
+    {
+      "rank": 10990,
+      "headword": "lousy",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "паршивый",
+        "отвратительный",
+        "никудышный"
+      ],
+      "ipa": "/ˈlaʊzi/",
+      "example": "The weather was lousy all week.",
+      "example_ru": "Всю неделю погода была паршивой."
+    },
+    {
+      "rank": 10991,
+      "headword": "luncheon",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "обед",
+        "ланч"
+      ],
+      "ipa": "/ˈlʌntʃən/",
+      "example": "The club holds a luncheon every month.",
+      "example_ru": "Клуб каждый месяц устраивает обед."
+    },
+    {
+      "rank": 10992,
+      "headword": "midtown",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "центр города",
+        "деловой центр"
+      ],
+      "ipa": "/ˈmɪdtaʊn/",
+      "example": "Our office is in midtown.",
+      "example_ru": "Наш офис в центре города."
+    },
+    {
+      "rank": 10993,
+      "headword": "muzzle",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "намордник",
+        "морда",
+        "дуло"
+      ],
+      "ipa": "/ˈmʌzl/",
+      "example": "The dog must wear a muzzle on the bus.",
+      "example_ru": "В автобусе собака должна быть в наморднике."
+    },
+    {
+      "rank": 10994,
+      "headword": "oblivious",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "не замечающий",
+        "не обращающий внимания"
+      ],
+      "ipa": "/əˈblɪviəs/",
+      "example": "He was oblivious to the danger.",
+      "example_ru": "Он не замечал опасности."
+    },
+    {
+      "rank": 10995,
+      "headword": "overt",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "явный",
+        "открытый"
+      ],
+      "ipa": "/əʊˈvɜːt/",
+      "example": "There was overt anger in his voice.",
+      "example_ru": "В его голосе был явный гнев."
+    },
+    {
+      "rank": 10996,
+      "headword": "paisley",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пейсли",
+        "узор турецкий огурец"
+      ],
+      "ipa": "/ˈpeɪzli/",
+      "example": "He wore a tie with a paisley pattern.",
+      "example_ru": "Он был в галстуке с узором пейсли."
+    },
+    {
+      "rank": 10997,
+      "headword": "penthouse",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "пентхаус"
+      ],
+      "ipa": "/ˈpenthaʊs/",
+      "example": "They live in a penthouse with a view of the river.",
+      "example_ru": "Они живут в пентхаусе с видом на реку."
+    },
+    {
+      "rank": 10998,
+      "headword": "perjury",
+      "tier": "lookup",
+      "pos": "noun",
+      "translations": [
+        "лжесвидетельство"
+      ],
+      "ipa": "/ˈpɜːdʒəri/",
+      "example": "He went to prison for perjury.",
+      "example_ru": "Он попал в тюрьму за лжесвидетельство."
+    },
+    {
+      "rank": 10999,
+      "headword": "pious",
+      "tier": "lookup",
+      "pos": "adjective",
+      "translations": [
+        "набожный",
+        "благочестивый"
+      ],
+      "ipa": "/ˈpaɪəs/",
+      "example": "She is a pious woman who prays every day.",
+      "example_ru": "Она набожная женщина, которая молится каждый день."
+    },
+    {
+      "rank": 11000,
+      "headword": "prematurely",
+      "tier": "lookup",
+      "pos": "adverb",
+      "translations": [
+        "преждевременно",
+        "раньше срока"
+      ],
+      "ipa": "/ˈpremətʃəli/",
+      "example": "The baby was born prematurely.",
+      "example_ru": "Ребёнок родился раньше срока."
+    }
+  ]
+}
