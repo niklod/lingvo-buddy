@@ -172,7 +172,7 @@ struct QuizCardFooter: View {
 }
 
 struct MasteryDots: View {
-    static let total = 4
+    static let total = WordRow.masteryGoal
     let filled: Int
 
     var body: some View {
