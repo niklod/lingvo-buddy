@@ -31,3 +31,15 @@ public struct ExtendedEntry: Sendable, Equatable {
         self.russianExample = russianExample
     }
 }
+
+/// What the extended dictionary says about a Russian word: short English translations, best first.
+/// Only words the bundled dictionary does not translate are in it.
+public struct ExtendedRussianEntry: Sendable, Equatable {
+    public let word: String
+    public let translations: [String]
+
+    public init(word: String, translations: [String]) {
+        self.word = word
+        self.translations = translations
+    }
+}

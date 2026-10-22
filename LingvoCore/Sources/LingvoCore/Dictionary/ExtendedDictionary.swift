@@ -29,9 +29,13 @@ public struct ExtendedDictionary: Sendable {
     }
 
     /// Builds a private in-memory extended dictionary (tests, previews).
-    public static func inMemory(english: [ExtendedEntry], meta: [String: String] = [:]) throws -> ExtendedDictionary {
+    public static func inMemory(
+        english: [ExtendedEntry],
+        russian: [ExtendedRussianEntry] = [],
+        meta: [String: String] = [:]
+    ) throws -> ExtendedDictionary {
         let queue = try DatabaseQueue()
-        try ExtendedDictionaryBuilder.write(english: english, meta: meta, into: queue)
+        try ExtendedDictionaryBuilder.write(english: english, russian: russian, meta: meta, into: queue)
         return try ExtendedDictionary(reader: queue)
     }
 
@@ -54,6 +58,17 @@ public struct ExtendedDictionary: Sendable {
                 arguments: [key]
             ).map(Self.entry(from:))
         }
+    }
+
+    /// The English translations of a Russian word, best first, at most `limit`. The match ignores case
+    /// and «ё», like the bundled lookup, because the data holds «е» only.
+    public func englishTranslations(forRussian text: String, limit: Int) throws -> [String] {
+        let key = RussianText.normalized(text)
+        let joined: String? = try reader.read { db in
+            try String.fetchOne(db, sql: "SELECT translations FROM russian WHERE word = ?", arguments: [key])
+        }
+        let translations = joined?.split(separator: ExtendedEntry.translationSeparator).map(String.init) ?? []
+        return Array(translations.prefix(limit))
     }
 
     /// How many English and Russian entries the file holds; `lingvo-dict check` prints them.
@@ -100,7 +115,12 @@ public struct ExtendedDictionary: Sendable {
 
 /// Writes extended entries into the contract schema for tests and previews, like `DictionaryBuilder`.
 enum ExtendedDictionaryBuilder {
-    static func write(english: [ExtendedEntry], meta: [String: String], into writer: some DatabaseWriter) throws {
+    static func write(
+        english: [ExtendedEntry],
+        russian: [ExtendedRussianEntry],
+        meta: [String: String],
+        into writer: some DatabaseWriter
+    ) throws {
         do {
             try writer.write { db in
                 try ExtendedSchema.create(in: db)
@@ -114,6 +134,14 @@ enum ExtendedDictionaryBuilder {
                             entry.headword, entry.partOfSpeech.rawValue, entry.ipa,
                             entry.translations.joined(separator: String(ExtendedEntry.translationSeparator)),
                             entry.example, entry.russianExample,
+                        ]
+                    )
+                }
+                for entry in russian {
+                    try db.execute(
+                        sql: "INSERT INTO russian (word, translations) VALUES (?, ?)",
+                        arguments: [
+                            entry.word, entry.translations.joined(separator: String(ExtendedEntry.translationSeparator)),
                         ]
                     )
                 }
