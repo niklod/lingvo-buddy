@@ -23,9 +23,8 @@ Every batch entry is tied to its rank in `data/wordlist/wordlist.tsv`. A new run
 
 The key of a group is the headword of its lowest-ranked member in ranks 1–2000. A word with no near-synonym uses its own headword. This rule lets parallel agents that work on different rank ranges pick the same key without talking.
 
-- `validate.py` rejects chains, keys of a higher rank and keys that are not quiz-tier headwords.
-- It does not check this convention, which the data keeps: words with the same first translation share one group. Check it after any group edit:
-  `python3 -c "import json,collections as c;g=c.defaultdict(set);[g[e['translations'][0]].add(e['synonym_group']) for n in range(1,5) for e in json.load(open(f'data/batches/batch-{n:02d}.json'))['entries']];print({k:v for k,v in g.items() if len(v)>1})"` must print `{}`.
+- `validate.py` rejects chains (the error names the final key), loops, keys of a higher rank, keys that are not quiz-tier headwords, and keys with no entry in a complete loaded batch.
+- It does not fail on this convention, which the data keeps: words with the same first translation share one group. After any group edit, run `python3 tools/dictionary/validate.py --full --report-shared-translations`. The first list ("same first translation, different groups") must be empty. The second list ("one group, different first translations") is for review: most of it is real synonyms (`big` большой / `huge` огромный); look for wrong merges. Quiz exclusions are left out.
 - Generators miss real near-synonyms more often than they invent false ones. Before you merge new groups, test known pairs (`big`/`large`, `begin`/`start`, `kid`/`child`, `shop`/`store`) and look at every shared group that gained a member.
 
 ## Workflow: generate, review, validate, build
