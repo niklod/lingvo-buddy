@@ -13,7 +13,7 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     private let transfer: CSVTransferActions
     private let navigation = SettingsNavigation()
     private var window: NSWindow?
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "settings")
+    private let logger = Logger.app(category: "settings")
 
     init(
         model: SettingsModel,

@@ -26,7 +26,7 @@ struct CSVTransferActions {
 final class CSVTransferController {
     private let store: any CSVTransferring
     private let errors: ErrorPresenter
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "csv")
+    private let logger = Logger.app(category: "csv")
 
     init(store: any CSVTransferring, errors: ErrorPresenter) {
         self.store = store
@@ -50,7 +50,7 @@ final class CSVTransferController {
         }
         let panel = NSSavePanel()
         panel.allowedContentTypes = [.commaSeparatedText]
-        panel.nameFieldStringValue = Self.exportFileName(on: Date())
+        panel.nameFieldStringValue = Self.exportFileName(on: SystemClock().now())
         panel.message = String(localized: "My words and the progress of every word.")
         present(panel) { [weak self] url in
             self?.write(data, to: url)

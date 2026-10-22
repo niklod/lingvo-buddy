@@ -34,7 +34,7 @@ enum AppEnvironment {
         }
         let userDatabase = try UserDatabase.open(at: userDatabaseURL)
         if options.seedDemo {
-            try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: Date())
+            try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
         }
         return Services(
             tutor: try Tutor(dictionary: dictionary, userDatabase: userDatabase),

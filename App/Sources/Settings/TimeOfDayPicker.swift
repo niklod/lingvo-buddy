@@ -14,7 +14,7 @@ struct TimeOfDayPicker: View {
 
     private var date: Binding<Date> {
         Binding(
-            get: { Self.calendar.date(from: DateComponents(hour: time.hour, minute: time.minute)) ?? Date() },
+            get: { Self.calendar.date(from: DateComponents(hour: time.hour, minute: time.minute)) ?? SystemClock().now() },
             set: { date in
                 let parts = Self.calendar.dateComponents([.hour, .minute], from: date)
                 // The field only produces valid times; keep the old one if it ever does not.

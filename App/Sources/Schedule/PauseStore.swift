@@ -12,7 +12,7 @@ struct PauseStore {
     }
 
     /// `nil` when not paused or when the pause is over.
-    func pausedUntil(now: Date = Date()) -> Date? {
+    func pausedUntil(now: Date) -> Date? {
         guard let until = defaults.object(forKey: Self.key) as? Date, until > now else { return nil }
         return until
     }

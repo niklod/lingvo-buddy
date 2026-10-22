@@ -4,7 +4,7 @@ import OSLog
 /// Shows problems to the learner in plain words and logs the details.
 @MainActor
 struct ErrorPresenter {
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "errors")
+    private let logger = Logger.app(category: "errors")
 
     func show(_ error: Error, title: String = String(localized: "Something went wrong")) {
         // Error text can carry the learner's words, CSV cells and SQL: only the type is public.

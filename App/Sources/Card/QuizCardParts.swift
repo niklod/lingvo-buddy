@@ -57,9 +57,9 @@ private struct KindBadge: View {
 
     private var colors: (background: Color, foreground: Color) {
         switch kind {
-        case .new: (Theme.Palette.accent.opacity(0.18), Color(hex: 0x64D2FF))
-        case .review: (Color(hex: 0x5E5CE6).opacity(0.22), Color(hex: 0xB7B5FF))
-        case .mine: (Theme.Palette.wrong.opacity(0.18), Color(hex: 0xFFC56B))
+        case .new: (Theme.Palette.accent.opacity(0.18), Theme.Palette.chipNewText)
+        case .review: (Theme.Palette.chipReview.opacity(0.22), Theme.Palette.chipReviewText)
+        case .mine: (Theme.Palette.wrong.opacity(0.18), Theme.Palette.chipMineText)
         }
     }
 }

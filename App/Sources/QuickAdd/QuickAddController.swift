@@ -10,7 +10,7 @@ final class QuickAddController {
     private static let topOffsetShare: CGFloat = 0.2
 
     private let tutor: Tutor
-    private let logger = Logger(subsystem: "com.niklod.LingvoBuddy", category: "quick-add")
+    private let logger = Logger.app(category: "quick-add")
     private var panel: QuickAddPanel?
     private var model: QuickAddModel?
     private var outsideClickMonitor: Any?
@@ -99,8 +99,7 @@ final class QuickAddController {
     /// Clicks in other apps reach only a global monitor; resigning key covers
     /// the rest (⌘⇥, a click on another window of this app).
     private func watchOutsideClicks() {
-        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) {
-            [weak self] _ in
+        outsideClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             MainActor.assumeIsolated { self?.close() }
         }
     }
