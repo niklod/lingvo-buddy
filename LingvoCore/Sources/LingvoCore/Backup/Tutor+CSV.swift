@@ -30,6 +30,7 @@ extension Tutor {
     public func importCSV(_ data: Data) throws -> CSVImportSummary {
         let rows = try WordBackupCSV.decode(data, now: clock.now())
         try userDatabase.restore(rows)
+        rows.forEach { forgetDeferral(of: $0.headword) }
         return CSVImportSummary(words: rows.count, myWords: rows.filter { $0.myWord != nil }.count)
     }
 }

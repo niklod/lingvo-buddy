@@ -15,13 +15,13 @@ struct CardDeferrals: Sendable, Equatable {
     private var skipped: Set<String> = []
 
     func postponing(_ card: Card, at now: Date) -> CardDeferrals {
-        var copy = without(card.headword)
+        var copy = forgetting(card.headword)
         copy.postponed.append(Postponed(card: card, dueAt: now.addingTimeInterval(Self.laterDelay)))
         return copy
     }
 
     func skipping(_ card: Card) -> CardDeferrals {
-        var copy = without(card.headword)
+        var copy = forgetting(card.headword)
         copy.skipped.insert(card.headword)
         return copy
     }
@@ -38,12 +38,13 @@ struct CardDeferrals: Sendable, Equatable {
 
     /// A card was shown: its word is no longer deferred, and the skip hold ends.
     func shown(_ card: Card) -> CardDeferrals {
-        var copy = without(card.headword)
+        var copy = forgetting(card.headword)
         copy.skipped = []
         return copy
     }
 
-    private func without(_ headword: String) -> CardDeferrals {
+    /// The word changed outside a card (row action, import): a kept snapshot would be stale.
+    func forgetting(_ headword: String) -> CardDeferrals {
         var copy = self
         copy.postponed.removeAll { $0.card.headword == headword }
         copy.skipped.remove(headword)

@@ -68,6 +68,10 @@ public final class Tutor: Sendable {
         deferrals.withLock { $0 = $0.skipping(card) }
     }
 
+    func forgetDeferral(of headword: String) {
+        deferrals.withLock { $0 = $0.forgetting(headword) }
+    }
+
     /// A held-back word is still offered when nothing else is left.
     private func pickCard(heldBack: Set<String>, now: Date) throws -> CardDecision {
         let (picker, cards) = rules.withLock { ($0.picker, $0.cards) }
