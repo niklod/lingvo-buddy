@@ -1,0 +1,7 @@
+# Only the word-list export needs these. The validator, the build and the tests use the standard library.
+# requirements-export.txt is the hashed lock of this file, so a changed upload on PyPI fails the install:
+#   pip-compile --generate-hashes --allow-unsafe --no-strip-extras --output-file requirements-export.txt requirements-export.in
+#   pip install --require-hashes -r tools/dictionary/requirements-export.txt
+wordfreq==3.1.1
+simplemma==2.0.0
+lemminflect==0.2.3

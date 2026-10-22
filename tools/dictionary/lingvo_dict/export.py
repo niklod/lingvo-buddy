@@ -26,6 +26,7 @@ WORDFREQ_LIST = "best"
 SOURCE_FORMS = 60000
 LIMIT = 10000
 LEMMA_POS_ORDER = ("VERB", "NOUN", "ADJ", "ADV", "AUX")
+REQUIREMENTS = "tools/dictionary/requirements-export.txt"
 
 
 def read_lines(path: Path) -> List[str]:
@@ -77,7 +78,7 @@ def main(argv: List[str]) -> int:
 
         lemmatize = make_lemmatizer()
     except ImportError as error:
-        print(f"error: {error}. Install tools/dictionary/requirements-export.txt.", file=sys.stderr)
+        print(f"error: {error}. Run: pip install --require-hashes -r {REQUIREMENTS}", file=sys.stderr)
         return 2
 
     forms = [
