@@ -43,7 +43,8 @@ def parse_word_list(text: str) -> WordList:
         if not line.strip():
             continue
         parts = line.split("\t")
-        if len(parts) != 2 or not parts[0].isdigit():
+        # isdigit() alone accepts "²", which int() then rejects.
+        if len(parts) != 2 or not (parts[0].isascii() and parts[0].isdigit()):
             raise WordListError(f"line {number}: expected 'rank<TAB>headword', got {line!r}")
         rank = int(parts[0])
         if rank != len(headwords) + 1:
@@ -55,7 +56,7 @@ def parse_word_list(text: str) -> WordList:
 def read_word_list(path: Path) -> WordList:
     try:
         text = path.read_text(encoding="utf-8")
-    except OSError as error:
+    except (OSError, UnicodeDecodeError) as error:
         raise WordListError(f"cannot read word list {path}: {error}") from error
     try:
         return parse_word_list(text)

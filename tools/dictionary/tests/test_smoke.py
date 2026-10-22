@@ -1,23 +1,22 @@
 """End to end on real data: the committed word list, the smoke batch, the build."""
 
-import io
 import sqlite3
 import tempfile
 import unittest
-from contextlib import closing, redirect_stderr, redirect_stdout
+from contextlib import closing
 from pathlib import Path
 
 from lingvo_dict import build, validate
 from lingvo_dict.paths import WORDLIST_FILE
+from lingvo_dict.wordlist_file import read_word_list
+from tests.support import run_main
 
 SMOKE_BATCHES = Path(__file__).resolve().parents[1] / "smoke"
 
 
 def run(main, *args):
-    out, err = io.StringIO(), io.StringIO()
-    with redirect_stdout(out), redirect_stderr(err):
-        code = main(list(args))
-    return code, out.getvalue() + err.getvalue()
+    code, out, err = run_main(main, *args)
+    return code, out + err
 
 
 class SmokeTest(unittest.TestCase):
@@ -45,8 +44,6 @@ class SmokeTest(unittest.TestCase):
         self.assertTrue(source.startswith("wordfreq 3.1.1"), source)
 
     def test_committed_word_list_has_ten_thousand_lemmas(self):
-        from lingvo_dict.wordlist_file import read_word_list
-
         word_list = read_word_list(WORDLIST_FILE)
 
         self.assertEqual(word_list.size, 10000)

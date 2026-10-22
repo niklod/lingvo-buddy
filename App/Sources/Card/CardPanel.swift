@@ -33,8 +33,19 @@ final class CardPanel: NSPanel {
         isMovable = false
     }
 
-    override var canBecomeKey: Bool { true }
+    /// When another of our panels (tray, quick add) closes, AppKit hands key status
+    /// to the next window that accepts it. An untouched timed card must not take it:
+    /// it would catch the learner's typing and never auto-close.
+    private var acceptsKeyFocus = false
+
+    override var canBecomeKey: Bool { acceptsKeyFocus }
     override var canBecomeMain: Bool { false }
+
+    /// The learner asked for the card (click, ⌥⌘W, menu): from now on it may be key.
+    func takeKeyFocus() {
+        acceptsKeyFocus = true
+        makeKeyAndOrderFront(nil)
+    }
 
     override func becomeKey() {
         super.becomeKey()
@@ -45,7 +56,7 @@ final class CardPanel: NSPanel {
     /// turn Enter or Space into a click.
     override func sendEvent(_ event: NSEvent) {
         if event.type == .leftMouseDown, !isKeyWindow {
-            makeKey()
+            takeKeyFocus()
         }
         if event.type == .keyDown, let command = CardKeyCommand(event: event), onKey(command) {
             return

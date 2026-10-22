@@ -58,8 +58,8 @@ final class TrayMenuController {
             return
         }
         let panel = TrayPanel()
-        panel.setContent(TrayMenuView(state: state, actions: actions, highlighted: nil) {
-            TrayAddWordField { [weak self] text in self?.run { $0.commands.quickAdd(text) } }
+        panel.setContent(TrayMenuView(state: state, actions: actions, highlighted: nil) { [weak self] in
+            TrayAddWordField { text in self?.run { $0.commands.quickAdd(text) } }
         })
         panel.onKey = { [weak self] command in self?.handle(command) ?? false }
         panel.setFrameOrigin(CardPlacement.origin(for: panel.frame.size, under: anchor))
