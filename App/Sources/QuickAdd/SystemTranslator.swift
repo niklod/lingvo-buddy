@@ -1,3 +1,4 @@
+import LingvoCore
 import Observation
 import OSLog
 import SwiftUI
