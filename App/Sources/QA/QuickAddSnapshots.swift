@@ -45,6 +45,7 @@ enum QuickAddSnapshots {
             state("quick_add_example_translation", text: "provide", example: "", standing: .notAdded, showsExampleTranslation: true),
             russianState("quick_add_russian", text: "сомнение"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
+            machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
             machineState("quick_add_machine_missing_pack", text: "serendipity", answer: .languagePackMissing),
             machineState("quick_add_machine_error", text: "serendipity", answer: .failed),
@@ -52,12 +53,15 @@ enum QuickAddSnapshots {
     }
 
     /// A word the dictionary lacks, with the translator's answer already in.
-    private static func machineState(_ name: String, text: String, answer: MachineTranslation) -> SnapshotState {
+    private static func machineState(
+        _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false
+    ) -> SnapshotState {
         SnapshotState(name: name, usesWindow: true) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
                 QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query == "медленно")
             }
             await model.machineTranslationSettled()
+            if choosesCustom { model.choose(.custom) }
             return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
         }
     }

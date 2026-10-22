@@ -1,19 +1,14 @@
 import SwiftUI
 
-/// The line under the field the machine translation fills: its label, the
-/// download button when the language pack is missing, or a short error.
+/// The line under the custom field when the machine translation has no bubble:
+/// the download button when the language pack is missing, or a short error.
+/// A result shows as a marked bubble instead (`TranslationPill`).
 struct MachineSuggestionNote: View {
     let machine: MachineSuggestion
-    /// The field's current text: an edited suggestion is the learner's own, so it loses the label.
-    let fieldText: String
     let download: () -> Void
 
     var body: some View {
         switch machine {
-        case .suggested(let suggestion) where suggestion == fieldText:
-            Text("machine translation")
-                .font(.system(size: Theme.FontSize.small))
-                .foregroundStyle(Theme.Palette.chipMineText)
         case .languagePackMissing, .downloading:
             downloadRow
         case .failed:

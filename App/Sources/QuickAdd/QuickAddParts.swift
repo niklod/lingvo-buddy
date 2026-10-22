@@ -23,14 +23,23 @@ struct TranslationPill: View {
     let title: String
     let isSelected: Bool
     var isCustom = false
+    /// A small note after the title ("machine translation") for a bubble that is not from a dictionary.
+    var mark: String?
     let action: () -> Void
 
     /// A tap gesture, not a Button: a Button would take keyboard focus away from
     /// the text fields, and Enter must always add the word.
     var body: some View {
-        Text(verbatim: isSelected && !isCustom ? "\(title) ✓" : title)
-            .font(.system(size: Theme.FontSize.body))
-            .foregroundStyle(foreground)
+        HStack(spacing: 6) {
+            Text(verbatim: isSelected && !isCustom ? "\(title) ✓" : title)
+                .font(.system(size: Theme.FontSize.body))
+                .foregroundStyle(foreground)
+            if let mark {
+                Text(verbatim: mark)
+                    .font(.system(size: Theme.FontSize.small))
+                    .foregroundStyle(Theme.Palette.chipMineText)
+            }
+        }
             .padding(.horizontal, 12)
             .frame(height: QuickAddTheme.pillHeight)
             .background(Capsule().fill(isSelected ? QuickAddTheme.selectedFill : .clear))

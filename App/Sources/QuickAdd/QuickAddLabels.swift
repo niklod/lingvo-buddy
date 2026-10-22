@@ -1,14 +1,15 @@
 import LingvoCore
 
 extension QuickAddModel {
-    /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000".
+    /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000". Empty when a machine
+    /// translation fills the bubble: the "type your own" hint shows only when there is none.
     var metaLine: String {
         guard let candidate else { return String(localized: "Type an English or Russian word") }
         if needsEnglishWord {
-            return String(localized: "Not in the dictionary: type the English word")
+            return machineBubble == nil ? String(localized: "Not in the dictionary: type the English word") : ""
         }
         guard let lookup = candidate.lookup else {
-            return String(localized: "Not in the dictionary: type your own translation")
+            return machineBubble == nil ? String(localized: "Not in the dictionary: type your own translation") : ""
         }
         let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]
         return parts.compactMap { $0 }.joined(separator: " · ")
