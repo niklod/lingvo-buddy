@@ -43,7 +43,10 @@ enum AppEnvironment {
             try DesignDemoSeed.apply(to: userDatabase, dictionary: dictionary, now: SystemClock().now())
         }
         return Services(
-            tutor: try Tutor(dictionary: dictionary, userDatabase: userDatabase, extendedDictionary: extended),
+            tutor: try Tutor(
+                dictionary: dictionary, userDatabase: userDatabase, extendedDictionary: extended,
+                systemDictionary: LiveSystemDictionary()
+            ),
             dictionaryMeta: try dictionary.meta(),
             extendedMeta: try extended.meta()
         )

@@ -9,10 +9,9 @@ extension QuickAddModel {
             return machineBubble == nil ? String(localized: "Not in the dictionary: type the English word") : ""
         }
         guard let lookup = candidate.lookup else {
-            // Wiktionary data has no rank or tier, so the line is only the transcription and the part of speech.
-            if let extended = candidate.extended {
-                return [extended.ipa, extended.partOfSpeech.label].compactMap { $0 }.joined(separator: " · ")
-            }
+            // Wiktionary and system data have no rank or tier, so the line is only the transcription and the part of speech.
+            let details = [candidate.ipa, candidate.partOfSpeech?.label].compactMap { $0 }
+            if !details.isEmpty { return details.joined(separator: " · ") }
             // An English candidate for Russian input is a real translation: the line is empty without details.
             if isRussianInput { return "" }
             return machineBubble == nil ? String(localized: "Not in the dictionary: type your own translation") : ""
@@ -20,6 +19,18 @@ extension QuickAddModel {
         let parts = [lookup.entry.ipa, lookup.entry.partOfSpeech.label, Self.tierLabel(lookup)]
         return parts.compactMap { $0 }.joined(separator: " · ")
     }
+
+    /// Details from a dictionary do not make a translation: the line stays until a bubble comes.
+    var missingTranslationNote: String? {
+        guard !isRussianInput, let candidate, candidate.lookup == nil, candidate.translations.isEmpty,
+              machineBubble == nil, !metaLine.isEmpty, metaLine != Self.notInDictionaryLine else { return nil }
+        return Self.notInDictionaryLine
+    }
+
+    /// The short English definition under the bubbles; it is a hint and never saved.
+    var definitionHint: String? { isRussianInput ? nil : candidate?.definitionHint }
+
+    private static var notInDictionaryLine: String { String(localized: "Not in the dictionary: type your own translation") }
 
     var footerText: String {
         switch message {

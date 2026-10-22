@@ -11,7 +11,20 @@ enum SystemEntryText {
     private static var senseNumber: Regex<Substring> { /^\d{1,2}\s+/ }
 
     /// Region and register labels in front of a definition ("North American English informal").
-    private static var usageLabel: Regex<Substring> { /^(?:(?:mainly|chiefly|mostly|especially|also|originally|now)\s+)?(?:(?:North American|British|US|American|Australian and New Zealand|Australian|New Zealand|Irish|Scottish and Northern|Scottish|Scots|West Indian|South African|Indian|Canadian|Caribbean|Welsh)\s+English|informal|formal|archaic|literary|humorous|humorously|dated|rare|slang|vulgar|offensive|derogatory|technical|historical|poetic|ironic|euphemistic|dialect|disapproving|approving|figurative|figuratively|old-fashioned)\b\s*/ }
+    private static var usageLabel: Regex<Substring> {
+        #/
+            (?x)
+            ^ (?: (?:mainly|chiefly|mostly|especially|also|originally|now) \s+ )?
+            (?:
+                (?: North\sAmerican | British | US | American | Australian\sand\sNew\sZealand | Australian
+                  | New\sZealand | Irish | Scottish\sand\sNorthern | Scottish | Scots | West\sIndian
+                  | South\sAfrican | Indian | Canadian | Caribbean | Welsh ) \s+ English
+                | informal | formal | archaic | literary | humorous | humorously | dated | rare | slang
+                | vulgar | offensive | derogatory | technical | historical | poetic | ironic | euphemistic
+                | dialect | disapproving | approving | figurative | figuratively | old-fashioned
+            ) \b \s*
+        /#
+    }
 
     /// Longest first: "modal verb" must win over "verb" at another position.
     private static let partsOfSpeech: [(name: String, value: PartOfSpeech)] = [
