@@ -259,6 +259,24 @@ class MergeRussianTest(unittest.TestCase):
 
         self.assertEqual(entry.translations, ("castle", "palace", "lock", "latch", "bolt"))
 
+    def test_single_words_win_over_phrases_before_the_cut_to_five(self):
+        entry = english_entry(
+            "шлагбаум",
+            senses=[{"glosses": ["boom barrier, boom gate, crossing barrier"]}, {"glosses": ["barrier; gate"]}],
+            lang_code="ru",
+        )
+
+        (merged,) = self.merge(entry)
+
+        self.assertEqual(merged.translations, ("barrier", "gate"))
+
+    def test_a_word_with_only_phrases_keeps_them(self):
+        entry = english_entry("шлагбаум", senses=[{"glosses": ["boom barrier, boom gate"]}], lang_code="ru")
+
+        (merged,) = self.merge(entry)
+
+        self.assertEqual(merged.translations, ("boom barrier", "boom gate"))
+
     def test_words_the_bundled_translations_have_are_dropped_ignoring_yo(self):
         entry = english_entry("ёлка", senses=[{"glosses": ["fir tree"]}], lang_code="ru")
 

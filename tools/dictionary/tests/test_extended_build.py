@@ -24,7 +24,7 @@ PETRICHOR = EnglishEntry(
     "Запах земли поднялся после грозы.",
 )
 SKEDADDLE = EnglishEntry("skedaddle", "verb", None, ("улепётывать", "удирать"), None, None)
-UDIRAT = RussianEntry("удирать", ("run away", "scarper"))
+UDIRAT = RussianEntry("удирать", ("run", "scarper"))
 NONE = Bundled(frozenset(), frozenset())
 
 
@@ -90,6 +90,17 @@ class ValidateTest(unittest.TestCase):
             with self.subTest(word=word, translations=translations):
                 self.assertTrue(self.errors(russian=(RussianEntry(word, translations),)))
 
+    def test_rejects_a_phrase_next_to_a_single_word_and_a_phrase_before_one(self):
+        for translations in (("boom barrier", "barrier"), ("gate", "boom gate", "barrier")):
+            with self.subTest(translations=translations):
+                errors = self.errors(russian=(RussianEntry("шлагбаум", translations),))
+                self.assertTrue(any("single words" in error for error in errors), errors)
+
+    def test_accepts_only_phrases_and_single_words_first(self):
+        for translations in (("boom barrier", "boom gate"), ("barrier", "gate")):
+            with self.subTest(translations=translations):
+                self.assertEqual(self.errors(russian=(RussianEntry("шлагбаум", translations),)), [])
+
     def test_rejects_words_the_bundled_dictionary_has(self):
         bundled = Bundled(frozenset({"petrichor"}), frozenset({"удирать"}))
 
@@ -141,7 +152,7 @@ class BuildTest(unittest.TestCase):
                 ("skedaddle", "verb", None, "улепётывать|удирать", None, None),
             ],
         )
-        self.assertEqual(self.query("SELECT word, translations FROM russian"), [("удирать", "run away|scarper")])
+        self.assertEqual(self.query("SELECT word, translations FROM russian"), [("удирать", "run|scarper")])
         self.assertEqual(self.query("SELECT value FROM meta WHERE key = 'license'"), [(default_meta()["license"],)])
         self.assertEqual(self.query("PRAGMA user_version"), [(build.SCHEMA_VERSION,)])
         self.assertEqual(self.query("PRAGMA journal_mode"), [("delete",)])

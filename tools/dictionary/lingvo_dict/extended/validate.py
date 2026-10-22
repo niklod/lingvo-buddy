@@ -67,6 +67,7 @@ def _english_problems(entry: EnglishEntry, bundled: Bundled) -> list[str]:
 
 def _russian_problems(entry: RussianEntry, bundled: Bundled) -> list[str]:
     problems = _translation_problems(entry.translations, ENGLISH_ITEM, "English letters")
+    problems += _single_word_problems(entry.translations)
     if not RUSSIAN_WORD.fullmatch(entry.word) or entry.word != russian_key(entry.word):
         problems.append("word is not a lower case Russian word without stress and ё")
     if entry.word in bundled.russian_keys:
@@ -86,6 +87,14 @@ def _translation_problems(items: Sequence[str], pattern, letters: str) -> list[s
         elif len(item.split()) > MAX_ITEM_WORDS:
             problems.append(f"translation {item!r} has more than {MAX_ITEM_WORDS} words; bubbles hold at most 3 words")
     return problems
+
+
+def _single_word_problems(items: Sequence[str]) -> list[str]:
+    """A Russian word with a single-word translation lists those first and no phrase at all."""
+    is_phrase = [len(item.split()) > 1 for item in items]
+    if all(is_phrase) or not any(is_phrase):
+        return []
+    return ["translations mix phrases with single words; only the single words belong, listed first"]
 
 
 def _text_problems(name: str, text: str | None, limit: int) -> list[str]:

@@ -7,6 +7,7 @@ from lingvo_dict.extended.clean import (
     normalize_ipa,
     pick_example,
     pick_ipa,
+    prefer_single_words,
     russian_items,
     russian_translation_items,
     strip_labels,
@@ -183,3 +184,21 @@ class ExampleTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PreferSingleWordsTest(unittest.TestCase):
+    def test_single_words_come_first_and_phrases_are_dropped(self):
+        items = ["boom barrier", "barrier", "crossing barrier", "gate"]
+
+        self.assertEqual(prefer_single_words(items), ["barrier", "gate"])
+
+    def test_keeps_the_source_order_of_the_single_words(self):
+        self.assertEqual(prefer_single_words(["b", "a two", "a", "c"]), ["b", "a", "c"])
+
+    def test_keeps_the_phrases_when_there_is_no_single_word(self):
+        items = ["boom barrier", "boom gate", "crossing barrier"]
+
+        self.assertEqual(prefer_single_words(items), items)
+
+    def test_a_hyphenated_or_apostrophe_word_is_one_word(self):
+        self.assertEqual(prefer_single_words(["well known", "well-known", "o'clock"]), ["well-known", "o'clock"])

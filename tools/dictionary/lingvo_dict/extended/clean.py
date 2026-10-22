@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import re
 import unicodedata
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from typing import Any
 
 from lingvo_dict.contract import IPA_PATTERN
@@ -125,6 +125,15 @@ def english_items(gloss: str) -> list[str]:
 
 def _short_items(items: Iterable[str], pattern: re.Pattern[str]) -> list[str]:
     return distinct(item for item in items if item and pattern.fullmatch(item) and len(item.split()) <= MAX_ITEM_WORDS)
+
+
+def prefer_single_words(items: Sequence[str]) -> list[str]:
+    """Single words first, in source order; phrases only when the word has no single-word translation.
+
+    A bubble that lists "boom barrier" and "boom gate" and nothing else gives the learner no word to remember.
+    """
+    singles = [item for item in items if len(item.split()) == 1]
+    return singles or list(items)
 
 
 def distinct(items: Iterable[str]) -> list[str]:

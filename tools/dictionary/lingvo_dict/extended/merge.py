@@ -7,7 +7,7 @@ from collections.abc import Collection, Iterable
 from dataclasses import dataclass
 from itertools import chain
 
-from lingvo_dict.extended.clean import MAX_TRANSLATIONS, distinct
+from lingvo_dict.extended.clean import MAX_TRANSLATIONS, distinct, prefer_single_words
 from lingvo_dict.extended.records import EnglishRecord, RussianRecord
 
 
@@ -62,7 +62,7 @@ def merge_russian(records: Iterable[RussianRecord], bundled_keys: Collection[str
         if record.key not in bundled_keys:
             groups[record.key].extend(record.translations)
     entries = (
-        RussianEntry(word=word, translations=tuple(distinct(items)[:MAX_TRANSLATIONS]))
+        RussianEntry(word=word, translations=tuple(prefer_single_words(distinct(items))[:MAX_TRANSLATIONS]))
         for word, items in sorted(groups.items())
     )
     return [entry for entry in entries if entry.translations]
