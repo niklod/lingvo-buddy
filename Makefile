@@ -8,8 +8,6 @@ APP_BINARY   := $(APP)/Contents/MacOS/LingvoBuddy
 SHELL        := /bin/bash
 PYTHON       ?= python3
 
-# The bundled dictionary is built from data/batches (all 20 batches, ranks 1-10000).
-# The 40-word sample in LingvoCore's test fixtures is only a test fixture now.
 DICT_TOOLS   := tools/dictionary
 DICT_OUT     := App/Resources/dictionary.sqlite
 

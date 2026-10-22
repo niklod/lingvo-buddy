@@ -1,10 +1,9 @@
-import io
+import json
 import unittest
-from contextlib import redirect_stderr, redirect_stdout
 
 from lingvo_dict import validate
 from lingvo_dict.validate import ValidationOptions, validate_batches
-from tests.support import BatchFolder, full_batch, make_word_list, quiz_entry
+from tests.support import BatchFolder, full_batch, make_word_list, quiz_entry, run_main
 
 PARTIAL = ValidationOptions(allow_partial=True)
 
@@ -33,6 +32,16 @@ class BatchRulesTest(unittest.TestCase):
         self.assertEqual(len(strict.errors), 1, strict.errors)
         self.assertIn("missing ranks 499-500", strict.errors[0])
         self.assertEqual(partial.errors, ())
+
+    def test_a_boolean_rank_does_not_count_as_rank_one(self):
+        entries = [{**quiz_entry(self.word_list, 1), "rank": True}] + full_batch(self.word_list, 1)[1:]
+        path = self.folder.write(1, entries)
+
+        errors = validate_batches([path], self.word_list, ValidationOptions()).errors
+
+        self.assertEqual(len(errors), 2, errors)
+        self.assertIn("rank must be a positive integer, got True", errors[0])
+        self.assertIn("missing ranks 1 ", errors[1])
 
     def test_entries_must_be_sorted_by_rank(self):
         path = self.folder.write(1, [quiz_entry(self.word_list, 4), quiz_entry(self.word_list, 3)])
@@ -66,6 +75,47 @@ class BatchRulesTest(unittest.TestCase):
 
         self.assertEqual(len(errors), 1, errors)
         self.assertIn("invalid JSON", errors[0])
+
+    def test_bad_batch_headers_are_errors_not_crashes(self):
+        documents = {
+            "top level must be an object": [],
+            "'batch' must be batch-01 to batch-20, got 'batch-21'": {"batch": "batch-21", "entries": []},
+            "'entries' must be a list": {"batch": "batch-01", "entries": {}},
+            "unknown top-level field 'note'": {"batch": "batch-01", "entries": [], "note": "x"},
+            "entry 5: entry must be a JSON object": {"batch": "batch-01", "entries": [5]},
+        }
+        for expected, document in documents.items():
+            with self.subTest(expected):
+                path = self.folder.write_raw("batch-01.json", json.dumps(document))
+
+                errors = validate_batches([path], self.word_list, PARTIAL).errors
+
+                self.assertEqual(len(errors), 1, errors)
+                self.assertIn(expected, errors[0])
+
+    def test_a_missing_file_is_reported(self):
+        errors = validate_batches([self.folder.path / "batch-01.json"], self.word_list, PARTIAL).errors
+
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("batch-01.json: cannot read file", errors[0])
+
+    def test_a_file_that_is_not_utf8_is_invalid_json(self):
+        path = self.folder.path / "batch-01.json"
+        path.write_bytes(b"\xff")
+
+        errors = validate_batches([path], self.word_list, PARTIAL).errors
+
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("batch-01.json: invalid JSON", errors[0])
+
+    def test_synonym_group_must_point_at_a_quiz_tier_headword(self):
+        lookup_word = self.word_list.headword_at(1001)
+        path = self.folder.write(2, [quiz_entry(self.word_list, 1000, synonym_group=lookup_word)])
+
+        errors = validate_batches([path], self.word_list, PARTIAL).errors
+
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn(f"synonym_group '{lookup_word}' is not a quiz-tier headword", errors[0])
 
     def test_synonym_group_points_at_a_lower_ranked_quiz_headword(self):
         entries = [
@@ -130,12 +180,23 @@ class CommandLineTest(unittest.TestCase):
         self.exclusions_path = self.folder.write_exclusions()
 
     def run_cli(self, *args):
-        out, err = io.StringIO(), io.StringIO()
-        with redirect_stdout(out), redirect_stderr(err):
-            code = validate.main(
-                ["--word-list", str(self.word_list_path), "--quiz-exclusions", str(self.exclusions_path), *args]
-            )
-        return code, out.getvalue(), err.getvalue()
+        return run_main(
+            validate.main, "--word-list", str(self.word_list_path), "--quiz-exclusions", str(self.exclusions_path), *args
+        )
+
+    def test_exit_code_is_two_when_the_word_list_cannot_be_read(self):
+        path = self.folder.write(1, full_batch(self.word_list, 1))
+
+        code, _, err = run_main(validate.main, "--word-list", str(self.folder.path / "none.tsv"), str(path))
+
+        self.assertEqual(code, 2)
+        self.assertIn("error: cannot read word list", err)
+
+    def test_exit_code_is_one_for_a_folder_without_batches(self):
+        code, _, err = self.run_cli("--batches", str(self.folder.path / "empty"))
+
+        self.assertEqual(code, 1)
+        self.assertIn("no batch-*.json files", err)
 
     def test_exit_code_is_zero_for_valid_batches(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))

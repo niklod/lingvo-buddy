@@ -15,7 +15,7 @@ extension QuickAddModel {
         switch message {
         case .standing(let standing): Self.label(for: standing)
         case .error(let text): text
-        case nil: String(localized: "Will show in one of the next cards")
+        case nil: String(localized: "I'll show it in one of the next cards")
         }
     }
 
@@ -32,7 +32,7 @@ extension QuickAddModel {
 
     static func label(for standing: WordStanding) -> String {
         switch standing {
-        case .notAdded: String(localized: "Will show in one of the next cards")
+        case .notAdded: String(localized: "I'll show it in one of the next cards")
         case .mine: String(localized: "Already in My words")
         case .learning(let mastery): String(localized: "Already in Learning (\(mastery)/4)")
         case .learned: String(localized: "Already learned")

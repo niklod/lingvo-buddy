@@ -9,9 +9,22 @@ final class CardPanel: FloatingPanel {
     var onKey: (CardKeyCommand) -> Bool = { _ in false }
     var onBecameKey: () -> Void = {}
 
+    /// When another of our panels (tray, quick add) closes, AppKit hands key status
+    /// to the next window that accepts it. An untouched timed card must not take it:
+    /// it would catch the learner's typing and never auto-close.
+    private var acceptsKeyFocus = false
+
     init() {
         // The feedback block appears after an answer; the card stays under the menu bar.
         super.init(keepsTopEdge: true)
+    }
+
+    override var canBecomeKey: Bool { acceptsKeyFocus }
+
+    /// The learner asked for the card (click, ⌥⌘W, menu): from now on it may be key.
+    func takeKeyFocus() {
+        acceptsKeyFocus = true
+        makeKeyAndOrderFront(nil)
     }
 
     override func becomeKey() {
@@ -24,7 +37,7 @@ final class CardPanel: FloatingPanel {
     /// how Full Keyboard Access presses it.
     override func sendEvent(_ event: NSEvent) {
         if event.type == .leftMouseDown, !isKeyWindow {
-            makeKey()
+            takeKeyFocus()
         }
         if event.type == .keyDown, let command = CardKeyCommand(event: event), onKey(command) {
             return

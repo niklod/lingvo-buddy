@@ -52,7 +52,7 @@ final class CardPanelController {
     }
 
     func focus() {
-        panel?.makeKeyAndOrderFront(nil)
+        panel?.takeKeyFocus()
     }
 
     /// Removes the card with no close action (auto-close, replacement).
@@ -68,7 +68,7 @@ final class CardPanelController {
         panel.setFrame(target.offsetBy(dx: 0, dy: slide), display: false)
         panel.alphaValue = 0
         if focused {
-            panel.makeKeyAndOrderFront(nil)
+            panel.takeKeyFocus()
         } else {
             panel.orderFrontRegardless()
         }
