@@ -3,7 +3,8 @@ import LingvoCore
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private static let openDelay: TimeInterval = 0.5
+    /// macOS refuses activation, and the status item has no frame, until launch finishes.
+    private static let afterLaunchDelay: Duration = .milliseconds(500)
 
     private let errors = ErrorPresenter()
     private var statusItem: StatusItemController?
@@ -22,9 +23,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.appearance = NSAppearance(named: .darkAqua)
         do {
             let options = try LaunchOptions.parse(CommandLine.arguments)
+            #if DEBUG
             if let directory = options.snapshotDirectory {
                 renderSnapshotsAndExit(to: directory, filter: options.snapshotFilter)
             }
+            #endif
             try start(with: options)
         } catch {
             errors.show(error)
@@ -36,9 +39,38 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let services = try AppEnvironment.makeServices(options: options)
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
+        let focus = SystemFocusStatus()
+        let launchAtLogin = SystemLaunchAtLogin()
+        let quickAdd = QuickAddController(tutor: tutor)
+        makeWindows(tutor: tutor, settings: settings, launchAtLogin: launchAtLogin, services: services, quickAdd: quickAdd)
+        let coordinator = try makeCoordinator(tutor: tutor, settings: settings, focus: focus, options: options)
+        let tray = TrayMenuController(
+            tutor: tutor,
+            commands: trayCommands(for: coordinator, quickAdd: quickAdd),
+            errors: errors
+        )
+        makeStatusItem(coordinator: coordinator, tray: tray)
+        registerHotKeys(coordinator: coordinator, tray: tray, quickAdd: quickAdd)
+        registerServices(quickAdd: quickAdd, tray: tray)
+        self.coordinator = coordinator
+        self.tray = tray
+        self.quickAdd = quickAdd
+        showOnboarding = { [weak self] in
+            self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
+        }
+        coordinator.start()
+        try scheduleLaunchViews(options: options, tutor: tutor, focus: focus)
+    }
+
+    private func makeWindows(
+        tutor: Tutor,
+        settings: SettingsModel,
+        launchAtLogin: SystemLaunchAtLogin,
+        services: AppEnvironment.Services,
+        quickAdd: QuickAddController
+    ) {
         let csvTransfer = CSVTransferController(store: tutor, errors: errors)
         self.csvTransfer = csvTransfer
-        let launchAtLogin = SystemLaunchAtLogin()
         settingsWindow = SettingsWindowController(
             model: settings,
             launchAtLogin: launchAtLogin,
@@ -46,13 +78,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             errors: errors,
             transfer: csvTransfer.actions
         )
+        dictionaryWindow = DictionaryWindowController(
+            model: DictionaryModel(store: tutor, errors: errors),
+            settings: settings,
+            actions: DictionaryActions(addWord: { [weak quickAdd] prefill in quickAdd?.open(prefill: prefill) })
+        )
         NSApp.mainMenu = MainMenu.make(
             target: self,
             settingsAction: #selector(openSettingsFromMenu),
             dictionaryAction: #selector(openDictionaryFromMenu)
         )
-        let focus = SystemFocusStatus()
-        let coordinator = CardCoordinator(
+    }
+
+    private func makeCoordinator(
+        tutor: Tutor,
+        settings: SettingsModel,
+        focus: SystemFocusStatus,
+        options: LaunchOptions
+    ) throws -> CardCoordinator {
+        CardCoordinator(
             tutor: tutor,
             panel: CardPanelController(tutor: tutor, errors: errors),
             contexts: CardContextBuilder(
@@ -65,30 +109,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             scheduleSettings: try AppEnvironment.scheduleSettings(options: options, settings: settings.settings),
             errors: errors
         )
-        let quickAdd = QuickAddController(tutor: tutor)
-        dictionaryWindow = DictionaryWindowController(
-            model: DictionaryModel(store: tutor, errors: errors),
-            settings: settings,
-            actions: DictionaryActions(addWord: { [weak quickAdd] prefill in quickAdd?.open(prefill: prefill) })
-        )
-        let tray = TrayMenuController(
-            tutor: tutor,
-            commands: trayCommands(for: coordinator, quickAdd: quickAdd),
-            errors: errors
-        )
+    }
+
+    /// The tray and a card hang in the same place under the icon, so one gives way to the other.
+    private func makeStatusItem(coordinator: CardCoordinator, tray: TrayMenuController) {
         let statusItem = StatusItemController(actions: StatusItemActions(
             primaryClick: { [weak coordinator, weak tray] in
                 guard coordinator?.reopenWaitingCard() == true else { return false }
                 tray?.close()
                 return true
             },
-            toggleTray: { [weak tray] button in tray?.toggle(under: button) }
+            toggleTray: { [weak coordinator, weak tray] button in
+                if tray?.isShowing == false {
+                    coordinator?.setAsideShownCard()
+                }
+                tray?.toggle(under: button)
+            }
         ))
         coordinator.statusItem = statusItem
-        self.coordinator = coordinator
+        coordinator.isTrayOpen = { [weak tray] in tray?.isShowing == true }
         self.statusItem = statusItem
-        self.tray = tray
-        self.quickAdd = quickAdd
+    }
+
+    private func registerHotKeys(coordinator: CardCoordinator, tray: TrayMenuController, quickAdd: QuickAddController) {
         HotKeys.register(
             showWordNow: { [weak coordinator, weak tray] in
                 tray?.close()
@@ -99,27 +142,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 quickAdd?.open()
             }
         )
-        registerServices(quickAdd: quickAdd, tray: tray)
-        showOnboarding = { [weak self] in
-            self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
-        }
-        coordinator.start()
-        if try !options.skipOnboarding && tutor.needsOnboarding() {
-            // The Focus prompt is one of the onboarding steps; it must not pop up before it.
-            // Shown after launch finishes: macOS refuses activation earlier.
-            DispatchQueue.main.asyncAfter(deadline: .now() + Self.openDelay) { [weak self] in
-                self?.showOnboarding?()
-            }
-        } else {
-            focus.requestAccessIfNeeded()
-        }
-        if let view = options.openView {
-            // The status item gets its place in the menu bar only after launch
-            // finishes; opening earlier would anchor the card to a zero frame.
-            DispatchQueue.main.asyncAfter(deadline: .now() + Self.openDelay) { [weak self] in
-                self?.open(view, options: options)
-            }
-        }
     }
 
     private func registerServices(quickAdd: QuickAddController, tray: TrayMenuController) {
@@ -136,10 +158,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func trayCommands(for coordinator: CardCoordinator, quickAdd: QuickAddController) -> TrayCommands {
         TrayCommands(
             showWordNow: { [weak coordinator] in coordinator?.showWordNow() },
-            schedule: { [weak coordinator] in
-                coordinator?.trayInfo
-                    ?? TrayScheduleInfo(nextCardAt: nil, interval: CardScheduleSettings.defaultInterval, pausedUntil: nil)
-            },
+            schedule: { [weak coordinator] in coordinator?.trayInfo ?? .idle },
             changeInterval: { [weak coordinator] interval in coordinator?.changeInterval(interval) },
             pause: { [weak coordinator] option in coordinator?.pause(option) },
             resume: { [weak coordinator] in coordinator?.resume() },
@@ -147,6 +166,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             openDictionary: { [weak self] in self?.openDictionary() },
             openSettings: { [weak self] in self?.openSettings() }
         )
+    }
+
+    private func scheduleLaunchViews(options: LaunchOptions, tutor: Tutor, focus: SystemFocusStatus) throws {
+        if try !options.skipOnboarding && tutor.needsOnboarding() {
+            // The Focus prompt is one of the onboarding steps; it must not pop up before it.
+            afterLaunch { $0.showOnboarding?() }
+        } else {
+            focus.requestAccessIfNeeded()
+        }
+        if let view = options.openView {
+            afterLaunch { $0.open(view, options: options) }
+        }
+    }
+
+    private func afterLaunch(_ action: @escaping @MainActor (AppDelegate) -> Void) {
+        Task { [weak self] in
+            try? await Task.sleep(for: Self.afterLaunchDelay)
+            guard let self else { return }
+            action(self)
+        }
     }
 
     private func open(_ view: OpenableView, options: LaunchOptions) {
@@ -212,8 +251,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         openDictionary()
     }
 
+    #if DEBUG
     private func renderSnapshotsAndExit(to path: String, filter: String?) -> Never {
-        let states = SnapshotRegistry.all.filter { filter == nil || $0.name.contains(filter ?? "") }
+        let states = SnapshotRegistry.all.filter { state in filter.map { state.name.contains($0) } ?? true }
         do {
             let files = try SnapshotRenderer.render(states, to: SnapshotRenderer.directoryURL(path))
             files.forEach { print($0.path) }
@@ -223,4 +263,5 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             exit(1)
         }
     }
+    #endif
 }

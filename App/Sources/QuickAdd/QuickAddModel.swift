@@ -16,12 +16,14 @@ enum QuickAddMessage: Equatable {
 }
 
 /// The live state of the quick-add panel. The view binds to it; the lookup
-/// runs on every edit of the word, which is cheap (one indexed SQLite read).
+/// reads the dictionary and all progress, so it waits for a short pause in typing.
 @MainActor
 @Observable
 final class QuickAddModel {
+    private static let lookupDelay: Duration = .milliseconds(80)
+
     var text: String {
-        didSet { if text != oldValue { refreshPreview() } }
+        didSet { if text != oldValue { scheduleLookup() } }
     }
     var choice: TranslationChoice = .custom
     var customTranslation = ""
@@ -30,6 +32,7 @@ final class QuickAddModel {
     private(set) var message: QuickAddMessage?
 
     @ObservationIgnored private let lookup: (String) throws -> QuickAddPreview?
+    @ObservationIgnored private var pendingLookup: Task<Void, Never>?
 
     init(text: String = "", example: String = "", lookup: @escaping (String) throws -> QuickAddPreview?) {
         self.text = text
@@ -66,6 +69,10 @@ final class QuickAddModel {
 
     /// The word to add, or `nil` (with a footer message) when the form is not ready.
     func submission() -> NewMyWord? {
+        // Enter can come before the typing pause ends; the word must be the one on screen.
+        if pendingLookup != nil {
+            refreshPreview()
+        }
         guard let preview else { return nil }
         guard preview.canAdd else {
             message = .standing(preview.standing)
@@ -84,7 +91,18 @@ final class QuickAddModel {
 
     /// The first dictionary translation is preselected for each new word; a
     /// choice made for the same word survives further edits (a trailing space).
+    private func scheduleLookup() {
+        pendingLookup?.cancel()
+        pendingLookup = Task { [weak self] in
+            try? await Task.sleep(for: Self.lookupDelay)
+            guard !Task.isCancelled else { return }
+            self?.refreshPreview()
+        }
+    }
+
     private func refreshPreview() {
+        pendingLookup?.cancel()
+        pendingLookup = nil
         let previousHeadword = preview?.headword
         do {
             preview = try lookup(text)

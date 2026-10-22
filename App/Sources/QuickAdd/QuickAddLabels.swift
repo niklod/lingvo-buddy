@@ -1,6 +1,5 @@
 import LingvoCore
 
-/// The texts of the quick-add panel, built from the model.
 extension QuickAddModel {
     /// "/rɪˈlʌktənt/ · adjective · outside Top‑1000".
     var metaLine: String {

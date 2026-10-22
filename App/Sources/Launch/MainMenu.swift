@@ -65,10 +65,18 @@ enum MainMenu {
 }
 
 @MainActor
-final class WindowCommands: NSObject {
+final class WindowCommands: NSObject, NSMenuItemValidation {
     static let shared = WindowCommands()
 
     @objc func closeKeyWindow(_ sender: Any?) {
         NSApp.keyWindow?.performClose(sender)
+    }
+
+    /// AppKit tries menu key equivalents before the key window sees the key. An
+    /// enabled "Close" would take ⌘W from the borderless tray, card and quick
+    /// add and only beep; disabled, the key reaches the panel's own handler.
+    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+        guard menuItem.action == #selector(closeKeyWindow(_:)) else { return true }
+        return NSApp.keyWindow?.styleMask.contains(.closable) == true
     }
 }

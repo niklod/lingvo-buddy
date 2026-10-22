@@ -29,8 +29,8 @@ private struct ScheduleSection: View {
         SettingsSection(title: String(localized: "Cards")) {
             SettingsRow(label: String(localized: "Show a card")) {
                 ValueStepper(
-                    text: String(localized: "every \(intervalMinutes.wrappedValue) min"),
-                    value: intervalMinutes,
+                    text: String(localized: "every \(model.intervalMinutes) min"),
+                    value: $model.intervalMinutes,
                     range: SettingsRanges.intervalMinutes,
                     step: SettingsRanges.intervalStep
                 )
@@ -48,13 +48,6 @@ private struct ScheduleSection: View {
                 }
             }
         }
-    }
-
-    private var intervalMinutes: Binding<Int> {
-        Binding(
-            get: { Int((model.settings.cardInterval / 60).rounded()) },
-            set: { minutes in model.update { $0.replacing(cardInterval: TimeInterval(minutes) * 60) } }
-        )
     }
 
     private var quietEnabled: Binding<Bool> {

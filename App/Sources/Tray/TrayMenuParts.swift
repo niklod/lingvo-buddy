@@ -75,12 +75,9 @@ struct TrayDivider: View {
 /// One menu row: title on the left, shortcut or "›" on the right; blue while hovered.
 struct TrayMenuRow: View {
     private static let height: CGFloat = 34
-    /// Rows of slices that have not landed yet stay visible but read as unavailable.
-    private static let disabledOpacity = 0.4
 
     let title: String
     let detail: String
-    let isEnabled: Bool
     let isHighlighted: Bool
     let action: () -> Void
 
@@ -104,7 +101,5 @@ struct TrayMenuRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .disabled(!isEnabled)
-        .opacity(isEnabled ? 1 : Self.disabledOpacity)
     }
 }

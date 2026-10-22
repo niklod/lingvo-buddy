@@ -99,6 +99,7 @@ final class OnboardingModel {
     func finishLevelCheck() {
         do {
             step = .levelDone(try store.applyLevelCheck(answers))
+            UserDataChanges.post(staleCards: .all)
         } catch {
             errors?.show(error)
         }

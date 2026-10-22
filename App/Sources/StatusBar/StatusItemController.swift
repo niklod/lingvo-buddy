@@ -11,15 +11,20 @@ struct StatusItemActions {
 /// otherwise, and on a right click, it toggles the tray menu.
 @MainActor
 final class StatusItemController: NSObject {
+    /// Built once: `arm()` asks for the dot on every timer event, all day long.
+    private static let plainGlyph = StatusGlyph.image(waiting: false)
+    private static let waitingGlyph = StatusGlyph.image(waiting: true)
+
     private let statusItem: NSStatusItem
     private let actions: StatusItemActions
+    private var showsWaitingDot = false
 
     init(actions: StatusItemActions) {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         self.actions = actions
         super.init()
         guard let button = statusItem.button else { return }
-        button.image = StatusGlyph.image()
+        button.image = Self.plainGlyph
         button.setAccessibilityTitle("LingvoBuddy")
         button.target = self
         button.action = #selector(clicked(_:))
@@ -28,8 +33,11 @@ final class StatusItemController: NSObject {
 
     var anchor: NSStatusBarButton? { statusItem.button }
 
+    /// A new image makes the menu bar lay out and redraw the item, so only a change sets one.
     func showWaitingDot(_ waiting: Bool) {
-        statusItem.button?.image = StatusGlyph.image(waiting: waiting)
+        guard waiting != showsWaitingDot else { return }
+        showsWaitingDot = waiting
+        statusItem.button?.image = waiting ? Self.waitingGlyph : Self.plainGlyph
     }
 
     @objc private func clicked(_ sender: NSStatusBarButton) {

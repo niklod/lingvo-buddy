@@ -68,7 +68,8 @@ private struct WelcomeView: View {
             }
             HStack {
                 Spacer()
-                OnboardingButton(title: String(localized: "Continue")) { model.showLevelIntro() }
+                Button(String(localized: "Continue")) { model.showLevelIntro() }
+                    .buttonStyle(.onboarding())
                     .keyboardShortcut(.defaultAction)
             }
         }
@@ -80,10 +81,7 @@ private struct WelcomeView: View {
     }
 
     private var intervalMinutes: Binding<Int> {
-        Binding(
-            get: { Int((settings.settings.cardInterval / 60).rounded()) },
-            set: { minutes in settings.update { $0.replacing(cardInterval: TimeInterval(minutes) * 60) } }
-        )
+        Bindable(settings).intervalMinutes
     }
 }
 
@@ -115,7 +113,8 @@ private struct SetupView: View {
             }
             HStack {
                 Spacer()
-                OnboardingButton(title: String(localized: "Start learning")) { model.finish() }
+                Button(String(localized: "Start learning")) { model.finish() }
+                    .buttonStyle(.onboarding())
                     .keyboardShortcut(.defaultAction)
             }
         }

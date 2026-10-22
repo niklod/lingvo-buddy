@@ -2,7 +2,6 @@ import AppKit
 import LingvoCore
 import SwiftUI
 
-/// How the learner closed a card.
 enum CardCloseAction: Equatable {
     /// "Next ↵" (or Enter) after an answer.
     case next
@@ -36,6 +35,7 @@ final class CardPanelController {
     }
 
     var isShowing: Bool { panel?.isVisible == true }
+    var isAnswered: Bool { session?.state.isAnswered == true }
 
     /// `focused` makes the card key at once (hotkey, menu, icon click);
     /// a timed card appears without taking keyboard focus.
@@ -104,8 +104,8 @@ final class CardPanelController {
             guard session.state.card.options.indices.contains(index) else { return false }
             answer { session.pick(index) }
         case .next:
-            guard session.state.isAnswered else { return false }
-            finish(.next)
+            // Unanswered, Enter does nothing; it still must not reach a focused option.
+            if session.state.isAnswered { finish(.next) }
         case .close:
             finish(.skip)
         }
@@ -133,7 +133,7 @@ enum CardPlacement {
         guard let button = anchor, let window = button.window, let screen = window.screen,
               screen.frame.intersects(window.frame), window.frame.height > 0 else {
             // The icon can be hidden (crowded or auto-hidden menu bar): use the top-right corner.
-            let visible = (NSScreen.main ?? NSScreen.screens[0]).visibleFrame
+            guard let visible = (NSScreen.main ?? NSScreen.screens.first)?.visibleFrame else { return .zero }
             return NSPoint(x: visible.maxX - size.width, y: visible.maxY - size.height)
         }
         let buttonFrame = window.convertToScreen(button.convert(button.bounds, to: nil))

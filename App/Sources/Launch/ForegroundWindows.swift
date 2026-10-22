@@ -2,7 +2,8 @@ import AppKit
 
 /// An accessory (menu-bar) app may not take activation on macOS 14+, so a
 /// window would open inactive behind other apps. A regular app may: the Dock
-/// icon shows only while one of our titled windows (Settings, onboarding) is open.
+/// icon shows only while one of our titled windows (Settings, Dictionary,
+/// onboarding) is open or minimized.
 @MainActor
 enum ForegroundWindows {
     static func show(_ window: NSWindow) {
@@ -15,9 +16,10 @@ enum ForegroundWindows {
     }
 
     /// Call from `windowWillClose`: the closing window still counts as visible.
+    /// A minimized window is not visible, but its only way back is the Dock tile.
     static func willClose(_ window: NSWindow) {
         let othersOpen = NSApp.windows.contains { other in
-            other !== window && other.isVisible && other.styleMask.contains(.titled)
+            other !== window && (other.isVisible || other.isMiniaturized) && other.styleMask.contains(.titled)
         }
         if !othersOpen {
             NSApp.setActivationPolicy(.accessory)
