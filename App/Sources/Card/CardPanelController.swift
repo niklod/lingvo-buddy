@@ -43,7 +43,7 @@ final class CardPanelController {
         dismiss()
         let session = CardSession(
             card: card,
-            showsExampleTranslation: tutor.settings.showsExampleTranslation,
+            settings: tutor.settings,
             tutor: tutor
         ) { [errors] error in errors.show(error) }
         let panel = CardPanel()

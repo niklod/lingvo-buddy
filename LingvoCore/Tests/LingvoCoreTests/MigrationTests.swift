@@ -96,7 +96,7 @@ struct MigrationTests {
                 ('direction', 'sideways'), ('review_share', 'abc'), ('max_active_new_words', 'many'),
                 ('card_interval_seconds', 'soon'), ('quiet_hours_enabled', 'yes'),
                 ('quiet_hours_start', '25:00'), ('quiet_hours_end', 'noon'),
-                ('show_example_translation', 'yes');
+                ('show_example_translation', 'yes'), ('youglish_accent', 'mars');
             """)
         defer { try? FileManager.default.removeItem(at: url) }
 

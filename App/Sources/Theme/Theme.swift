@@ -23,6 +23,7 @@ enum Theme {
         static let desktop = Color(hex: 0x33404D)
         static let shadow = Color.black.opacity(0.45)
         static let chipNewText = Color(hex: 0x64D2FF)
+        static let link = Color(hex: 0x64D2FF)
         static let chipReview = Color(hex: 0x5E5CE6)
         static let chipReviewText = Color(hex: 0xB7B5FF)
         static let chipMineText = Color(hex: 0xFFC56B)

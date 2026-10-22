@@ -10,8 +10,13 @@ final class CardSession {
     private let tutor: Tutor
     private let onError: (Error) -> Void
 
-    init(card: Card, showsExampleTranslation: Bool, tutor: Tutor, onError: @escaping (Error) -> Void) {
-        self.state = QuizCardState(card: card, answer: nil, showsExampleTranslation: showsExampleTranslation)
+    init(card: Card, settings: TutorSettings, tutor: Tutor, onError: @escaping (Error) -> Void) {
+        self.state = QuizCardState(
+            card: card,
+            answer: nil,
+            showsExampleTranslation: settings.showsExampleTranslation,
+            youGlishAccent: settings.youGlishAccent
+        )
         self.tutor = tutor
         self.onError = onError
     }
@@ -31,7 +36,8 @@ final class CardSession {
             state = QuizCardState(
                 card: state.card,
                 answer: .init(pickedIndex: pickedIndex, result: result),
-                showsExampleTranslation: state.showsExampleTranslation
+                showsExampleTranslation: state.showsExampleTranslation,
+                youGlishAccent: state.youGlishAccent
             )
             UserDataChanges.post()
         } catch {

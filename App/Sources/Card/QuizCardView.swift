@@ -106,6 +106,15 @@ struct QuizCardView: View {
                     .font(.system(size: Theme.FontSize.body))
                     .foregroundStyle(Theme.Palette.textSecondary)
             }
+            if let url = state.youGlishURL {
+                Link(destination: url) {
+                    Text(verbatim: state.youGlishLabel)
+                        .font(.system(size: Theme.FontSize.caption, weight: .medium))
+                        .foregroundStyle(Theme.Palette.link)
+                }
+                .buttonStyle(.plain)
+                .pointerStyle(.link)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

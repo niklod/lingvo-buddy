@@ -16,19 +16,22 @@ public struct TutorSettings: Sendable, Equatable {
     public let quietHoursEnabled: Bool
     /// Off by default: the Russian line under the example breaks the English-only reading.
     public let showsExampleTranslation: Bool
+    public let youGlishAccent: YouGlishAccent
 
     public init(
         learning: LearningSettings = LearningSettings(),
         cardInterval: TimeInterval = CardScheduleSettings.defaultInterval,
         quietHours: QuietHours = .standard,
         quietHoursEnabled: Bool = true,
-        showsExampleTranslation: Bool = false
+        showsExampleTranslation: Bool = false,
+        youGlishAccent: YouGlishAccent = .all
     ) {
         self.learning = learning
         self.cardInterval = Self.clampedInterval(cardInterval)
         self.quietHours = quietHours
         self.quietHoursEnabled = quietHoursEnabled
         self.showsExampleTranslation = showsExampleTranslation
+        self.youGlishAccent = youGlishAccent
     }
 
     /// The span the quiet rules use, or `nil` when quiet hours are off.
@@ -41,14 +44,16 @@ public struct TutorSettings: Sendable, Equatable {
         cardInterval: TimeInterval? = nil,
         quietHours: QuietHours? = nil,
         quietHoursEnabled: Bool? = nil,
-        showsExampleTranslation: Bool? = nil
+        showsExampleTranslation: Bool? = nil,
+        youGlishAccent: YouGlishAccent? = nil
     ) -> TutorSettings {
         TutorSettings(
             learning: learning ?? self.learning,
             cardInterval: cardInterval ?? self.cardInterval,
             quietHours: quietHours ?? self.quietHours,
             quietHoursEnabled: quietHoursEnabled ?? self.quietHoursEnabled,
-            showsExampleTranslation: showsExampleTranslation ?? self.showsExampleTranslation
+            showsExampleTranslation: showsExampleTranslation ?? self.showsExampleTranslation,
+            youGlishAccent: youGlishAccent ?? self.youGlishAccent
         )
     }
 

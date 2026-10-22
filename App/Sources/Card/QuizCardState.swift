@@ -13,6 +13,8 @@ struct QuizCardState: Equatable {
     let answer: Answer?
     /// The learner's "Show example translation" setting, read when the card appears.
     let showsExampleTranslation: Bool
+    /// The learner's "YouGlish accent" setting, read when the card appears.
+    var youGlishAccent: YouGlishAccent = .all
 
     var isAnswered: Bool { answer != nil }
 
@@ -84,6 +86,14 @@ extension QuizCardState {
 
     var russianExample: String? {
         showsExampleTranslation ? card.russianExample : nil
+    }
+
+    var youGlishURL: URL? {
+        YouGlishLink.url(for: card.headword, accent: youGlishAccent)
+    }
+
+    var youGlishLabel: String {
+        String(localized: "Hear “\(card.headword)” on YouGlish ↗")
     }
 
     var feedbackIsPositive: Bool { answer?.result.outcome == .correct }
