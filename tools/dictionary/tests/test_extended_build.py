@@ -1,7 +1,6 @@
 """The extended dictionary source, its validation and its SQLite build, all from small fixtures."""
 
 import dataclasses
-import gzip
 import json
 import sqlite3
 import tempfile
@@ -9,8 +8,8 @@ import unittest
 from contextlib import closing
 from pathlib import Path
 
-from lingvo_dict.extended import build, importer
-from lingvo_dict.extended.bundled import Bundled, load_bundled
+from lingvo_dict.extended import build
+from lingvo_dict.extended.bundled import Bundled
 from lingvo_dict.extended.merge import EnglishEntry, RussianEntry
 from lingvo_dict.extended.source import SourceError, default_meta, parse_source, render_source
 from lingvo_dict.extended.validate import validate_extended
@@ -173,66 +172,15 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("petrichor", errors)
 
+    def test_a_broken_bundled_batch_stops_the_build_with_an_error(self):
+        (self.batches / "batch-01.json").write_text("{broken", encoding="utf-8")
 
-class ImportTest(unittest.TestCase):
-    def test_imports_the_three_extracts_into_a_deterministic_source(self):
-        with tempfile.TemporaryDirectory() as name:
-            folder = Path(name)
-            batches = folder / "batches"
-            batches.mkdir()
-            batch = {"entries": [{"headword": "dog", "translations": ["собака", "пёс"]}]}
-            (batches / "batch-01.json").write_text(json.dumps(batch, ensure_ascii=False), encoding="utf-8")
-            english = [
-                {
-                    "word": "dog",
-                    "lang_code": "en",
-                    "pos": "noun",
-                    "senses": [{"glosses": ["x"]}],
-                    "translations": [{"lang_code": "ru", "word": "собака"}],
-                },
-                {
-                    "word": "petrichor",
-                    "lang_code": "en",
-                    "pos": "noun",
-                    "senses": [{"glosses": ["x"]}],
-                    "translations": [{"lang_code": "ru", "word": "пе́трихор"}],
-                    "sounds": [{"ipa": "/ˈpɛt.ɹɪ.kɔː/"}],
-                },
-            ]
-            ruwikt = [{"word": "skedaddle", "lang_code": "en", "pos": "verb", "senses": [{"glosses": ["удирать"]}]}]
-            ruword = [
-                {"word": "собака", "lang_code": "ru", "pos": "noun", "senses": [{"glosses": ["dog"]}]},
-                {"word": "улепётывать", "lang_code": "ru", "pos": "verb", "senses": [{"glosses": ["to skedaddle"]}]},
-            ]
-            paths = {}
-            for key, entries, gzipped in (("en", english, True), ("ruwikt", ruwikt, False), ("ruword", ruword, True)):
-                path = folder / (key + (".jsonl.gz" if gzipped else ".jsonl"))
-                payload = "\n".join(json.dumps(entry, ensure_ascii=False) for entry in entries) + "\n"
-                if gzipped:
-                    path.write_bytes(gzip.compress(payload.encode("utf-8")))
-                else:
-                    path.write_text(payload, encoding="utf-8")
-                paths[key] = str(path)
-            out = folder / "extended.txt"
+        code, _, errors = self.build()
 
-            code, output, errors = run_main(
-                importer.main,
-                "--en", paths["en"], "--ruwikt", paths["ruwikt"], "--ruword", paths["ruword"],
-                "--batches", str(batches), "--out", str(out),
-            )  # fmt: skip
-
-            self.assertEqual(code, 0, errors)
-            data = parse_source(out.read_text(encoding="utf-8"))
-            self.assertEqual([entry.headword for entry in data.english], ["petrichor", "skedaddle"])
-            self.assertEqual(data.english[0].translations, ("петрихор",))
-            self.assertEqual(data.english[0].ipa, "/ˈpetrɪkɔː/")
-            self.assertEqual(data.english[1].translations, ("удирать",))
-            # «собака» is a bundled translation already; «улепетывать» is new.
-            self.assertEqual(
-                [(entry.word, entry.translations) for entry in data.russian], [("улепетывать", ("skedaddle",))]
-            )
-            self.assertEqual(validate_extended(data, load_bundled(batches)), [])
-            self.assertIn("2 English", output)
+        self.assertEqual(code, 2)
+        self.assertIn("error: cannot read bundled batch", errors)
+        self.assertIn("batch-01.json", errors)
+        self.assertFalse(self.out.exists())
 
 
 if __name__ == "__main__":

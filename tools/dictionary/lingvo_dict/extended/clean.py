@@ -124,10 +124,14 @@ def english_items(gloss: str) -> list[str]:
 
 
 def _short_items(items: Iterable[str], pattern: re.Pattern[str]) -> list[str]:
+    return distinct(item for item in items if item and pattern.fullmatch(item) and len(item.split()) <= MAX_ITEM_WORDS)
+
+
+def distinct(items: Iterable[str]) -> list[str]:
+    """Drops repeats that differ only in case; the first spelling wins."""
     kept: dict[str, str] = {}
     for item in items:
-        if item and pattern.fullmatch(item) and len(item.split()) <= MAX_ITEM_WORDS:
-            kept.setdefault(item.lower(), item)
+        kept.setdefault(item.lower(), item)
     return list(kept.values())
 
 

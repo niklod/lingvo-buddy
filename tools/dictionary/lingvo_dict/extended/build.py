@@ -6,28 +6,22 @@ import argparse
 import hashlib
 import sqlite3
 import sys
-from collections.abc import Sequence
-from contextlib import closing
 from pathlib import Path
 
 from lingvo_dict.contract import POS_VALUES
-from lingvo_dict.extended.bundled import load_bundled
+from lingvo_dict.extended.bundled import BundledError, load_bundled
 from lingvo_dict.extended.paths import DEFAULT_EXTENDED_DICTIONARY, EXTENDED_SOURCE_FILE
 from lingvo_dict.extended.source import SEPARATOR, ExtendedData, SourceError, parse_source
-from lingvo_dict.extended.validate import validate_extended
+from lingvo_dict.extended.validate import print_errors, validate_extended
 from lingvo_dict.paths import BATCHES_DIR
-
-
-def _in_list(values: Sequence[str]) -> str:
-    return ", ".join(f"'{value}'" for value in values)
-
+from lingvo_dict.sqlite_file import atomic_database, sql_in_list
 
 # Mirrors LingvoCore/Sources/LingvoCore/Dictionary/ExtendedSchema.swift; keep both in step.
 SCHEMA_VERSION = 1
 SCHEMA = f"""
 CREATE TABLE english (
     headword TEXT PRIMARY KEY,
-    pos TEXT NOT NULL CHECK (pos IN ({_in_list(POS_VALUES)})),
+    pos TEXT NOT NULL CHECK (pos IN ({sql_in_list(POS_VALUES)})),
     ipa TEXT,
     translations TEXT NOT NULL,
     example TEXT,
@@ -46,34 +40,17 @@ PRAGMA user_version = {SCHEMA_VERSION};
 
 
 def write_extended(data: ExtendedData, source_digest: str, out: Path) -> None:
-    """Writes to a temporary file first so a failed build never leaves a half-written dictionary."""
-    out.parent.mkdir(parents=True, exist_ok=True)
-    temporary = out.with_name(out.name + ".tmp")
-    temporary.unlink(missing_ok=True)
-    try:
-        with closing(sqlite3.connect(temporary)) as connection:
-            with connection:
-                connection.executescript(SCHEMA)
-                connection.executemany(
-                    "INSERT INTO english (headword, pos, ipa, translations, example, example_ru)"
-                    " VALUES (?, ?, ?, ?, ?, ?)",
-                    [
-                        (e.headword, e.pos, e.ipa, SEPARATOR.join(e.translations), e.example, e.example_ru)
-                        for e in data.english
-                    ],
-                )
-                connection.executemany(
-                    "INSERT INTO russian (word, translations) VALUES (?, ?)",
-                    [(e.word, SEPARATOR.join(e.translations)) for e in data.russian],
-                )
-                connection.executemany("INSERT INTO meta (key, value) VALUES (?, ?)", _meta(data, source_digest))
-            # The app opens the file read-only inside its signed bundle: no -wal/-shm files there.
-            connection.execute("PRAGMA journal_mode=DELETE")
-            connection.execute("VACUUM")
-        temporary.replace(out)
-    except BaseException:
-        temporary.unlink(missing_ok=True)
-        raise
+    with atomic_database(out) as connection:
+        connection.executescript(SCHEMA)
+        connection.executemany(
+            "INSERT INTO english (headword, pos, ipa, translations, example, example_ru) VALUES (?, ?, ?, ?, ?, ?)",
+            [(e.headword, e.pos, e.ipa, SEPARATOR.join(e.translations), e.example, e.example_ru) for e in data.english],
+        )
+        connection.executemany(
+            "INSERT INTO russian (word, translations) VALUES (?, ?)",
+            [(e.word, SEPARATOR.join(e.translations)) for e in data.russian],
+        )
+        connection.executemany("INSERT INTO meta (key, value) VALUES (?, ?)", _meta(data, source_digest))
 
 
 def _meta(data: ExtendedData, source_digest: str) -> list[tuple[str, str]]:
@@ -92,13 +69,16 @@ def main(argv: list[str]) -> int:
     try:
         text = args.source.read_text(encoding="utf-8")
         data = parse_source(text)
+        bundled = load_bundled(args.batches)
     except (OSError, SourceError) as error:
         print(f"error: cannot read {args.source}: {error}", file=sys.stderr)
         return 2
-    errors = validate_extended(data, load_bundled(args.batches))
+    except BundledError as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
+    errors = validate_extended(data, bundled)
     if errors:
-        print("\n".join(errors[:50]), file=sys.stderr)
-        print(f"build stopped: {len(errors)} validation errors in {args.source}", file=sys.stderr)
+        print_errors(errors, f"build stopped: {len(errors)} validation errors in {args.source}")
         return 1
     try:
         write_extended(data, hashlib.sha256(text.encode("utf-8")).hexdigest(), args.out)

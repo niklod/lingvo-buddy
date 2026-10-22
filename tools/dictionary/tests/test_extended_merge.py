@@ -3,8 +3,13 @@
 import json
 import unittest
 
-from lingvo_dict.extended.merge import merge_english, merge_russian
-from lingvo_dict.extended.records import english_records, russian_wiktionary_records, russian_word_records
+from lingvo_dict.extended.merge import EnglishEntry, merge_english, merge_russian
+from lingvo_dict.extended.records import (
+    EnglishRecord,
+    english_records,
+    russian_wiktionary_records,
+    russian_word_records,
+)
 
 
 def lines(*entries):
@@ -32,8 +37,7 @@ class EnglishRecordsTest(unittest.TestCase):
 
         (record,) = self.read(entry)
 
-        self.assertEqual(record.translations, ("улепётывать", "удирать"))
-        self.assertEqual(record.pos, "verb")
+        self.assertEqual(record, EnglishRecord("skedaddle", "verb", ("улепётывать", "удирать"), None, None))
 
     def test_ignores_other_languages_and_obsolete_translations(self):
         entry = english_entry("dog", translations=["собака"])
@@ -59,7 +63,7 @@ class EnglishRecordsTest(unittest.TestCase):
             english_entry("Monday"),
             english_entry("etc.", pos="abbrev"),
             english_entry("a", "numeral"),
-            english_entry("kept"),
+            english_entry("kept", translations=["сохранённый"]),
         )
 
         self.assertEqual([record.word for record in records], ["kept"])
@@ -76,7 +80,18 @@ class EnglishRecordsTest(unittest.TestCase):
     def test_a_word_with_a_form_sense_and_a_real_sense_stays(self):
         senses = [{"glosses": ["plural of x"], "form_of": [{"word": "x"}]}, {"glosses": ["a real meaning"]}]
 
-        self.assertEqual(len(self.read(english_entry("axes", senses=senses))), 1)
+        self.assertEqual(len(self.read(english_entry("axes", translations=["топоры"], senses=senses))), 1)
+
+    def test_skips_an_entry_with_no_translation_ipa_or_example(self):
+        sounds = [{"ipa": "/ˈpɛt.ɹɪ.kɔː/"}]
+
+        records = self.read(english_entry("mumpsimus"), english_entry("petrichor", sounds=sounds))
+
+        self.assertEqual([record.word for record in records], ["petrichor"])
+
+    def test_a_broken_json_line_names_its_number(self):
+        with self.assertRaisesRegex(ValueError, "line 2: invalid JSON"):
+            list(english_records([*lines(english_entry("dog")), "{broken"], frozenset()))
 
     def test_takes_ipa_and_a_usage_example_from_the_entry(self):
         senses = [
@@ -92,11 +107,12 @@ class EnglishRecordsTest(unittest.TestCase):
 
         (record,) = self.read(english_entry("skedaddle", "verb", senses=senses, sounds=sounds))
 
-        self.assertEqual(record.ipa, "/skɪˈdædl/")
-        self.assertEqual(record.example, ("They skedaddled at dawn.", ""))
+        self.assertEqual(record, EnglishRecord("skedaddle", "verb", (), "/skɪˈdædl/", ("They skedaddled at dawn.", "")))
 
     def test_maps_the_wiktionary_part_of_speech(self):
-        (adjective, other) = self.read(english_entry("big", "adj"), english_entry("hmm", "particle"))
+        (adjective, other) = self.read(
+            english_entry("big", "adj", ["большой"]), english_entry("hmm", "particle", ["хм"])
+        )
 
         self.assertEqual((adjective.pos, other.pos), ("adjective", "other"))
 
@@ -115,16 +131,21 @@ class RussianWiktionaryRecordsTest(unittest.TestCase):
 
         (record,) = russian_wiktionary_records(lines(entry), frozenset())
 
-        self.assertEqual(record.translations, ("чепуха", "ерунда", "ахинея", "абсурд"))
-        self.assertEqual(record.example, ("What codswallop!", "Какая чепуха!"))
-        self.assertIsNone(record.ipa)
+        self.assertEqual(
+            record,
+            EnglishRecord(
+                "codswallop",
+                "noun",
+                ("чепуха", "ерунда", "ахинея", "абсурд"),
+                None,
+                ("What codswallop!", "Какая чепуха!"),
+            ),
+        )
 
-    def test_a_long_definition_gives_no_translation(self):
+    def test_a_long_definition_gives_no_translation_so_no_record(self):
         entry = english_entry("petrichor", senses=[{"glosses": ["запах земли после дождя в сухую погоду"]}])
 
-        (record,) = russian_wiktionary_records(lines(entry), frozenset())
-
-        self.assertEqual(record.translations, ())
+        self.assertEqual(list(russian_wiktionary_records(lines(entry), frozenset())), [])
 
 
 class RussianWordRecordsTest(unittest.TestCase):
@@ -208,7 +229,10 @@ class MergeEnglishTest(unittest.TestCase):
 
         (entry,) = self.merge(english, russian)
 
-        self.assertEqual((entry.example, entry.example_ru), ("Drug abuse.", "Злоупотребление наркотиками."))
+        self.assertEqual(
+            entry,
+            EnglishEntry("abuse", "noun", None, ("злоупотребление",), "Drug abuse.", "Злоупотребление наркотиками."),
+        )
 
     def test_ipa_comes_from_english_wiktionary(self):
         sounds = [{"ipa": "/ˈpɛt.ɹɪˌkɔː/"}]

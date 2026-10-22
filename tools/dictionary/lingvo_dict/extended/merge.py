@@ -5,8 +5,9 @@ from __future__ import annotations
 from collections import defaultdict
 from collections.abc import Collection, Iterable
 from dataclasses import dataclass
+from itertools import chain
 
-from lingvo_dict.extended.clean import MAX_TRANSLATIONS
+from lingvo_dict.extended.clean import MAX_TRANSLATIONS, distinct
 from lingvo_dict.extended.records import EnglishRecord, RussianRecord
 
 
@@ -29,7 +30,7 @@ class RussianEntry:
 def merge_english(english: Iterable[EnglishRecord], russian: Iterable[EnglishRecord]) -> list[EnglishEntry]:
     """English Wiktionary first: its translations are curated, the Russian glosses only add to them."""
     groups: dict[str, list[EnglishRecord]] = defaultdict(list)
-    for record in [*english, *russian]:
+    for record in chain(english, russian):
         groups[record.word].append(record)
     entries = (_merge_word(word, records) for word, records in sorted(groups.items()))
     return [entry for entry in entries if entry is not None]
@@ -41,7 +42,7 @@ def _merge_word(word: str, records: list[EnglishRecord]) -> EnglishEntry | None:
         return None
     # Translations of another part of speech would sit under the wrong label.
     same_pos = [record for record in records if record.pos == main.pos]
-    translations = _distinct(item for record in same_pos for item in record.translations)[:MAX_TRANSLATIONS]
+    translations = distinct(item for record in same_pos for item in record.translations)[:MAX_TRANSLATIONS]
     example = next((r.example for r in same_pos if r.example and r.example[1]), None) or next(
         (r.example for r in same_pos if r.example), None
     )
@@ -61,14 +62,7 @@ def merge_russian(records: Iterable[RussianRecord], bundled_keys: Collection[str
         if record.key not in bundled_keys:
             groups[record.key].extend(record.translations)
     entries = (
-        RussianEntry(word=word, translations=tuple(_distinct(items)[:MAX_TRANSLATIONS]))
+        RussianEntry(word=word, translations=tuple(distinct(items)[:MAX_TRANSLATIONS]))
         for word, items in sorted(groups.items())
     )
     return [entry for entry in entries if entry.translations]
-
-
-def _distinct(items: Iterable[str]) -> list[str]:
-    kept: dict[str, str] = {}
-    for item in items:
-        kept.setdefault(item.lower(), item)
-    return list(kept.values())
