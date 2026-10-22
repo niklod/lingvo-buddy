@@ -6,16 +6,22 @@ extension DictionaryStore {
     /// empty when they match. The file comes from tools/dictionary, so this is
     /// the check that keeps the two writers of the contract in step.
     public func schemaDrift() throws -> [String] {
-        let contract = try DatabaseQueue()
-        try contract.write { db in try DictionarySchema.create(in: db) }
-        let expected = try contract.read(Self.schemaStatements)
-        let actual = try reader.read(Self.schemaStatements)
-        return expected.symmetricDifference(actual).sorted()
+        try ReadOnlyDictionaryFile.schemaDrift(of: reader, contract: DictionarySchema.create(in:))
     }
 
-    /// Whitespace is collapsed: the two writers indent their SQL differently.
-    private static func schemaStatements(in db: Database) throws -> Set<String> {
-        let statements = try String.fetchAll(db, sql: "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL")
-        return Set(statements.map { $0.split(whereSeparator: \.isWhitespace).joined(separator: " ") })
+    /// Translations whose stored `norm` is not `RussianText.normalized(text)`, as "text: norm"; empty when
+    /// all match. Russian input finds words only through `norm`, so tools/dictionary must normalise
+    /// exactly as the app does.
+    public func normalizationDrift() throws -> [String] {
+        try reader.read { db in
+            let rows = try Row.fetchCursor(db, sql: "SELECT text, norm FROM translations")
+            var drift: [String] = []
+            while let row = try rows.next() {
+                let text: String = row["text"]
+                let norm: String = row["norm"]
+                if norm != RussianText.normalized(text) { drift.append("\(text): \(norm)") }
+            }
+            return drift
+        }
     }
 }

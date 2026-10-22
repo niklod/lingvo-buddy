@@ -1,3 +1,4 @@
+import LingvoCore
 import SwiftUI
 
 /// The line under the custom field when the machine translation has no bubble:

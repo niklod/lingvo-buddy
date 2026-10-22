@@ -27,21 +27,22 @@ struct ChainedLookupTests {
     func systemDetailsForPickedWord() throws {
         let details = try #require(try Self.tutor().englishDetails("skedaddle"))
 
-        #expect(details.headword == "skedaddle")
-        #expect(details.ipa == "/skəˈdædəl/")
-        #expect(details.partOfSpeech == .verb)
-        #expect(details.example == "when he saw us, he skedaddled.")
-        #expect(details.definitionHint == "depart quickly or hurriedly; run away")
+        #expect(details == QuickAddCandidate(
+            headword: "skedaddle", lookup: nil, standing: .notAdded, system: SystemSamples.skedaddleEntry
+        ))
     }
 
     @Test("a typed English word with extended data shows it before the system data, field by field")
     func extendedBeforeSystem() throws {
         let details = try #require(try Self.tutor().englishDetails("  Petrichor "))
 
-        #expect(details.headword == "petrichor")
-        #expect(details.ipa == "/ˈpetrɪkɔː/")
-        #expect(details.example == "The petrichor rose after the storm.")
-        #expect(details.definitionHint?.hasPrefix("a pleasant smell") == true)
+        #expect(details == QuickAddCandidate(
+            headword: "petrichor",
+            lookup: nil,
+            standing: .notAdded,
+            extended: ExtendedQuickAddTests.petrichor,
+            system: SystemSamples.petrichorEntry
+        ))
     }
 
     @Test("a bundled English word keeps its bundled details")
@@ -67,7 +68,7 @@ struct ChainedLookupTests {
         let tutor = try Self.tutor()
 
         #expect(try tutor.englishDetails("   ") == nil)
-        #expect(try tutor.englishDetails("удирать")?.ipa == nil)
+        #expect(try tutor.englishDetails("удирать") == QuickAddCandidate(headword: "удирать", lookup: nil, standing: .notAdded))
     }
 
     @Test("a word of My words shows that it is already added")

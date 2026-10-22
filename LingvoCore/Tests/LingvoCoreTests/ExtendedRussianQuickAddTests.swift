@@ -33,11 +33,15 @@ struct ExtendedRussianQuickAddTests {
         let preview = try #require(try learner.tutor.quickAddPreview(" Удирать "))
 
         // The typed word, as typed, becomes the card's translation.
-        #expect(preview.russianText == "Удирать")
-        #expect(preview.isRussianInput)
-        #expect(preview.candidates.map(\.headword) == ["skedaddle", "scram", "bolt", "hightail", "decamp"])
-        #expect(preview.headword == "skedaddle")
-        #expect(preview.canAdd)
+        #expect(preview == QuickAddPreview(russianText: "Удирать", candidates: [
+            QuickAddCandidate(
+                headword: "skedaddle", lookup: nil, standing: .notAdded, extended: ExtendedQuickAddTests.skedaddle
+            ),
+            QuickAddCandidate(headword: "scram", lookup: nil, standing: .notAdded),
+            QuickAddCandidate(headword: "bolt", lookup: nil, standing: .notAdded),
+            QuickAddCandidate(headword: "hightail", lookup: nil, standing: .notAdded),
+            QuickAddCandidate(headword: "decamp", lookup: nil, standing: .notAdded),
+        ]))
     }
 
     @Test("an English candidate shows the extended details the data has for it")

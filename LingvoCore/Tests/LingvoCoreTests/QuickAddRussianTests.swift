@@ -14,13 +14,10 @@ struct QuickAddRussianTests {
 
         let preview = try #require(try learner.tutor.quickAddPreview(" предлагать "))
 
-        #expect(preview.russianText == "предлагать")
-        #expect(preview.candidates.map(\.headword) == ["offer", "suggest", "propose"])
-        #expect(preview.candidates.map(\.standing) == [.notAdded, .notAdded, .notAdded])
-        #expect(preview.headword == "offer")
-        #expect(preview.candidates[1].lookup?.entry.translations[.russian] == ["предлагать", "советовать"])
-        #expect(preview.candidates[1].lookup?.membership == .inside(.top1000))
-        #expect(preview.candidates[1].example == "I suggest we start again tomorrow.")
+        let expected = QuickAddPreview(russianText: "предлагать", candidates: try ["offer", "suggest", "propose"].map {
+            QuickAddCandidate(headword: $0, lookup: try learner.tutor.lookup($0), standing: .notAdded)
+        })
+        #expect(preview == expected)
     }
 
     @Test("at most 5 candidates, sorted by rank and not by dictionary order")
@@ -63,10 +60,7 @@ struct QuickAddRussianTests {
 
         let preview = try #require(try learner.tutor.quickAddPreview(" медленно "))
 
-        #expect(preview.russianText == nil)
-        #expect(preview.headword == "медленно")
-        #expect(preview.lookup == nil)
-        #expect(preview.canAdd)
+        #expect(preview == QuickAddPreview(headword: "медленно", lookup: nil, standing: .notAdded, isRussianInput: true))
     }
 
     @Test("the preview tells Russian text from English, with or without candidates")

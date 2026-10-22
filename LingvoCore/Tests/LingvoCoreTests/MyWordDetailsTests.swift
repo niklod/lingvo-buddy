@@ -36,10 +36,19 @@ struct MyWordDetailsTests {
         let petrichor = try #require(rows.first { $0.headword == "petrichor" })
         let kubernetes = try #require(rows.first { $0.headword == "Kubernetes" })
 
-        #expect(petrichor.ipa == "/ˈpetrɪkɔː/")
-        #expect(petrichor.partOfSpeech == .noun)
-        #expect(kubernetes.ipa == nil)
-        #expect(kubernetes.partOfSpeech == nil)
+        #expect(petrichor == WordRow(
+            headword: "petrichor",
+            translation: "петрихор",
+            mastery: 0,
+            lastAnswer: nil,
+            source: .mine,
+            status: nil,
+            ipa: "/ˈpetrɪkɔː/",
+            partOfSpeech: .noun
+        ))
+        #expect(kubernetes == WordRow(
+            headword: "Kubernetes", translation: "кубернетес", mastery: 0, lastAnswer: nil, source: .mine, status: nil
+        ))
     }
 
     @Test("the IPA and part of speech of my words survive a CSV export and import")

@@ -29,6 +29,8 @@ extension Tutor {
     /// learning or learned is left as it is (spec "Duplicate rules").
     public func addMyWord(_ word: NewMyWord) throws -> AddWordOutcome {
         let word = try word.validated()
+        // Russian text would preview as Russian input and add its first English candidate instead.
+        guard !RussianText.isRussian(word.text) else { throw LingvoCoreError.notEnglishWord(word.text) }
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
         let candidate = preview.candidates[0]
@@ -38,8 +40,10 @@ extension Tutor {
             // The extended or system example is a dictionary example: it goes on the card like the bundled one does.
             example: word.example ?? candidate.fallbackExample,
             addedAt: clock.now(),
-            ipa: candidate.fallbackIPA,
-            partOfSpeech: candidate.fallbackPartOfSpeech
+            // A CSV import refuses a longer IPA, so saving one would make the backup fail to import.
+            ipa: candidate.fallbackIPA.flatMap { $0.count <= NewMyWord.maxIPALength ? $0 : nil },
+            partOfSpeech: candidate.fallbackPartOfSpeech,
+            russianExample: word.example == nil ? candidate.fallbackRussianExample : nil
         ))
         return .added(headword: preview.headword)
     }
@@ -91,8 +95,9 @@ extension Tutor {
             forRussian: query, limit: QuickAddPreview.maxCandidates
         ) ?? []
         guard !headwords.isEmpty else { return nil }
+        let open = try openTier()
         let candidates = try headwords.map { headword in
-            let lookup = try lookup(headword)
+            let lookup = try dictionary.lookupEntry(headword).map { WordLookup(entry: $0, openTier: open) }
             return QuickAddCandidate(
                 headword: lookup?.entry.headword ?? headword,
                 lookup: lookup,

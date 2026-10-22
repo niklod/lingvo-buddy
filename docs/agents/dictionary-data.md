@@ -12,6 +12,8 @@ A contract change also touches:
 - `DictionaryStore.swift`, which rejects a file built for an older contract with a clear message;
 - the core test fixture `LingvoCore/Tests/LingvoCoreTests/Fixtures/sample-dictionary.json`.
 
+`translations.norm` holds each translation in the form Russian input matches (`RussianText.normalized`: trimmed, lower case, «е» for «ё»). The Python mirror is `lingvo_dict/russian_text.py`; change both together. `lingvo-dict check` fails when a stored `norm` differs from the Swift form.
+
 ## Ranks are fixed
 
 Every batch entry is tied to its rank in `data/wordlist/wordlist.tsv`. The export ranks the lemmas of the top 60,000 `wordfreq` forms first (ranks 1–24,494), then appends new lemmas of the top 100,000 forms up to rank 30,000; one pass over all forms would move ranks from 180 on. A new run of `export_wordlist.py` with changed rule files shifts ranks and breaks every batch after the change, so leave the word list as it is. A bad headword goes on one of two lists:

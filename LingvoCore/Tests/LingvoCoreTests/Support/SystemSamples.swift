@@ -53,6 +53,46 @@ enum SystemSamples {
     static let garbage = "💥 not a dictionary entry at all | | |"
 }
 
+/// What `SystemEntry.parse` must read from the long samples above, written out by hand.
+extension SystemSamples {
+    static let skedaddleEntry = SystemEntry(
+        ipa: "/skəˈdædəl/",
+        partOfSpeech: .verb,
+        definition: "depart quickly or hurriedly; run away",
+        example: "when he saw us, he skedaddled."
+    )
+    static let mumpsimusEntry = SystemEntry(
+        ipa: "/ˈmʌmpsəməs/",
+        partOfSpeech: .noun,
+        definition: "a traditional custom or notion adhered to although shown to be unreasonable",
+        example: nil
+    )
+    static let petrichorEntry = SystemEntry(
+        ipa: "/ˈpɛtraɪˌkɔr/",
+        partOfSpeech: .noun,
+        definition: "a pleasant smell that frequently accompanies the first rain after a long period of warm, dry weather",
+        example: "other than the petrichor emanating from the rapidly drying grass, there was not a trace of evidence that it had rained at all."
+    )
+    static let persnicketyEntry = SystemEntry(
+        ipa: "/pɚˈsnɪkədi/",
+        partOfSpeech: .adjective,
+        definition: "placing too much emphasis on trivial or minor details; fussy",
+        example: "she's very persnickety about her food."
+    )
+    static let codswallopEntry = SystemEntry(
+        ipa: "/ˈkɑdzˌwɑləp/",
+        partOfSpeech: .noun,
+        definition: "nonsense",
+        example: "I think that's a right load of old codswallop."
+    )
+    static let runEntry = SystemEntry(
+        ipa: "/rʌn/",
+        partOfSpeech: .verb,
+        definition: "move at a speed faster than a walk, never having both or all the feet on the ground at the same time",
+        example: "the dog ran across the road"
+    )
+}
+
 /// A system dictionary that answers from a table; a word it lacks has no definition.
 struct FakeSystemDictionary: SystemDictionary {
     let definitions: [String: String]

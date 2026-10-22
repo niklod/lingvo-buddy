@@ -79,13 +79,13 @@ enum QuickAddSnapshots {
     private static func machineState(
         _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+        panelState(name) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
                 QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query == "медленно")
             }
             await model.machineTranslationSettled()
             if choosesCustom { model.choose(.custom) }
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
         }
     }
 
@@ -93,7 +93,7 @@ enum QuickAddSnapshots {
     private static func extendedState(
         _ name: String, text: String, showsExampleTranslation: Bool = false, answer: MachineTranslation? = nil
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true) {
+        panelState(name) {
             let model = QuickAddModel(
                 text: text,
                 translator: answer.map(FakeMachineTranslator.init(answer:)),
@@ -102,22 +102,22 @@ enum QuickAddSnapshots {
                 QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, extended: codswallop)
             }
             await model.machineTranslationSettled()
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
         }
     }
 
     private static func russianState(_ name: String, text: String) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+        panelState(name) {
             let model = QuickAddModel(text: text) { query in
                 QuickAddPreview(russianText: query, candidates: doubtCandidates)
             }
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
         }
     }
 
     /// Russian text only the extended dictionary knows: English bubbles, the first with Wiktionary details.
     private static func russianExtendedState(_ name: String, text: String) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+        panelState(name) {
             let model = QuickAddModel(text: text) { query in
                 let candidates = [
                     QuickAddCandidate(headword: "skedaddle", lookup: nil, standing: .notAdded, extended: skedaddle),
@@ -126,7 +126,14 @@ enum QuickAddSnapshots {
                 ]
                 return QuickAddPreview(russianText: query, candidates: candidates)
             }
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
+        }
+    }
+
+    /// Every quick-add state is a panel state, so `--check-panel-sizes` measures each of them.
+    static func panelState(_ name: String, model: @escaping @MainActor () async -> QuickAddModel) -> SnapshotState {
+        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+            AnyView(QuickAddView(model: await model()).background(Theme.Palette.desktop))
         }
     }
 
@@ -154,14 +161,14 @@ enum QuickAddSnapshots {
         standing: WordStanding,
         showsExampleTranslation: Bool = false
     ) -> SnapshotState {
-        SnapshotState(name: name, usesWindow: true, isPanel: true) {
+        panelState(name) {
             let model = QuickAddModel(text: text, example: example, showsExampleTranslation: showsExampleTranslation) { query in
                 let lookup = [reluctant, provide].first { $0.headword == query }.map { entry in
                     WordLookup(entry: entry, membership: entry.tier == .quiz ? .inside(.top1000) : .outside(.top1000))
                 }
                 return QuickAddPreview(headword: query, lookup: lookup, standing: standing)
             }
-            return AnyView(QuickAddView(model: model).background(Theme.Palette.desktop))
+            return model
         }
     }
 }

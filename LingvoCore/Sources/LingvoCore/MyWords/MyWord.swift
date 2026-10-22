@@ -17,11 +17,14 @@ struct MyWord: Sendable, Equatable, Codable, FetchableRecord, PersistableRecord 
     /// Saved from what quick add showed, for a word the bundled dictionary lacks.
     let ipa: String?
     let partOfSpeech: PartOfSpeech?
+    /// The translation of a dictionary example saved as `example`; `nil` for the learner's own example.
+    let russianExample: String?
 
     enum CodingKeys: String, CodingKey {
         case headword, translation, example, ipa
         case addedAt = "added_at"
         case partOfSpeech = "pos"
+        case russianExample = "example_ru"
     }
 
     init(
@@ -30,7 +33,8 @@ struct MyWord: Sendable, Equatable, Codable, FetchableRecord, PersistableRecord 
         example: String?,
         addedAt: Date,
         ipa: String? = nil,
-        partOfSpeech: PartOfSpeech? = nil
+        partOfSpeech: PartOfSpeech? = nil,
+        russianExample: String? = nil
     ) {
         self.headword = headword
         self.translation = translation
@@ -38,6 +42,7 @@ struct MyWord: Sendable, Equatable, Codable, FetchableRecord, PersistableRecord 
         self.addedAt = addedAt
         self.ipa = ipa
         self.partOfSpeech = partOfSpeech
+        self.russianExample = russianExample
     }
 
     /// The card data: the learner's translation first, then the dictionary's
@@ -52,7 +57,8 @@ struct MyWord: Sendable, Equatable, Codable, FetchableRecord, PersistableRecord 
                 example: example,
                 synonymGroup: nil,
                 tier: .lookup,
-                translations: [.russian: [translation]]
+                translations: [.russian: [translation]],
+                russianExample: russianExample
             )
         }
         return dictionaryEntry.withPrimaryTranslation(translation, example: example)

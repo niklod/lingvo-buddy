@@ -24,7 +24,18 @@ enum OxfordPronunciation {
 
     private static let vowelNotation: Set<Unicode.Scalar> = Set("aeiouäôēīōāūəăĕĭŏŭ".unicodeScalars)
 
-    /// `nil` when nothing is left after the first spelling variant.
+    /// Signs that only IPA uses. A British or bilingual dictionary that comes first in the learner's
+    /// list answers in IPA ("ˈkʌlə"), and converting that again would garble it.
+    private static let ipaOnly: Set<Unicode.Scalar> = Set("æɛɪɑɒʌʊɔɜɝɚɐʃʒθðŋɡɹɾʔʤʧɫːˑ".unicodeScalars)
+
+    /// The marks of the Oxford notation that IPA never uses: macrons, breves, the circumflex and
+    /// diaeresis, the ties of "o͞o" and "T͟H", and the capitals of "CH", "SH", "ZH", "TH" and "NG".
+    private static let oxfordOnly: Set<Unicode.Scalar> = Set(
+        "äôēīōāūăĕĭŏŭ\u{35D}\u{35E}\u{35F}\u{304}\u{306}\u{302}\u{308}CHSZTNG".unicodeScalars
+    )
+
+    /// `nil` when nothing is left after the first spelling variant, or when the text mixes IPA
+    /// with the Oxford notation and so is neither.
     static func ipa(_ notation: String) -> String? {
         // Several spellings follow each other after commas ("ant, änt"); the first is the main one.
         let first = notation.split(separator: ",").first.map(String.init) ?? ""
@@ -35,6 +46,9 @@ enum OxfordPronunciation {
             .trimmingCharacters(in: .whitespaces)
         let scalars = Array(cleaned.unicodeScalars)
         guard !scalars.isEmpty else { return nil }
+        if scalars.contains(where: ipaOnly.contains) {
+            return scalars.contains(where: oxfordOnly.contains) ? nil : "/\(cleaned)/"
+        }
         let converted = convert(scalars)
         return converted.isEmpty ? nil : "/\(converted)/"
     }

@@ -40,7 +40,7 @@ class BuildTest(unittest.TestCase):
                 quiz_entry(self.word_list, 2),
                 quiz_entry(
                     self.word_list, 3,
-                    translations=["большой", "крупный"], synonym_group="big", example_ru="Это очень старый дом.",
+                    translations=["Большой", "крупнёйший"], synonym_group="big", example_ru="Это очень старый дом.",
                 ),
             ],
         )
@@ -66,15 +66,15 @@ class BuildTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
-            self.query("SELECT entry_id, lang, ord, text FROM translations WHERE entry_id = 3 ORDER BY ord"),
-            [(3, "ru", 0, "большой"), (3, "ru", 1, "крупный")],
+            self.query("SELECT entry_id, lang, ord, text, norm FROM translations WHERE entry_id = 3 ORDER BY ord"),
+            [(3, "ru", 0, "Большой", "большой"), (3, "ru", 1, "крупнёйший", "крупнейший")],
         )
         self.assertEqual(self.query("PRAGMA journal_mode"), [("delete",)])
         # Same contract as LingvoCore's DictionarySchema (schema version and RU lookup index).
-        self.assertEqual(self.query("PRAGMA user_version"), [(3,)])
+        self.assertEqual(self.query("PRAGMA user_version"), [(4,)])
         self.assertEqual(
-            self.query("SELECT name FROM sqlite_master WHERE type = 'index' AND name = 'translations_text'"),
-            [("translations_text",)],
+            self.query("SELECT name FROM sqlite_master WHERE type = 'index' AND name LIKE 'translations_%'"),
+            [("translations_norm",)],
         )
         meta = dict(self.query("SELECT key, value FROM meta"))
         self.assertEqual(meta["source"], "wordfreq 3.1.1 (en)")

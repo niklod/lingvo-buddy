@@ -29,8 +29,11 @@ enum WordBackupColumn: String, CaseIterable, Sendable {
     case ownTranslation = "own_translation"
     case ipa
     case partOfSpeech = "pos"
+    case russianExample = "example_ru"
 
-    static let myWordColumns: [WordBackupColumn] = [.translation, .example, .addedAt, .ipa, .partOfSpeech]
+    static let myWordColumns: [WordBackupColumn] = [
+        .translation, .example, .addedAt, .ipa, .partOfSpeech, .russianExample,
+    ]
     static let progressColumns: [WordBackupColumn] = [
         .mastery, .enToRuCorrect, .ruToEnCorrect, .reviewStage,
         .dueAt, .lastResult, .lastAnsweredAt, .lastCountedCorrectAt,
@@ -61,6 +64,7 @@ extension WordBackupRow {
         case .ownTranslation: ownTranslation ?? ""
         case .ipa: myWord?.ipa ?? ""
         case .partOfSpeech: myWord?.partOfSpeech?.rawValue ?? ""
+        case .russianExample: myWord?.russianExample ?? ""
         }
     }
 
