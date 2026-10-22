@@ -22,8 +22,10 @@ enum LevelCheckPlacement {
 
 extension WordProgress {
     /// A word the learner knew before any practice. It skips the 7 and 21 day
-    /// steps: reviewing "the" or "have" after a week would waste cards.
-    static func knownBeforePractice(_ headword: String, at time: Date) -> WordProgress {
+    /// steps: reviewing "the" or "have" after a week would waste cards. The
+    /// first review comes after `firstReviewDelay`; the last stage then keeps
+    /// every later review 60 days apart.
+    static func knownBeforePractice(_ headword: String, at time: Date, firstReviewDelay: TimeInterval) -> WordProgress {
         WordProgress(
             headword: headword,
             status: .learned,
@@ -33,7 +35,7 @@ extension WordProgress {
             enToRuCorrect: true,
             ruToEnCorrect: true,
             reviewStage: ReviewSchedule.lastStage,
-            dueAt: time.addingTimeInterval(ReviewSchedule.interval(forStage: ReviewSchedule.lastStage))
+            dueAt: time.addingTimeInterval(firstReviewDelay)
         )
     }
 }

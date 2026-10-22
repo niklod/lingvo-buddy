@@ -75,7 +75,7 @@ extension WordProgress {
 /// Learned words come back after 7, then 21, then every 60 days.
 enum ReviewSchedule {
     private static let intervalsInDays: [Double] = [7, 21, 60]
-    private static let day: TimeInterval = 24 * 60 * 60
+    static let day: TimeInterval = 24 * 60 * 60
 
     static let firstStage = 1
     static var lastStage: Int { intervalsInDays.count }
