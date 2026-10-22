@@ -76,6 +76,10 @@ struct QuizCardView: View {
                 }
             }
         }
+        // The options fill their row (maxHeight: .infinity). The panel measures the
+        // card with an unbounded height, so without this the card asks for an
+        // endless frame and AppKit refuses to show it.
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     private func feedbackBlock(_ text: String) -> some View {
