@@ -1,4 +1,5 @@
 import AppKit
+import OSLog
 import SwiftUI
 
 /// A borderless panel that takes key status without activating the app, so the
@@ -51,7 +52,29 @@ class FloatingPanel: NSPanel {
         let controller = NSHostingController(rootView: view)
         controller.sizingOptions = [.preferredContentSize]
         contentViewController = controller
+        let size = Self.fittingSize(of: controller)
+        if !size.isFinite {
+            Self.logger.error("Panel content has no finite size: \(String(describing: size), privacy: .public)")
+        }
+        setContentSize(size)
+    }
+
+    private static let logger = Logger.app(category: "panel")
+
+    /// The size a panel takes for its content. A view that grows without limit
+    /// (`maxHeight: .infinity`) reports an endless size here, and AppKit then
+    /// refuses the frame: `make check` measures every panel state the same way.
+    static func fittingSize(of controller: NSHostingController<some View>) -> NSSize {
         let unbounded = CGFloat.greatestFiniteMagnitude
-        setContentSize(controller.sizeThatFits(in: NSSize(width: unbounded, height: unbounded)))
+        return controller.sizeThatFits(in: NSSize(width: unbounded, height: unbounded))
+    }
+}
+
+extension NSSize {
+    /// No panel is this big: a larger side means a view grew without limit.
+    private static let maxPanelSide: CGFloat = 10_000
+
+    var isFinite: Bool {
+        width.isFinite && height.isFinite && width < Self.maxPanelSide && height < Self.maxPanelSide
     }
 }

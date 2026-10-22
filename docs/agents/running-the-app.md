@@ -31,6 +31,8 @@ Other agents and the owner run LingvoBuddy on the same Mac at the same time. All
 
 ## Drive the real app
 
+A Debug build crashes on an uncaught exception (`NSApplicationCrashOnExceptions`), so a launch that ends with no window and no process is a crash: read the crash report in `~/Library/Logs/DiagnosticReports/` and `/usr/bin/log show --last 2m --predicate 'subsystem == "com.niklod.LingvoBuddy"'`. Write the full path `/usr/bin/log`: the agent shell's `log` is a zsh builtin.
+
 Agent shells on this Mac have Accessibility and Screen Recording permission. Use CGEvent mouse and key events, the AX API or System Events, and capture with `screencapture -l <windowID>` or `screencapture -R x,y,w,h`.
 
 - Two instances put two Kapa icons side by side. Find your own icon by PID before you click: `osascript -e 'tell application "System Events" to tell (first process whose unix id is <pid>) to get {position, size} of every UI element of every menu bar'`.
