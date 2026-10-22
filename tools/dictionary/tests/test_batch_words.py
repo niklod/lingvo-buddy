@@ -30,13 +30,23 @@ class BatchWordsTest(unittest.TestCase):
         self.assertTrue(out.splitlines()[0].startswith("2001\t"))
         self.assertTrue(out.splitlines()[0].endswith("\tlookup"))
 
+    def test_the_last_batch_prints_lookup_ranks_up_to_30000(self):
+        code, out, _ = run_main(batch_words.main, "batch-60")
+
+        lines = out.splitlines()
+        self.assertEqual(code, 0)
+        self.assertEqual(len(lines), 500)
+        self.assertTrue(lines[0].startswith("29501\t"), lines[0])
+        self.assertTrue(lines[-1].startswith("30000\t"), lines[-1])
+        self.assertEqual({line.split("\t")[2] for line in lines}, {"lookup"})
+
     def test_bad_batch_ids_exit_two_with_the_usage(self):
-        for argv in (["batch-1"], ["batch-21"], ["batch-00"], [], ["batch-01", "batch-02"]):
+        for argv in (["batch-1"], ["batch-61"], ["batch-00"], [], ["batch-01", "batch-02"]):
             with self.subTest(argv=argv):
                 code, _, err = run_main(batch_words.main, *argv)
 
                 self.assertEqual(code, 2)
-                self.assertIn("usage: batch_words.py batch-NN (01 to 20)", err)
+                self.assertIn("usage: batch_words.py batch-NN (01 to 60)", err)
 
 
 if __name__ == "__main__":

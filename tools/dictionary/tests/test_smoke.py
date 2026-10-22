@@ -6,7 +6,8 @@ import unittest
 from contextlib import closing
 from pathlib import Path
 
-from lingvo_dict import build, validate
+from lingvo_dict import build, export, validate
+from lingvo_dict.contract import BATCH_COUNT, batch_ranks
 from lingvo_dict.paths import WORDLIST_FILE
 from lingvo_dict.wordlist_file import read_word_list
 from tests.support import run_main
@@ -45,11 +46,13 @@ class SmokeTest(unittest.TestCase):
         self.assertIn("CC BY-SA 4.0", license_text)
         self.assertTrue(source.startswith("wordfreq 3.1.1"), source)
 
-    def test_committed_word_list_has_ten_thousand_lemmas(self):
+    def test_committed_word_list_has_thirty_thousand_lemmas_for_sixty_batches(self):
         word_list = read_word_list(WORDLIST_FILE)
 
-        self.assertEqual(word_list.size, 10000)
-        self.assertEqual(len(set(word_list.headwords)), 10000)
+        self.assertEqual(word_list.size, 30000)
+        self.assertEqual(len({word.lower() for word in word_list.headwords}), 30000)
+        self.assertEqual(word_list.size, export.LIMIT)
+        self.assertEqual(batch_ranks(BATCH_COUNT)[1], word_list.size)
         for form in ("was", "said", "the", "1"):
             self.assertNotIn(form, word_list.headwords)
 

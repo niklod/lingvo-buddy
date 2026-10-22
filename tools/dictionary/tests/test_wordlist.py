@@ -1,6 +1,6 @@
 import unittest
 
-from lingvo_dict.wordlist import ExportRules, rank_lemmas
+from lingvo_dict.wordlist import ExportRules, rank_lemmas, rank_lemmas_in_stages
 
 LEMMAS = {
     "was": "be",
@@ -164,6 +164,43 @@ class RankLemmasTest(unittest.TestCase):
         )
 
         self.assertEqual([e.lemma for e in result.excluded], ["the"])
+
+
+
+class RankLemmasInStagesTest(unittest.TestCase):
+    # "houses" lifts "house" above "dog" once the second stage reads it.
+    FORMS = [("dog", 0.5), ("cat", 0.4), ("house", 0.3), ("houses", 0.25), ("say", 0.2)]
+
+    def test_a_later_stage_appends_new_lemmas_and_keeps_the_earlier_order(self):
+        result = rank_lemmas_in_stages(self.FORMS, fake_lemmatize, rules(), limit=10, stages=(3, 5))
+
+        self.assertEqual(headwords(result), [(1, "dog"), (2, "cat"), (3, "house"), (4, "say")])
+
+    def test_one_stage_with_every_form_ranks_like_rank_lemmas(self):
+        staged = rank_lemmas_in_stages(self.FORMS, fake_lemmatize, rules(), limit=10, stages=(5,))
+        single = rank_lemmas(self.FORMS, fake_lemmatize, rules(), limit=10)
+
+        self.assertEqual(staged, single)
+
+    def test_limit_cuts_the_list_inside_a_later_stage(self):
+        result = rank_lemmas_in_stages(self.FORMS, fake_lemmatize, rules(), limit=3, stages=(2, 5))
+
+        self.assertEqual(headwords(result), [(1, "dog"), (2, "cat"), (3, "house")])
+
+    def test_the_report_uses_the_frequencies_of_every_form(self):
+        # The first stage alone ranks one lemma, so "the" would look frequent enough to rank.
+        forms = [("cat", 0.5), ("the", 0.3), ("house", 0.2), ("houses", 0.2)]
+
+        result = rank_lemmas_in_stages(
+            forms, fake_lemmatize, rules(exclusions=["the"]), limit=2, stages=(2, 4)
+        )
+
+        self.assertEqual(headwords(result), [(1, "cat"), (2, "house")])
+        self.assertEqual(result.excluded, ())
+
+    def test_stages_must_grow(self):
+        with self.assertRaisesRegex(ValueError, "stages must grow"):
+            rank_lemmas_in_stages(self.FORMS, fake_lemmatize, rules(), limit=3, stages=(5, 3))
 
 
 if __name__ == "__main__":

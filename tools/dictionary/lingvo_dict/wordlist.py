@@ -7,7 +7,7 @@ ranking rules are testable without wordfreq or simplemma installed.
 from __future__ import annotations
 
 import re
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Callable, Optional
 
@@ -78,6 +78,35 @@ def rank_lemmas(
         if decisions[key].reason is not None and totals[key] >= threshold
     )
     return WordListResult(words=words, excluded=excluded)
+
+
+def rank_lemmas_in_stages(
+    forms: Sequence[tuple[str, float]],  # most frequent first
+    lemmatize: Lemmatize,
+    rules: ExportRules,
+    limit: int,
+    stages: Sequence[int],  # growing counts of forms
+) -> WordListResult:
+    """Ranks the first stage's forms, then lets each larger stage append only lemmas not ranked yet.
+
+    More forms add frequency to lemmas that are already ranked and reorder them, which would
+    shift ranks that existing batches are tied to. So a stage never moves an earlier lemma.
+    The exclusion report comes from the last stage, which reads every form.
+    """
+    if list(stages) != sorted(set(stages)) or not stages:
+        raise ValueError(f"stages must grow, got {tuple(stages)}")
+    headwords: list[str] = []
+    ranked: set[str] = set()
+    result = WordListResult(words=(), excluded=())
+    for size in stages:
+        result = rank_lemmas(forms[:size], lemmatize, rules, limit)
+        for word in result.words:
+            key = word.headword.lower()
+            if key not in ranked and len(headwords) < limit:
+                ranked.add(key)
+                headwords.append(word.headword)
+    words = tuple(RankedWord(rank=index + 1, headword=headword) for index, headword in enumerate(headwords))
+    return WordListResult(words=words, excluded=result.excluded)
 
 
 def _merge(previous: _Decision | None, current: _Decision) -> _Decision:

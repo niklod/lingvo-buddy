@@ -18,14 +18,14 @@ _Avoid_: term, lemma
 The position of a headword in the frequency list; 1 is the most frequent word.
 
 **Bundled dictionary**:
-The read-only offline list of 10,000 ranked headwords with Russian translations, IPA and part of speech.
+The read-only offline list of up to 30,000 ranked headwords with Russian translations, IPA and part of speech.
 _Avoid_: word list (the export input it is built from), database
 
 **Quiz entry**:
 A dictionary entry with full card data: an example and a synonym group. Ranks 1–2000. Code: `DictionaryTier.quiz`.
 
 **Lookup entry**:
-A dictionary entry without example or synonym group, used only by quick add. Ranks 2001–10,000. Code: `DictionaryTier.lookup`.
+A dictionary entry without example or synonym group, used only by quick add. Ranks 2001–30,000. Code: `DictionaryTier.lookup`.
 
 **Tier**:
 A frequency band that new words come from: Top‑1000 (ranks 1–1000), then Top‑2000 (ranks 1001–2000). Code: `TopTier`. Not the same as quiz entry and lookup entry.

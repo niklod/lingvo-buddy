@@ -1,13 +1,14 @@
 # Generate one dictionary batch
 
 You write one batch of the LingvoBuddy bundled dictionary: English headwords with Russian translations.
-Replace `{{BATCH}}` with the batch id you were given (`batch-01` … `batch-20`).
+Replace `{{BATCH}}` with the batch id you were given (`batch-01` … `batch-60`).
 Run all commands from the repository root. They need only `python3` (3.9 or later), no packages.
 
 ## Scope
 
-- `batch-NN` covers ranks `(NN-1)*500+1` to `NN*500`: `batch-01` = 1–500, `batch-02` = 501–1000, `batch-20` = 9501–10000.
-- Ranks 1–2000 are the **quiz tier** (`batch-01` to `batch-04`: Top-1000 and Top-2000). Ranks 2001–10000 are the **lookup tier**.
+- `batch-NN` covers ranks `(NN-1)*500+1` to `NN*500`: `batch-01` = 1–500, `batch-02` = 501–1000, `batch-60` = 29501–30000.
+- Ranks 1–2000 are the **quiz tier** (`batch-01` to `batch-04`: Top-1000 and Top-2000). Ranks 2001–30000 are the **lookup tier**.
+- Every entry of both tiers gets `example` and `example_ru`. Batches `batch-21` to `batch-60` are new: write both fields for every entry.
 - Write exactly one file: `data/batches/{{BATCH}}.json`.
 - Do not change any other file: not the word list, not other batches, not the tools.
 
