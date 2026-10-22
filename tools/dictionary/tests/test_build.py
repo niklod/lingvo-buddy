@@ -135,14 +135,14 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("coverage: missing ranks 501-1000", err)
 
-    def test_a_full_build_holds_the_batches_that_exist_and_names_the_rest(self):
+    def test_a_full_build_stops_while_batches_do_not_exist_yet(self):
         self.folder.write(1, full_batch(self.word_list, 1))
 
-        code, out, err = self.run_build("--full")
+        code, _, err = self.run_build("--full")
 
-        self.assertEqual(code, 0, err)
-        self.assertEqual(self.query("SELECT COUNT(*), MAX(rank) FROM entries"), [(500, 500)])
-        self.assertIn("ranks 501-2600 wait for batch-02 to batch-06", out)
+        self.assertEqual(code, 1)
+        self.assertIn("coverage: missing ranks 501-2600 of 1-2600", err)
+        self.assertFalse(self.out.exists())
 
     def test_a_full_build_stops_on_a_missing_batch_before_the_last_one(self):
         self.folder.write(1, full_batch(self.word_list, 1))

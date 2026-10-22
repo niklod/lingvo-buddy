@@ -178,40 +178,38 @@ class BatchRulesTest(unittest.TestCase):
 
         self.assertTrue(any("tier must be 'lookup' for rank 29999" in e for e in errors), errors)
 
-    def test_full_coverage_waits_for_batches_after_the_last_batch_file(self):
+    def test_full_coverage_fails_on_batches_after_the_last_batch_file(self):
         paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in (1, 2, 3)]
 
-        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+        errors = validate_batches(paths, self.word_list, ValidationOptions(full=True)).errors
 
-        self.assertEqual(report.errors, ())
-        self.assertEqual(report.pending_batches, (4, 5, 6))
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("coverage: missing ranks 1501-2600 of 1-2600", errors[0])
 
-    def test_full_coverage_has_no_pending_batches_when_the_last_batch_ends_the_word_list(self):
+    def test_full_coverage_passes_when_the_last_batch_ends_the_word_list(self):
         paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in range(1, 6)]
         paths.append(self.folder.write(6, full_batch(self.word_list, 6)[:100]))
 
-        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+        errors = validate_batches(paths, self.word_list, ValidationOptions(full=True)).errors
 
-        self.assertEqual(report.errors, ())
-        self.assertEqual(report.pending_batches, ())
+        self.assertEqual(errors, ())
 
     def test_full_coverage_fails_on_a_missing_batch_before_the_last_one(self):
         paths = [self.folder.write(n, full_batch(self.word_list, n)) for n in (1, 3)]
 
-        report = validate_batches(paths, self.word_list, ValidationOptions(full=True))
+        errors = validate_batches(paths, self.word_list, ValidationOptions(full=True)).errors
 
-        self.assertEqual(len(report.errors), 1, report.errors)
-        self.assertIn("coverage: missing ranks 501-1000 of 1-1500", report.errors[0])
-        self.assertEqual(report.pending_batches, (4, 5, 6))
+        self.assertEqual(len(errors), 1, errors)
+        self.assertIn("coverage: missing ranks 501-1000, 1501-2600 of 1-2600", errors[0])
 
-    def test_full_coverage_fails_on_missing_ranks_of_the_last_batch(self):
+    def test_full_coverage_fails_on_missing_ranks_of_the_last_batch_file(self):
         paths = [self.folder.write(1, full_batch(self.word_list, 1))]
         paths.append(self.folder.write(2, full_batch(self.word_list, 2)[:-2]))
 
         errors = validate_batches(paths, self.word_list, ValidationOptions(full=True, allow_partial=True)).errors
 
         self.assertEqual(len(errors), 1, errors)
-        self.assertIn("coverage: missing ranks 999-1000 of 1-1000", errors[0])
+        self.assertIn("coverage: missing ranks 999-2600 of 1-2600", errors[0])
 
 
 class CommandLineTest(unittest.TestCase):
@@ -274,24 +272,14 @@ class CommandLineTest(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn("OK: 1000 entries in 2 batches", out)
 
-    def test_full_coverage_names_the_batches_that_do_not_exist_yet(self):
+    def test_full_coverage_fails_while_batches_do_not_exist_yet(self):
         self.folder.write(1, full_batch(self.word_list, 1))
         self.folder.write(2, full_batch(self.word_list, 2))
 
-        code, out, err = self.run_cli("--batches", str(self.folder.path), "--full")
+        code, _, err = self.run_cli("--batches", str(self.folder.path), "--full")
 
-        self.assertEqual(code, 0, err)
-        self.assertIn("OK: 1000 entries in 2 batches", out)
-        self.assertIn("ranks 1001-2600 wait for batch-03 to batch-06", out)
-
-    def test_one_pending_batch_is_named_alone(self):
-        for number in range(1, 6):
-            self.folder.write(number, full_batch(self.word_list, number))
-
-        code, out, err = self.run_cli("--batches", str(self.folder.path), "--full")
-
-        self.assertEqual(code, 0, err)
-        self.assertIn("ranks 2501-2600 wait for batch-06 (not generated yet)", out)
+        self.assertEqual(code, 1)
+        self.assertIn("coverage: missing ranks 1001-2600 of 1-2600", err)
 
     def test_quiz_exclusions_must_be_known_top_2000_headwords_listed_once(self):
         path = self.folder.write(1, full_batch(self.word_list, 1))

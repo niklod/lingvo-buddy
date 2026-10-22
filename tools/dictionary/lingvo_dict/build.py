@@ -18,7 +18,6 @@ from lingvo_dict.validate import (
     add_selection_arguments,
     batch_files,
     load_and_validate,
-    pending_note,
     plural,
 )
 from lingvo_dict.wordlist_file import WordList
@@ -181,6 +180,4 @@ def main(argv: list[str]) -> int:
         f"wrote {args.out}: {plural(report.entry_count, 'entry')} from {plural(report.batch_count, 'batch')}, "
         f"{plural(len(report.quiz_exclusions), 'quiz exclusion')}"
     )
-    if report.pending_batches:
-        print(pending_note(report.pending_batches, word_list))
     return 0

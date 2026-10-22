@@ -1,6 +1,6 @@
 # Dictionary data
 
-The bundled dictionary is built from `data/batches/batch-NN.json` (60 batches of 500 ranks for the 30,000 ranks of the word list; batches 21–60 do not exist yet) by `tools/dictionary/` (Python standard library only, 3.9+). `make test` runs the tool tests, `validate.py --full`, the build and `lingvo-dict check`. `--full` requires every rank up to the end of the last batch file, so a missing batch in the middle fails, and it names the batches after the last file that are not generated yet. The field rules live in `tools/dictionary/prompts/generate-batch.md`: that prompt is the single source for what a good entry is.
+The bundled dictionary is built from `data/batches/batch-NN.json` (60 batches of 500 ranks for the 30,000 ranks of the word list) by `tools/dictionary/` (Python standard library only, 3.9+). `make test` runs the tool tests, `validate.py --full`, the build and `lingvo-dict check`. `--full` requires every rank of the word list, so all 60 batch files must exist. The field rules live in `tools/dictionary/prompts/generate-batch.md`: that prompt is the single source for what a good entry is.
 
 ## The contract has two sides
 

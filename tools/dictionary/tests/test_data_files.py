@@ -5,8 +5,20 @@ import unittest
 from pathlib import Path
 
 from lingvo_dict import export
+from lingvo_dict.contract import BATCH_COUNT, batch_id
+from lingvo_dict.paths import BATCHES_DIR
 from lingvo_dict.wordlist_file import WordListError, parse_word_list, read_word_list
 from tests.support import run_main
+
+
+class BundledBatchFilesTest(unittest.TestCase):
+    def test_every_batch_of_the_word_list_exists(self):
+        expected = {f"{batch_id(number)}.json" for number in range(1, BATCH_COUNT + 1)}
+
+        found = {path.name for path in BATCHES_DIR.glob("batch-*.json")}
+
+        self.assertEqual(sorted(expected - found), [], "batch files are missing")
+        self.assertEqual(sorted(found - expected), [], "unknown batch files")
 
 
 class WordListFileTest(unittest.TestCase):
