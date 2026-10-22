@@ -14,40 +14,26 @@ public struct DictionaryStore: Sendable {
     /// has only a case-sensitive index; this map lets a case-insensitive lookup
     /// use that index instead of scanning all entries on each keystroke.
     private let headwordsByLowercase: [String: [String]]
-    /// Headwords by their Russian translations in `RussianText.normalized` form,
-    /// best rank first. The stored translations keep «ё» and their case, so the
-    /// translations index cannot answer a normalized match by itself.
-    private let headwordsByRussian: [String: [String]]
 
     init(reader: any DatabaseReader) throws {
         self.reader = reader
-        let (entries, headwords, russian) = try reader.read { db in
-            try Self.checkSchemaVersion(in: db)
+        let (entries, headwords) = try reader.read { db in
+            try ReadOnlyDictionaryFile.checkVersion(DictionarySchema.schemaVersion, name: "dictionary", in: db)
             let entries = try Self.fetchEntries(
                 where: "e.rank <= ? AND e.headword NOT IN (SELECT headword FROM quiz_exclusions)",
                 arguments: [TopTier.last.maxRank],
                 in: db
             )
-            return (
-                entries,
-                try String.fetchAll(db, sql: "SELECT headword FROM entries"),
-                try Self.headwordsByRussian(in: db)
-            )
+            return (entries, try String.fetchAll(db, sql: "SELECT headword FROM entries"))
         }
         self.quizEntries = entries.filter { $0.primaryRussian != nil }
         self.headwordsByLowercase = Dictionary(grouping: headwords) { $0.lowercased() }
-        self.headwordsByRussian = russian
         self.tierGate = TierGate(cardEntries: quizEntries)
     }
 
     /// Opens a dictionary file read-only, for example the one bundled with the app.
     public static func open(at url: URL) throws -> DictionaryStore {
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            throw LingvoCoreError.invalidDictionary("no dictionary file at \(url.path)")
-        }
-        var configuration = Configuration()
-        configuration.readonly = true
-        return try DictionaryStore(reader: DatabaseQueue(path: url.path, configuration: configuration))
+        try DictionaryStore(reader: ReadOnlyDictionaryFile.open(at: url, name: "dictionary"))
     }
 
     /// Builds a private in-memory dictionary from JSON sources (tests, previews).
@@ -59,11 +45,7 @@ public struct DictionaryStore: Sendable {
     }
 
     public func meta() throws -> [String: String] {
-        try reader.read { db in
-            try Row.fetchAll(db, sql: "SELECT key, value FROM meta").reduce(into: [:]) { result, row in
-                result[row["key"]] = row["value"]
-            }
-        }
+        try ReadOnlyDictionaryFile.meta(in: reader)
     }
 
     public func entry(headword: String) throws -> DictionaryEntry? {
@@ -82,9 +64,21 @@ public struct DictionaryStore: Sendable {
 
     /// Entries with a Russian translation equal to the text after
     /// `RussianText.normalized`, best rank first. Dictionary forms only: no morphology.
+    /// The file stores that form in `norm`, so the match is one indexed query per keystroke.
     func russianLookupEntries(_ text: String, limit: Int) throws -> [DictionaryEntry] {
-        guard let headwords = headwordsByRussian[RussianText.normalized(text)] else { return [] }
-        return try entries(headwords: Array(headwords.prefix(limit)))
+        try reader.read { db in
+            try Self.fetchEntries(
+                where: """
+                    e.id IN (
+                        SELECT t.entry_id FROM translations t JOIN entries m ON m.id = t.entry_id
+                        WHERE t.lang = ? AND t.norm = ?
+                        GROUP BY t.entry_id ORDER BY m.rank LIMIT ?
+                    )
+                    """,
+                arguments: [Language.russian.rawValue, RussianText.normalized(text), limit],
+                in: db
+            )
+        }
     }
 
     /// Ordered by rank.
@@ -93,37 +87,6 @@ public struct DictionaryStore: Sendable {
         return try reader.read { db in
             try Self.fetchEntries(
                 where: "e.headword IN (\(placeholders))", arguments: StatementArguments(headwords), in: db
-            )
-        }
-    }
-
-    private static func headwordsByRussian(in db: Database) throws -> [String: [String]] {
-        let rows = try Row.fetchCursor(db, sql: """
-            SELECT t.text, e.headword
-            FROM translations t
-            JOIN entries e ON e.id = t.entry_id
-            WHERE t.lang = ?
-            ORDER BY e.rank, t.ord
-            """, arguments: [Language.russian.rawValue])
-        var result: [String: [String]] = [:]
-        while let row = try rows.next() {
-            let headword: String = row["headword"]
-            let key = RussianText.normalized(row["text"])
-            // «ещё» and «еще» on one entry would list its headword twice.
-            if result[key]?.last != headword {
-                result[key, default: []].append(headword)
-            }
-        }
-        return result
-    }
-
-    /// A file built for an older contract lacks tables this code reads; fail with
-    /// a clear message instead of an SQL error on the first card.
-    private static func checkSchemaVersion(in db: Database) throws {
-        let version = try Int.fetchOne(db, sql: "PRAGMA user_version") ?? 0
-        guard version == DictionarySchema.schemaVersion else {
-            throw LingvoCoreError.invalidDictionary(
-                "dictionary schema version \(version), expected \(DictionarySchema.schemaVersion): rebuild it"
             )
         }
     }

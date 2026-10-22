@@ -4,28 +4,20 @@ import GRDB
 /// Read-only access to the extended dictionary, which sits next to the bundled one.
 /// It answers only for words the bundled dictionary lacks, so the Tutor asks it second.
 public struct ExtendedDictionary: Sendable {
+    private static let name = "extended dictionary"
+
     private let reader: any DatabaseReader
 
     init(reader: any DatabaseReader) throws {
         self.reader = reader
         try reader.read { db in
-            let version = try Int.fetchOne(db, sql: "PRAGMA user_version") ?? 0
-            guard version == ExtendedSchema.schemaVersion else {
-                throw LingvoCoreError.invalidDictionary(
-                    "extended dictionary schema version \(version), expected \(ExtendedSchema.schemaVersion): rebuild it"
-                )
-            }
+            try ReadOnlyDictionaryFile.checkVersion(ExtendedSchema.schemaVersion, name: Self.name, in: db)
         }
     }
 
     /// Opens the extended dictionary file read-only, for example the one bundled with the app.
     public static func open(at url: URL) throws -> ExtendedDictionary {
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            throw LingvoCoreError.invalidDictionary("no extended dictionary file at \(url.path)")
-        }
-        var configuration = Configuration()
-        configuration.readonly = true
-        return try ExtendedDictionary(reader: DatabaseQueue(path: url.path, configuration: configuration))
+        try ExtendedDictionary(reader: ReadOnlyDictionaryFile.open(at: url, name: name))
     }
 
     /// Builds a private in-memory extended dictionary (tests, previews).
@@ -40,11 +32,7 @@ public struct ExtendedDictionary: Sendable {
     }
 
     public func meta() throws -> [String: String] {
-        try reader.read { db in
-            try Row.fetchAll(db, sql: "SELECT key, value FROM meta").reduce(into: [:]) { result, row in
-                result[row["key"]] = row["value"]
-            }
-        }
+        try ReadOnlyDictionaryFile.meta(in: reader)
     }
 
     /// The entry for an English word; case and surrounding spaces are ignored
@@ -83,17 +71,7 @@ public struct ExtendedDictionary: Sendable {
 
     /// Schema statements in which this file and `ExtendedSchema` differ; empty when they match.
     public func schemaDrift() throws -> [String] {
-        let contract = try DatabaseQueue()
-        try contract.write { db in try ExtendedSchema.create(in: db) }
-        let expected = try contract.read(Self.schemaStatements)
-        let actual = try reader.read(Self.schemaStatements)
-        return expected.symmetricDifference(actual).sorted()
-    }
-
-    /// Whitespace is collapsed: the two writers indent their SQL differently.
-    private static func schemaStatements(in db: Database) throws -> Set<String> {
-        let statements = try String.fetchAll(db, sql: "SELECT sql FROM sqlite_master WHERE sql IS NOT NULL")
-        return Set(statements.map { $0.split(whereSeparator: \.isWhitespace).joined(separator: " ") })
+        try ReadOnlyDictionaryFile.schemaDrift(of: reader, contract: ExtendedSchema.create(in:))
     }
 
     private static func entry(from row: Row) throws -> ExtendedEntry {

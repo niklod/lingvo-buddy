@@ -34,6 +34,11 @@ struct DictionaryContractTests {
         #expect(try Fixture.dictionary().schemaDrift() == [])
     }
 
+    @Test("the dictionary written for tests stores every translation in the form Russian input matches")
+    func noNormalizationDrift() throws {
+        #expect(try Fixture.dictionary().normalizationDrift() == [])
+    }
+
     @Test("a duplicate headword is rejected")
     func duplicateHeadwordIsRejected() throws {
         #expect(throws: LingvoCoreError.invalidDictionary("UNIQUE constraint failed: entries.headword")) {
@@ -69,7 +74,7 @@ struct DictionaryContractTests {
         let url = Fixture.temporaryDatabaseURL()
         try OldUserDatabase.run("CREATE TABLE entries (id INTEGER PRIMARY KEY); PRAGMA user_version = 2;", at: url)
 
-        #expect(throws: LingvoCoreError.invalidDictionary("dictionary schema version 2, expected 3: rebuild it")) {
+        #expect(throws: LingvoCoreError.invalidDictionary("dictionary schema version 2, expected 4: rebuild it")) {
             try DictionaryStore.open(at: url)
         }
     }

@@ -23,6 +23,10 @@ func runCheck(_ arguments: [String]) throws {
     guard drift.isEmpty else {
         fail("the schema differs from LingvoCore's DictionarySchema in:\n\(drift.joined(separator: "\n"))")
     }
+    let normalization = try store.normalizationDrift()
+    guard normalization.isEmpty else {
+        fail("translations whose norm differs from RussianText.normalized:\n\(normalization.prefix(20).joined(separator: "\n"))")
+    }
     guard let license = try store.meta()["license"], !license.isEmpty else {
         fail("meta has no license")
     }

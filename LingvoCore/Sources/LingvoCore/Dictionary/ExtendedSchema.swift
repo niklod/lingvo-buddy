@@ -9,7 +9,7 @@ enum ExtendedSchema {
         try db.execute(sql: """
             CREATE TABLE english (
                 headword TEXT PRIMARY KEY,
-                pos TEXT NOT NULL CHECK (pos IN (\(quotedList(PartOfSpeech.allCases.map(\.rawValue))))),
+                pos TEXT NOT NULL CHECK (pos IN (\(ReadOnlyDictionaryFile.quotedList(PartOfSpeech.allCases.map(\.rawValue))))),
                 ipa TEXT,
                 translations TEXT NOT NULL,
                 example TEXT,
@@ -25,9 +25,5 @@ enum ExtendedSchema {
             );
             PRAGMA user_version = \(schemaVersion);
             """)
-    }
-
-    private static func quotedList(_ values: [String]) -> String {
-        values.map { "'\($0)'" }.joined(separator: ", ")
     }
 }

@@ -42,8 +42,8 @@ enum DictionaryBuilder {
         for (language, texts) in entry.translations.sorted(by: { $0.key.rawValue < $1.key.rawValue }) {
             for (order, text) in texts.enumerated() {
                 try db.execute(
-                    sql: "INSERT INTO translations (entry_id, lang, ord, text) VALUES (?, ?, ?, ?)",
-                    arguments: [entry.rank, language.rawValue, order, text]
+                    sql: "INSERT INTO translations (entry_id, lang, ord, text, norm) VALUES (?, ?, ?, ?, ?)",
+                    arguments: [entry.rank, language.rawValue, order, text, RussianText.normalized(text)]
                 )
             }
         }

@@ -12,7 +12,8 @@ from typing import Optional
 
 from lingvo_dict.contract import POS_VALUES, TIERS, TRANSLATION_LANG
 from lingvo_dict.paths import DEFAULT_DICTIONARY
-from lingvo_dict.sqlite_file import atomic_database
+from lingvo_dict.russian_text import normalized
+from lingvo_dict.sqlite_file import atomic_database, sql_in_list
 from lingvo_dict.validate import (
     LoadedEntry,
     add_selection_arguments,
@@ -28,32 +29,29 @@ ATTRIBUTION = (
 )
 
 
-def _in_list(values: Sequence[str]) -> str:
-    return ", ".join(f"'{value}'" for value in values)
-
-
 # Mirrors LingvoCore/Sources/LingvoCore/Dictionary/DictionarySchema.swift; keep both in step.
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 SCHEMA = f"""
 CREATE TABLE entries (
     id INTEGER PRIMARY KEY,
     headword TEXT NOT NULL UNIQUE,
     rank INTEGER NOT NULL UNIQUE,
-    pos TEXT NOT NULL CHECK (pos IN ({_in_list(POS_VALUES)})),
+    pos TEXT NOT NULL CHECK (pos IN ({sql_in_list(POS_VALUES)})),
     ipa TEXT NOT NULL,
     example TEXT,
     example_ru TEXT,
     synonym_group TEXT,
-    tier TEXT NOT NULL CHECK (tier IN ({_in_list(TIERS)}))
+    tier TEXT NOT NULL CHECK (tier IN ({sql_in_list(TIERS)}))
 );
 CREATE TABLE translations (
     entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
     lang TEXT NOT NULL,
     ord INTEGER NOT NULL,
     text TEXT NOT NULL,
+    norm TEXT NOT NULL,
     PRIMARY KEY (entry_id, lang, ord)
 );
-CREATE INDEX translations_text ON translations(lang, text);
+CREATE INDEX translations_norm ON translations(lang, norm);
 CREATE TABLE quiz_exclusions (
     headword TEXT PRIMARY KEY REFERENCES entries(headword)
 );
@@ -69,7 +67,7 @@ INSERT_ENTRY = (
     "INSERT INTO entries (id, headword, rank, pos, ipa, example, example_ru, synonym_group, tier)"
     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
 )
-INSERT_TRANSLATION = "INSERT INTO translations (entry_id, lang, ord, text) VALUES (?, ?, ?, ?)"
+INSERT_TRANSLATION = "INSERT INTO translations (entry_id, lang, ord, text, norm) VALUES (?, ?, ?, ?, ?)"
 INSERT_EXCLUSION = "INSERT INTO quiz_exclusions (headword) VALUES (?)"
 INSERT_META = "INSERT INTO meta (key, value) VALUES (?, ?)"
 
@@ -95,7 +93,8 @@ def _insert_all(
     connection.executemany(
         INSERT_TRANSLATION,
         [
-            (item.rank, TRANSLATION_LANG, index, text)
+            # Russian input matches `norm` with an index, so the app needs no lookup table in memory.
+            (item.rank, TRANSLATION_LANG, index, text, normalized(text))
             for item in ordered
             for index, text in enumerate(item.data["translations"])
         ],
