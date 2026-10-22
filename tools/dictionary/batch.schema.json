@@ -29,6 +29,7 @@
               "translations",
               "ipa",
               "example",
+              "example_ru",
               "synonym_group"
             ],
             "properties": {
@@ -101,7 +102,9 @@
               "tier",
               "pos",
               "translations",
-              "ipa"
+              "ipa",
+              "example",
+              "example_ru"
             ],
             "properties": {
               "rank": {

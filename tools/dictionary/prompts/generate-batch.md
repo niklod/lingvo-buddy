@@ -8,7 +8,7 @@ Run all commands from the repository root. They need only `python3` (3.9 or late
 
 - `batch-NN` covers ranks `(NN-1)*500+1` to `NN*500`: `batch-01` = 1–500, `batch-02` = 501–1000, `batch-60` = 29501–30000.
 - Ranks 1–2000 are the **quiz tier** (`batch-01` to `batch-04`: Top-1000 and Top-2000). Ranks 2001–30000 are the **lookup tier**.
-- Every entry of both tiers gets `example` and `example_ru`. Batches `batch-21` to `batch-60` are new: write both fields for every entry.
+- `example` and `example_ru` are required for every entry of both tiers: the validator rejects an entry without them. Batches `batch-21` to `batch-60` are new: write both fields for every entry.
 - Write exactly one file: `data/batches/{{BATCH}}.json`.
 - Do not change any other file: not the word list, not other batches, not the tools.
 
@@ -87,17 +87,16 @@ Use `determiner` for words like `this`, `every`, `some` before a noun, `numeral`
 - Use the strong form of function words (`/ænd/`, `/fɔː/`, `/æt/`).
 - No American symbols (`ɚ`, `ɝ`, `ɹ`, `ɾ`, `oʊ`), no spaces, no brackets, no optional sounds.
 
-**example** (both tiers) — one natural English sentence that shows the meaning of the first translation.
+**example** (required, both tiers) — one natural English sentence that shows the meaning of the first translation.
 - 4 to 14 words, simple everyday vocabulary (A2–B1), 10 to 140 characters.
 - It must contain the headword or a regular form that starts with it: some word in the sentence must start with the headword (`house` → `houses`), or with the headword without a final `e`/`y` when the headword has four or more letters (`make` → `making`, `try` → `tried`). An irregular form does not count (`went` for `go`), so use the headword itself then.
 - Capital letter first, `.` `!` or `?` last. Plain ASCII letters, digits, spaces and the punctuation `, . ; : ! ? ' " ( ) -`.
 - No real people, brands, politics, violence or sex.
 
-**example_ru** (both tiers) — a natural Russian translation of `example`, as a Russian speaker would say it.
+**example_ru** (required, both tiers) — a natural Russian translation of `example`, as a Russian speaker would say it.
 - Translate the whole sentence. Use the first translation's meaning for the headword; the Russian word may be a form of it (`большом` for `большой`).
 - 1 to 180 characters, one sentence. Capital letter first, `.` `!` or `?` last (a closing `»` or `"` may follow).
 - Only Cyrillic letters, digits, spaces and the punctuation `, . ; : ! ? " ( ) « » - – —`. No Latin letters: write names and places in Cyrillic, and an English word in the translation would show the answer on the card.
-- Write it only together with `example`.
 
 **synonym_group** (quiz tier only) — prevents two correct answers in one quiz.
 - Look at the quiz-tier words of ranks 1–2000. If a word with a *lower* rank has the same main meaning, so that a learner could fairly pick either as the answer (`large` → `big`, `begin` → `start`, `kid` → `child`), write that word's headword.

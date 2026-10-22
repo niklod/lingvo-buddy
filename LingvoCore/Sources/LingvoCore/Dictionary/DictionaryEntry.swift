@@ -8,7 +8,7 @@ public enum PartOfSpeech: String, Sendable, Codable, CaseIterable {
 public enum DictionaryTier: String, Sendable, Codable, CaseIterable {
     /// Full card data: example and synonym group are present.
     case quiz
-    /// Quick-add lookup only: no example, no synonym group.
+    /// Quick-add lookup only: an example, but no synonym group, and never a card on its own.
     case lookup
 }
 

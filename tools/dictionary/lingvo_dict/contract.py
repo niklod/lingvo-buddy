@@ -44,29 +44,21 @@ EXAMPLE_PATTERN = re.compile(r"[A-Z0-9\"'][A-Za-z0-9 ,.;:!?'\"()\-–—’]*[.!
 # No Latin letters: an English word left in the translation would show the answer on the card.
 EXAMPLE_RU_PATTERN = re.compile(r"[А-ЯЁ0-9«\"][А-Яа-яЁё0-9 ,.;:!?\"()«»\-–—]*[.!?»\"]")
 
-QUIZ_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa", "example", "synonym_group")
-LOOKUP_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa")
-# Optional until every entry of the tier has them; then they join the tier's fields.
-QUIZ_OPTIONAL_FIELDS = ("example_ru",)
-LOOKUP_OPTIONAL_FIELDS = ("example", "example_ru")
+QUIZ_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa", "example", "example_ru", "synonym_group")
+LOOKUP_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa", "example", "example_ru")
 
 
 @dataclass(frozen=True)
 class TierRules:
     fields: tuple[str, ...]
     translations: tuple[int, int]  # min and max count
-    optional: tuple[str, ...] = ()
-
-    @property
-    def allowed(self) -> tuple[str, ...]:
-        return self.fields + self.optional
 
 
 # Ordered: json_schema emits oneOf in this order, and the committed schema file expects quiz first.
 TIER_RULES = MappingProxyType(
     {
-        "quiz": TierRules(fields=QUIZ_FIELDS, translations=QUIZ_TRANSLATIONS, optional=QUIZ_OPTIONAL_FIELDS),
-        "lookup": TierRules(fields=LOOKUP_FIELDS, translations=LOOKUP_TRANSLATIONS, optional=LOOKUP_OPTIONAL_FIELDS),
+        "quiz": TierRules(fields=QUIZ_FIELDS, translations=QUIZ_TRANSLATIONS),
+        "lookup": TierRules(fields=LOOKUP_FIELDS, translations=LOOKUP_TRANSLATIONS),
     }
 )
 TIERS = tuple(TIER_RULES)
@@ -129,7 +121,7 @@ def json_schema() -> dict[str, object]:
             },
             "ipa": {"type": "string", "pattern": _anchored(IPA_PATTERN)},
         }
-        if "example" in rules.allowed:
+        if "example" in rules.fields:
             properties["example"] = {
                 "type": "string",
                 "minLength": EXAMPLE_LENGTH[0],
@@ -144,7 +136,7 @@ def json_schema() -> dict[str, object]:
                     " the entry's own headword if none."
                 ),
             }
-        if "example_ru" in rules.allowed:
+        if "example_ru" in rules.fields:
             properties["example_ru"] = {
                 "type": "string",
                 "description": "A natural Russian translation of example, in the meaning of the first translation.",

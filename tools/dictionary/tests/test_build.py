@@ -48,6 +48,7 @@ class BuildTest(unittest.TestCase):
 
         code, out, err = self.run_build("--allow-partial")
 
+        lookup_headword = self.word_list.headword_at(2001)
         self.assertEqual(code, 0, err)
         self.assertIn("3 entries", out)
         self.assertEqual(
@@ -56,9 +57,12 @@ class BuildTest(unittest.TestCase):
                 " FROM entries ORDER BY rank"
             ),
             [
-                (2, "big", 2, "noun", "/haʊs/", "This big is very old.", None, "big", "quiz"),
+                (2, "big", 2, "noun", "/haʊs/", "This big is very old.", "Этот дом очень старый.", "big", "quiz"),
                 (3, "large", 3, "noun", "/haʊs/", "This large is very old.", "Это очень старый дом.", "big", "quiz"),
-                (2001, self.word_list.headword_at(2001), 2001, "noun", "/haʊs/", None, None, None, "lookup"),
+                (
+                    2001, lookup_headword, 2001, "noun", "/haʊs/",
+                    f"The {lookup_headword} stands near the river.", "Дом стоит у реки.", None, "lookup",
+                ),
             ],
         )
         self.assertEqual(
