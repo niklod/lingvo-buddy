@@ -7,9 +7,10 @@ also after a headword ("dude  # slang"); blank lines are ignored.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Set, Tuple
 
-from lingvo_dict.contract import QUIZ_MAX_RANK
+from lingvo_dict.contract import QUIZ_MAX_RANK, is_quiz_rank
+from lingvo_dict.text_lines import content_lines
 from lingvo_dict.wordlist_file import WordList
 
 
@@ -17,21 +18,20 @@ def parse_exclusions(text: str, word_list: WordList, name: str) -> Tuple[Tuple[s
     """Returns (headwords in file order, errors)."""
     ranks = word_list.ranks()
     headwords: List[str] = []
+    seen: Set[str] = set()
     errors: List[str] = []
-    for number, line in enumerate(text.splitlines(), start=1):
-        headword = line.split("#", 1)[0].strip()
-        if not headword:
-            continue
+    for number, headword in content_lines(text):
         label = f"{name}:{number} '{headword}'"
         rank = ranks.get(headword)
         if rank is None:
             errors.append(f"{label}: not a headword of the word list")
-        elif rank <= QUIZ_MAX_RANK:
+        elif is_quiz_rank(rank):
             # Quiz-tier words were reviewed with examples; drop them from the word list instead.
             errors.append(f"{label}: rank {rank} is quiz tier; only lookup-tier words (rank > {QUIZ_MAX_RANK}) can be excluded")
-        elif headword in headwords:
+        elif headword in seen:
             errors.append(f"{label}: listed twice")
         else:
+            seen.add(headword)
             headwords.append(headword)
     return tuple(headwords), errors
 

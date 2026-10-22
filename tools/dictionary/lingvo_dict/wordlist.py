@@ -119,12 +119,14 @@ def _decide(
 
 
 def format_word_list(words: Iterable[RankedWord], header: List[str]) -> str:
-    lines = ["# " + line for line in header]
-    lines.extend(f"{word.rank}\t{word.headword}" for word in words)
-    return "\n".join(lines) + "\n"
+    return _format_tsv(header, ((word.rank, word.headword) for word in words))
 
 
 def format_exclusion_report(excluded: Iterable[Exclusion], header: List[str]) -> str:
-    lines = ["# " + line for line in header]
-    lines.extend(f"{item.lemma}\t{item.reason}" for item in excluded)
+    return _format_tsv(header, ((item.lemma, item.reason) for item in excluded))
+
+
+def _format_tsv(header: Iterable[str], rows: Iterable[Tuple[object, ...]]) -> str:
+    lines = [f"# {line}" for line in header]
+    lines += ["\t".join(str(cell) for cell in row) for row in rows]
     return "\n".join(lines) + "\n"

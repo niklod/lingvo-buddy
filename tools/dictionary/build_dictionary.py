@@ -1,4 +1,7 @@
-"""Builds the bundled SQLite dictionary. Usage: python3 tools/dictionary/build_dictionary.py --out PATH [--through N]."""
+"""Builds the bundled SQLite dictionary.
+
+Usage: python3 tools/dictionary/build_dictionary.py [--out PATH] (--full | --through N | --allow-partial)
+"""
 
 import sys
 

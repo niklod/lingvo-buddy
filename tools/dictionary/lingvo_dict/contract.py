@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import re
-from typing import Dict, Tuple
+from dataclasses import dataclass
+from types import MappingProxyType
+from typing import Dict, Optional, Tuple
 
 BATCH_SIZE = 500
 BATCH_COUNT = 20
@@ -23,8 +25,6 @@ POS_VALUES = (
     "interjection",
     "other",
 )
-TIERS = ("quiz", "lookup")
-
 QUIZ_TRANSLATIONS = (1, 3)
 LOOKUP_TRANSLATIONS = (1, 5)
 TRANSLATION_MAX_LENGTH = 40
@@ -43,8 +43,28 @@ QUIZ_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa", "exampl
 LOOKUP_FIELDS = ("rank", "headword", "tier", "pos", "translations", "ipa")
 
 
+@dataclass(frozen=True)
+class TierRules:
+    fields: Tuple[str, ...]
+    translations: Tuple[int, int]  # min and max count
+
+
+# Ordered: json_schema emits oneOf in this order, and the committed schema file expects quiz first.
+TIER_RULES = MappingProxyType(
+    {
+        "quiz": TierRules(fields=QUIZ_FIELDS, translations=QUIZ_TRANSLATIONS),
+        "lookup": TierRules(fields=LOOKUP_FIELDS, translations=LOOKUP_TRANSLATIONS),
+    }
+)
+TIERS = tuple(TIER_RULES)
+
+
+def is_quiz_rank(rank: int) -> bool:
+    return rank <= QUIZ_MAX_RANK
+
+
 def tier_for_rank(rank: int) -> str:
-    return "quiz" if rank <= QUIZ_MAX_RANK else "lookup"
+    return "quiz" if is_quiz_rank(rank) else "lookup"
 
 
 def batch_ranks(number: int) -> Tuple[int, int]:
@@ -56,8 +76,21 @@ def batch_id(number: int) -> str:
     return f"batch-{number:02d}"
 
 
+def parse_batch_id(text: object) -> Optional[int]:
+    """Returns NN of 'batch-NN' when it names one of the BATCH_COUNT batches, else None."""
+    match = BATCH_ID_PATTERN.fullmatch(text) if isinstance(text, str) else None
+    if match is None:
+        return None
+    number = int(match.group(1))
+    return number if 1 <= number <= BATCH_COUNT else None
+
+
+def _anchored(pattern: "re.Pattern[str]") -> str:
+    return f"^{pattern.pattern}$"
+
+
 def json_schema() -> Dict[str, object]:
-    def entry(tier: str, fields: Tuple[str, ...], translations: Tuple[int, int]) -> Dict[str, object]:
+    def entry(tier: str, rules: TierRules) -> Dict[str, object]:
         properties: Dict[str, object] = {
             "rank": {"type": "integer", "minimum": 1},
             "headword": {"type": "string", "description": "Exactly the headword of this rank in data/wordlist/wordlist.tsv."},
@@ -65,23 +98,23 @@ def json_schema() -> Dict[str, object]:
             "pos": {"enum": list(POS_VALUES)},
             "translations": {
                 "type": "array",
-                "minItems": translations[0],
-                "maxItems": translations[1],
+                "minItems": rules.translations[0],
+                "maxItems": rules.translations[1],
                 "uniqueItems": True,
                 "items": {
                     "type": "string",
-                    "pattern": "^" + TRANSLATION_PATTERN.pattern + "$",
+                    "pattern": _anchored(TRANSLATION_PATTERN),
                     "maxLength": TRANSLATION_MAX_LENGTH,
                 },
             },
-            "ipa": {"type": "string", "pattern": "^" + IPA_PATTERN.pattern + "$"},
+            "ipa": {"type": "string", "pattern": _anchored(IPA_PATTERN)},
         }
-        if tier == "quiz":
+        if "example" in rules.fields:
             properties["example"] = {
                 "type": "string",
                 "minLength": EXAMPLE_LENGTH[0],
                 "maxLength": EXAMPLE_LENGTH[1],
-                "pattern": "^" + EXAMPLE_PATTERN.pattern + "$",
+                "pattern": _anchored(EXAMPLE_PATTERN),
             }
             properties["synonym_group"] = {
                 "type": "string",
@@ -90,7 +123,7 @@ def json_schema() -> Dict[str, object]:
         return {
             "type": "object",
             "additionalProperties": False,
-            "required": list(fields),
+            "required": list(rules.fields),
             "properties": properties,
         }
 
@@ -107,14 +140,11 @@ def json_schema() -> Dict[str, object]:
         "additionalProperties": False,
         "required": ["batch", "entries"],
         "properties": {
-            "batch": {"type": "string", "pattern": "^" + BATCH_ID_PATTERN.pattern + "$"},
+            "batch": {"type": "string", "pattern": _anchored(BATCH_ID_PATTERN)},
             "entries": {
                 "type": "array",
                 "items": {
-                    "oneOf": [
-                        entry("quiz", QUIZ_FIELDS, QUIZ_TRANSLATIONS),
-                        entry("lookup", LOOKUP_FIELDS, LOOKUP_TRANSLATIONS),
-                    ]
+                    "oneOf": [entry(tier, rules) for tier, rules in TIER_RULES.items()]
                 },
             },
         },
