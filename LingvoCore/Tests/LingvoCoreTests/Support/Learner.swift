@@ -29,7 +29,8 @@ struct Learner {
         return (card, try tutor.answer(card, choice: choice))
     }
 
-    /// Answers the word on the next card correctly, one hour apart, until it is learned.
+    /// Answers one hour apart: a correct answer within the hour after the last
+    /// counted one adds no dot, so a faster loop would never learn the word.
     @discardableResult
     func learnNextWord() throws -> String {
         let headword = try nextCard().headword

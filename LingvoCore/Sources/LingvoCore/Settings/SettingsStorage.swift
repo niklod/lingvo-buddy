@@ -1,9 +1,9 @@
 import Foundation
 import GRDB
 
-/// Settings live in a key/value table: later slices (onboarding, export) add
-/// keys without a schema change, and an unknown or broken value falls back to
-/// its default instead of failing the whole load.
+/// Settings live in a key/value table: a new key needs no schema change, and
+/// an unknown or broken value falls back to its default instead of failing
+/// the whole load.
 extension UserDatabase {
     private enum Key {
         static let direction = "direction"
@@ -64,8 +64,18 @@ extension UserDatabase {
             learning: learning,
             cardInterval: stored[Key.cardInterval].flatMap(TimeInterval.init) ?? defaults.cardInterval,
             quietHours: quietHours,
-            quietHoursEnabled: stored[Key.quietHoursEnabled].map { $0 == "1" } ?? defaults.quietHoursEnabled
+            quietHoursEnabled: stored[Key.quietHoursEnabled].flatMap(Self.flag) ?? defaults.quietHoursEnabled
         )
+    }
+}
+
+private extension UserDatabase {
+    static func flag(_ text: String) -> Bool? {
+        switch text {
+        case "1": true
+        case "0": false
+        default: nil
+        }
     }
 }
 

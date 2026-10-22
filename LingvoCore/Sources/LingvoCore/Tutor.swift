@@ -45,12 +45,15 @@ public final class Tutor: Sendable {
         if let reason = context.holdReason(at: now) {
             return .noCard(reason)
         }
-        let decision: CardDecision
-        if let postponed = deferrals.withLock({ $0.dueCard(at: now) }) {
-            decision = .card(postponed)
-        } else {
-            decision = try pickCard(heldBack: deferrals.withLock { $0.heldBack(at: now) }, now: now)
+        let postponed = deferrals.withLock { deferrals -> Card? in
+            guard let card = deferrals.dueCard(at: now) else { return nil }
+            deferrals = deferrals.shown(card)
+            return card
         }
+        if let postponed {
+            return .card(postponed)
+        }
+        let decision = try pickCard(heldBack: deferrals.withLock { $0.heldBack(at: now) }, now: now)
         if let card = decision.card {
             deferrals.withLock { $0 = $0.shown(card) }
         }
@@ -66,6 +69,10 @@ public final class Tutor: Sendable {
     /// "×" or Esc: the next card is another word. Not an answer: no stat changes.
     public func skip(_ card: Card) {
         deferrals.withLock { $0 = $0.skipping(card) }
+    }
+
+    func forgetDeferral(of headword: String) {
+        deferrals.withLock { $0 = $0.forgetting(headword) }
     }
 
     /// A held-back word is still offered when nothing else is left.
@@ -111,22 +118,19 @@ public final class Tutor: Sendable {
     }
 
     private func record(_ outcome: AnswerOutcome, for card: Card) throws -> AnswerResult {
-        guard try dictionary.entry(headword: card.headword) != nil
-                || userDatabase.myWord(headword: card.headword) != nil else {
-            throw LingvoCoreError.unknownWord(card.headword)
+        // Cards are public values: one built outside the tutor may name a missing option.
+        guard card.options.indices.contains(card.correctIndex) else {
+            throw LingvoCoreError.invalidChoice(card.correctIndex)
         }
-        let now = clock.now()
-        let before = try userDatabase.progress(for: card.headword) ?? .fresh(card.headword)
-        let after = before.applying(outcome, direction: card.direction, at: now)
-        try userDatabase.record(
+        let (before, after) = try userDatabase.record(
             AnswerRecord(
                 headword: card.headword,
                 direction: card.direction,
                 kind: card.kind,
                 result: outcome,
-                answeredAt: now
+                answeredAt: clock.now()
             ),
-            updating: after
+            inDictionary: dictionary.entry(headword: card.headword) != nil
         )
         return AnswerResult(
             outcome: outcome,

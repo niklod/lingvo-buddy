@@ -42,13 +42,14 @@ struct QuickAddTests {
     func addWithCustomTranslationAndExample() throws {
         let learner = try Self.learner()
 
-        try learner.tutor.addMyWord(NewMyWord(
+        let outcome = try learner.tutor.addMyWord(NewMyWord(
             text: "eventually",
             translation: " со временем ",
             example: "  It will work eventually. "
         ))
         let card = try learner.nextCard()
 
+        #expect(outcome == .added(headword: "eventually"))
         #expect(card.headword == "eventually")
         #expect(card.correctAnswer == "со временем")
         #expect(card.example == "It will work eventually.")

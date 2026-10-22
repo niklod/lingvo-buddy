@@ -1,7 +1,8 @@
 import Foundation
 import GRDB
 
-/// The writable database with the learner's state (progress, answers log, settings).
+/// The writable database with the learner's state: progress, answers log,
+/// settings, my words and own translations.
 ///
 /// Rows key words by `headword`, not by dictionary id: dictionary ids change
 /// whenever the bundled dictionary is rebuilt, headwords do not.
@@ -26,69 +27,29 @@ public struct UserDatabase: Sendable {
         try UserDatabase(writer: DatabaseQueue())
     }
 
+    /// Every table keyed by headword, in one place so that a new per-word table
+    /// is not missed by delete, import or erase. The answers log is not one: it is history.
+    static let wordTables = ["my_words", "word_progress", "translation_overrides"]
+
     /// Removes all learner state. Used by QA hooks that seed a known state.
     public func eraseAll() throws {
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM answers; DELETE FROM word_progress; DELETE FROM my_words; DELETE FROM translation_overrides;")
+            for table in ["answers"] + Self.wordTables {
+                try db.execute(sql: "DELETE FROM \(table)")
+            }
+        }
+    }
+
+    static func deleteWordRows(_ headword: String, in db: Database) throws {
+        for table in wordTables {
+            try db.execute(sql: "DELETE FROM \(table) WHERE headword = ?", arguments: [headword])
         }
     }
 
     private static var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
-        migrator.registerMigration("v1-progress-and-answers") { db in
-            try db.execute(sql: """
-                CREATE TABLE word_progress (
-                    headword TEXT PRIMARY KEY,
-                    status TEXT NOT NULL,
-                    mastery INTEGER NOT NULL DEFAULT 0,
-                    last_result TEXT,
-                    last_answered_at DATETIME
-                );
-                CREATE TABLE answers (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    headword TEXT NOT NULL,
-                    direction TEXT NOT NULL,
-                    result TEXT NOT NULL,
-                    answered_at DATETIME NOT NULL
-                );
-                CREATE INDEX answers_answered_at ON answers(answered_at);
-                """)
-        }
-        migrator.registerMigration("v2-learning-rules") { db in
-            try db.execute(sql: """
-                ALTER TABLE word_progress ADD COLUMN en_ru_correct BOOLEAN NOT NULL DEFAULT 0;
-                ALTER TABLE word_progress ADD COLUMN ru_en_correct BOOLEAN NOT NULL DEFAULT 0;
-                ALTER TABLE word_progress ADD COLUMN last_counted_correct_at DATETIME;
-                ALTER TABLE word_progress ADD COLUMN review_stage INTEGER NOT NULL DEFAULT 0;
-                ALTER TABLE word_progress ADD COLUMN due_at DATETIME;
-                ALTER TABLE answers ADD COLUMN kind TEXT;
-                """)
-        }
-        migrator.registerMigration("v3-settings") { db in
-            try db.execute(sql: """
-                CREATE TABLE settings (
-                    key TEXT PRIMARY KEY,
-                    value TEXT NOT NULL
-                );
-                """)
-        }
-        migrator.registerMigration("v4-my-words") { db in
-            try db.execute(sql: """
-                CREATE TABLE my_words (
-                    headword TEXT PRIMARY KEY,
-                    translation TEXT NOT NULL,
-                    example TEXT,
-                    added_at DATETIME NOT NULL
-                );
-                """)
-        }
-        migrator.registerMigration("v6-dictionary") { db in
-            try db.execute(sql: """
-                CREATE TABLE translation_overrides (
-                    headword TEXT PRIMARY KEY,
-                    translation TEXT NOT NULL
-                );
-                """)
+        for migration in UserSchema.migrations {
+            migrator.registerMigration(migration.name) { db in try db.execute(sql: migration.sql) }
         }
         return migrator
     }

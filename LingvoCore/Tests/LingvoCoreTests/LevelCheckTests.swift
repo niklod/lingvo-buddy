@@ -4,7 +4,6 @@ import Testing
 
 @Suite("Onboarding level check")
 struct LevelCheckTests {
-    /// 300 nouns, ranks 1–300, one distinct translation each.
     static func wideDictionary(words: Int = 300) throws -> DictionaryStore {
         try TestDictionary.make((1...words).map { rank in
             .init("w\(rank)", rank: rank, pos: "noun", ru: ["слово\(rank)"])
@@ -61,7 +60,6 @@ struct LevelCheckTests {
         #expect(sample.words.count == 30)
     }
 
-    /// Answers for w10, w20, … w300: the learner knows the words whose rank passes `knows`.
     static func answers(knows: (Int) -> Bool) -> [LevelCheckAnswer] {
         stride(from: 10, through: 300, by: 10).map { LevelCheckAnswer(headword: "w\($0)", knows: knows($0)) }
     }

@@ -116,6 +116,22 @@ struct StatsTests {
         #expect(try stats(learner).streakDays == 2)
     }
 
+    @Test("the streak survives a daylight-saving change at midnight")
+    func streakAcrossMidnightDST() throws {
+        var santiago = Calendar(identifier: .gregorian)
+        santiago.timeZone = try #require(TimeZone(identifier: "America/Santiago"))
+        // Clocks in Santiago jump from 00:00 to 01:00 on 2026-09-06.
+        let noon = try #require(santiago.date(from: DateComponents(year: 2026, month: 9, day: 5, hour: 12)))
+        let learner = try learner(at: noon)
+        for _ in 0..<4 {
+            try learner.answerNext()
+            learner.clock.advance(by: Fixture.day)
+        }
+        learner.clock.advance(by: -Fixture.day)
+
+        #expect(try learner.tutor.stats(calendar: santiago).streakDays == 4)
+    }
+
     @Test("progress counts learned Top-1000 words and words in learning")
     func learnedAndLearningCounts() throws {
         let learner = try learner()

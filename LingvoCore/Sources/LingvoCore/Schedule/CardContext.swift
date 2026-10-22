@@ -19,14 +19,14 @@ public struct CardContext: Sendable, Equatable {
         case onDemand
     }
 
-    public var trigger: Trigger
+    public let trigger: Trigger
     /// `nil` turns quiet hours off.
-    public var quietHours: QuietHours?
-    public var isFocusOn: Bool
-    public var isFullScreenAppFrontmost: Bool
-    public var pausedUntil: Date?
+    public let quietHours: QuietHours?
+    public let isFocusOn: Bool
+    public let isFullScreenAppFrontmost: Bool
+    public let pausedUntil: Date?
     /// Quiet hours are local wall-clock times, so they need the learner's calendar and zone.
-    public var calendar: Calendar
+    public let calendar: Calendar
 
     public init(
         trigger: Trigger = .timer,

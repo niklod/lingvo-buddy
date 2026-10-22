@@ -19,9 +19,10 @@ struct WordPicker {
     let settings: LearningSettings
 
     /// How many of the latest answers the review cap looks at (see `reviewAllowed`).
+    /// The real share is 1 / (window + 1); rounding up keeps it at or below the setting.
     var reviewCapWindow: Int {
         guard settings.reviewShare > 0 else { return 0 }
-        return max(Int((1 / settings.reviewShare).rounded()) - 1, 0)
+        return max(Int((1 / settings.reviewShare).rounded(.up)) - 1, 0)
     }
 
     /// New words come only from the open `tier`. `myWords` are card entries of
@@ -37,8 +38,11 @@ struct WordPicker {
         heldBack: Set<String> = []
     ) -> PickedWord? {
         let mine = Set(myWords.map(\.headword))
-        let pool = (quizEntries.filter { !mine.contains($0.headword) } + myWords)
-            .filter { !heldBack.contains($0.headword) }
+        let candidates = quizEntries.filter { !mine.contains($0.headword) } + myWords
+        // A held-back word is still active: counting it keeps "×" and "Later"
+        // from opening a place for one more new word.
+        let activeCount = candidates.filter { progress[$0.headword]?.status == .learning }.count
+        let pool = candidates.filter { !heldBack.contains($0.headword) }
         let started = pool.compactMap { entry in progress[entry.headword].map { (entry, $0) } }
         let reviews = started
             .filter { $0.1.status == .learned && $0.1.isDue(at: now) }
@@ -61,7 +65,7 @@ struct WordPicker {
         if let fresh = pool.first(where: { mine.contains($0.headword) && progress[$0.headword] == nil }) {
             return PickedWord(entry: fresh, kind: .mine, progress: nil, isMine: true)
         }
-        if learning.count < settings.maxActiveNewWords,
+        if activeCount < settings.maxActiveNewWords,
            let fresh = pool.first(where: { !mine.contains($0.headword) && $0.rank <= tier.maxRank && progress[$0.headword] == nil }) {
             return PickedWord(entry: fresh, kind: .new, progress: nil)
         }

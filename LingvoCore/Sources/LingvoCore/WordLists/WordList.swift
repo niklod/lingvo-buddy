@@ -12,7 +12,6 @@ public enum WordList: String, Sendable, CaseIterable {
     case queue
 }
 
-/// The latest answer to a word.
 public struct LastAnswer: Sendable, Equatable {
     public let outcome: AnswerOutcome
     public let at: Date

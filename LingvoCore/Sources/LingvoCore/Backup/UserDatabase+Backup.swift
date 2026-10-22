@@ -24,9 +24,7 @@ extension UserDatabase {
     func restore(_ rows: [WordBackupRow]) throws {
         try writer.write { db in
             for row in rows {
-                try db.execute(sql: "DELETE FROM my_words WHERE headword = ?", arguments: [row.headword])
-                try db.execute(sql: "DELETE FROM word_progress WHERE headword = ?", arguments: [row.headword])
-                try db.execute(sql: "DELETE FROM translation_overrides WHERE headword = ?", arguments: [row.headword])
+                try Self.deleteWordRows(row.headword, in: db)
                 if let ownTranslation = row.ownTranslation {
                     try db.execute(
                         sql: "INSERT INTO translation_overrides (headword, translation) VALUES (?, ?)",

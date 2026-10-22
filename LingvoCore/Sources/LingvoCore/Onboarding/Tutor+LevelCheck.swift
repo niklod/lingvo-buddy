@@ -16,7 +16,8 @@ extension Tutor {
     /// Marks the known sample words learned, and every queued word of the tier
     /// below the learner's level too, except words the learner did not know.
     /// Logs no answers: the level check is not practice. Words with progress
-    /// keep it. An answer for a word that is not a card word changes nothing.
+    /// keep it. An answer for a word that is not a card word throws
+    /// `unknownWord`, and nothing is saved.
     @discardableResult
     public func applyLevelCheck(_ answers: [LevelCheckAnswer]) throws -> LevelCheckOutcome {
         let cardWords = Dictionary(dictionary.quizEntries.map { ($0.headword, $0.rank) }, uniquingKeysWith: min)

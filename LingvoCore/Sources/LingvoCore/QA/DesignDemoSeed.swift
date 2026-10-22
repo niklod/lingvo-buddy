@@ -50,7 +50,7 @@ public enum DesignDemoSeed {
                 throw LingvoCoreError.unknownWord(sample.headword)
             }
             let answeredAt = now.addingTimeInterval(-sample.minutesAgo * 60)
-            try database.record(
+            try database.log(
                 AnswerRecord(
                     headword: sample.headword,
                     direction: .enToRu,
@@ -58,7 +58,7 @@ public enum DesignDemoSeed {
                     result: sample.lastResult,
                     answeredAt: answeredAt
                 ),
-                updating: progress(for: sample, answeredAt: answeredAt)
+                saving: progress(for: sample, answeredAt: answeredAt)
             )
         }
         try writeHistory(to: database, now: now)
@@ -79,9 +79,9 @@ public enum DesignDemoSeed {
             ))
             guard let minutesAgo = sample.wrongMinutesAgo else { continue }
             let answeredAt = now.addingTimeInterval(-minutesAgo * 60)
-            try database.record(
+            try database.log(
                 AnswerRecord(headword: sample.headword, direction: .enToRu, kind: .mine, result: .wrong, answeredAt: answeredAt),
-                updating: WordProgress(
+                saving: WordProgress(
                     headword: sample.headword, status: .learning, mastery: 0,
                     lastResult: .wrong, lastAnsweredAt: answeredAt, dueAt: answeredAt
                 )

@@ -10,7 +10,6 @@ extension Fixture {
         return calendar
     }()
 
-    /// Local time on 2026-10-15 in `calendar`, shifted by `dayOffset` days.
     static func date(hour: Int, minute: Int, dayOffset: Int = 0) -> Date {
         let components = DateComponents(year: 2026, month: 10, day: 15 + dayOffset, hour: hour, minute: minute)
         guard let date = calendar.date(from: components) else {
@@ -19,7 +18,6 @@ extension Fixture {
         return date
     }
 
-    /// The context a timer tick builds: default quiet hours, all other signals off.
     static func timedContext(
         quietHours: QuietHours? = .standard,
         isFocusOn: Bool = false,

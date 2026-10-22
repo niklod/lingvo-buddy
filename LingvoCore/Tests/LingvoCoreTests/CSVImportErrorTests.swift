@@ -29,7 +29,8 @@ struct CSVImportErrorTests {
     static let badFiles: [BadFile] = [
         BadFile("empty file", "", .empty),
         BadFile("not UTF-8", data: Data([0xFF, 0xFE, 0x41, 0x00, 0xE9]), .notUTF8),
-        BadFile("another app's CSV", "name,age\nBob,4\n", .unknownColumns(["name", "age"])),
+        BadFile("separated by semicolons (Excel in some locales)", "headword;translation\nfoo;бар\n", .semicolonSeparated),
+        BadFile("another app's CSV","name,age\nBob,4\n", .unknownColumns(["name", "age"])),
         BadFile("no headword column", "translation\nсо временем\n", .missingColumns(["headword"])),
         BadFile("a column twice", "headword,status,status\nx,learning,learning\n", .duplicateColumns(["status"])),
         BadFile(
@@ -66,6 +67,16 @@ struct CSVImportErrorTests {
             "the same word twice",
             header + validLine + "eventually,в итоге,,,\n",
             .duplicateWord(line: 3, headword: "eventually")
+        ),
+        BadFile(
+            "the same word twice in another case",
+            header + validLine + "Eventually,в итоге,,,\n",
+            .duplicateWord(line: 3, headword: "Eventually")
+        ),
+        BadFile(
+            "progress for a word that is neither in the dictionary nor a my word",
+            header + validLine + "zzzz,,learning,2,\n",
+            .unknownWord(line: 3, headword: "zzzz")
         ),
         BadFile(
             "progress without a status",
