@@ -33,7 +33,7 @@ enum QuickAddMessage: Equatable {
 @MainActor
 @Observable
 final class QuickAddModel {
-    private static let lookupDelay: Duration = .milliseconds(80)
+    static let lookupDelay: Duration = .milliseconds(80)
 
     var text: String {
         didSet {
@@ -45,7 +45,12 @@ final class QuickAddModel {
     var choice: TranslationChoice = .custom
     var customTranslation = ""
     /// The card's English word for Russian text the dictionary does not know.
-    var englishWord = ""
+    var englishWord = "" {
+        didSet {
+            guard englishWord != oldValue else { return }
+            syncDetails(delayed: true)
+        }
+    }
     var example = ""
     private(set) var preview: QuickAddPreview?
     private(set) var message: QuickAddMessage?
@@ -55,6 +60,7 @@ final class QuickAddModel {
 
     @ObservationIgnored private let lookup: (String) throws -> QuickAddPreview?
     @ObservationIgnored private let translator: MachineTranslator?
+    @ObservationIgnored private let chain: EnglishDetailsChain
     @ObservationIgnored let showsExampleTranslation: Bool
     @ObservationIgnored private var pendingLookup: Task<Void, Never>?
     @ObservationIgnored private var pendingTranslation: Task<Void, Never>?
@@ -66,8 +72,10 @@ final class QuickAddModel {
         example: String = "",
         translator: MachineTranslator? = nil,
         showsExampleTranslation: Bool = false,
+        details: @escaping (String) throws -> QuickAddCandidate? = { _ in nil },
         lookup: @escaping (String) throws -> QuickAddPreview?
     ) {
+        chain = EnglishDetailsChain(delay: Self.lookupDelay, lookup: details)
         self.text = text
         self.example = example
         self.translator = translator
@@ -87,6 +95,26 @@ final class QuickAddModel {
     /// The English words to choose from; empty for English input.
     var candidates: [QuickAddCandidate] {
         preview?.russianText == nil ? [] : preview?.candidates ?? []
+    }
+
+    /// What the panel shows for the word on the card. For Russian input it is the details asked again
+    /// for the English word; until they arrive, the candidate's own.
+    var details: QuickAddCandidate? {
+        guard isRussianInput else { return candidate }
+        if let chained = chain.details(for: chainedWord) { return chained }
+        return needsEnglishWord ? nil : candidate
+    }
+
+    /// The English word of a Russian input whose details are asked again. A bundled candidate has
+    /// them already.
+    private var chainedWord: String? {
+        guard isRussianInput else { return nil }
+        if needsEnglishWord {
+            let word = chosenEnglishWord
+            return word.isEmpty ? nil : word
+        }
+        guard let candidate, candidate.lookup == nil else { return nil }
+        return candidate.headword
     }
 
     /// The typed Russian word is the translation, so there is none to choose.
@@ -138,12 +166,14 @@ final class QuickAddModel {
     func choose(_ choice: TranslationChoice) {
         self.choice = choice
         if message.isError { message = nil }
+        syncDetails(delayed: false)
     }
 
     func chooseCandidate(_ index: Int) {
         guard candidates.indices.contains(index) else { return }
         candidateIndex = index
         message = Self.standingMessage(for: candidate)
+        syncDetails(delayed: false)
     }
 
     /// `false` when there is nothing to move through, so the key keeps its text-field meaning.
@@ -190,9 +220,10 @@ final class QuickAddModel {
         }
     }
 
-    /// Snapshots render the state after the fake translator has answered.
+    /// Snapshots render the state after the fake translator has answered and the details came.
     func machineTranslationSettled() async {
         await pendingTranslation?.value
+        await chain.settled()
     }
 
     private func englishWordSubmission() -> NewMyWord? {
@@ -233,6 +264,11 @@ final class QuickAddModel {
         // Unknown Russian text is not the word that gets added, so its own standing does not matter.
         message = failure ?? (needsEnglishWord ? nil : Self.standingMessage(for: candidate))
         requestMachineTranslation()
+        syncDetails(delayed: false)
+    }
+
+    private func syncDetails(delayed: Bool) {
+        chain.want(chainedWord, delayed: delayed)
     }
 
     /// No dictionary has a match: an English word outside both, or Russian text with no candidates.
@@ -276,6 +312,7 @@ final class QuickAddModel {
         case .translated(let suggestion):
             machine = .suggested(suggestion)
             preselectMachineBubble(direction: request.direction)
+            syncDetails(delayed: true)
         case .languagePackMissing:
             machine = .languagePackMissing
         case .failed:
