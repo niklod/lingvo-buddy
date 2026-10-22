@@ -10,9 +10,10 @@ extension Tutor {
         let windowStart = calendar.date(byAdding: .day, value: 1 - Self.accuracyWindowDays, to: today) ?? today
         let recent = try userDatabase.answers(since: windowStart)
         let todays = recent.filter { $0.answeredAt >= today }
-        let words = try wordCounts(endOfToday: calendar.date(byAdding: .day, value: 1, to: today) ?? today)
+        let endOfToday = calendar.date(byAdding: .day, value: 1, to: today) ?? today
+        let words = try wordCounts(endOfToday: endOfToday)
         var streak = StreakCounter(today: today, calendar: calendar)
-        try userDatabase.walkAnswerTimes { streak.add($0) }
+        try userDatabase.walkAnswerDays(before: endOfToday, calendar: calendar) { streak.add($0) }
         return TutorStats(
             streakDays: streak.days,
             todayAnswers: todays.count,

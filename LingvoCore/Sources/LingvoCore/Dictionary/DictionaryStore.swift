@@ -10,18 +10,24 @@ public struct DictionaryStore: Sendable {
     /// the picker and distractor rules then work without SQL.
     let quizEntries: [DictionaryEntry]
     let tierGate: TierGate
+    /// Every headword by its lowercased form. The bundled file is read-only and
+    /// has only a case-sensitive index; this map lets a case-insensitive lookup
+    /// use that index instead of scanning all entries on each keystroke.
+    private let headwordsByLowercase: [String: [String]]
 
     init(reader: any DatabaseReader) throws {
         self.reader = reader
-        let entries = try reader.read { db in
+        let (entries, headwords) = try reader.read { db in
             try Self.checkSchemaVersion(in: db)
-            return try Self.fetchEntries(
+            let entries = try Self.fetchEntries(
                 where: "e.rank <= ? AND e.headword NOT IN (SELECT headword FROM quiz_exclusions)",
                 arguments: [TopTier.last.maxRank],
                 in: db
             )
+            return (entries, try String.fetchAll(db, sql: "SELECT headword FROM entries"))
         }
         self.quizEntries = entries.filter { $0.primaryRussian != nil }
+        self.headwordsByLowercase = Dictionary(grouping: headwords) { $0.lowercased() }
         self.tierGate = TierGate(cardEntries: quizEntries)
     }
 
@@ -60,9 +66,12 @@ public struct DictionaryStore: Sendable {
     /// Ignores case and surrounding spaces; an exact-case match wins ("US" over "us").
     func lookupEntry(_ text: String) throws -> DictionaryEntry? {
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !query.isEmpty else { return nil }
+        guard let candidates = headwordsByLowercase[query.lowercased()] else { return nil }
+        let placeholders = Array(repeating: "?", count: candidates.count).joined(separator: ", ")
         let matches = try reader.read { db in
-            try Self.fetchEntries(where: "e.headword = ? COLLATE NOCASE", arguments: [query], in: db)
+            try Self.fetchEntries(
+                where: "e.headword IN (\(placeholders))", arguments: StatementArguments(candidates), in: db
+            )
         }
         return matches.first { $0.headword == query } ?? matches.first
     }

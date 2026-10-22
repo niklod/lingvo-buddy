@@ -24,12 +24,17 @@ extension UserDatabase {
         }
     }
 
-    /// Hands answer times to `visit`, newest first, until it returns `false`.
-    /// A cursor, so a long streak walk does not load the whole log at once.
-    func walkAnswerTimes(newestFirst visit: (Date) -> Bool) throws {
+    /// Hands answer times to `visit`, newest first and one per local day, until
+    /// it returns `false`. After each answer the walk seeks straight to the day
+    /// before, so a year-long streak costs one index seek per day, not per answer.
+    func walkAnswerDays(before end: Date, calendar: Calendar, visit: (Date) -> Bool) throws {
         try writer.read { db in
-            let times = try Date.fetchCursor(db, sql: "SELECT answered_at FROM answers ORDER BY answered_at DESC")
-            while let time = try times.next(), visit(time) {}
+            var bound = end
+            while let time = try Date.fetchOne(
+                db, sql: "SELECT MAX(answered_at) FROM answers WHERE answered_at < ?", arguments: [bound]
+            ), visit(time) {
+                bound = calendar.startOfDay(for: time)
+            }
         }
     }
 }
