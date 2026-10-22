@@ -70,6 +70,9 @@ The card button that shows the answer. It counts as a wrong answer. Code: `Answe
 **Example**:
 The English sentence a card shows after the answer. For a my word it is the "Where I saw it" text, or the dictionary example when that field is empty.
 
+**Russian example**:
+The dictionary's Russian translation of its example, shown under the example after the answer. A my word with its own "Where I saw it" text has none. Code: `russianExample`; `example_ru` in the dictionary data.
+
 ### Learning
 
 **Mastery**:
@@ -172,7 +175,7 @@ _Avoid_: popover, dropdown
 The panel that adds a my word: ⌥⌘L, the Services item "Add to LingvoBuddy", the tray field, or "+ Word" in the Dictionary window. Code: `QuickAdd*`.
 
 **Example preview**:
-The read-only dictionary example that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `ExamplePreview`.
+The read-only dictionary example, with its Russian example, that quick add shows under "Where I saw it" while that field is empty. Code: `QuickAddPreview.example`, `QuickAddPreview.russianExample`, `ExamplePreview`.
 
 **Dictionary window**:
 The window that lists the learner's words: Learning, Learned, My words and the queue. Code: `WordList`.

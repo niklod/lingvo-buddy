@@ -25,7 +25,8 @@ enum QuickAddSnapshots {
         example: "The hotel provides free breakfast.",
         synonymGroup: "provide",
         tier: .quiz,
-        translations: [.russian: ["обеспечивать", "предоставлять"]]
+        translations: [.russian: ["обеспечивать", "предоставлять"]],
+        russianExample: "Отель предоставляет бесплатный завтрак."
     )
 
     static var states: [SnapshotState] {
