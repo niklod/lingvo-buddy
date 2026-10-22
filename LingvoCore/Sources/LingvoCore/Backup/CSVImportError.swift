@@ -23,7 +23,7 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
     case unknownWord(line: Int, headword: String)
     /// A progress column has a value, but the word has no status.
     case progressWithoutStatus(line: Int, column: String)
-    /// Neither a translation (my word) nor a status (progress).
+    /// No translation (my word), status (progress) or own translation.
     case nothingToImport(line: Int, headword: String)
 
     public var errorDescription: String? {
@@ -63,7 +63,7 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
         case .progressWithoutStatus(let line, let column):
             "Line \(line): \"\(column)\" has a value, but \"status\" is empty."
         case .nothingToImport(let line, let headword):
-            "Line \(line): \"\(headword)\" has neither a translation nor a status."
+            "Line \(line): \"\(headword)\" has no translation, status or own translation."
         }
     }
 }

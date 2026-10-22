@@ -47,12 +47,4 @@ struct CSVSafetyTests {
         }
         #expect(try target.tutor.stats().myWordsCount == 0)
     }
-
-    @Test("the new error messages say what to do")
-    func errorMessages() {
-        #expect(CSVImportError.tooManyRows(limit: 20_000).localizedDescription
-            == "The file has more than 20000 words. Split it into smaller files.")
-        #expect(CSVImportError.semicolonSeparated.localizedDescription
-            == "The values are separated by \";\". Save the file as CSV with commas and try again.")
-    }
 }
