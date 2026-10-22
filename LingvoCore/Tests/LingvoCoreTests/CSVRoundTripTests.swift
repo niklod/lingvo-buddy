@@ -136,23 +136,31 @@ struct CSVRoundTripTests {
         #expect(try target.nextCard().correctAnswer == "кубернетес")
     }
 
-    @Test("words learned in the onboarding level check stay at the 60-day review step")
+    @Test("words learned in the onboarding level check keep their spread first reviews")
     func levelCheckWordsRoundTrip() throws {
         let source = try freshLearner()
         let outcome = try source.tutor.applyLevelCheck([LevelCheckAnswer(headword: "know", knows: true)])
         let target = try roundTrip(source)
+        let exported = try target.tutor.exportCSV()
 
-        target.clock.advance(by: 8 * Fixture.day)
+        // The spread puts the harder word, "know", on day 7 and "they" on day 34.
+        target.clock.advance(by: 6 * Fixture.day)
+        let beforeAWeek = try target.nextCard()
+        target.clock.advance(by: Fixture.day)
         let afterAWeek = try target.nextCard()
-        target.clock.advance(by: 53 * Fixture.day)
-        let afterTwoMonths = try target.nextCard()
+        target.clock.advance(by: 26 * Fixture.day)
+        let dueOnDay33 = try target.tutor.stats(calendar: Fixture.calendar).reviewsLeftToday
+        target.clock.advance(by: Fixture.day)
+        let dueOnDay34 = try target.tutor.stats(calendar: Fixture.calendar).reviewsLeftToday
 
         #expect(outcome.learnedCount == 2)
-        #expect(try target.tutor.exportCSV() == source.tutor.exportCSV())
+        #expect(try exported == source.tutor.exportCSV())
         #expect(try target.tutor.stats().tierProgress.learned == 2)
         #expect(try target.tutor.quickAddPreview("know")?.standing == .learned)
-        #expect(afterAWeek.kind == .new)
-        #expect(!["they", "know"].contains(afterAWeek.headword))
-        #expect(afterTwoMonths.kind == .review)
+        #expect(beforeAWeek.kind == .new)
+        #expect(!["they", "know"].contains(beforeAWeek.headword))
+        #expect(afterAWeek.headword == "know" && afterAWeek.kind == .review)
+        #expect(dueOnDay33 == 1)
+        #expect(dueOnDay34 == 2)
     }
 }
