@@ -69,6 +69,30 @@ struct QuickAddRussianTests {
         #expect(preview.canAdd)
     }
 
+    @Test("the preview tells Russian text from English, with or without candidates")
+    func previewKnowsTheTypedLanguage() throws {
+        let learner = try QuickAddTests.learner()
+
+        #expect(try learner.tutor.quickAddPreview("медленно")?.isRussianInput == true)
+        #expect(try learner.tutor.quickAddPreview("сомнение")?.isRussianInput == true)
+        #expect(try learner.tutor.quickAddPreview("kubernetes")?.isRussianInput == false)
+        #expect(try learner.tutor.quickAddPreview("rapid быстрый")?.isRussianInput == false)
+    }
+
+    @Test("a machine-suggested English word for unknown Russian text asks the typed Russian word")
+    func machineSuggestionForRussianBecomesCard() throws {
+        let learner = try QuickAddTests.learner()
+
+        let outcome = try learner.tutor.addMyWord(NewMyWord(text: "sluggishly", translation: "медленно", example: nil))
+        let card = try learner.nextCard()
+
+        #expect(outcome == .added(headword: "sluggishly"))
+        #expect(card.prompt == "sluggishly")
+        #expect(card.kind == .mine)
+        #expect(card.correctAnswer == "медленно")
+        #expect(card.example == nil)
+    }
+
     @Test("each candidate has its own standing, and a word in learning is not added again")
     func standingPerCandidate() throws {
         let learner = try QuickAddTests.learner()

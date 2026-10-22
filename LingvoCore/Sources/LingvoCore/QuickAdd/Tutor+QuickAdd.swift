@@ -6,12 +6,18 @@ extension Tutor {
     public func quickAddPreview(_ text: String) throws -> QuickAddPreview? {
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !query.isEmpty else { return nil }
-        if RussianText.isRussian(query), let preview = try russianPreview(query) {
+        let isRussian = RussianText.isRussian(query)
+        if isRussian, let preview = try russianPreview(query) {
             return preview
         }
         let lookup = try lookup(query)
         let headword = try lookup?.entry.headword ?? userDatabase.myWord(ignoringCase: query)?.headword ?? query
-        return QuickAddPreview(headword: headword, lookup: lookup, standing: try standing(of: headword))
+        return QuickAddPreview(
+            headword: headword,
+            lookup: lookup,
+            standing: try standing(of: headword),
+            isRussianInput: isRussian
+        )
     }
 
     /// Adds the word to My words. A queued dictionary word keeps its rank and

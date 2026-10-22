@@ -43,16 +43,21 @@ public struct QuickAddPreview: Sendable, Equatable {
     /// card's translation. `nil` for English input and for unknown Russian text,
     /// which then needs a typed translation like any unknown word.
     public let russianText: String?
+    /// Russian text with or without candidates. Unknown Russian text needs an
+    /// English word for the card, not a translation, so the panel must know its language.
+    public let isRussianInput: Bool
 
-    public init(headword: String, lookup: WordLookup?, standing: WordStanding) {
+    public init(headword: String, lookup: WordLookup?, standing: WordStanding, isRussianInput: Bool = false) {
         self.candidates = [QuickAddCandidate(headword: headword, lookup: lookup, standing: standing)]
         self.russianText = nil
+        self.isRussianInput = isRussianInput
     }
 
     public init(russianText: String, candidates: [QuickAddCandidate]) {
         precondition(!candidates.isEmpty, "Russian input without candidates takes the English path")
         self.candidates = candidates
         self.russianText = russianText
+        self.isRussianInput = true
     }
 
     public var headword: String { preselected.headword }
