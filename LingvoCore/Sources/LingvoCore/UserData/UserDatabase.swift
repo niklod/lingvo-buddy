@@ -1,7 +1,8 @@
 import Foundation
 import GRDB
 
-/// The writable database with the learner's state (progress, answers log, settings).
+/// The writable database with the learner's state: progress, answers log,
+/// settings, my words and own translations.
 ///
 /// Rows key words by `headword`, not by dictionary id: dictionary ids change
 /// whenever the bundled dictionary is rebuilt, headwords do not.
@@ -26,10 +27,22 @@ public struct UserDatabase: Sendable {
         try UserDatabase(writer: DatabaseQueue())
     }
 
+    /// Every table keyed by headword, in one place so that a new per-word table
+    /// is not missed by delete, import or erase. The answers log is not one: it is history.
+    static let wordTables = ["my_words", "word_progress", "translation_overrides"]
+
     /// Removes all learner state. Used by QA hooks that seed a known state.
     public func eraseAll() throws {
         try writer.write { db in
-            try db.execute(sql: "DELETE FROM answers; DELETE FROM word_progress; DELETE FROM my_words; DELETE FROM translation_overrides;")
+            for table in ["answers"] + Self.wordTables {
+                try db.execute(sql: "DELETE FROM \(table)")
+            }
+        }
+    }
+
+    static func deleteWordRows(_ headword: String, in db: Database) throws {
+        for table in wordTables {
+            try db.execute(sql: "DELETE FROM \(table) WHERE headword = ?", arguments: [headword])
         }
     }
 
