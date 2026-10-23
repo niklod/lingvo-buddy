@@ -22,11 +22,21 @@ final class QuickAddModel {
         }
     }
     var choice: TranslationChoice = .custom
-    var customTranslation = ""
+    /// The bubbles and the field of "+ custom variant" for English input.
+    private(set) var customTranslations = CustomVariants()
+    /// The bubbles and the field of "English word for the card" for Russian text the dictionary does not know.
+    private(set) var customEnglishWords = CustomVariants()
+
+    var customTranslation: String {
+        get { customTranslations.field }
+        set { (customTranslations, choice) = customTranslations.typing(newValue, choice: choice) }
+    }
+
     /// The card's English word for Russian text the dictionary does not know.
-    var englishWord = "" {
-        didSet {
-            guard englishWord != oldValue else { return }
+    var englishWord: String {
+        get { customEnglishWords.field }
+        set {
+            (customEnglishWords, choice) = customEnglishWords.typing(newValue, choice: choice)
             syncDetails(delayed: true)
         }
     }
@@ -105,14 +115,20 @@ final class QuickAddModel {
         return candidate?.translations ?? []
     }
 
-    /// Words the dictionary lacks always need the custom field.
+    /// Words the dictionary lacks always need the custom field. It stays while a custom bubble is
+    /// selected, so the learner can type the next variant.
     var showsCustomField: Bool {
         guard !isRussianInput else { return false }
-        return preview != nil && choice == .custom
+        return preview != nil && choice.isCustom
     }
 
     /// Russian text with no candidates: the field shows until the learner picks the machine bubble.
-    var showsEnglishWordField: Bool { needsEnglishWord && choice == .custom }
+    var showsEnglishWordField: Bool { needsEnglishWord && choice.isCustom }
+
+    /// The variants the learner finished with a separator, in the section that is on screen.
+    var customBubbles: [String] {
+        needsEnglishWord ? customEnglishWords.bubbles : customTranslations.bubbles
+    }
 
     var machine: MachineSuggestion { fallback.suggestion }
 
@@ -124,14 +140,14 @@ final class QuickAddModel {
         return switch choice {
         case .dictionary(let index) where translations.indices.contains(index): translations[index]
         case .machine(let index) where machineBubbles.indices.contains(index): machineBubbles[index]
-        case .dictionary, .machine, .custom: customTranslation
+        case .dictionary, .machine, .custom, .customBubble: customTranslations.variant(for: choice)
         }
     }
 
     /// The English word for Russian text the dictionary does not know.
     private var chosenEnglishWord: String {
         if case .machine(let index) = choice, machineBubbles.indices.contains(index) { return machineBubbles[index] }
-        return choice.isMachine ? "" : Self.trimmed(englishWord)
+        return choice.isMachine ? "" : customEnglishWords.variant(for: choice)
     }
 
     /// Cyrillic in the English word field, shown at once and not only after Add.
@@ -148,6 +164,16 @@ final class QuickAddModel {
     func choose(_ choice: TranslationChoice) {
         self.choice = choice
         if message.isError { message = nil }
+        syncDetails(delayed: false)
+    }
+
+    /// The × of a custom bubble.
+    func removeCustomBubble(at index: Int) {
+        if needsEnglishWord {
+            (customEnglishWords, choice) = customEnglishWords.removing(at: index, choice: choice)
+        } else {
+            (customTranslations, choice) = customTranslations.removing(at: index, choice: choice)
+        }
         syncDetails(delayed: false)
     }
 
@@ -244,6 +270,8 @@ final class QuickAddModel {
             preview = nil
             failure = .error(error.localizedDescription)
         }
+        customTranslations = customTranslations.afterPreview(from: previous, to: preview)
+        customEnglishWords = customEnglishWords.afterPreview(from: previous, to: preview)
         if !QuickAddPreview.keepsChoices(from: previous, to: preview) {
             candidateIndex = 0
             choice = .preselected(translations: translations)
@@ -307,6 +335,14 @@ final class QuickAddModel {
 private extension TranslationChoice {
     var isMachine: Bool {
         if case .machine = self { true } else { false }
+    }
+
+    /// The field or one of the bubbles typed in it.
+    var isCustom: Bool {
+        switch self {
+        case .custom, .customBubble: true
+        case .dictionary, .machine: false
+        }
     }
 }
 

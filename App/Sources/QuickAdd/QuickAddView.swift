@@ -84,7 +84,7 @@ struct QuickAddView: View {
 
     private var translationSection: some View {
         section(String(localized: "Translation for the card")) {
-            if !model.translations.isEmpty || !model.machineBubbles.isEmpty {
+            if !model.translations.isEmpty || !model.machineBubbles.isEmpty || !model.customBubbles.isEmpty {
                 FlowLayout(spacing: 6) {
                     ForEach(Array(model.translations.enumerated()), id: \.offset) { index, translation in
                         TranslationPill(title: translation, isSelected: model.choice == .dictionary(index)) {
@@ -92,6 +92,7 @@ struct QuickAddView: View {
                         }
                     }
                     machinePills
+                    customBubblePills(focusing: .custom)
                     customPill(focusing: .custom)
                 }
             }
@@ -117,9 +118,10 @@ struct QuickAddView: View {
     /// Russian text the dictionary does not know: the typed text is the translation.
     private var englishWordSection: some View {
         section(String(localized: "English word for the card")) {
-            if !model.machineBubbles.isEmpty {
+            if !model.machineBubbles.isEmpty || !model.customBubbles.isEmpty {
                 FlowLayout(spacing: 6) {
                     machinePills
+                    customBubblePills(focusing: .englishWord)
                     customPill(focusing: .englishWord)
                 }
             }
@@ -141,6 +143,21 @@ struct QuickAddView: View {
             ) {
                 model.choose(.machine(index))
             }
+        }
+    }
+
+    /// The field stays focused after a pick, so the learner can type the next variant at once.
+    private func customBubblePills(focusing field: Field) -> some View {
+        ForEach(Array(model.customBubbles.enumerated()), id: \.offset) { index, bubble in
+            TranslationPill(
+                title: bubble,
+                isSelected: model.choice == .customBubble(index),
+                remove: { model.removeCustomBubble(at: index) },
+                action: {
+                    model.choose(.customBubble(index))
+                    focus = field
+                }
+            )
         }
     }
 
