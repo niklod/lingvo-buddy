@@ -28,18 +28,29 @@ final class QuickAddModel {
     private(set) var customEnglishWords = CustomVariants()
 
     var customTranslation: String {
-        get { customTranslations.field }
-        set { (customTranslations, choice) = customTranslations.typing(newValue, choice: choice) }
+        get { typedText ?? customTranslations.field }
+        set {
+            (customTranslations, choice) = customTranslations.typing(newValue, choice: choice)
+            showTypedTextForOneTurn(newValue, field: customTranslations.field)
+        }
     }
 
     /// The card's English word for Russian text the dictionary does not know.
     var englishWord: String {
-        get { customEnglishWords.field }
+        get { typedText ?? customEnglishWords.field }
         set {
             (customEnglishWords, choice) = customEnglishWords.typing(newValue, choice: choice)
+            showTypedTextForOneTurn(newValue, field: customEnglishWords.field)
             syncDetails(delayed: true)
         }
     }
+
+    /// SwiftUI redraws a text field only when its binding returns a new value. A separator empties the
+    /// field, but "" is also what the binding returned before the keystroke, so the field would keep
+    /// "смыться,". The binding returns the typed text until the next main-actor turn, then the field.
+    /// Only one of the two custom fields is on screen, so they share it.
+    private var typedText: String?
+
     var example = ""
     private(set) var preview: QuickAddPreview?
     private(set) var message: QuickAddMessage?
@@ -280,6 +291,15 @@ final class QuickAddModel {
         message = failure ?? (needsEnglishWord ? nil : Self.standingMessage(for: candidate))
         requestMachineTranslation()
         syncDetails(delayed: false)
+    }
+
+    private func showTypedTextForOneTurn(_ typed: String, field: String) {
+        guard typed != field else {
+            typedText = nil
+            return
+        }
+        typedText = typed
+        Task { @MainActor [weak self] in self?.typedText = nil }
     }
 
     private func syncDetails(delayed: Bool) {
