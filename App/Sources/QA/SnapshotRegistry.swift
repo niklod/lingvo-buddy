@@ -66,7 +66,7 @@ enum QuizCardSnapshots {
     }
 }
 
-/// The menu-bar icon as macOS tints it on a dark menu bar, scaled up so the dot is easy to check.
+/// The menu-bar icon as macOS tints it on a dark menu bar, scaled up so the marks are easy to check.
 @MainActor
 enum StatusIconSnapshots {
     private static let zoom: CGFloat = 4
@@ -74,12 +74,17 @@ enum StatusIconSnapshots {
     private static let menuBar = Theme.Palette.menuBar
 
     static var states: [SnapshotState] {
-        [state("menubar_icon", waiting: false), state("menubar_icon_waiting", waiting: true)]
+        [
+            state("menubar_icon", waiting: false, updateMark: false),
+            state("menubar_icon_waiting", waiting: true, updateMark: false),
+            state("menubar_icon_update", waiting: false, updateMark: true),
+            state("menubar_icon_waiting_update", waiting: true, updateMark: true),
+        ]
     }
 
-    private static func state(_ name: String, waiting: Bool) -> SnapshotState {
+    private static func state(_ name: String, waiting: Bool, updateMark: Bool) -> SnapshotState {
         SnapshotState(name: name) {
-            let image = StatusGlyph.image(waiting: waiting)
+            let image = StatusGlyph.image(waiting: waiting, updateMark: updateMark)
             return AnyView(
                 Image(nsImage: image)
                     .renderingMode(.template)

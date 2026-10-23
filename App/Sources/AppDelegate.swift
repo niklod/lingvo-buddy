@@ -124,7 +124,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// The tray and a card hang in the same place under the icon, so one gives way to the other.
     private func makeStatusItem(coordinator: CardCoordinator, tray: TrayMenuController) {
-        let statusItem = StatusItemController(actions: StatusItemActions(
+        let statusItem = StatusItemController(update: updates, actions: StatusItemActions(
             primaryClick: { [weak coordinator, weak tray] in
                 guard coordinator?.reopenWaitingCard() == true else { return false }
                 tray?.close()
