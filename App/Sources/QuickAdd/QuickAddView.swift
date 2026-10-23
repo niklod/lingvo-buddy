@@ -84,14 +84,14 @@ struct QuickAddView: View {
 
     private var translationSection: some View {
         section(String(localized: "Translation for the card")) {
-            if !model.translations.isEmpty || model.machineBubble != nil {
+            if !model.translations.isEmpty || !model.machineBubbles.isEmpty {
                 FlowLayout(spacing: 6) {
                     ForEach(Array(model.translations.enumerated()), id: \.offset) { index, translation in
                         TranslationPill(title: translation, isSelected: model.choice == .dictionary(index)) {
                             model.choose(.dictionary(index))
                         }
                     }
-                    machinePill
+                    machinePills
                     customPill(focusing: .custom)
                 }
             }
@@ -117,9 +117,9 @@ struct QuickAddView: View {
     /// Russian text the dictionary does not know: the typed text is the translation.
     private var englishWordSection: some View {
         section(String(localized: "English word for the card")) {
-            if model.machineBubble != nil {
+            if !model.machineBubbles.isEmpty {
                 FlowLayout(spacing: 6) {
-                    machinePill
+                    machinePills
                     customPill(focusing: .englishWord)
                 }
             }
@@ -132,14 +132,14 @@ struct QuickAddView: View {
         }
     }
 
-    @ViewBuilder private var machinePill: some View {
-        if let bubble = model.machineBubble {
+    @ViewBuilder private var machinePills: some View {
+        ForEach(Array(model.machineBubbles.enumerated()), id: \.offset) { index, bubble in
             TranslationPill(
                 title: bubble,
-                isSelected: model.choice == .machine,
+                isSelected: model.choice == .machine(index),
                 mark: String(localized: "machine translation")
             ) {
-                model.choose(.machine)
+                model.choose(.machine(index))
             }
         }
     }
