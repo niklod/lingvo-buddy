@@ -68,6 +68,27 @@ struct TranslationShapeTests {
         #expect(outcome == .alreadyAdded(.mine))
     }
 
+    @Test("a word with a non-ASCII capital typed again is already added, not a second row")
+    func unknownHeadwordNonASCIIDuplicate() throws {
+        let learner = try learner()
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "Éclair", translation: "эклер", example: nil))
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "Kubernetes", translation: "кубернетес", example: nil))
+
+        let eclair = try learner.tutor.addMyWord(NewMyWord(text: "Éclair", translation: "пирожное", example: nil))
+        let kubernetes = try learner.tutor.addMyWord(NewMyWord(text: "kubernetes", translation: "к8с", example: nil))
+
+        #expect([eclair, kubernetes] == [.alreadyAdded(.mine), .alreadyAdded(.mine)])
+        #expect(try learner.tutor.wordList(.myWords).rows.map(\.headword).sorted() == ["kubernetes", "éclair"])
+    }
+
+    @Test("a learner's word given in Russian input saves a lower-case headword and translation")
+    func russianInputShape() throws {
+        let card = try addAndReadCard("Chatterbox", translation: "Болтушка")
+
+        #expect(card.headword == "chatterbox")
+        #expect(card.correctAnswer == "болтушка")
+    }
+
     @Test("a translation edit with a separator is refused and nothing changes")
     func editRefusesSeparator() throws {
         let learner = try learner()
@@ -101,16 +122,34 @@ struct TranslationShapeTests {
         #expect(try learner.tutor.wordList(.queue).rows.first { $0.headword == "they" }?.translation == "ООН")
     }
 
+    @Test("typing the dictionary translation back in another case leaves no override")
+    func editBackToDictionaryTranslation() throws {
+        let learner = try learner()
+
+        try learner.tutor.editTranslation("think", to: "полагать")
+        try learner.tutor.editTranslation("think", to: "Думать")
+
+        #expect(try ownTranslation(of: "think", in: learner) == "")
+    }
+
+    @Test("a translation edit of a dictionary word with a separator is refused")
+    func editDictionaryWordRefusesSeparator() throws {
+        let learner = try learner()
+
+        #expect(throws: LingvoCoreError.severalTranslations) {
+            try learner.tutor.editTranslation("think", to: "a; b")
+        }
+    }
+
     @Test("CSV import keeps the first variant of a my word translation and does not refuse the row")
     func importMyWordTranslation() throws {
         let learner = try learner()
 
         let summary = try learner.tutor.importCSV(Data("headword,translation\nFlee,Смыться; удрать\n".utf8))
-        let row = try #require(try learner.tutor.wordList(.myWords).rows.first)
+        let rows = try learner.tutor.wordList(.myWords).rows
 
         #expect(summary == CSVImportSummary(words: 1, myWords: 1))
-        #expect(row.headword == "flee")
-        #expect(row.translation == "смыться")
+        #expect(rows == [WordRow(headword: "flee", translation: "смыться", mastery: 0, lastAnswer: nil, source: .mine, status: nil)])
     }
 
     @Test("CSV import shapes an own translation of a dictionary word")
@@ -120,5 +159,49 @@ struct TranslationShapeTests {
         try learner.tutor.importCSV(Data("headword,own_translation\nthey,\"Они, сами\"\n".utf8))
 
         #expect(try learner.tutor.wordList(.queue).rows.first { $0.headword == "they" }?.translation == "они")
+    }
+
+    @Test("a CSV cell with separators only is refused with its line and column")
+    func importSeparatorsOnly() throws {
+        let learner = try learner()
+
+        #expect(throws: CSVImportError.noTranslation(line: 2, column: "translation")) {
+            try learner.tutor.importCSV(Data("headword,translation,example\nflee,\",,,\",They fled.\n".utf8))
+        }
+        #expect(throws: CSVImportError.noTranslation(line: 2, column: "own_translation")) {
+            try learner.tutor.importCSV(Data("headword,own_translation\nthey,\" , \"\n".utf8))
+        }
+    }
+
+    @Test("CSV import keeps an abbreviation headword, and one word in two cases is one word")
+    func importHeadwordCase() throws {
+        let learner = try learner()
+
+        try learner.tutor.importCSV(Data("headword,translation\nAPI,интерфейс\n".utf8))
+
+        #expect(try learner.tutor.wordList(.myWords).rows.map(\.headword) == ["API"])
+        #expect(throws: CSVImportError.duplicateWord(line: 3, headword: "flee")) {
+            try learner.tutor.importCSV(Data("headword,translation\nFlee,смыться\nflee,удрать\n".utf8))
+        }
+    }
+
+    @Test("a cell with several variants longer than a translation imports when its first variant fits")
+    func importLongCellWithShortFirstVariant() throws {
+        let learner = try learner()
+        let long = String(repeating: "о", count: NewMyWord.maxTranslationLength)
+
+        try learner.tutor.importCSV(Data("headword,translation\nflee,\"смыться, \(long)\"\n".utf8))
+
+        #expect(try learner.tutor.wordList(.myWords).rows.map(\.translation) == ["смыться"])
+    }
+
+    /// The `own_translation` cell of the word in an export; "" when the word has no row.
+    private func ownTranslation(of headword: String, in learner: Learner) throws -> String {
+        let csv = try #require(String(bytes: try learner.tutor.exportCSV(), encoding: .utf8))
+        let lines = csv.split(whereSeparator: \.isNewline)
+        let header = try #require(lines.first).split(separator: ",", omittingEmptySubsequences: false)
+        let column = try #require(header.firstIndex(of: "own_translation"))
+        guard let line = lines.first(where: { $0.hasPrefix("\(headword),") }) else { return "" }
+        return String(line.split(separator: ",", omittingEmptySubsequences: false)[column])
     }
 }

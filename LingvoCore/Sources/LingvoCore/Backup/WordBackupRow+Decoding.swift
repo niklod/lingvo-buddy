@@ -17,8 +17,16 @@ extension WordBackupRow {
     }
 
     /// Old exports and hand-made lists may hold several variants; a card keeps the first one, so the row is not refused.
+    /// The limit applies to that variant, not to the whole cell.
     private static func firstVariant(_ column: WordBackupColumn, reader: CSVFieldReader) throws(CSVImportError) -> String? {
-        try reader.text(column, limit: NewMyWord.maxTranslationLength).flatMap { TranslationShape.variants(in: $0).first }
+        guard let cell = reader.text(column) else { return nil }
+        guard let variant = TranslationShape.firstVariant(in: cell) else {
+            throw .noTranslation(line: reader.line, column: column.rawValue)
+        }
+        guard variant.count <= NewMyWord.maxTranslationLength else {
+            throw .tooLong(line: reader.line, column: column.rawValue, limit: NewMyWord.maxTranslationLength)
+        }
+        return variant
     }
 
     private static func myWord(_ headword: String, reader: CSVFieldReader, now: Date) throws(CSVImportError) -> MyWord? {

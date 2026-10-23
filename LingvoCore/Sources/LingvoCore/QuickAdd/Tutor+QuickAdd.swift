@@ -34,11 +34,11 @@ extension Tutor {
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
         // A card holds one variant, and its case must not tell the learner which option is correct.
-        guard let translation = TranslationShape.variants(in: word.translation).first else {
+        guard let translation = TranslationShape.firstVariant(in: word.translation) else {
             throw LingvoCoreError.missingTranslation(word.text)
         }
         let candidate = preview.candidates[0]
-        // Only a word no dictionary knows has the learner's spelling; the others keep the dictionary's.
+        // Only a word with no bundled or extended dictionary entry has the learner's spelling; the others keep the dictionary's.
         let headword = candidate.lookup == nil && candidate.extended == nil
             ? TranslationShape.normalizedCase(preview.headword)
             : preview.headword
@@ -81,7 +81,7 @@ extension Tutor {
         let lookup = try lookup(query)
         let extended = lookup == nil && detailed ? try extendedDictionary?.entry(headword: query) : nil
         let headword = try lookup?.entry.headword
-            ?? userDatabase.myWord(ignoringCase: query)?.headword
+            ?? storedMyWordSpelling(of: query)
             ?? extended?.headword
             ?? query
         return QuickAddCandidate(
@@ -91,6 +91,13 @@ extension Tutor {
             extended: extended,
             system: lookup == nil && detailed ? systemEntry(for: headword) : nil
         )
+    }
+
+    /// SQLite NOCASE folds ASCII letters only, so "Éclair" misses the stored "éclair"; the word is
+    /// stored under its normalized case, so that spelling is asked too.
+    private func storedMyWordSpelling(of query: String) throws -> String? {
+        try userDatabase.myWord(ignoringCase: query)?.headword
+            ?? userDatabase.myWord(headword: TranslationShape.normalizedCase(query))?.headword
     }
 
     private func systemEntry(for headword: String) -> SystemEntry? {

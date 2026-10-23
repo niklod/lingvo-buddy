@@ -97,8 +97,15 @@ final class QuickAddController {
             }
         } catch {
             logger.error("quick add failed: \(String(describing: error), privacy: .private)")
-            model.show(.error(error.localizedDescription))
+            model.show(.error(Self.message(for: error)))
         }
+    }
+
+    /// Core errors are written for the learner; any other error (a database error) holds SQL text,
+    /// which goes to the log only.
+    private static func message(for error: Error) -> String {
+        if let error = error as? LingvoCoreError { return error.localizedDescription }
+        return String(localized: "The word could not be added. Try again.")
     }
 
     /// A Services selection can span lines or carry punctuation around the word.

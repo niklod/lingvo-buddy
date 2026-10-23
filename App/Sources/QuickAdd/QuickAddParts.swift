@@ -47,7 +47,7 @@ struct TranslationPill: View {
                     .foregroundStyle(Theme.Palette.textSecondary)
                     .contentShape(Rectangle())
                     .onTapGesture(perform: remove)
-                    .accessibilityLabel(Text(String(localized: "Remove")))
+                    .accessibilityHidden(true)
             }
         }
             .padding(.horizontal, 12)
@@ -60,7 +60,7 @@ struct TranslationPill: View {
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
             .accessibilityActions {
-                if let remove { Button(String(localized: "Remove"), action: remove) }
+                if let remove { Button("Remove", action: remove) }
             }
     }
 

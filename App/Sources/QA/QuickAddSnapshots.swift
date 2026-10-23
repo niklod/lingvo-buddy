@@ -69,9 +69,12 @@ enum QuickAddSnapshots {
             russianExtendedState("quick_add_russian_extended", text: "улепётывать"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
             machineState("quick_add_machine_en_variants", text: "skedaddle", answer: .translated("Сматываться, смотаться")),
-            machineState("quick_add_machine_en_variants_second", text: "skedaddle", answer: .translated("Сматываться, смотаться"), choosesBubble: 1),
+            machineState(
+                "quick_add_machine_en_variants_second", text: "skedaddle", answer: .translated("Сматываться, смотаться"),
+                chooses: .machine(1)
+            ),
             machineState("quick_add_machine_ru_variants", text: "болтун", answer: .translated("Chatterbox, blabbermouth")),
-            machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
+            machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), chooses: .custom),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
             machineState(
                 "quick_add_custom_bubbles", text: "skedaddle", answer: .translated("Сматываться, смотаться"),
@@ -89,23 +92,26 @@ enum QuickAddSnapshots {
     /// A word the dictionary lacks, with the translator's answer already in. `typesCustom` goes into
     /// the custom field one text at a time, as the learner types or pastes it.
     private static func machineState(
-        _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false,
-        choosesBubble: Int? = nil, typesCustom: [String] = []
+        _ name: String, text: String, answer: MachineTranslation, chooses choice: TranslationChoice? = nil,
+        typesCustom: [String] = []
     ) -> SnapshotState {
         panelState(name) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
-                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query.contains(where: { "а"..."я" ~= $0 }))
+                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: isCyrillic(query))
             }
             await model.machineTranslationSettled()
-            if choosesCustom { model.choose(.custom) }
-            if let choosesBubble { model.choose(.machine(choosesBubble)) }
+            if let choice { model.choose(choice) }
             if !typesCustom.isEmpty { model.choose(.custom) }
             for typed in typesCustom {
                 if model.needsEnglishWord { model.englishWord = typed } else { model.customTranslation = typed }
             }
-            await model.machineTranslationSettled()
             return model
         }
+    }
+
+    /// The whole Cyrillic block, so "ё" and capitals count too.
+    private static func isCyrillic(_ text: String) -> Bool {
+        text.unicodeScalars.contains { (0x0400...0x04FF).contains($0.value) }
     }
 
     /// The extended dictionary has the word. A translator that would answer shows no bubble: it is not asked.

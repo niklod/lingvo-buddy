@@ -15,6 +15,17 @@ struct QuickAddView: View {
     @Bindable var model: QuickAddModel
     var actions = QuickAddActions()
     @FocusState private var focus: Field?
+    /// The custom fields bind to view-owned drafts, not to the model: when a separator makes a bubble,
+    /// the draft is set to the text left in the field, so the field really redraws ("смыться," → "").
+    @State private var translationDraft: String
+    @State private var englishWordDraft: String
+
+    init(model: QuickAddModel, actions: QuickAddActions = QuickAddActions()) {
+        self.model = model
+        self.actions = actions
+        _translationDraft = State(initialValue: model.customTranslation)
+        _englishWordDraft = State(initialValue: model.englishWord)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -91,13 +102,11 @@ struct QuickAddView: View {
                             model.choose(.dictionary(index))
                         }
                     }
-                    machinePills
-                    customBubblePills(focusing: .custom)
-                    customPill(focusing: .custom)
+                    variantPills(focusing: .custom)
                 }
             }
             if model.showsCustomField {
-                QuickAddField(placeholder: String(localized: "Your translation"), text: $model.customTranslation)
+                customField(String(localized: "Your translation"), draft: $translationDraft, model: \.customTranslation)
                     .focused($focus, equals: .custom)
                 MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
             }
@@ -120,13 +129,11 @@ struct QuickAddView: View {
         section(String(localized: "English word for the card")) {
             if !model.machineBubbles.isEmpty || !model.customBubbles.isEmpty {
                 FlowLayout(spacing: 6) {
-                    machinePills
-                    customBubblePills(focusing: .englishWord)
-                    customPill(focusing: .englishWord)
+                    variantPills(focusing: .englishWord)
                 }
             }
             if model.showsEnglishWordField {
-                QuickAddField(placeholder: String(localized: "English word"), text: $model.englishWord)
+                customField(String(localized: "English word"), draft: $englishWordDraft, model: \.englishWord)
                     .focused($focus, equals: .englishWord)
                 MachineSuggestionNote(machine: model.machine) { model.downloadLanguagePack() }
             }
@@ -134,8 +141,26 @@ struct QuickAddView: View {
         }
     }
 
-    @ViewBuilder private var machinePills: some View {
-        ForEach(Array(model.machineBubbles.enumerated()), id: \.offset) { index, bubble in
+    /// The draft goes to the model, and the model's field text comes back: a separator empties it.
+    private func customField(
+        _ placeholder: String, draft: Binding<String>, model field: ReferenceWritableKeyPath<QuickAddModel, String>
+    ) -> some View {
+        QuickAddField(placeholder: placeholder, text: draft)
+            .onChange(of: draft.wrappedValue) { _, typed in
+                model[keyPath: field] = typed
+                draft.wrappedValue = model[keyPath: field]
+            }
+    }
+
+    /// The tail both FlowLayouts share: machine bubbles, custom bubbles and "+ custom variant".
+    @ViewBuilder private func variantPills(focusing field: Field) -> some View {
+        machinePills
+        customBubblePills(focusing: field)
+        customPill(focusing: field)
+    }
+
+    private var machinePills: some View {
+        ForEach(Array(model.machineBubbles.enumerated()), id: \.element) { index, bubble in
             TranslationPill(
                 title: bubble,
                 isSelected: model.choice == .machine(index),
@@ -148,7 +173,7 @@ struct QuickAddView: View {
 
     /// The field stays focused after a pick, so the learner can type the next variant at once.
     private func customBubblePills(focusing field: Field) -> some View {
-        ForEach(Array(model.customBubbles.enumerated()), id: \.offset) { index, bubble in
+        ForEach(Array(model.customBubbles.enumerated()), id: \.element) { index, bubble in
             TranslationPill(
                 title: bubble,
                 isSelected: model.choice == .customBubble(index),
