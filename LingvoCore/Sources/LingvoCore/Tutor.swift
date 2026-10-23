@@ -96,7 +96,7 @@ public final class Tutor: Sendable {
         guard let picked else {
             return .noCard(.noWordsAvailable)
         }
-        return .card(try cards.card(for: withOwnTranslation(picked)))
+        return .card(try cards.card(for: withOwnTranslation(picked), at: now))
     }
 
     /// A translation edited in the Dictionary window replaces the dictionary's
@@ -130,24 +130,32 @@ public final class Tutor: Sendable {
         guard card.options.indices.contains(card.correctIndex) else {
             throw LingvoCoreError.invalidChoice(card.correctIndex)
         }
+        let now = clock.now()
         let (before, after) = try userDatabase.record(
             AnswerRecord(
                 headword: card.headword,
                 direction: card.direction,
                 kind: card.kind,
                 result: outcome,
-                answeredAt: clock.now()
+                answeredAt: now
             ),
             inDictionary: dictionary.entry(headword: card.headword) != nil
         )
+        let isTooSoon = outcome == .correct && before.isTooSoon(at: now)
         return AnswerResult(
             outcome: outcome,
             correctIndex: card.correctIndex,
             correctAnswer: card.correctAnswer,
             becameLearned: before.status != .learned && after.status == .learned,
             isLearned: after.status == .learned,
-            mastery: after.mastery
+            mastery: after.mastery,
+            nextDueAfterTooSoon: isTooSoon ? try nextDueAt(now: now) : nil
         )
+    }
+
+    /// The earliest due date of any started word; a word with no due date is due now.
+    private func nextDueAt(now: Date) throws -> Date {
+        try userDatabase.allProgress().values.map { $0.dueAt ?? now }.min() ?? now
     }
 }
 

@@ -34,6 +34,8 @@ public struct Card: Sendable, Equatable {
     /// own example has none, since nobody translated the learner's text.
     public let russianExample: String?
     public let mastery: Int
+    /// Picked while no word was due: a correct answer adds no dot (see `WordProgress.isTooSoon`).
+    public let isPractice: Bool
 
     public init(
         headword: String,
@@ -47,7 +49,8 @@ public struct Card: Sendable, Equatable {
         correctIndex: Int,
         example: String?,
         mastery: Int,
-        russianExample: String? = nil
+        russianExample: String? = nil,
+        isPractice: Bool = false
     ) {
         self.headword = headword
         self.prompt = prompt
@@ -61,6 +64,7 @@ public struct Card: Sendable, Equatable {
         self.example = example
         self.russianExample = russianExample
         self.mastery = mastery
+        self.isPractice = isPractice
     }
 
     /// Empty for a card built with a `correctIndex` outside `options`; the
@@ -88,6 +92,11 @@ public struct AnswerResult: Sendable, Equatable {
     /// The word is learned after this answer: just now, or a passed review.
     public let isLearned: Bool
     public let mastery: Int
+    /// Set when a correct answer came too soon to add a dot: when the next word
+    /// is due, so the card can suggest a break until then.
+    public let nextDueAfterTooSoon: Date?
+
+    public var isTooSoon: Bool { nextDueAfterTooSoon != nil }
 
     public init(
         outcome: AnswerOutcome,
@@ -95,7 +104,8 @@ public struct AnswerResult: Sendable, Equatable {
         correctAnswer: String,
         becameLearned: Bool,
         isLearned: Bool,
-        mastery: Int
+        mastery: Int,
+        nextDueAfterTooSoon: Date? = nil
     ) {
         self.outcome = outcome
         self.correctIndex = correctIndex
@@ -103,5 +113,6 @@ public struct AnswerResult: Sendable, Equatable {
         self.becameLearned = becameLearned
         self.isLearned = isLearned
         self.mastery = mastery
+        self.nextDueAfterTooSoon = nextDueAfterTooSoon
     }
 }

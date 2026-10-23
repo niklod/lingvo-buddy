@@ -47,6 +47,9 @@ enum QuizCardSnapshots {
             ),
             state("q12_russian_example_hidden", DesignSamples.althoughWithRussianExample, answer: DesignSamples.althoughCorrect),
             state("q13_mine_saved_ipa_pos", DesignSamples.petrichorMine, answer: nil),
+            state("q8_new_correct_too_soon", DesignSamples.requirePractice, answer: DesignSamples.requireTooSoon),
+            state("q9_new_unanswered_practice", DesignSamples.requirePractice, answer: nil),
+            state("q14_correct_too_soon_hours", DesignSamples.requirePractice, answer: DesignSamples.requireTooSoonLong),
         ]
     }
 

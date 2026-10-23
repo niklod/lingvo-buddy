@@ -6,7 +6,7 @@ struct CardFactory {
     let distractors: DistractorPicker
     let random: any RandomSource
 
-    func card(for picked: PickedWord) throws -> Card {
+    func card(for picked: PickedWord, at now: Date) throws -> Card {
         let entry = picked.entry
         let direction = directions.direction(for: picked.progress)
         guard let translation = entry.primaryRussian,
@@ -26,7 +26,8 @@ struct CardFactory {
             correctIndex: options.firstIndex(of: answer) ?? 0,
             example: entry.example,
             mastery: picked.progress?.mastery ?? 0,
-            russianExample: entry.russianExample
+            russianExample: entry.russianExample,
+            isPractice: picked.progress?.isTooSoon(at: now) ?? false
         )
     }
 }

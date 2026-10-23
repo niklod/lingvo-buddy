@@ -7,6 +7,8 @@ struct QuizCardState: Equatable {
         /// `nil` when the learner pressed "Don't know".
         let pickedIndex: Int?
         let result: AnswerResult
+        /// The break hint counts its minutes from here; snapshots pass a fixed moment.
+        var answeredAt = Date.now
     }
 
     let card: Card
@@ -19,6 +21,9 @@ struct QuizCardState: Equatable {
     var isAnswered: Bool { answer != nil }
 
     var mastery: Int { answer?.result.mastery ?? card.mastery }
+
+    /// Before the answer, a practice card says in the footer that no dot will come.
+    var isPracticeShown: Bool { card.isPractice && !isAnswered }
 }
 
 enum OptionAppearance {
@@ -72,6 +77,8 @@ extension QuizCardState {
         guard let answer else { return nil }
         let pair = "\(card.prompt) — \(answer.result.correctAnswer)"
         switch answer.result.outcome {
+        case .correct where answer.result.isTooSoon:
+            return String(localized: "✓ Correct, but no dot")
         case .correct:
             // A passed review also confirms the word as learned (design state q5).
             return answer.result.isLearned
@@ -82,6 +89,29 @@ extension QuizCardState {
         case .dontKnow:
             return String(localized: "Answer: \(pair)")
         }
+    }
+
+    /// After a correct answer that came too soon: the break lasts until the next word is due.
+    var breakHint: AttributedString? {
+        guard let answer, let nextDue = answer.result.nextDueAfterTooSoon else { return nil }
+        // Non-breaking spaces: a wrap inside "1 h 5 min" leaves "1" alone at the line end.
+        let time = Self.breakText(nextDue.timeIntervalSince(answer.answeredAt))
+            .replacingOccurrences(of: " ", with: "\u{00A0}")
+        var hint = AttributedString(localized: "Too fast. Take a break — next word in \(time).")
+        if let range = hint.range(of: time) {
+            hint[range].inlinePresentationIntent = .stronglyEmphasized
+            hint[range].swiftUI.foregroundColor = Theme.Palette.textPrimary
+        }
+        return hint
+    }
+
+    /// "25 min", "1 h 5 min". A word due already still reads "1 min", not "0 min".
+    static func breakText(_ interval: TimeInterval) -> String {
+        let minutes = max(Int((interval / 60).rounded(.up)), 1)
+        let hours = minutes / 60
+        guard hours > 0 else { return String(localized: "\(minutes) min") }
+        let rest = minutes % 60
+        return rest == 0 ? String(localized: "\(hours) h") : String(localized: "\(hours) h \(rest) min")
     }
 
     var russianExample: String? {
@@ -99,6 +129,8 @@ extension QuizCardState {
     var feedbackIsPositive: Bool { answer?.result.outcome == .correct }
 
     var masteryLabel: String {
-        String(localized: "Mastery \(mastery)/\(WordRow.masteryGoal)")
+        if isPracticeShown { return String(localized: "Practice: no new dot") }
+        let label = String(localized: "Mastery \(mastery)/\(WordRow.masteryGoal)")
+        return answer?.result.isTooSoon == true ? String(localized: "\(label) · unchanged") : label
     }
 }

@@ -66,6 +66,11 @@ extension WordProgress {
         )
     }
 
+    /// A correct answer at `time` would add no dot: the word earned one less than an hour ago.
+    func isTooSoon(at time: Date) -> Bool {
+        status == .learning && !isPastGap(at: time)
+    }
+
     private func isPastGap(at time: Date) -> Bool {
         guard let lastCountedCorrectAt else { return true }
         return time.timeIntervalSince(lastCountedCorrectAt) >= Self.countedCorrectGap

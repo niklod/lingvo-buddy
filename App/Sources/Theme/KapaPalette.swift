@@ -16,5 +16,6 @@ extension Theme {
         static let sweat = Color(hex: 0x7FD0F5)
         static let confettiPink = Color(hex: 0xFF5E7E)
         static let sleep = Color(hex: 0x8E9BB0)
+        static let sand = Color(hex: 0x64D2FF)
     }
 }
