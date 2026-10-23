@@ -25,13 +25,13 @@ XCODE_SETTINGS ?=
 # Extra launch arguments for `make run`, for example ARGS="--user-db demo --seed-demo --open card".
 ARGS ?=
 
-# `make pkg` stamps these into the app. The release workflow passes the tag and the run number.
+# `make dmg` stamps these into the app. The release workflow passes the tag and the run number.
 VERSION      ?= 0.0.0-dev
 BUILD_NUMBER ?= 1
-PKG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).pkg
+DMG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).dmg
 
 .PHONY: test test-core test-dictionary check lint lint-swift lint-python build-core-strict app-strict \
-	hooks dictionary import-wiktionary project packages app run snapshots check-panels pkg clean
+	hooks dictionary import-wiktionary project packages app run snapshots check-panels dmg clean
 
 test: test-core test-dictionary
 
@@ -113,12 +113,12 @@ snapshots: app
 		| while read -r file; do cp "$$file" $(BUILD_DIR)/snapshots/; done
 	@ls $(BUILD_DIR)/snapshots
 
-# Release build for Apple silicon only, wrapped into an installer for /Applications.
+# Release build for Apple silicon only, wrapped into a disk image to drag into /Applications.
 # Xcode adds get-task-allow (a debugger may attach) to every build that is not an archive.
-pkg:
+dmg:
 	$(MAKE) app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
 		MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)"
-	tools/release/build-pkg.sh $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app $(VERSION) $(PKG)
+	tools/release/build-dmg.sh $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app $(VERSION) $(DMG)
 
 clean:
 	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist App/LingvoBuddy.entitlements
