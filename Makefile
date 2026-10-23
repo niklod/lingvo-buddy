@@ -19,6 +19,8 @@ XCODE_RESOLVED := LingvoBuddy.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
 XCODEBUILD     := xcodebuild -project LingvoBuddy.xcodeproj -scheme LingvoBuddy -configuration $(CONFIG) \
 	-destination "platform=macOS,arch=$$(uname -m)" \
 	-derivedDataPath $(DERIVED_DIR) -clonedSourcePackagesDirPath $(PACKAGES_DIR)
+# CI (GitHub sets CI=true) prints the whole build log: with -quiet a slow build looks hung.
+XCODEBUILD_QUIET := $(if $(CI),,-quiet)
 # Extra xcodebuild build settings for `make app`. `make app-strict` passes STRICT_WARNINGS=YES.
 XCODE_SETTINGS ?=
 
@@ -99,7 +101,7 @@ packages: project
 	cp $(XCODE_RESOLVED) $(APP_RESOLVED)
 
 app: dictionary project
-	$(XCODEBUILD) -onlyUsePackageVersionsFromResolvedFile -quiet build $(XCODE_SETTINGS)
+	$(XCODEBUILD) -onlyUsePackageVersionsFromResolvedFile $(XCODEBUILD_QUIET) build $(XCODE_SETTINGS)
 
 run: app
 	@# Stop only this checkout's build: other worktrees may run their own copy.

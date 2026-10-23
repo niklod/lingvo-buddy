@@ -20,9 +20,13 @@ concurrency:
 jobs:
   # Runs no third-party code. A tag must point at a commit of main and name a version newer
   # than every published Release: a tag on a side branch or an old version never gets signed.
+  # The build job runs no checks: a tag also waits for a green Core tests run on its commit.
   version:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: read
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
@@ -60,11 +64,34 @@ jobs:
             fi
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
+      # Core tests runs `make check` for each push to main, on the pushed head only. A tag pushed
+      # right after the merge waits for that run instead of failing.
+      - name: Wait for Core tests on the tag commit
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          while :; do
+            run=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/core-tests.yml/runs?head_sha=$GITHUB_SHA&event=push&branch=main&per_page=1" \
+              --jq '.workflow_runs[0] | select(.) | "\(.status) \(.conclusion)"')
+            case "$run" in
+              "")
+                echo "::error::No Core tests run on main for $GITHUB_SHA: tag the head of a push to main"
+                exit 1 ;;
+              "completed success")
+                exit 0 ;;
+              completed*)
+                echo "::error::Core tests did not pass on $GITHUB_SHA ($run)"
+                exit 1 ;;
+            esac
+            echo "Core tests: $run. Waiting."
+            sleep 20
+          done
 
   build:
     needs: version
     runs-on: macos-15
-    timeout-minutes: 45
+    timeout-minutes: 25
     env:
       VERSION: ${{ needs.version.outputs.version }}
     steps:
@@ -75,16 +102,13 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
           xcode-version: latest-stable
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
-        with:
-          path: LingvoCore/.build
-          key: spm-${{ runner.os }}-${{ hashFiles('LingvoCore/Package.resolved') }}
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+      # Restore only: a cache saved by a tag run is visible to that tag alone. Core tests saves
+      # this key on main, and every tag can read the caches of main.
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: build/SourcePackages
           key: app-spm-${{ runner.os }}-${{ hashFiles('App/Package.resolved') }}
-      - run: brew install xcodegen swiftlint ruff
-      - run: make check
+      - run: brew install xcodegen
       - run: make release-app VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
       # An artifact loses the executable bit and the symlinks of a bundle: a tar keeps them.
       - run: tar -C build/DerivedData/Build/Products/Release -cf build/LingvoBuddy-app.tar LingvoBuddy.app

@@ -28,7 +28,7 @@ open /Applications/LingvoBuddy.app
 
 ## Release
 
-Push a tag on a commit of `main`: `git tag v0.4.0 && git push origin v0.4.0`. The version must be newer than every published Release. The Release workflow runs `make check` and builds the app with that version. A separate job signs it with the release certificate (secrets of the `release` Environment), builds the dmg and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the unsigned app as a workflow artifact; it signs and publishes nothing. `make dmg VERSION=0.3.0` builds an ad-hoc signed dmg locally into `build/` and checks the mounted image. `docs/agents/release-signing.md` tells how to make the certificate and test the signing locally.
+Push a tag on a commit of `main`: `git tag v0.4.0 && git push origin v0.4.0`. The version must be newer than every published Release. The Release workflow waits for a green "Core tests" run (`make check`) on the tag's commit, then builds the app with that version. A separate job signs it with the release certificate (secrets of the `release` Environment), builds the dmg and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the unsigned app as a workflow artifact; it signs and publishes nothing. `make dmg VERSION=0.3.0` builds an ad-hoc signed dmg locally into `build/` and checks the mounted image. `docs/agents/release-signing.md` tells how to make the certificate and test the signing locally.
 
 ## Build
 
