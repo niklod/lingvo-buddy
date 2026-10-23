@@ -68,6 +68,27 @@ struct TranslationShapeTests {
         #expect(outcome == .alreadyAdded(.mine))
     }
 
+    @Test("a word with a non-ASCII capital typed again is already added, not a second row")
+    func unknownHeadwordNonASCIIDuplicate() throws {
+        let learner = try learner()
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "Éclair", translation: "эклер", example: nil))
+        _ = try learner.tutor.addMyWord(NewMyWord(text: "Kubernetes", translation: "кубернетес", example: nil))
+
+        let eclair = try learner.tutor.addMyWord(NewMyWord(text: "Éclair", translation: "пирожное", example: nil))
+        let kubernetes = try learner.tutor.addMyWord(NewMyWord(text: "kubernetes", translation: "к8с", example: nil))
+
+        #expect([eclair, kubernetes] == [.alreadyAdded(.mine), .alreadyAdded(.mine)])
+        #expect(try learner.tutor.wordList(.myWords).rows.map(\.headword).sorted() == ["kubernetes", "éclair"])
+    }
+
+    @Test("a learner's word given in Russian input saves a lower-case headword and translation")
+    func russianInputShape() throws {
+        let card = try addAndReadCard("Chatterbox", translation: "Болтушка")
+
+        #expect(card.headword == "chatterbox")
+        #expect(card.correctAnswer == "болтушка")
+    }
+
     @Test("a translation edit with a separator is refused and nothing changes")
     func editRefusesSeparator() throws {
         let learner = try learner()

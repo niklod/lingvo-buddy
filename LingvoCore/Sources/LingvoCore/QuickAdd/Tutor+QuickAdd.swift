@@ -38,7 +38,7 @@ extension Tutor {
             throw LingvoCoreError.missingTranslation(word.text)
         }
         let candidate = preview.candidates[0]
-        // Only a word no dictionary knows has the learner's spelling; the others keep the dictionary's.
+        // Only a word with no bundled or extended dictionary entry has the learner's spelling; the others keep the dictionary's.
         let headword = candidate.lookup == nil && candidate.extended == nil
             ? TranslationShape.normalizedCase(preview.headword)
             : preview.headword
@@ -81,7 +81,7 @@ extension Tutor {
         let lookup = try lookup(query)
         let extended = lookup == nil && detailed ? try extendedDictionary?.entry(headword: query) : nil
         let headword = try lookup?.entry.headword
-            ?? userDatabase.myWord(ignoringCase: query)?.headword
+            ?? storedMyWordSpelling(of: query)
             ?? extended?.headword
             ?? query
         return QuickAddCandidate(
@@ -91,6 +91,13 @@ extension Tutor {
             extended: extended,
             system: lookup == nil && detailed ? systemEntry(for: headword) : nil
         )
+    }
+
+    /// SQLite NOCASE folds ASCII letters only, so "Éclair" misses the stored "éclair"; the word is
+    /// stored under its normalized case, so that spelling is asked too.
+    private func storedMyWordSpelling(of query: String) throws -> String? {
+        try userDatabase.myWord(ignoringCase: query)?.headword
+            ?? userDatabase.myWord(headword: TranslationShape.normalizedCase(query))?.headword
     }
 
     private func systemEntry(for headword: String) -> SystemEntry? {
