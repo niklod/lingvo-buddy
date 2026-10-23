@@ -197,7 +197,8 @@ struct TranslationShapeTests {
 
     /// The `own_translation` cell of the word in an export; "" when the word has no row.
     private func ownTranslation(of headword: String, in learner: Learner) throws -> String {
-        let lines = String(decoding: try learner.tutor.exportCSV(), as: UTF8.self).split(whereSeparator: \.isNewline)
+        let csv = try #require(String(bytes: try learner.tutor.exportCSV(), encoding: .utf8))
+        let lines = csv.split(whereSeparator: \.isNewline)
         let header = try #require(lines.first).split(separator: ",", omittingEmptySubsequences: false)
         let column = try #require(header.firstIndex(of: "own_translation"))
         guard let line = lines.first(where: { $0.hasPrefix("\(headword),") }) else { return "" }

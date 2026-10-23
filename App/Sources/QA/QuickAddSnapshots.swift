@@ -69,7 +69,10 @@ enum QuickAddSnapshots {
             russianExtendedState("quick_add_russian_extended", text: "улепётывать"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
             machineState("quick_add_machine_en_variants", text: "skedaddle", answer: .translated("Сматываться, смотаться")),
-            machineState("quick_add_machine_en_variants_second", text: "skedaddle", answer: .translated("Сматываться, смотаться"), chooses: .machine(1)),
+            machineState(
+                "quick_add_machine_en_variants_second", text: "skedaddle", answer: .translated("Сматываться, смотаться"),
+                chooses: .machine(1)
+            ),
             machineState("quick_add_machine_ru_variants", text: "болтун", answer: .translated("Chatterbox, blabbermouth")),
             machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), chooses: .custom),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
