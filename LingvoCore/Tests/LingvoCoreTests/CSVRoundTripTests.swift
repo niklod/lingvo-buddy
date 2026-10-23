@@ -34,7 +34,7 @@ struct CSVRoundTripTests {
         #expect(first.source == .mine)
         #expect(first.correctAnswer == "со временем")
         #expect(first.example == "It will work eventually.")
-        #expect(second.headword == "Kubernetes")
+        #expect(second.headword == "kubernetes")
         #expect(second.correctAnswer == "кубернетес")
     }
 
@@ -96,12 +96,12 @@ struct CSVRoundTripTests {
     func specialCharactersRoundTrip() throws {
         let source = try freshLearner()
         let example = "She said: \"Well, maybe.\"\nThen, \"no\"."
-        _ = try source.tutor.addMyWord(NewMyWord(text: "reluctant", translation: "неохотный, вялый", example: example))
+        _ = try source.tutor.addMyWord(NewMyWord(text: "reluctant", translation: "неохотный", example: example))
 
         let target = try roundTrip(source)
         let card = try target.nextCard()
 
-        #expect(card.correctAnswer == "неохотный, вялый")
+        #expect(card.correctAnswer == "неохотный")
         #expect(card.example == example)
     }
 

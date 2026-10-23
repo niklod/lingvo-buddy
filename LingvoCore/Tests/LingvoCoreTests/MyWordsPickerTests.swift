@@ -17,7 +17,7 @@ struct MyWordsPickerTests {
 
         let headwords = try (0..<3).map { _ in try learner.answerNext().card.headword }
 
-        #expect(headwords == ["reluctant", "Kubernetes", "they"])
+        #expect(headwords == ["reluctant", "kubernetes", "they"])
     }
 
     @Test("a due learning word comes before a my word")

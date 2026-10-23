@@ -68,7 +68,7 @@ struct QuickAddDuplicateTests {
 
         #expect(try add("kubernetes", "кубер", to: learner) == .alreadyAdded(.mine))
         #expect(try add("RELUCTANT", "нежелающий", to: learner) == .alreadyAdded(.mine))
-        #expect(try learner.tutor.quickAddPreview("KUBERNETES")?.headword == "Kubernetes")
+        #expect(try learner.tutor.quickAddPreview("KUBERNETES")?.headword == "kubernetes")
         #expect(try learner.tutor.stats().myWordsCount == 2)
     }
 

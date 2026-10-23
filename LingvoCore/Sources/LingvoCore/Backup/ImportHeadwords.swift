@@ -26,7 +26,8 @@ struct ImportHeadwords {
         if let entry = try dictionarySpelling(typed) {
             headword = entry
         } else if isMyWord {
-            headword = try myWordSpelling(typed) ?? fileSpellings[typed.lowercased(), default: typed]
+            headword = try myWordSpelling(typed)
+                ?? fileSpellings[typed.lowercased(), default: TranslationShape.normalizedCase(typed)]
             fileSpellings[typed.lowercased()] = headword
         } else {
             throw CSVImportError.unknownWord(line: line, headword: typed)
