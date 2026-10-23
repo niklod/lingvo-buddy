@@ -11,7 +11,7 @@ public enum UpdateFailureReason: Sendable, Equatable {
     private static let sparkleSignatureCodes: Set<Int> = [3001, 3002]
     private static let offlineURLCodes: Set<Int> = [
         NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut,
-        NSURLErrorCannotFindHost, NSURLErrorNetworkConnectionLost,
+        NSURLErrorCannotFindHost, NSURLErrorCannotConnectToHost, NSURLErrorNetworkConnectionLost,
     ]
 
     public init(error: any Error) {
@@ -105,11 +105,13 @@ public enum UpdateState: Sendable, Equatable {
         }
     }
 
-    // A check (the scheduled one included) must not touch a running download or restart.
+    // A found version must not touch a running download or restart. Sparkle runs one session at a
+    // time, so "nothing found" during a download is the Retry check itself: the update is gone.
     private func afterCheck(found version: String?) -> UpdateState {
-        switch self {
-        case .downloading, .restarting: self
-        case .idle, .available, .failed: version.map(UpdateState.available) ?? .idle
+        switch (self, version) {
+        case (.restarting, _), (.downloading, .some): self
+        case (.downloading, nil): .idle
+        case (.idle, _), (.available, _), (.failed, _): version.map(UpdateState.available) ?? .idle
         }
     }
 

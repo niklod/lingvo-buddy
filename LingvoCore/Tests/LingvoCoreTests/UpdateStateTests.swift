@@ -74,13 +74,19 @@ struct UpdateStateTests {
         #expect(UpdateState.available("0.3.0").applying(.foundNothing) == .idle)
     }
 
-    @Test("a check never interrupts a download or a restart")
+    @Test("a found version never interrupts a download or a restart")
     func checksDuringInstall() {
         let downloading = UpdateState.downloading(version: "0.3.0", fraction: 0.4)
-        #expect(downloading.applying(.foundNothing) == downloading)
         #expect(downloading.applying(.foundVersion("0.4.0")) == downloading)
         let restarting = UpdateState.restarting(version: "0.3.0")
         #expect(restarting.applying(.foundNothing) == restarting)
+        #expect(restarting.applying(.foundVersion("0.4.0")) == restarting)
+    }
+
+    @Test("a Retry whose check finds no update anymore hides the button")
+    func retryFindsNothing() {
+        let retrying = UpdateState.failed(version: "0.3.0", reason: .other).applying(.installClicked)
+        #expect(retrying.applying(.foundNothing) == .idle)
     }
 
     @Test("a newer check result replaces the offered version, and a failure keeps waiting")
@@ -155,6 +161,8 @@ struct UpdateFailureReasonTests {
         arguments: [
             NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut,
             NSURLErrorCannotFindHost, NSURLErrorNetworkConnectionLost,
+            // The server refuses or the route is down: the learner sees no difference from offline.
+            NSURLErrorCannotConnectToHost,
         ]
     )
     func noConnection(code: Int) {
@@ -182,5 +190,21 @@ struct UpdateFailureReasonTests {
         let inner = NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet)
         let outer = NSError(domain: "SUSparkleErrorDomain", code: 2001, userInfo: [NSUnderlyingErrorKey: inner])
         #expect(UpdateFailureReason(error: outer) == .noConnection)
+    }
+}
+
+@Suite("Updater gate")
+struct UpdaterGateTests {
+    @Test("a Release version X.Y.Z starts the updater", arguments: ["0.4.0", "1.2.3", "10.20.300"])
+    func release(version: String) {
+        #expect(UpdaterGate.allows(shortVersion: version))
+    }
+
+    @Test(
+        "dev builds and malformed versions never start it",
+        arguments: ["0.0.0-dev.12", "0.0.0-dev", "0.1", "1.2.3.4", "v1.2.3", "1.2.x", "1..3", " 1.2.3", ""]
+    )
+    func notRelease(version: String) {
+        #expect(!UpdaterGate.allows(shortVersion: version))
     }
 }
