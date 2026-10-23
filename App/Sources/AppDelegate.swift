@@ -11,9 +11,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var coordinator: CardCoordinator?
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
-    /// The one holder of the update state (#57 and #59 observe and feed it).
     let updates = UpdateCenter()
-    /// Nil in Debug and dev builds.
+    /// Nil in Debug and dev builds, and when Sparkle did not start.
     private var updater: SparkleUpdater?
     private var quickAdd: QuickAddController?
     private var dictionaryWindow: DictionaryWindowController?
@@ -48,7 +47,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func start(with options: LaunchOptions) throws {
         let services = try AppEnvironment.makeServices(options: options)
+        #if DEBUG
         if let forced = options.forcedUpdateState { updates.force(forced.state) }
+        #endif
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
         let focus = SystemFocusStatus()

@@ -161,9 +161,6 @@ The state of a card the learner gave focus to or answered. An engaged card does 
 **Waiting card**:
 A card that auto-closed and waits for the learner. A click on the menu-bar icon reopens it. Code: `CardSchedule.waitingCard`.
 
-**Update button**:
-The tiny button in the tray header that downloads the newer version and restarts the app. Code: `UpdateButtonView`, `UpdateState`, `UpdateCenter`.
-
 **Waiting dot**:
 The dot on the menu-bar icon while a waiting card exists.
 _Avoid_: badge, dot (alone)
@@ -190,6 +187,9 @@ _Avoid_: tray icon
 **Update mark**:
 The small arrow on the menu-bar icon while a newer version is available or its install failed.
 _Avoid_: badge, dot (alone; see waiting dot)
+
+**Update button**:
+The tiny button in the tray header that downloads the newer version and restarts the app. Code: `UpdateButtonView`, `UpdateState`, `UpdateCenter`.
 
 **Tray**:
 The panel under the menu-bar icon with the streak, progress, today's stats, pause, interval, the add-word field and the app menu items. Code: `TrayMenu*`, `TrayPanel`.

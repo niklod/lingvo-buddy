@@ -27,15 +27,9 @@ enum TrayMenuSnapshots {
         ] + updateStates
     }
 
-    /// The four states of the "Auto update · tray header flow" board.
+    /// The four states of the "Auto update · tray header flow" board, as `--update-state` shows them.
     private static var updateStates: [SnapshotState] {
-        let version = ForcedUpdateState.fakeVersion
-        return [
-            state("tray_update_available", update: .available(version)),
-            state("tray_update_downloading", update: .downloading(version: version, fraction: 0.42)),
-            state("tray_update_restarting", update: .restarting(version: version)),
-            state("tray_update_failed", update: .failed(version: version, reason: .noConnection)),
-        ]
+        ForcedUpdateState.allCases.map { state("tray_update_\($0.rawValue)", update: $0.state) }
     }
 
     private static func state(

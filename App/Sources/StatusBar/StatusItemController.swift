@@ -8,28 +8,16 @@ struct StatusItemActions {
     var toggleTray: (NSStatusBarButton) -> Void = { _ in }
 }
 
-/// The two marks the menu-bar icon can show; each combination has its own glyph image.
-private struct StatusMarks: Hashable {
-    let waiting: Bool
-    let updateMark: Bool
-}
-
 /// The Kapa status item. A left click reopens a waiting card (dot shown);
 /// otherwise, and on a right click, it toggles the tray menu.
 @MainActor
 final class StatusItemController: NSObject {
-    /// Built once: `arm()` asks for the dot on every timer event, all day long.
-    private static let glyphs: [StatusMarks: NSImage] = Dictionary(uniqueKeysWithValues: [
-        StatusMarks(waiting: false, updateMark: false),
-        StatusMarks(waiting: true, updateMark: false),
-        StatusMarks(waiting: false, updateMark: true),
-        StatusMarks(waiting: true, updateMark: true),
-    ].map { ($0, StatusGlyph.image(waiting: $0.waiting, updateMark: $0.updateMark)) })
+    private static let glyphs = StatusGlyphImages()
 
     private let statusItem: NSStatusItem
     private let actions: StatusItemActions
     private let update: UpdateCenter
-    private var marks = StatusMarks(waiting: false, updateMark: false)
+    private var marks = StatusMarks()
 
     init(update: UpdateCenter, actions: StatusItemActions) {
         self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -37,7 +25,7 @@ final class StatusItemController: NSObject {
         self.update = update
         super.init()
         guard let button = statusItem.button else { return }
-        button.image = Self.glyphs[marks]
+        button.image = Self.glyphs.image(marks)
         button.setAccessibilityTitle("LingvoBuddy")
         button.target = self
         button.action = #selector(clicked(_:))
@@ -65,7 +53,7 @@ final class StatusItemController: NSObject {
     private func show(_ next: StatusMarks) {
         guard next != marks else { return }
         marks = next
-        statusItem.button?.image = Self.glyphs[next]
+        statusItem.button?.image = Self.glyphs.image(next)
     }
 
     @objc private func clicked(_ sender: NSStatusBarButton) {
