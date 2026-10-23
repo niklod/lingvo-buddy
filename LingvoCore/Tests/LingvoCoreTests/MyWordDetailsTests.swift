@@ -34,7 +34,7 @@ struct MyWordDetailsTests {
         _ = try learner.tutor.addMyWord(NewMyWord(text: "Kubernetes", translation: "кубернетес", example: nil))
         let rows = try learner.tutor.wordList(.myWords).rows
         let petrichor = try #require(rows.first { $0.headword == "petrichor" })
-        let kubernetes = try #require(rows.first { $0.headword == "Kubernetes" })
+        let kubernetes = try #require(rows.first { $0.headword == "kubernetes" })
 
         #expect(petrichor == WordRow(
             headword: "petrichor",
@@ -47,7 +47,7 @@ struct MyWordDetailsTests {
             partOfSpeech: .noun
         ))
         #expect(kubernetes == WordRow(
-            headword: "Kubernetes", translation: "кубернетес", mastery: 0, lastAnswer: nil, source: .mine, status: nil
+            headword: "kubernetes", translation: "кубернетес", mastery: 0, lastAnswer: nil, source: .mine, status: nil
         ))
     }
 
@@ -67,7 +67,7 @@ struct MyWordDetailsTests {
         #expect(card.ipa == "/ˈpetrɪkɔː/")
         #expect(card.partOfSpeech == .noun)
         #expect(rows.first { $0.headword == "petrichor" }?.partOfSpeech == .noun)
-        #expect(rows.first { $0.headword == "Kubernetes" }?.ipa == nil)
+        #expect(rows.first { $0.headword == "kubernetes" }?.ipa == nil)
     }
 
     @Test("a CSV file from before the two columns still imports, with empty IPA and part of speech")

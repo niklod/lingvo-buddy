@@ -13,7 +13,7 @@ struct CSVImportHeadwordTests {
         try learner.tutor.importCSV(Data("headword,translation\nkubernetes,к8с\n".utf8))
         let rows = try learner.tutor.wordList(.myWords).rows
 
-        #expect(rows.map(\.headword) == ["Kubernetes"])
+        #expect(rows.map(\.headword) == ["kubernetes"])
         #expect(rows.first?.translation == "к8с")
     }
 

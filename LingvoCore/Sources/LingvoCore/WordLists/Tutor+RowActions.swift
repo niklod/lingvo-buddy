@@ -34,11 +34,13 @@ extension Tutor {
     /// Cards then ask for the new translation. Setting a dictionary word back
     /// to its dictionary translation drops the learner's own one.
     public func editTranslation(_ headword: String, to translation: String) throws {
-        let translation = translation.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !translation.isEmpty else { throw LingvoCoreError.missingTranslation(headword) }
-        guard translation.count <= NewMyWord.maxTranslationLength else {
+        let typed = translation.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !typed.isEmpty else { throw LingvoCoreError.missingTranslation(headword) }
+        guard !TranslationShape.hasSeparator(in: typed) else { throw LingvoCoreError.severalTranslations }
+        guard typed.count <= NewMyWord.maxTranslationLength else {
             throw LingvoCoreError.tooLong(.translation, limit: NewMyWord.maxTranslationLength)
         }
+        let translation = TranslationShape.normalizedCase(typed)
         defer { forgetDeferral(of: headword) }
         if try userDatabase.myWord(headword: headword) != nil {
             try userDatabase.updateMyWordTranslation(headword, to: translation)
@@ -49,7 +51,8 @@ extension Tutor {
         }
         try userDatabase.setTranslationOverride(
             headword,
-            to: translation == entry.primaryRussian ? nil : translation
+            // The dictionary spelling may have a capital ("Земля"): typing it back must still drop the override.
+            to: [typed, translation].contains(entry.primaryRussian) ? nil : translation
         )
     }
 
