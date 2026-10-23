@@ -11,6 +11,10 @@ LingvoBuddy is a sandboxed, ad-hoc signed `LSUIElement` app on macOS 15+, and th
 - **Save and open panels need a window.** Open `NSSavePanel` / `NSOpenPanel` as a sheet on a titled window (Settings), never on a non-activating panel.
 - **macOS 26+ paints toolbar glass over SwiftUI headers.** An `NSToolbar`, or a SwiftUI `ScrollView` under a transparent title bar, draws over a custom header. The Dictionary window has no toolbar and hides the top scroll edge effect (`scrollEdgeEffectHidden`).
 
+## SwiftUI text fields
+
+- **A binding setter that rewrites the typed text does not redraw the field.** SwiftUI updates the `NSTextField` only when the binding returns a new value. When the setter turns "смыться," into a bubble and the field text goes back to "", the field keeps "смыться,". The binding returns the typed text until the next main-actor turn, then the new text. Snapshots do not catch it. (`showTypedTextForOneTurn` in `App/Sources/QuickAdd/QuickAddModel.swift`)
+
 ## Status item
 
 - **Keep `statusItem.menu` nil.** A menu on the status item eats every click, also the click that reopens a waiting card. The icon's action reopens the card or toggles the tray. (`App/Sources/StatusBar/StatusItemController.swift`)
