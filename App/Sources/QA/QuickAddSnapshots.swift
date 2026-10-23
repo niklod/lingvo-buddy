@@ -73,15 +73,24 @@ enum QuickAddSnapshots {
             machineState("quick_add_machine_ru_variants", text: "болтун", answer: .translated("Chatterbox, blabbermouth")),
             machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
+            machineState(
+                "quick_add_custom_bubbles", text: "skedaddle", answer: .translated("Сматываться, смотаться"),
+                typesCustom: ["Смыться, удрать,", "слинять"]
+            ),
+            machineState(
+                "quick_add_custom_bubbles_ru", text: "болтун", answer: .translated("Chatterbox, blabbermouth"),
+                typesCustom: ["Windbag, ", "gasbag/"]
+            ),
             machineState("quick_add_machine_missing_pack", text: "serendipity", answer: .languagePackMissing),
             machineState("quick_add_machine_error", text: "serendipity", answer: .failed),
         ]
     }
 
-    /// A word the dictionary lacks, with the translator's answer already in.
+    /// A word the dictionary lacks, with the translator's answer already in. `typesCustom` goes into
+    /// the custom field one text at a time, as the learner types or pastes it.
     private static func machineState(
         _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false,
-        choosesBubble: Int? = nil
+        choosesBubble: Int? = nil, typesCustom: [String] = []
     ) -> SnapshotState {
         panelState(name) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
@@ -90,6 +99,11 @@ enum QuickAddSnapshots {
             await model.machineTranslationSettled()
             if choosesCustom { model.choose(.custom) }
             if let choosesBubble { model.choose(.machine(choosesBubble)) }
+            if !typesCustom.isEmpty { model.choose(.custom) }
+            for typed in typesCustom {
+                if model.needsEnglishWord { model.englishWord = typed } else { model.customTranslation = typed }
+            }
+            await model.machineTranslationSettled()
             return model
         }
     }

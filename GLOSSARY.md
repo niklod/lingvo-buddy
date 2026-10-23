@@ -62,6 +62,9 @@ _Avoid_: custom word, user word
 **Translation shape**:
 The form of every translation a learner saves, the same as a dictionary translation: one variant with a lower-case first letter ("США" keeps its capitals). Separators are `,` `;` `/`. A my word that no dictionary knows gets the same case rule for its headword. Code: `TranslationShape`.
 
+**Custom bubble**:
+A variant the learner typed in a quick-add custom field and ended with a separator. It has an × to remove it, and a new word drops it. Text left in the field without a separator counts as a variant on Add. Code: `CustomVariants`, `TranslationChoice.customBubble`.
+
 ### Cards
 
 **Card**:

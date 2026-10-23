@@ -25,6 +25,8 @@ struct TranslationPill: View {
     var isCustom = false
     /// A small note after the title ("machine translation") for a bubble that is not from a dictionary.
     var mark: String?
+    /// The × of a bubble the learner typed; `nil` for bubbles they cannot remove.
+    var remove: (() -> Void)?
     let action: () -> Void
 
     /// A tap gesture, not a Button: a Button would take keyboard focus away from
@@ -39,6 +41,14 @@ struct TranslationPill: View {
                     .font(.system(size: Theme.FontSize.small))
                     .foregroundStyle(Theme.Palette.chipMineText)
             }
+            if let remove {
+                Image(systemName: "xmark")
+                    .font(.system(size: Theme.FontSize.small, weight: .semibold))
+                    .foregroundStyle(Theme.Palette.textSecondary)
+                    .contentShape(Rectangle())
+                    .onTapGesture(perform: remove)
+                    .accessibilityLabel(Text(String(localized: "Remove")))
+            }
         }
             .padding(.horizontal, 12)
             .frame(height: QuickAddTheme.pillHeight)
@@ -49,6 +59,9 @@ struct TranslationPill: View {
             .onTapGesture(perform: action)
             .accessibilityElement(children: .combine)
             .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+            .accessibilityActions {
+                if let remove { Button(String(localized: "Remove"), action: remove) }
+            }
     }
 
     private var foreground: Color {

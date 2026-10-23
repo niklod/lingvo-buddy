@@ -6,6 +6,8 @@ public enum TranslationChoice: Equatable, Sendable {
     case dictionary(Int)
     /// The "+ custom variant" text.
     case custom
+    /// Index into the custom bubbles: variants the learner finished with a separator.
+    case customBubble(Int)
     /// Index into the machine translation bubbles: the card's translation, or the English word for Russian input.
     case machine(Int)
 
