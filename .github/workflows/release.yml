@@ -101,6 +101,12 @@ jobs:
           RELEASE_CERT_P12_BASE64: ${{ secrets.RELEASE_CERT_P12_BASE64 }}
           RELEASE_CERT_PASSWORD: ${{ secrets.RELEASE_CERT_PASSWORD }}
         run: tools/release/import-certificate.sh "$KEYCHAIN"
+      # On the runner, codesign finds no identity in a keychain outside the user search list,
+      # even with --keychain. The runner is thrown away, so the changed list does not matter.
+      - name: Add the keychain to the search list
+        run: |
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          security find-identity -p codesigning "$KEYCHAIN"
       - name: Sign the app and build the disk image
         run: >-
           tools/release/sign-release.sh build/LingvoBuddy.app "LingvoBuddy Release"
