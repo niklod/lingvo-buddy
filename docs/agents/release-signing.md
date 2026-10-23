@@ -139,6 +139,8 @@ A dmg with one changed byte gives "The download is damaged". A stopped server gi
 - **A refused signature is nested.** Sparkle 2.10 reports a bad EdDSA signature as `SUInstallationError` (4005) whose underlying 4005 holds `SUValidationError` (3002) in `NSMultipleUnderlyingErrorsKey`. `UpdateFailureReason` walks the whole error tree.
 - **Sparkle quits the app before the next frame.** An instant "install" reply in `showReady(toInstallAndRelaunch:)` never draws "Restarting…"; the driver waits 0.7 s first.
 - **Scheduled checks fail silently.** Sparkle calls `showUpdaterError` only in sessions the learner started (the update button). A failed launch or 6-hour check only reaches `updater(_:didAbortWithError:)`, which logs it. "Nothing found" reaches the updater delegate for both kinds.
+- **A held reply stops the schedule.** While the reply block of `showUpdateFound` waits, the session stays open, and Sparkle schedules no next 6-hour check: the button would offer an old version forever. The driver replies at once: "dismiss" for a background find, "install" after a click. A click starts its own user-initiated check.
+- **A check during a session is dropped.** `checkForUpdates()` does nothing while `sessionInProgress` is true (a launch or 6-hour check runs). The click then waits for that session: if it finds the update, the driver installs it. `updater(_:didFinishUpdateCycleFor:error:)` ends every session; there the driver starts the click's own check after a clean end, or fails with the session's error.
 - **The check at launch is explicit.** Sparkle's own schedule skips a launch within 6 hours of the last check, so `SparkleUpdater` calls `checkForUpdatesInBackground()` right after `start()`.
 
 ## EdDSA traps

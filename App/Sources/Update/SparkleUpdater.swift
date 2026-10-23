@@ -19,7 +19,8 @@ final class SparkleUpdater: NSObject, SPUUpdaterDelegate {
         super.init()
     }
 
-    /// Nil in Debug builds and in dev builds (`0.0.0-dev.N`): they never check and never install.
+    /// Nil in Debug builds and in dev builds (`0.0.0-dev.N`), which never check and never install,
+    /// and when Sparkle did not start.
     static func startIfRelease(center: UpdateCenter, bundle: Bundle = .main) -> SparkleUpdater? {
         let version = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
         guard isReleaseBuild, UpdaterGate.allows(shortVersion: version) else {
@@ -47,7 +48,12 @@ final class SparkleUpdater: NSObject, SPUUpdaterDelegate {
             return false
         }
         self.updater = updater
-        driver.checkForUpdates = { [weak updater] in updater?.checkForUpdates() }
+        // Sparkle drops a check while a session runs; the driver then waits for the session's end.
+        driver.checkForUpdates = { [weak updater] in
+            guard let updater, !updater.sessionInProgress else { return false }
+            updater.checkForUpdates()
+            return true
+        }
         center.onInstallRequested = { [weak driver] in driver?.install() }
         // Sparkle's own schedule skips a launch within 6 hours of the last check; the spec wants one.
         if updater.automaticallyChecksForUpdates {
@@ -60,9 +66,15 @@ final class SparkleUpdater: NSObject, SPUUpdaterDelegate {
         center.send(.foundNothing)
     }
 
-    // Also "nothing found" (SUNoUpdateError). A failed scheduled check ends only here: the driver
-    // hears of failures in sessions that the learner started, so the tray stays as it is.
+    // Also "nothing found" (SUNoUpdateError). The driver hears of failures only in sessions that
+    // showed an update, so a failed scheduled check leaves the tray as it is, unless a click
+    // waits for it (`sessionEnded`).
     func updater(_ updater: SPUUpdater, didAbortWithError error: any Error) {
         Self.logger.notice("update cycle aborted: \(error as NSError, privacy: .public)")
+    }
+
+    // Every session ends here, also one that dropped the learner's click.
+    func updater(_ updater: SPUUpdater, didFinishUpdateCycleFor updateCheck: SPUUpdateCheck, error: (any Error)?) {
+        driver.sessionEnded(error: error)
     }
 }
