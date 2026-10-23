@@ -26,6 +26,11 @@ jobs:
         with:
           path: LingvoCore/.build
           key: spm-${{ runner.os }}-${{ hashFiles('LingvoCore/Package.resolved') }}
+      # The Release workflow restores this key: a tag run can read the caches of main.
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: build/SourcePackages
+          key: app-spm-${{ runner.os }}-${{ hashFiles('App/Package.resolved') }}
       - run: swift --version
       # The dictionary tools use only the Python standard library (3.9+), so no pip install.
       - run: python3 --version
