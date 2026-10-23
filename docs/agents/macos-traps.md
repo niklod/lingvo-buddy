@@ -13,7 +13,7 @@ LingvoBuddy is a sandboxed, ad-hoc signed `LSUIElement` app on macOS 15+, and th
 
 ## SwiftUI text fields
 
-- **A binding setter that rewrites the typed text does not redraw the field.** SwiftUI updates the `NSTextField` only when the binding returns a new value. When the setter turns "смыться," into a bubble and the field text goes back to "", the field keeps "смыться,". The binding returns the typed text until the next main-actor turn, then the new text. Snapshots do not catch it. (`showTypedTextForOneTurn` in `App/Sources/QuickAdd/QuickAddModel.swift`)
+- **A binding setter that rewrites the typed text does not redraw the field.** SwiftUI updates the `NSTextField` only when the binding returns a new value. When the setter turns "смыться," into a bubble and the field text goes back to "", the field keeps "смыться,". Bind the field to a view-owned `@State` draft instead. `.onChange(of: draft)` sends the draft to the model and sets the draft to the model's remaining text, so the field redraws at once. Snapshots do not catch it. (`customField` in `App/Sources/QuickAdd/QuickAddView.swift`)
 
 ## Status item
 
