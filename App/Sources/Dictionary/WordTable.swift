@@ -20,7 +20,6 @@ struct WordTableColumns {
 struct WordTable: View {
     @Bindable var model: DictionaryModel
     @State private var editing: WordRow?
-    @State private var editedTranslation = ""
     @State private var confirming: PendingConfirmation?
 
     var body: some View {
@@ -36,12 +35,10 @@ struct WordTable: View {
                 }
             }
         }
-        .alert(Text("Edit translation"), isPresented: isEditing, presenting: editing) { row in
-            TextField(text: $editedTranslation) { Text("Translation") }
-            Button("Save") { model.perform(.editTranslation(editedTranslation), on: row) }
-            Button("Cancel", role: .cancel) {}
-        } message: { row in
-            Text(row.headword)
+        .sheet(item: $editing) { row in
+            TranslationEditSheet(row: row) { text in
+                model.perform(.editTranslation(text), on: row)
+            }
         }
         .confirmationDialog(
             confirming?.title ?? "",
@@ -87,10 +84,7 @@ struct WordTable: View {
 
     @ViewBuilder
     private func menu(for row: WordRow) -> some View {
-        Button("Edit translation…") {
-            editedTranslation = row.translation
-            editing = row
-        }
+        Button("Edit translation…") { editing = row }
         Button("Delete…") { confirming = .delete(row) }
             .disabled(!row.canDelete)
         Button("Reset progress…") { confirming = .reset(row) }
@@ -104,10 +98,6 @@ struct WordTable: View {
             .font(.system(size: Theme.FontSize.body))
             .foregroundStyle(Theme.Palette.textSecondary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var isEditing: Binding<Bool> {
-        Binding(get: { editing != nil }, set: { if !$0 { editing = nil } })
     }
 
     private var isConfirming: Binding<Bool> {

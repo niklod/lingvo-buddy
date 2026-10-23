@@ -36,7 +36,7 @@ extension Tutor {
     public func editTranslation(_ headword: String, to translation: String) throws {
         let typed = translation.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !typed.isEmpty else { throw LingvoCoreError.missingTranslation(headword) }
-        guard !TranslationShape.hasSeparator(in: typed) else { throw LingvoCoreError.severalTranslations }
+        if let problem = TranslationEditInput.problem(in: typed) { throw problem }
         guard typed.count <= NewMyWord.maxTranslationLength else {
             throw LingvoCoreError.tooLong(.translation, limit: NewMyWord.maxTranslationLength)
         }
