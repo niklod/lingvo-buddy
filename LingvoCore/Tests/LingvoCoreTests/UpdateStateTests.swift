@@ -191,6 +191,18 @@ struct UpdateFailureReasonTests {
         let outer = NSError(domain: "SUSparkleErrorDomain", code: 2001, userInfo: [NSUnderlyingErrorKey: inner])
         #expect(UpdateFailureReason(error: outer) == .noConnection)
     }
+
+    // The shape Sparkle 2.10 reports for a dmg whose EdDSA signature does not match.
+    @Test("a signature error deep inside an installation error means verification failed")
+    func nestedVerification() {
+        let mismatch = NSError(domain: "SUSparkleErrorDomain", code: 3002)
+        let validation = NSError(
+            domain: "SUSparkleErrorDomain", code: 4005,
+            userInfo: [NSMultipleUnderlyingErrorsKey: [mismatch]]
+        )
+        let outer = NSError(domain: "SUSparkleErrorDomain", code: 4005, userInfo: [NSUnderlyingErrorKey: validation])
+        #expect(UpdateFailureReason(error: outer) == .verificationFailed)
+    }
 }
 
 @Suite("Updater gate")

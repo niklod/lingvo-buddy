@@ -14,23 +14,36 @@ public enum UpdateFailureReason: Sendable, Equatable {
         NSURLErrorCannotFindHost, NSURLErrorCannotConnectToHost, NSURLErrorNetworkConnectionLost,
     ]
 
+    /// Sparkle nests the cause: a download wraps the URL error, and a refused signature sits two
+    /// levels under an installation error (4005). A real tree is 3 levels deep; the limit stops a cycle.
+    private static let maxErrorDepth = 6
+
     public init(error: any Error) {
-        let nsError = error as NSError
-        // Sparkle wraps the network error of a failed download; look through the wrapper.
-        if let inner = nsError.userInfo[NSUnderlyingErrorKey] as? NSError,
-           Self.isOffline(inner) {
+        let errors = Self.flatten(error as NSError, depth: Self.maxErrorDepth)
+        if errors.contains(where: Self.isOffline) {
             self = .noConnection
-        } else if Self.isOffline(nsError) {
-            self = .noConnection
-        } else if nsError.domain == Self.sparkleDomain, Self.sparkleSignatureCodes.contains(nsError.code) {
+        } else if errors.contains(where: Self.isSignatureError) {
             self = .verificationFailed
         } else {
             self = .other
         }
     }
 
+    private static func flatten(_ error: NSError, depth: Int) -> [NSError] {
+        guard depth > 0 else { return [error] }
+        var children = (error.userInfo[NSMultipleUnderlyingErrorsKey] as? [NSError]) ?? []
+        if let underlying = error.userInfo[NSUnderlyingErrorKey] as? NSError {
+            children.append(underlying)
+        }
+        return [error] + children.flatMap { flatten($0, depth: depth - 1) }
+    }
+
     private static func isOffline(_ error: NSError) -> Bool {
         error.domain == NSURLErrorDomain && offlineURLCodes.contains(error.code)
+    }
+
+    private static func isSignatureError(_ error: NSError) -> Bool {
+        error.domain == sparkleDomain && sparkleSignatureCodes.contains(error.code)
     }
 }
 
