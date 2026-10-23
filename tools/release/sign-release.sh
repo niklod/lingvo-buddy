@@ -99,7 +99,8 @@ designated=$(codesign --display --requirements - "$app" 2>&1 | grep '^designated
 details=$(codesign --display --verbose "$app" 2>&1)
 grep -q 'flags=0x[0-9a-f]*(.*runtime' <<< "$details" || fail "no hardened runtime"
 codesign --display --entitlements - --xml "$app" 2> /dev/null > "$work/signed.plist"
-[ "$(plutil -convert json -o - "$work/signed.plist")" = "$(plutil -convert json -o - "$entitlements")" ] \
+# XML, not JSON: plutil writes XML dictionaries with sorted keys, so equal entitlements compare equal.
+[ "$(plutil -convert xml1 -o - "$work/signed.plist")" = "$(plutil -convert xml1 -o - "$entitlements")" ] \
 	|| fail "the signed entitlements differ from $entitlements_source"
 signed=$(cat "$work/signed.plist")
 # A signature without the sandbox entitlement starts the app outside its container: no data.
