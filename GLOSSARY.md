@@ -161,6 +161,9 @@ The state of a card the learner gave focus to or answered. An engaged card does 
 **Waiting card**:
 A card that auto-closed and waits for the learner. A click on the menu-bar icon reopens it. Code: `CardSchedule.waitingCard`.
 
+**Update button**:
+The tiny button in the tray header that downloads the newer version and restarts the app. Code: `UpdateButtonView`, `UpdateState`, `UpdateCenter`.
+
 **Waiting dot**:
 The dot on the menu-bar icon while a waiting card exists.
 _Avoid_: badge, dot (alone)

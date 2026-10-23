@@ -24,10 +24,26 @@ enum TrayMenuSnapshots {
         [
             state("tray_menu", pausedUntil: nil, highlighted: .showWordNow),
             state("tray_menu_paused", pausedUntil: now.addingTimeInterval(60 * 60), highlighted: nil),
+        ] + updateStates
+    }
+
+    /// The four states of the "Auto update · tray header flow" board.
+    private static var updateStates: [SnapshotState] {
+        let version = ForcedUpdateState.fakeVersion
+        return [
+            state("tray_update_available", update: .available(version)),
+            state("tray_update_downloading", update: .downloading(version: version, fraction: 0.42)),
+            state("tray_update_restarting", update: .restarting(version: version)),
+            state("tray_update_failed", update: .failed(version: version, reason: .noConnection)),
         ]
     }
 
-    private static func state(_ name: String, pausedUntil: Date?, highlighted: TrayRow?) -> SnapshotState {
+    private static func state(
+        _ name: String,
+        pausedUntil: Date? = nil,
+        highlighted: TrayRow? = nil,
+        update: UpdateState = .idle
+    ) -> SnapshotState {
         let tray = TrayMenuState(
             stats: designStats,
             schedule: TrayScheduleInfo(
@@ -41,7 +57,7 @@ enum TrayMenuSnapshots {
         // The inline TextField is AppKit-backed: ImageRenderer would draw a placeholder.
         return SnapshotState(name: name, usesWindow: true, isPanel: true) {
             AnyView(
-                TrayMenuView(state: tray, highlighted: highlighted) { TrayAddWordField { _ in } }
+                TrayMenuView(state: tray, update: UpdateCenter(state: update), highlighted: highlighted) { TrayAddWordField { _ in } }
                     .background(Theme.Palette.desktop)
             )
         }

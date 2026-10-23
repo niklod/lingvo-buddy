@@ -11,6 +11,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var coordinator: CardCoordinator?
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
+    /// The one holder of the update state (#57 and #59 observe and feed it).
+    let updates = UpdateCenter()
     private var quickAdd: QuickAddController?
     private var dictionaryWindow: DictionaryWindowController?
     private var csvTransfer: CSVTransferController?
@@ -44,6 +46,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func start(with options: LaunchOptions) throws {
         let services = try AppEnvironment.makeServices(options: options)
+        if let forced = options.forcedUpdateState { updates.force(forced.state) }
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
         let focus = SystemFocusStatus()
@@ -54,7 +57,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let tray = TrayMenuController(
             tutor: tutor,
             commands: trayCommands(for: coordinator, quickAdd: quickAdd),
-            errors: errors
+            errors: errors,
+            update: updates
         )
         makeStatusItem(coordinator: coordinator, tray: tray)
         registerHotKeys(coordinator: coordinator, tray: tray, quickAdd: quickAdd)

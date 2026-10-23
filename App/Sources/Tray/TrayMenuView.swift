@@ -21,6 +21,8 @@ struct TrayMenuView<AddWordField: View>: View {
     private static var kapaHeight: CGFloat { 30 }
 
     let state: TrayMenuState
+    /// Read in `body`, so the button follows the download while the tray stays open.
+    var update = UpdateCenter()
     var actions = TrayMenuActions()
     /// Snapshots show the design's highlighted first row; the app starts with none.
     @State var highlighted: TrayRow?
@@ -53,15 +55,30 @@ struct TrayMenuView<AddWordField: View>: View {
     }
 
     private var header: some View {
-        HStack(spacing: 8) {
-            KapaMoodView(mood: state.kapaMood, height: Self.kapaHeight)
-            Text(verbatim: "LingvoBuddy")
-                .font(.system(size: Theme.FontSize.title, weight: .bold))
-                .foregroundStyle(Theme.Palette.textPrimary)
-            Spacer(minLength: 8)
-            Text(verbatim: state.streakLabel)
-                .font(.system(size: Theme.FontSize.caption))
-                .foregroundStyle(Theme.Palette.textSecondary)
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                KapaMoodView(mood: state.kapaMood, height: Self.kapaHeight)
+                Text(verbatim: "LingvoBuddy")
+                    .font(.system(size: Theme.FontSize.title, weight: .bold))
+                    .foregroundStyle(Theme.Palette.textPrimary)
+                    .lineLimit(1)
+                    .fixedSize()
+                Spacer(minLength: 4)
+                if let button = update.state.button {
+                    UpdateButtonView(button: button, action: update.clickInstall)
+                }
+                // "Restarting…" leaves no room for the streak, and the app quits in seconds.
+                if update.state.button?.label != .restarting {
+                    Text(verbatim: state.streakLabel)
+                        .font(.system(size: Theme.FontSize.caption))
+                        .foregroundStyle(Theme.Palette.textSecondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                }
+            }
+            if let reason = update.state.failureReason {
+                UpdateFailureLine(reason: reason)
+            }
         }
     }
 
