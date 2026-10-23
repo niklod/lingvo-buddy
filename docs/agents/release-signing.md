@@ -88,6 +88,7 @@ security delete-keychain "$dir/test.keychain-db"
 - **`grep -q` after `codesign` under `pipefail`** fails the pipeline when grep stops early. Read the output into a variable first.
 - **Resource bundles stay unsigned.** `GRDB_GRDB.bundle` and `KeyboardShortcuts_KeyboardShortcuts.bundle` hold no code; Xcode seals them as app resources, and the script does the same.
 - **Nested code is signed inside out.** The script signs every code bundle (`.app`, `.xpc`, `.appex`, `.framework`, `.plugin`, `.bundle` with `Contents/MacOS`) and every bare Mach-O file under `Contents`, deepest first, with the same certificate, hardened runtime and preserved entitlements. Sparkle's framework, XPC services, `Autoupdate` and `Updater.app` need nothing more.
+- **A self-signed certificate has no Team ID.** Hardened runtime library validation then refuses to load `Sparkle.framework` ("mapping process and mapped file (non-platform) have different Team IDs"), even though both carry the same certificate: dyld kills the app at launch. The app has `com.apple.security.cs.disable-library-validation` for this. Ad-hoc Debug builds never show the trap.
 
 ## Make the EdDSA key (once)
 
@@ -117,6 +118,24 @@ OPENSSL="$(brew --prefix openssl@3)/bin/openssl" tools/release/sign-appcast.sh \
 ```
 
 To check the signature with Sparkle's `sign_update`, use a throwaway key, never the real one. `sign_update -f` reads the base64 of the 32-byte seed (`openssl pkey -in k.pem -outform DER | tail -c 32 | base64`). `sign_update -f <seed file> --verify <dmg> <signature>` must exit 0. Ed25519 is deterministic: `sign_update -f <seed file> <dmg>` prints the same signature as the script.
+
+## Test an update locally
+
+A Release build ignores `--user-db` and opens the learner's database, and a Debug build never starts the updater. The safe test is a Release build with another bundle id, so it gets its own sandbox container. The feed URL and the EdDSA public key are the build settings `SPARKLE_FEED_URL` and `SPARKLE_PUBLIC_ED_KEY` in `project.yml`, so the test needs no code change:
+
+1. Make a throwaway certificate (above, with a short `-days`), import it with `import-certificate.sh`, and make a throwaway Ed25519 key.
+2. Build 1.0.0 and 1.0.1 with `make app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO MARKETING_VERSION=1.0.1 CURRENT_PROJECT_VERSION=102 PRODUCT_BUNDLE_IDENTIFIER=com.niklod.LingvoBuddy.sparkletest SPARKLE_FEED_URL=http://127.0.0.1:8759/appcast.xml SPARKLE_PUBLIC_ED_KEY=<throwaway public key>"` (101 for 1.0.0). Copy each app out of DerivedData and sign it with `KEYCHAIN=… sign-release.sh`.
+3. Write the appcast with `sign-appcast.sh` and the throwaway key, and point its enclosure URL at the local server. Serve the folder on 127.0.0.1 (ATS allows plain HTTP to an IP address). Limit the server rate (about 700 KB/s) to see the progress.
+4. Copy 1.0.0 to a folder you own and `open` it. The update button shows within seconds; a click must relaunch the app on build 102.
+
+A dmg with one changed byte gives "The download is damaged". A stopped server gives "no connection" (`NSURLErrorCannotConnectToHost`). Delete the test apps afterwards with `lsregister -u`, or the Services menu shows their item. macOS protects the test container (`~/Library/Containers/com.niklod.LingvoBuddy.sparkletest`) from the shell: delete it in Finder.
+
+## Sparkle traps
+
+- **A refused signature is nested.** Sparkle 2.10 reports a bad EdDSA signature as `SUInstallationError` (4005) whose underlying 4005 holds `SUValidationError` (3002) in `NSMultipleUnderlyingErrorsKey`. `UpdateFailureReason` walks the whole error tree.
+- **Sparkle quits the app before the next frame.** An instant "install" reply in `showReady(toInstallAndRelaunch:)` never draws "Restarting…"; the driver waits 0.7 s first.
+- **Scheduled checks fail silently.** Sparkle calls `showUpdaterError` only in sessions the learner started (the update button). A failed launch or 6-hour check only reaches `updater(_:didAbortWithError:)`, which logs it. "Nothing found" reaches the updater delegate for both kinds.
+- **The check at launch is explicit.** Sparkle's own schedule skips a launch within 6 hours of the last check, so `SparkleUpdater` calls `checkForUpdatesInBackground()` right after `start()`.
 
 ## EdDSA traps
 

@@ -11,26 +11,39 @@ public enum UpdateFailureReason: Sendable, Equatable {
     private static let sparkleSignatureCodes: Set<Int> = [3001, 3002]
     private static let offlineURLCodes: Set<Int> = [
         NSURLErrorNotConnectedToInternet, NSURLErrorTimedOut,
-        NSURLErrorCannotFindHost, NSURLErrorNetworkConnectionLost,
+        NSURLErrorCannotFindHost, NSURLErrorCannotConnectToHost, NSURLErrorNetworkConnectionLost,
     ]
 
+    /// Sparkle nests the cause: a download wraps the URL error, and a refused signature sits two
+    /// levels under an installation error (4005). A real tree is 3 levels deep; the limit stops a cycle.
+    private static let maxErrorDepth = 6
+
     public init(error: any Error) {
-        let nsError = error as NSError
-        // Sparkle wraps the network error of a failed download; look through the wrapper.
-        if let inner = nsError.userInfo[NSUnderlyingErrorKey] as? NSError,
-           Self.isOffline(inner) {
+        let errors = Self.flatten(error as NSError, depth: Self.maxErrorDepth)
+        if errors.contains(where: Self.isOffline) {
             self = .noConnection
-        } else if Self.isOffline(nsError) {
-            self = .noConnection
-        } else if nsError.domain == Self.sparkleDomain, Self.sparkleSignatureCodes.contains(nsError.code) {
+        } else if errors.contains(where: Self.isSignatureError) {
             self = .verificationFailed
         } else {
             self = .other
         }
     }
 
+    private static func flatten(_ error: NSError, depth: Int) -> [NSError] {
+        guard depth > 0 else { return [error] }
+        var children = (error.userInfo[NSMultipleUnderlyingErrorsKey] as? [NSError]) ?? []
+        if let underlying = error.userInfo[NSUnderlyingErrorKey] as? NSError {
+            children.append(underlying)
+        }
+        return [error] + children.flatMap { flatten($0, depth: depth - 1) }
+    }
+
     private static func isOffline(_ error: NSError) -> Bool {
         error.domain == NSURLErrorDomain && offlineURLCodes.contains(error.code)
+    }
+
+    private static func isSignatureError(_ error: NSError) -> Bool {
+        error.domain == sparkleDomain && sparkleSignatureCodes.contains(error.code)
     }
 }
 
@@ -105,11 +118,13 @@ public enum UpdateState: Sendable, Equatable {
         }
     }
 
-    // A check (the scheduled one included) must not touch a running download or restart.
+    // A found version must not touch a running download or restart. Sparkle runs one session at a
+    // time, so "nothing found" during a download is the Retry check itself: the update is gone.
     private func afterCheck(found version: String?) -> UpdateState {
-        switch self {
-        case .downloading, .restarting: self
-        case .idle, .available, .failed: version.map(UpdateState.available) ?? .idle
+        switch (self, version) {
+        case (.restarting, _), (.downloading, .some): self
+        case (.downloading, nil): .idle
+        case (.idle, _), (.available, _), (.failed, _): version.map(UpdateState.available) ?? .idle
         }
     }
 

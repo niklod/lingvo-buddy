@@ -22,6 +22,9 @@ packages:
   KeyboardShortcuts:
     url: https://github.com/sindresorhus/KeyboardShortcuts
     exactVersion: "3.1.0"
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    exactVersion: "2.10.0"
 targets:
   LingvoBuddy:
     type: application
@@ -50,6 +53,10 @@ targets:
         STRICT_WARNINGS: NO
         SWIFT_TREAT_WARNINGS_AS_ERRORS: $(STRICT_WARNINGS)
         GCC_TREAT_WARNINGS_AS_ERRORS: $(STRICT_WARNINGS)
+        # Build settings, so a local update test can build against its own feed and throwaway key
+        # (docs/agents/release-signing.md, "Test an update locally"). Releases use these values.
+        SPARKLE_FEED_URL: https://github.com/niklod/lingvo-buddy/releases/latest/download/appcast.xml
+        SPARKLE_PUBLIC_ED_KEY: c6UWqJics6t+Dz4AdSJ39GC9RiuCbtRCEV/HyxvwbWU=
     info:
       path: App/Info.plist
       properties:
@@ -69,16 +76,36 @@ targets:
               - NSStringPboardType
             # Without NSRequiredContext (even empty) macOS registers the service but hides it.
             NSRequiredContext: {}
+        # Sparkle: only Release builds with an X.Y.Z version start the updater, and the app
+        # shows the update button, never a Sparkle window.
+        SUFeedURL: $(SPARKLE_FEED_URL)
+        SUPublicEDKey: $(SPARKLE_PUBLIC_ED_KEY)
+        SUEnableAutomaticChecks: true
+        SUScheduledCheckInterval: 21600
+        SUAutomaticallyUpdate: false
+        SUAllowsAutomaticUpdates: false
+        SUVerifyUpdateBeforeExtraction: true
+        # A sandboxed app cannot replace itself: Sparkle's installer starts through this XPC service.
+        SUEnableInstallerLauncherService: true
     entitlements:
       path: App/LingvoBuddy.entitlements
       properties:
         com.apple.security.app-sandbox: true
         # CSV export / import: Powerbox save and open panels grant access to the chosen file.
         com.apple.security.files.user-selected.read-write: true
+        # Sparkle: the appcast fetch and the dmg download, and the installer services it talks to.
+        com.apple.security.network.client: true
+        com.apple.security.temporary-exception.mach-lookup.global-name:
+          - $(PRODUCT_BUNDLE_IDENTIFIER)-spks
+          - $(PRODUCT_BUNDLE_IDENTIFIER)-spki
+        # The self-signed release certificate has no Team ID, and hardened runtime library validation
+        # then refuses to load Sparkle.framework ("different Team IDs"), even with the same certificate.
+        com.apple.security.cs.disable-library-validation: true
     dependencies:
       - package: LingvoCore
         product: LingvoCore
       - package: KeyboardShortcuts
+      - package: Sparkle
 schemes:
   LingvoBuddy:
     build:
