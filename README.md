@@ -4,18 +4,29 @@
 
 ## Install
 
-Each Release has `LingvoBuddy-<version>.pkg` (Apple silicon, macOS 15+). It installs the app into `/Applications` and restarts a running copy.
+Each Release has `LingvoBuddy-<version>.dmg` (Apple silicon, macOS 15+).
+
+1. Quit LingvoBuddy if it runs: Finder cannot replace an open app.
+2. Open the dmg and drag `LingvoBuddy` onto the `Applications` alias. Confirm the replacement of the old version.
+3. Eject the disk image and start LingvoBuddy from `/Applications`.
+
+The app is not notarized. macOS blocks the first launch of each version that you download in a browser: open System Settings → Privacy & Security and click "Open Anyway". After an update, macOS can ask for the Focus permission again.
+
+`gh` does not mark the download as quarantined, so this install from the terminal skips the "Open Anyway" step:
 
 ```sh
-gh release download --repo niklod/lingvo-buddy --pattern '*.pkg' --output /tmp/LingvoBuddy.pkg --clobber
-sudo installer -pkg /tmp/LingvoBuddy.pkg -target /
+gh release download --repo niklod/lingvo-buddy --pattern '*.dmg' --output /tmp/LingvoBuddy.dmg --clobber
+osascript -e 'quit app "LingvoBuddy"'
+hdiutil attach -nobrowse -mountpoint /tmp/LingvoBuddy-mount /tmp/LingvoBuddy.dmg
+rm -rf /Applications/LingvoBuddy.app
+ditto /tmp/LingvoBuddy-mount/LingvoBuddy.app /Applications/LingvoBuddy.app
+hdiutil detach /tmp/LingvoBuddy-mount
+open /Applications/LingvoBuddy.app
 ```
-
-The app is not notarized. `gh` does not mark the download as quarantined, so macOS does not block it. A pkg downloaded in a browser is blocked once: open System Settings → Privacy & Security and click "Open Anyway". After an update, macOS can ask for the Focus permission again.
 
 ## Release
 
-Push a tag: `git tag v0.2.0 && git push origin v0.2.0`. The Release workflow runs `make check`, builds the pkg with that version and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the pkg as a workflow artifact and publishes nothing. `make pkg VERSION=0.2.0` builds the same pkg locally into `build/`.
+Push a tag: `git tag v0.3.0 && git push origin v0.3.0`. The Release workflow runs `make check`, builds the dmg with that version and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the dmg as a workflow artifact and publishes nothing. `make dmg VERSION=0.3.0` builds the same dmg locally into `build/` and checks the mounted image.
 
 ## Build
 

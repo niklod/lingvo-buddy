@@ -1,7 +1,7 @@
 name: Release
 
-# A tag push `vX.Y.Z` publishes a Release with the installer. A manual run only uploads the
-# installer as a workflow artifact, to test the pipeline without a Release.
+# A tag push `vX.Y.Z` publishes a Release with the disk image. A manual run only uploads the
+# disk image as a workflow artifact, to test the pipeline without a Release.
 on:
   push:
     tags: ['v*']
@@ -52,14 +52,14 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - run: brew install xcodegen swiftlint ruff
       - run: make check
-      - run: make pkg VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
+      - run: make dmg VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
         env:
           VERSION: ${{ steps.version.outputs.version }}
-      - name: Upload the installer
+      - name: Upload the disk image
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: LingvoBuddy-${{ steps.version.outputs.version }}
-          path: build/LingvoBuddy-${{ steps.version.outputs.version }}.pkg
+          path: build/LingvoBuddy-${{ steps.version.outputs.version }}.dmg
           if-no-files-found: error
 
   publish:
@@ -78,5 +78,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.build.outputs.version }}
         run: >-
-          gh release create "$GITHUB_REF_NAME" "LingvoBuddy-$VERSION.pkg"
+          gh release create "$GITHUB_REF_NAME" "LingvoBuddy-$VERSION.dmg"
           --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
