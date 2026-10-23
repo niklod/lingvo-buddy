@@ -13,6 +13,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var tray: TrayMenuController?
     /// The one holder of the update state (#57 and #59 observe and feed it).
     let updates = UpdateCenter()
+    /// Nil in Debug and dev builds.
+    private var updater: SparkleUpdater?
     private var quickAdd: QuickAddController?
     private var dictionaryWindow: DictionaryWindowController?
     private var csvTransfer: CSVTransferController?
@@ -70,6 +72,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
         }
         coordinator.start()
+        updater = SparkleUpdater.startIfRelease(center: updates)
         try scheduleLaunchViews(options: options, tutor: tutor, focus: focus)
     }
 
