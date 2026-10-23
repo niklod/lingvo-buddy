@@ -103,7 +103,6 @@ enum OpenableView: String, CaseIterable {
     case dictionary
 }
 
-/// The value of `--update-state`.
 enum ForcedUpdateState: String, CaseIterable {
     case available
     case downloading
@@ -115,7 +114,7 @@ enum ForcedUpdateState: String, CaseIterable {
 
     var state: UpdateState {
         switch self {
-        case .available: .available(Self.fakeVersion)
+        case .available: .available(version: Self.fakeVersion)
         case .downloading: .downloading(version: Self.fakeVersion, fraction: 0.42)
         case .restarting: .restarting(version: Self.fakeVersion)
         case .failed: .failed(version: Self.fakeVersion, reason: .noConnection)

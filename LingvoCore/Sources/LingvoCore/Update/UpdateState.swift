@@ -6,7 +6,8 @@ public enum UpdateFailureReason: Sendable, Equatable {
     case verificationFailed
     case other
 
-    // Sparkle's `SUSparkleErrorDomain` codes, copied here so LingvoCore does not import Sparkle.
+    // Copied from Sparkle 2.10.0 `SUErrors.h`, so LingvoCore does not import Sparkle:
+    // `SUSparkleErrorDomain`, `SUSignatureError` = 3001 and `SUValidationError` = 3002.
     private static let sparkleDomain = "SUSparkleErrorDomain"
     private static let sparkleSignatureCodes: Set<Int> = [3001, 3002]
     private static let offlineURLCodes: Set<Int> = [
@@ -57,25 +58,37 @@ public enum UpdateEvent: Sendable, Equatable {
     case failed(UpdateFailureReason)
 }
 
-/// What the tray header shows for the update button.
 public struct UpdateButton: Sendable, Equatable {
     public enum Label: Sendable, Equatable {
-        case version(String)
+        /// The button shows `version`.
+        case version
         case percent(Int)
         case restarting
         case retry
     }
 
     public let label: Label
-    public let acceptsClicks: Bool
-    /// The version the click installs, for the tooltip.
+    /// The version the click installs: the label of an offered update, and the tooltip.
     public let version: String
+
+    public init(label: Label, version: String) {
+        self.label = label
+        self.version = version
+    }
+
+    /// A running download or restart must not start a second one.
+    public var acceptsClicks: Bool {
+        switch label {
+        case .version, .retry: true
+        case .percent, .restarting: false
+        }
+    }
 }
 
 /// The update flow as a pure state machine: events in, the next state and the UI values out.
 public enum UpdateState: Sendable, Equatable {
     case idle
-    case available(String)
+    case available(version: String)
     case downloading(version: String, fraction: Double)
     case restarting(version: String)
     case failed(version: String, reason: UpdateFailureReason)
@@ -96,13 +109,13 @@ public enum UpdateState: Sendable, Equatable {
         case .idle:
             nil
         case .available(let version):
-            UpdateButton(label: .version(version), acceptsClicks: true, version: version)
+            UpdateButton(label: .version, version: version)
         case .downloading(let version, let fraction):
-            UpdateButton(label: .percent(Int((fraction * 100).rounded())), acceptsClicks: false, version: version)
+            UpdateButton(label: .percent(Int((fraction * 100).rounded())), version: version)
         case .restarting(let version):
-            UpdateButton(label: .restarting, acceptsClicks: false, version: version)
+            UpdateButton(label: .restarting, version: version)
         case .failed(let version, _):
-            UpdateButton(label: .retry, acceptsClicks: true, version: version)
+            UpdateButton(label: .retry, version: version)
         }
     }
 
@@ -118,13 +131,14 @@ public enum UpdateState: Sendable, Equatable {
         }
     }
 
-    // A found version must not touch a running download or restart. Sparkle runs one session at a
-    // time, so "nothing found" during a download is the Retry check itself: the update is gone.
+    // Sparkle runs one session at a time, so a check during a download is the one the click
+    // started: what it finds is what downloads, and "nothing found" means the update is gone.
     private func afterCheck(found version: String?) -> UpdateState {
         switch (self, version) {
-        case (.restarting, _), (.downloading, .some): self
+        case (.restarting, _): self
+        case (.downloading(_, let fraction), .some(let found)): .downloading(version: found, fraction: fraction)
         case (.downloading, nil): .idle
-        case (.idle, _), (.available, _), (.failed, _): version.map(UpdateState.available) ?? .idle
+        case (.idle, _), (.available, _), (.failed, _): version.map { .available(version: $0) } ?? .idle
         }
     }
 
@@ -137,7 +151,9 @@ public enum UpdateState: Sendable, Equatable {
 
     private func afterProgress(_ fraction: Double) -> UpdateState {
         guard case .downloading(let version, _) = self else { return self }
-        return .downloading(version: version, fraction: min(max(fraction, 0), 1))
+        // NaN passes min and max unchanged, and the button's Int(percent) would trap on it.
+        let known = fraction.isNaN ? 0 : fraction
+        return .downloading(version: version, fraction: min(max(known, 0), 1))
     }
 
     private func afterVerified() -> UpdateState {
