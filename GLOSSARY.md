@@ -60,7 +60,7 @@ A word the learner added with quick add, with the learner's translation and opti
 _Avoid_: custom word, user word
 
 **Translation shape**:
-The form of every translation a learner saves, the same as a dictionary translation: one variant with a lower-case first letter ("США" keeps its capitals). Separators are `,` `;` `/`. A my word that no dictionary knows gets the same case rule for its headword. Code: `TranslationShape`.
+The form of every translation a learner saves, the same as a dictionary translation: one variant with a lower-case first letter. The first letter after leading quotes is lowered too («Спартак» → «спартак»). A variant with any later capital stays as typed ("США", "PhD", "McKinsey"). Separators are `,` `;` `/`. A my word that no dictionary knows gets the same case rule for its headword. Code: `TranslationShape`.
 
 **Custom bubble**:
 A variant the learner typed in a quick-add custom field and ended with a separator. It has an × to remove it, and a new word drops it. Text left in the field without a separator counts as a variant on Add. Code: `CustomVariants`, `TranslationChoice.customBubble`.

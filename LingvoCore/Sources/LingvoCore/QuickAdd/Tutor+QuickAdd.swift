@@ -34,7 +34,7 @@ extension Tutor {
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
         // A card holds one variant, and its case must not tell the learner which option is correct.
-        guard let translation = TranslationShape.variants(in: word.translation).first else {
+        guard let translation = TranslationShape.firstVariant(in: word.translation) else {
             throw LingvoCoreError.missingTranslation(word.text)
         }
         let candidate = preview.candidates[0]

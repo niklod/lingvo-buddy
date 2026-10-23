@@ -13,14 +13,26 @@ struct TranslationShapeRuleTests {
         #expect(TranslationShape.variants(in: "слово") == ["слово"])
     }
 
-    @Test("the first letter is lowered unless the second letter is upper case too")
+    @Test("the first letter is lowered unless any later letter is upper case")
     func normalizedCase() {
-        #expect(TranslationShape.normalizedCase("Москва") == "москва")
-        #expect(TranslationShape.normalizedCase("США") == "США")
-        #expect(TranslationShape.normalizedCase("API") == "API")
-        #expect(TranslationShape.normalizedCase("Я") == "я")
-        #expect(TranslationShape.normalizedCase("iPhone") == "iPhone")
-        #expect(TranslationShape.normalizedCase("") == "")
+        let typed = ["Москва", "Я", "iPhone", "", "США", "API", "PhD", "McKinsey", "WiFi"]
+        let shaped = ["москва", "я", "iPhone", "", "США", "API", "PhD", "McKinsey", "WiFi"]
+
+        #expect(typed.map(TranslationShape.normalizedCase) == shaped)
+    }
+
+    @Test("the first letter after leading quotes or punctuation is lowered")
+    func normalizedCaseAfterQuotes() {
+        let typed = ["«Спартак»", "\"Сматываться\"", "(Слово)", "«ООН»"]
+        let shaped = ["«спартак»", "\"сматываться\"", "(слово)", "«ООН»"]
+
+        #expect(typed.map(TranslationShape.normalizedCase) == shaped)
+    }
+
+    @Test("the first variant is the one a card saves")
+    func firstVariant() {
+        #expect(TranslationShape.firstVariant(in: " , Смыться; удрать") == "смыться")
+        #expect(TranslationShape.firstVariant(in: " ; ") == nil)
     }
 
     @Test("a separator is found even when no variant is typed yet")

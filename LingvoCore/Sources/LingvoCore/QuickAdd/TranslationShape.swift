@@ -7,7 +7,7 @@ public enum TranslationShape {
     /// A learner types or pastes variants with these; a machine translation also joins them with ", ".
     public static let separators: Set<Character> = [",", ";", "/"]
 
-    /// Whether the text holds more than one variant, even when the parts around the separator are blank.
+    /// Whether the learner ended a variant: the text has a separator, even when the part after it is blank.
     public static func hasSeparator(in text: String) -> Bool {
         text.contains(where: separators.contains)
     }
@@ -20,11 +20,17 @@ public enum TranslationShape {
             .filter { !$0.isEmpty && seen.insert($0).inserted }
     }
 
-    /// Lowers the first letter, unless the second letter is upper case too: "Москва" becomes "москва",
-    /// and an abbreviation such as "США" or "API" stays as it is.
+    /// The variant a card saves from the text; `nil` when the text has no variant at all.
+    public static func firstVariant(in text: String) -> String? {
+        variants(in: text).first
+    }
+
+    /// Lowers the first letter (after leading quotes or punctuation), unless any later letter is upper
+    /// case: "Москва" becomes "москва", «Спартак» becomes «спартак», and "США", "PhD" or "McKinsey" stay.
     public static func normalizedCase(_ variant: String) -> String {
-        guard let first = variant.first, first.isUppercase else { return variant }
-        if let second = variant.dropFirst().first, second.isUppercase { return variant }
-        return first.lowercased() + variant.dropFirst()
+        guard let index = variant.firstIndex(where: \.isLetter), variant[index].isUppercase else { return variant }
+        let rest = variant[variant.index(after: index)...]
+        guard !rest.contains(where: \.isUppercase) else { return variant }
+        return variant[..<index] + variant[index].lowercased() + rest
     }
 }
