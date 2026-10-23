@@ -8,11 +8,11 @@ extension QuickAddModel {
         let line = Self.infoLine(of: details ?? candidate)
         if !line.isEmpty { return line }
         if needsEnglishWord {
-            return machineBubble == nil ? String(localized: "Not in the dictionary: type the English word") : ""
+            return machineBubbles.isEmpty ? String(localized: "Not in the dictionary: type the English word") : ""
         }
         // An English candidate for Russian input is a real translation: the line is empty without details.
         if isRussianInput { return "" }
-        return machineBubble == nil ? Self.notInDictionaryLine : ""
+        return machineBubbles.isEmpty ? Self.notInDictionaryLine : ""
     }
 
     /// A bundled word shows its tier or rank; Wiktionary and system data have none, so the line is
@@ -28,7 +28,7 @@ extension QuickAddModel {
     /// Details from a dictionary do not make a translation: the line stays until a bubble comes.
     var missingTranslationNote: String? {
         guard !isRussianInput, let candidate, candidate.lookup == nil, candidate.translations.isEmpty,
-              machineBubble == nil, !metaLine.isEmpty, metaLine != Self.notInDictionaryLine else { return nil }
+              machineBubbles.isEmpty, !metaLine.isEmpty, metaLine != Self.notInDictionaryLine else { return nil }
         return Self.notInDictionaryLine
     }
 

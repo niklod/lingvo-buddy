@@ -38,6 +38,8 @@ Agent shells on this Mac have Accessibility and Screen Recording permission. Use
 - Two instances put two Kapa icons side by side. Find your own icon by PID before you click: `osascript -e 'tell application "System Events" to tell (first process whose unix id is <pid>) to get {position, size} of every UI element of every menu bar'`.
 - Move the pointer away from the status icon before a synthetic click on it. The click registers only when the pointer enters the icon from outside.
 - Send keys as CGEvent key codes. System Events `keystroke` and Unicode-string CGEvents (`keyboardSetUnicodeString`) do not reach our non-activating panels (card, quick add) reliably.
+- Set `flags` on every CGEvent key, also to `[]`. After a ⌘V the next key keeps the Command flag, and quick add ignores ⌘↵ as Add.
+- Type Cyrillic text by paste: save the pasteboard text (`pbpaste`), `pbcopy` the text, send ⌘V (key code 9), then restore the old text. The `pbpaste`/`pbcopy` restore keeps plain text only.
 - The save and open panels run out of process. Fill them with AX (`set value of text field "Save As:"`), or the keys may land in Finder.
 - Test the Services item without a UI: call `NSPerformService("Add to LingvoBuddy", pasteboard)`. If the item does not show in the Services menu, run `/System/Library/CoreServices/pbs -flush`.
 

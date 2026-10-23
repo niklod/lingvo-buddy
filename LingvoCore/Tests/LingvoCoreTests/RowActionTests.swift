@@ -87,7 +87,7 @@ struct RowActionTests {
         _ = try learner.tutor.addMyWord(NewMyWord(text: "Kubernetes", translation: "кубернетес", example: nil))
         try learner.answerNext()
 
-        try learner.tutor.deleteWord("Kubernetes")
+        try learner.tutor.deleteWord("kubernetes")
         let page = try learner.tutor.wordList(.myWords)
 
         #expect(page.rows.isEmpty)

@@ -11,6 +11,8 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
     case tooLong(Field, limit: Int)
     /// The card's English word must be English: Russian text there would add another word's card.
     case notEnglishWord(String)
+    /// A card has one translation: a separator in an edited translation would bring back several variants.
+    case severalTranslations
     /// Only my words can be deleted; dictionary words can be reset instead.
     case notMyWord(String)
 
@@ -39,6 +41,8 @@ public enum LingvoCoreError: Error, Equatable, LocalizedError {
             "The \(field.rawValue) is too long: at most \(limit) characters."
         case .notEnglishWord(let text):
             "\"\(text)\" is Russian. Type the English word for the card."
+        case .severalTranslations:
+            "One translation per card."
         case .notMyWord(let headword):
             "\"\(headword)\" is a dictionary word, not one of your words: it cannot be deleted."
         }

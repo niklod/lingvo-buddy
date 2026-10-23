@@ -4,24 +4,50 @@ import Foundation
 public enum TranslationChoice: Equatable, Sendable {
     /// Index into the dictionary translations.
     case dictionary(Int)
-    /// The "+ custom variant" text.
+    /// The text in the custom field (translation or English word), as opposed to a finished bubble.
     case custom
-    /// The machine translation bubble: the card's translation, or the English word for Russian input.
-    case machine
+    /// Index into the custom bubbles: variants the learner finished with a separator.
+    case customBubble(Int)
+    /// Index into the machine translation bubbles: the card's translation, or the English word for Russian input.
+    case machine(Int)
 
     /// The first dictionary translation is preselected for each new word; a word without one needs the custom text.
     public static func preselected(translations: [String]) -> TranslationChoice {
         translations.isEmpty ? .custom : .dictionary(0)
     }
 
-    /// When a suggestion arrives: text the learner typed while waiting wins over it.
-    public func afterSuggestion(typed: String) -> TranslationChoice {
-        self == .custom && typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .machine : self
+    /// When a suggestion arrives: text the learner typed while waiting wins over it, and so do the
+    /// bubbles they finished, even when the field is empty again.
+    public func afterSuggestion(typed: String, hasCustomBubbles: Bool) -> TranslationChoice {
+        let typedNothing = typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !hasCustomBubbles
+        return self == .custom && typedNothing ? .machine(0) : self
     }
 
-    /// A suggestion for the previous word must not stay selected as if it were for the new one.
+    /// A machine bubble picked for the previous word must not stay selected as if it were for the new one.
     public var droppingMachine: TranslationChoice {
-        self == .machine ? .custom : self
+        isMachine ? .custom : self
+    }
+
+    public var isMachine: Bool {
+        if case .machine = self { true } else { false }
+    }
+
+    /// The field or one of the bubbles typed in it.
+    public var isCustom: Bool {
+        switch self {
+        case .custom, .customBubble: true
+        case .dictionary, .machine: false
+        }
+    }
+
+    /// The variant the card gets. An index that no longer points at a bubble gives "", so Add refuses
+    /// instead of saving the text of another source.
+    public func variant(translations: [String], machineBubbles: [String], custom: CustomVariants) -> String {
+        switch self {
+        case .dictionary(let index): translations.indices.contains(index) ? translations[index] : ""
+        case .machine(let index): machineBubbles.indices.contains(index) ? machineBubbles[index] : ""
+        case .custom, .customBubble: custom.variant(for: self)
+        }
     }
 }
 

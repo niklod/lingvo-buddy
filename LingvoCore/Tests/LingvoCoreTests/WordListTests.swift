@@ -52,11 +52,11 @@ struct WordListTests {
 
         let page = try learner.tutor.wordList(.myWords)
 
-        #expect(page.rows.map(\.headword) == ["Kubernetes", "suggest"])
+        #expect(page.rows.map(\.headword) == ["kubernetes", "suggest"])
         #expect(page.rows.map(\.translation) == ["кубернетес", "советовать"])
         #expect(page.rows.map(\.source) == [.mine, .mine])
         #expect(page.counts == [.learning: 2, .learned: 0, .myWords: 2, .queue: 39])
-        #expect(try learner.tutor.wordList(.learning).rows.map(\.headword) == ["Kubernetes", "suggest"])
+        #expect(try learner.tutor.wordList(.learning).rows.map(\.headword) == ["kubernetes", "suggest"])
     }
 
     @Test("Learning shows the latest activity first")

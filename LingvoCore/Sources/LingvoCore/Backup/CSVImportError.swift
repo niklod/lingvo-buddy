@@ -18,6 +18,8 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
     case missingValue(line: Int, column: String)
     case invalidValue(line: Int, column: String, value: String, expected: String)
     case tooLong(line: Int, column: String, limit: Int)
+    /// A translation cell with separators only: dropping it silently would lose the row's translation.
+    case noTranslation(line: Int, column: String)
     case duplicateWord(line: Int, headword: String)
     /// Progress or an own translation for a word that is neither in the dictionary nor given a translation.
     case unknownWord(line: Int, headword: String)
@@ -56,6 +58,8 @@ public enum CSVImportError: Error, Equatable, LocalizedError {
             "Line \(line): \"\(value)\" is not a valid \(column). Expected: \(expected)."
         case .tooLong(let line, let column, let limit):
             "Line \(line): \"\(column)\" is too long: at most \(limit) characters."
+        case .noTranslation(let line, let column):
+            "Line \(line): \"\(column)\" has no translation in the cell, only separators."
         case .duplicateWord(let line, let headword):
             "Line \(line): \"\(headword)\" is already on an earlier line."
         case .unknownWord(let line, let headword):

@@ -33,10 +33,18 @@ extension Tutor {
         if let problem = EnglishWordInput.problem(in: word.text) { throw problem }
         guard let preview = try quickAddPreview(word.text) else { throw LingvoCoreError.emptyWord }
         guard preview.canAdd else { return .alreadyAdded(preview.standing) }
+        // A card holds one variant, and its case must not tell the learner which option is correct.
+        guard let translation = TranslationShape.firstVariant(in: word.translation) else {
+            throw LingvoCoreError.missingTranslation(word.text)
+        }
         let candidate = preview.candidates[0]
+        // Only a word with no bundled or extended dictionary entry has the learner's spelling; the others keep the dictionary's.
+        let headword = candidate.lookup == nil && candidate.extended == nil
+            ? TranslationShape.normalizedCase(preview.headword)
+            : preview.headword
         try userDatabase.insert(MyWord(
-            headword: preview.headword,
-            translation: word.translation,
+            headword: headword,
+            translation: translation,
             // The extended or system example is a dictionary example: it goes on the card like the bundled one does.
             example: word.example ?? candidate.fallbackExample,
             addedAt: clock.now(),
@@ -45,7 +53,7 @@ extension Tutor {
             partOfSpeech: candidate.fallbackPartOfSpeech,
             russianExample: word.example == nil ? candidate.fallbackRussianExample : nil
         ))
-        return .added(headword: preview.headword)
+        return .added(headword: headword)
     }
 
     /// My words as card data, oldest first.
@@ -73,7 +81,7 @@ extension Tutor {
         let lookup = try lookup(query)
         let extended = lookup == nil && detailed ? try extendedDictionary?.entry(headword: query) : nil
         let headword = try lookup?.entry.headword
-            ?? userDatabase.myWord(ignoringCase: query)?.headword
+            ?? storedMyWordSpelling(of: query)
             ?? extended?.headword
             ?? query
         return QuickAddCandidate(
@@ -83,6 +91,13 @@ extension Tutor {
             extended: extended,
             system: lookup == nil && detailed ? systemEntry(for: headword) : nil
         )
+    }
+
+    /// SQLite NOCASE folds ASCII letters only, so "Éclair" misses the stored "éclair"; the word is
+    /// stored under its normalized case, so that spelling is asked too.
+    private func storedMyWordSpelling(of query: String) throws -> String? {
+        try userDatabase.myWord(ignoringCase: query)?.headword
+            ?? userDatabase.myWord(headword: TranslationShape.normalizedCase(query))?.headword
     }
 
     private func systemEntry(for headword: String) -> SystemEntry? {

@@ -22,14 +22,11 @@ final class QuickAddModel {
         }
     }
     var choice: TranslationChoice = .custom
-    var customTranslation = ""
-    /// The card's English word for Russian text the dictionary does not know.
-    var englishWord = "" {
-        didSet {
-            guard englishWord != oldValue else { return }
-            syncDetails(delayed: true)
-        }
-    }
+    /// The bubbles and the field of "+ custom variant" for English input.
+    private(set) var customTranslations = CustomVariants()
+    /// The bubbles and the field of "English word for the card" for Russian text the dictionary does not know.
+    private(set) var customEnglishWords = CustomVariants()
+
     var example = ""
     private(set) var preview: QuickAddPreview?
     private(set) var message: QuickAddMessage?
@@ -105,32 +102,29 @@ final class QuickAddModel {
         return candidate?.translations ?? []
     }
 
-    /// Words the dictionary lacks always need the custom field.
+    /// Words the dictionary lacks always need the custom field. It stays while a custom bubble is
+    /// selected, so the learner can type the next variant.
     var showsCustomField: Bool {
         guard !isRussianInput else { return false }
-        return preview != nil && choice == .custom
+        return preview != nil && choice.isCustom
     }
 
     /// Russian text with no candidates: the field shows until the learner picks the machine bubble.
-    var showsEnglishWordField: Bool { needsEnglishWord && choice == .custom }
+    var showsEnglishWordField: Bool { needsEnglishWord && choice.isCustom }
 
     var machine: MachineSuggestion { fallback.suggestion }
 
-    /// The machine result as a bubble; `nil` until it arrives.
-    var machineBubble: String? { fallback.bubble }
+    /// The machine result, one bubble per variant; empty until it arrives.
+    var machineBubbles: [String] { fallback.bubbles }
 
     var chosenTranslation: String {
         if let preview, preview.isRussianInput { return preview.russianText ?? preview.headword }
-        return switch choice {
-        case .dictionary(let index) where translations.indices.contains(index): translations[index]
-        case .machine: machineBubble ?? customTranslation
-        case .dictionary, .custom: customTranslation
-        }
+        return choice.variant(translations: translations, machineBubbles: machineBubbles, custom: customTranslations)
     }
 
     /// The English word for Russian text the dictionary does not know.
     private var chosenEnglishWord: String {
-        choice == .machine ? machineBubble ?? "" : Self.trimmed(englishWord)
+        choice.variant(translations: [], machineBubbles: machineBubbles, custom: customEnglishWords)
     }
 
     /// Cyrillic in the English word field, shown at once and not only after Add.
@@ -141,7 +135,7 @@ final class QuickAddModel {
     var canSubmit: Bool {
         if needsEnglishWord { return !chosenEnglishWord.isEmpty && englishWordProblem == nil }
         guard let candidate, candidate.canAdd else { return false }
-        return !Self.trimmed(chosenTranslation).isEmpty
+        return !chosenTranslation.isEmpty
     }
 
     func choose(_ choice: TranslationChoice) {
@@ -244,6 +238,8 @@ final class QuickAddModel {
             failure = .error(error.localizedDescription)
         }
         if !QuickAddPreview.keepsChoices(from: previous, to: preview) {
+            customTranslations = customTranslations.droppingBubbles()
+            customEnglishWords = customEnglishWords.droppingBubbles()
             candidateIndex = 0
             choice = .preselected(translations: translations)
         }
@@ -281,8 +277,9 @@ final class QuickAddModel {
         guard let next = fallback.receiving(result, for: request) else { return }
         pendingTranslation = nil
         fallback = next
-        guard next.bubble != nil else { return }
-        choice = choice.afterSuggestion(typed: request.direction == .englishToRussian ? customTranslation : englishWord)
+        guard !next.bubbles.isEmpty else { return }
+        let custom = request.direction == .englishToRussian ? customTranslations : customEnglishWords
+        choice = choice.afterSuggestion(typed: custom.field, hasCustomBubbles: !custom.bubbles.isEmpty)
         syncDetails(delayed: true)
     }
 
@@ -294,12 +291,44 @@ final class QuickAddModel {
         fallback = next
     }
 
-    private static func trimmed(_ text: String) -> String {
-        text.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
     private static func standingMessage(for candidate: QuickAddCandidate?) -> QuickAddMessage? {
         candidate.flatMap { $0.canAdd ? nil : .standing($0.standing) }
+    }
+}
+
+/// The custom fields and their bubbles; the variant rules live in `CustomVariants`.
+extension QuickAddModel {
+    var customTranslation: String {
+        get { customTranslations.field }
+        set { type(newValue, into: \.customTranslations) }
+    }
+
+    /// The card's English word for Russian text the dictionary does not know.
+    var englishWord: String {
+        get { customEnglishWords.field }
+        set {
+            guard newValue != englishWord else { return }
+            type(newValue, into: \.customEnglishWords)
+            syncDetails(delayed: true)
+        }
+    }
+
+    /// The variants the learner finished with a separator, in the section that is on screen.
+    var customBubbles: [String] { self[keyPath: shownCustomVariants].bubbles }
+
+    func removeCustomBubble(at index: Int) {
+        let field = shownCustomVariants
+        (self[keyPath: field], choice) = self[keyPath: field].removing(at: index, choice: choice)
+        syncDetails(delayed: false)
+    }
+
+    /// Only one custom field is on screen: the English word for unknown Russian text, else the translation.
+    private var shownCustomVariants: ReferenceWritableKeyPath<QuickAddModel, CustomVariants> {
+        needsEnglishWord ? \.customEnglishWords : \.customTranslations
+    }
+
+    private func type(_ text: String, into field: ReferenceWritableKeyPath<QuickAddModel, CustomVariants>) {
+        (self[keyPath: field], choice) = self[keyPath: field].typing(text, choice: choice)
     }
 }
 

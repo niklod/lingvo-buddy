@@ -45,7 +45,8 @@ public enum MachineSuggestion: Equatable, Sendable {
     /// The dictionary has a match, or there is nothing to ask.
     case none
     case waiting
-    case suggested(String)
+    /// The variants of the answer, each its own bubble: never empty, lower-case, without repeats.
+    case suggested([String])
     case languagePackMissing
     case downloading
     case failed
@@ -75,11 +76,17 @@ public struct MachineFallback: Equatable, Sendable {
         guard request == self.request else { return nil }
         var next = self
         next.suggestion = switch result {
-        case .translated(let text): .suggested(text)
+        case .translated(let text): Self.suggestion(for: text)
         case .languagePackMissing: .languagePackMissing
         case .failed: .failed
         }
         return next
+    }
+
+    /// A result with no variant at all (blank text or only separators) has nothing to show, so it counts as a failure.
+    private static func suggestion(for text: String) -> MachineSuggestion {
+        let variants = TranslationShape.variants(in: text)
+        return variants.isEmpty ? .failed : .suggested(variants)
     }
 
     /// A newer keystroke drops a request still waiting; the lookup after the pause asks again.
@@ -105,9 +112,9 @@ public struct MachineFallback: Equatable, Sendable {
         return next
     }
 
-    /// The suggestion as a bubble; `nil` until it arrives.
-    public var bubble: String? {
-        guard case .suggested(let text) = suggestion else { return nil }
-        return text
+    /// One bubble per machine variant; empty until the answer arrives.
+    public var bubbles: [String] {
+        guard case .suggested(let variants) = suggestion else { return [] }
+        return variants
     }
 }

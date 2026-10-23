@@ -9,17 +9,30 @@ extension WordBackupRow {
             headword: headword,
             myWord: try Self.myWord(headword, reader: reader, now: now),
             progress: try Self.progress(headword, reader: reader),
-            ownTranslation: try reader.text(.ownTranslation, limit: NewMyWord.maxTranslationLength)
+            ownTranslation: try Self.firstVariant(.ownTranslation, reader: reader)
         )
         guard myWord != nil || progress != nil || ownTranslation != nil else {
             throw .nothingToImport(line: reader.line, headword: headword)
         }
     }
 
+    /// Old exports and hand-made lists may hold several variants; a card keeps the first one, so the row is not refused.
+    /// The limit applies to that variant, not to the whole cell.
+    private static func firstVariant(_ column: WordBackupColumn, reader: CSVFieldReader) throws(CSVImportError) -> String? {
+        guard let cell = reader.text(column) else { return nil }
+        guard let variant = TranslationShape.firstVariant(in: cell) else {
+            throw .noTranslation(line: reader.line, column: column.rawValue)
+        }
+        guard variant.count <= NewMyWord.maxTranslationLength else {
+            throw .tooLong(line: reader.line, column: column.rawValue, limit: NewMyWord.maxTranslationLength)
+        }
+        return variant
+    }
+
     private static func myWord(_ headword: String, reader: CSVFieldReader, now: Date) throws(CSVImportError) -> MyWord? {
         let example = try reader.text(.example, limit: NewMyWord.maxExampleLength)
         let addedAt = try reader.date(.addedAt)
-        guard let translation = try reader.text(.translation, limit: NewMyWord.maxTranslationLength) else {
+        guard let translation = try firstVariant(.translation, reader: reader) else {
             if example != nil || addedAt != nil {
                 throw .missingValue(line: reader.line, column: WordBackupColumn.translation.rawValue)
             }
