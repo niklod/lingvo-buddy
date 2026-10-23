@@ -98,6 +98,9 @@ targets:
         com.apple.security.temporary-exception.mach-lookup.global-name:
           - $(PRODUCT_BUNDLE_IDENTIFIER)-spks
           - $(PRODUCT_BUNDLE_IDENTIFIER)-spki
+        # The self-signed release certificate has no Team ID, and hardened runtime library validation
+        # then refuses to load Sparkle.framework ("different Team IDs"), even with the same certificate.
+        com.apple.security.cs.disable-library-validation: true
     dependencies:
       - package: LingvoCore
         product: LingvoCore

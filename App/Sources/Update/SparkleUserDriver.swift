@@ -4,9 +4,12 @@ import Sparkle
 
 /// Sparkle's UI, replaced by the tray header: each callback becomes one `UpdateCenter` event, and
 /// no callback opens a window. The "update found" reply waits for the learner's click; once the
-/// download is verified, the driver installs and relaunches at once, with no confirmation.
+/// download is verified, the driver installs and relaunches with no confirmation.
 @MainActor
 final class SparkleUserDriver: NSObject, SPUUserDriver {
+    /// Sparkle quits the app before the next frame, so an instant reply never shows "Restarting…".
+    private static let restartingVisibleFor: Duration = .milliseconds(700)
+
     private let center: UpdateCenter
     private let logger = Logger.app(category: "update")
     private var heldInstallReply: ((SPUUserUpdateChoice) -> Void)?
@@ -103,7 +106,10 @@ final class SparkleUserDriver: NSObject, SPUUserDriver {
     func showReady(toInstallAndRelaunch reply: @escaping (SPUUserUpdateChoice) -> Void) {
         logger.notice("update verified: installing and relaunching")
         center.send(.downloadVerified)
-        reply(.install)
+        Task {
+            try? await Task.sleep(for: Self.restartingVisibleFor)
+            reply(.install)
+        }
     }
 
     func showInstallingUpdate(
