@@ -1,14 +1,15 @@
 name: Release
 
-# A tag push `vX.Y.Z` publishes a Release with the disk image. A manual run only uploads the
-# disk image as a workflow artifact, to test the pipeline without a Release.
+# A tag push `vX.Y.Z` publishes a Release with the signed disk image. A manual run only uploads
+# the signed disk image as a workflow artifact, to test the pipeline without a Release.
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
 
-# Read-only by default: the build job runs third-party actions and must not hold a write token.
-# Only the publish job, which runs no third-party code, can write the Release.
+# Read-only by default: the build job runs third-party actions and must not hold a write token
+# or a secret. Only the sign job holds the certificate, and only the publish job, which runs no
+# third-party code, can write the Release.
 permissions:
   contents: read
 
@@ -52,18 +53,73 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - run: brew install xcodegen swiftlint ruff
       - run: make check
-      - run: make dmg VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
+      - run: make release-app VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
         env:
           VERSION: ${{ steps.version.outputs.version }}
+      # An artifact loses the executable bit and the symlinks of a bundle: a tar keeps them.
+      - run: tar -C build/DerivedData/Build/Products/Release -cf build/LingvoBuddy-app.tar LingvoBuddy.app
+      - name: Upload the unsigned app
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: LingvoBuddy-app-${{ steps.version.outputs.version }}
+          path: build/LingvoBuddy-app.tar
+          if-no-files-found: error
+          retention-days: 1
+
+  # The only job with the certificate. Besides actions/download-artifact it runs only the
+  # repository's scripts and macOS tools. The upload step runs after the keychain is deleted,
+  # and no secret reaches its environment.
+  sign:
+    needs: build
+    runs-on: macos-15
+    timeout-minutes: 15
+    env:
+      VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      # The runner context is not available in the job's env.
+      - run: echo "KEYCHAIN=$RUNNER_TEMP/release.keychain-db" >> "$GITHUB_ENV"
+      # Plain git instead of actions/checkout. The auth header goes through the environment, so
+      # the token shows on no command line and stays out of .git/config.
+      - name: Check out the release scripts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64)
+          echo "::add-mask::$auth"
+          git init -q .
+          GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=http.extraheader \
+            GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+            git fetch -q --depth 1 "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$GITHUB_SHA"
+          git checkout -q FETCH_HEAD
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: LingvoBuddy-app-${{ needs.build.outputs.version }}
+          path: build
+      - run: tar -C build -xf build/LingvoBuddy-app.tar
+      - name: Import the certificate
+        env:
+          RELEASE_CERT_P12_BASE64: ${{ secrets.RELEASE_CERT_P12_BASE64 }}
+          RELEASE_CERT_PASSWORD: ${{ secrets.RELEASE_CERT_PASSWORD }}
+        run: tools/release/import-certificate.sh "$KEYCHAIN"
+      - name: Sign the app and build the disk image
+        run: >-
+          tools/release/sign-release.sh build/LingvoBuddy.app "LingvoBuddy Release"
+          "$VERSION" "build/LingvoBuddy-$VERSION.dmg"
+      - name: Delete the keychain
+        if: always()
+        run: |
+          if [ -e "$KEYCHAIN" ]; then
+            security delete-keychain "$KEYCHAIN"
+          fi
       - name: Upload the disk image
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: LingvoBuddy-${{ steps.version.outputs.version }}
-          path: build/LingvoBuddy-${{ steps.version.outputs.version }}.dmg
+          name: LingvoBuddy-${{ needs.build.outputs.version }}
+          path: build/LingvoBuddy-${{ needs.build.outputs.version }}.dmg
           if-no-files-found: error
 
   publish:
-    needs: build
+    needs: [build, sign]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 10
