@@ -1,4 +1,5 @@
 #if DEBUG
+import Foundation
 import LingvoCore
 
 /// The sample cards from the design file, as fixed values for snapshots.
@@ -138,6 +139,41 @@ enum DesignSamples {
             becameLearned: false, isLearned: false, mastery: 0
         )
     )
+
+    /// A learning word picked while no word was due: the "too fast" states q8 and q9.
+    static let requirePractice = Card(
+        headword: "require",
+        prompt: "require",
+        direction: .enToRu,
+        kind: .new,
+        source: .rank(441),
+        ipa: "/rɪˈkwaɪə/",
+        partOfSpeech: .verb,
+        options: ["требовать", "предлагать", "отказывать", "объяснять"],
+        correctIndex: 0,
+        example: "This job requires a lot of patience.",
+        mastery: 2,
+        isPractice: true
+    )
+
+    static let requireTooSoon = tooSoon(nextWordInMinutes: 25)
+    /// The hint with hours: "1 h 5 min".
+    static let requireTooSoonLong = tooSoon(nextWordInMinutes: 65)
+
+    /// A fixed moment, so the minutes of the break hint never change between runs.
+    private static let answeredAt = Date(timeIntervalSince1970: 1_792_000_000)
+
+    private static func tooSoon(nextWordInMinutes minutes: Double) -> QuizCardState.Answer {
+        QuizCardState.Answer(
+            pickedIndex: 0,
+            result: AnswerResult(
+                outcome: .correct, correctIndex: 0, correctAnswer: "требовать",
+                becameLearned: false, isLearned: false, mastery: 2,
+                nextDueAfterTooSoon: answeredAt.addingTimeInterval(minutes * 60)
+            ),
+            answeredAt: answeredAt
+        )
+    }
 
     /// Answers on the `although` card, which stays in learning.
     private static func result(_ outcome: AnswerOutcome, correctAnswer: String, mastery: Int) -> AnswerResult {

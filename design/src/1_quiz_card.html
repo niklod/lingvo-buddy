@@ -1,7 +1,37 @@
 <!DOCTYPE html>
-<html lang="ru"><head>
+<!--
+q8 / q9: "too fast" hint (correct answer that adds no dot because the word earned one less than 1 hour ago)
+
+Copy (the app ships these English strings):
+  q8 feedback title        : "✓ Correct, but no dot"
+  q8 hint (hourglass line) : "Too fast. Take a break — next word in {time}."
+                     {time}: "25 min", "1 h 5 min" (kept on one line)
+  q8 footer label          : "Mastery 2/4 · unchanged"
+  q9 footer label          : "Practice: no new dot" (lavender, hourglass icon, dots at 45%)
+
+Kapa mood: new "wait" (k-wait below): calm closed eyes with relaxed lids, small smile, an hourglass on the
+word card instead of "Aa". Same drawing style and palette as calm / happy / oops; not "oops", because the
+answer was right, and not "asleep", because cards still come.
+
+Time shown: (b) minutes until the next word is due. It is never later than (a) (this word is one of the
+learning words), it is the moment any answer can add a dot again, and that is exactly how long the suggested
+break is. (a) would tell the learner to wait longer than needed and invite waiting on one word.
+
+Dots: unchanged values in their normal colour (they are true); the label says "unchanged" so the
+unchanged dots read as intended, not as a bug. Not shown after a wrong answer or "Don't know" (those reset to 0),
+nor when a correct answer did not count for the other-direction rule.
+
+q9: yes. When no word is due, the unanswered card says "Practice: no new dot" in the footer, in place of
+the mastery label (dots dimmed). It sets the expectation before the answer, so q8 is not a surprise, and costs
+no extra row. The time is left for q8 so the unanswered card stays calm.
+
+Edge cases checked (canvas artboard "Quiz card · too fast (q8, q9)"): long Russian hint wraps to 2 lines,
+RU → EN subtitle, a 3-line example and "1 h 5 min". The card grows; nothing is cut. The rank in the header
+truncates with "…" when a long badge and RU → EN make the row too wide.
+-->
+<html lang="en"><head>
 <meta charset="utf-8">
-<title>Карточка слова</title>
+<title>Quiz card</title>
 <script src="c54a94d5-7267-4d93-961e-e67012978284"></script>
 </head>
 <body>
@@ -14,11 +44,40 @@ button{font-family:inherit}
 </style>
 </helmet>
 <div style="width: 760px; height: 500px; position: relative; overflow: hidden; background: #33404D; color: #F5F5F7">
+<svg width="0" height="0" style="position: absolute" aria-hidden="true"><defs>
+<symbol id="k-head" sc-camel-view-box="0 0 1024 1024">
+<ellipse cx="320" cy="400" rx="46" ry="38" fill="#8A5A37"></ellipse>
+<ellipse cx="704" cy="400" rx="46" ry="38" fill="#8A5A37"></ellipse>
+<ellipse cx="322" cy="404" rx="20" ry="15" fill="#6E4529"></ellipse>
+<ellipse cx="702" cy="404" rx="20" ry="15" fill="#6E4529"></ellipse>
+<rect x="250" y="390" width="524" height="420" rx="175" fill="#B07A4F"></rect>
+<path d="M310 470 Q512 405 714 470" fill="none" stroke="#C4916A" stroke-width="18" stroke-linecap="round" stroke-opacity="0.6"></path>
+<rect x="392" y="600" width="240" height="160" rx="76" fill="#C8946A"></rect>
+<ellipse cx="470" cy="648" rx="16" ry="10" fill="#3A2414"></ellipse>
+<ellipse cx="554" cy="648" rx="16" ry="10" fill="#3A2414"></ellipse>
+</symbol>
+<symbol id="k-wait" sc-camel-view-box="180 170 664 700">
+<use href="#k-head" width="1024" height="1024"></use>
+<path d="M366 552 Q398 566 430 552" fill="none" stroke="#2A1A10" stroke-width="17" stroke-linecap="round"></path>
+<path d="M594 552 Q626 566 658 552" fill="none" stroke="#2A1A10" stroke-width="17" stroke-linecap="round"></path>
+<path d="M372 528 L426 532 M598 532 L652 528" fill="none" stroke="#6E4529" stroke-width="10" stroke-linecap="round"></path>
+<circle cx="350" cy="630" r="32" fill="#FF3D7F" fill-opacity="0.25"></circle>
+<circle cx="674" cy="630" r="32" fill="#FF3D7F" fill-opacity="0.25"></circle>
+<path d="M490 714 Q512 726 534 714" fill="none" stroke="#3A2414" stroke-width="11" stroke-linecap="round"></path>
+<g transform="rotate(-6 512 320)">
+<rect x="366" y="240" width="292" height="160" rx="26" fill="#FFFFFF"></rect>
+<path d="M478 266 L546 266 M478 374 L546 374" fill="none" stroke="#0A84FF" stroke-width="12" stroke-linecap="round"></path>
+<path d="M486 268 L538 268 L512 320 L538 372 L486 372 L512 320 Z" fill="none" stroke="#0A84FF" stroke-width="11" stroke-linejoin="round"></path>
+<path d="M494 364 L530 364 L512 338 Z" fill="#64D2FF"></path>
+<path d="M500 288 L524 288 L512 306 Z" fill="#64D2FF" fill-opacity="0.6"></path>
+</g>
+</symbol>
+</defs></svg>
 <div style="height: 28px; display: flex; align-items: center; justify-content: flex-end; gap: 18px; padding: 0 14px; background: rgba(20,24,30,0.55); font-size: 13px; color: #E5E5EA">
 <span>Wi‑Fi</span>
 <span>100%</span>
 <span style="display: flex; align-items: center; justify-content: center; width: 26px; height: 20px; border-radius: 5px; background: rgba(255,255,255,0.22); font-weight: 700; font-size: 12px; letter-spacing: -0.3px" aria-label="LingvoBuddy">Aa</span>
-<span>Ср 21 окт. 22:06</span>
+<span>Wed 21 Oct 22:06</span>
 </div>
 
 <div style="position: absolute; top: 36px; right: 92px; width: 380px; box-sizing: border-box; padding: 18px; display: flex; flex-direction: column; gap: 14px; background: #1E1E20; border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,0.45)">
@@ -29,8 +88,8 @@ button{font-family:inherit}
 <span style="padding: 2px 6px; border-radius: 6px; border: 1px solid #3A3A3C; color: #D1D1D6; font-weight: 600">{{w.dir}}</span>
 </div>
 <div style="display: flex; gap: 4px">
-<button style="height: 28px; padding: 0 10px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; font-size: 12px; cursor: pointer">Позже</button>
-<button aria-label="Закрыть" style="width: 28px; height: 28px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; cursor: pointer; display: flex; align-items: center; justify-content: center">
+<button style="height: 28px; padding: 0 10px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; font-size: 12px; cursor: pointer">Later</button>
+<button aria-label="Close" style="width: 28px; height: 28px; border-radius: 7px; border: 0; background: transparent; color: #A1A1A6; cursor: pointer; display: flex; align-items: center; justify-content: center">
 <svg width="12" height="12" sc-camel-view-box="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8"></path></svg>
 </button>
 </div>
@@ -52,8 +111,20 @@ button{font-family:inherit}
 
 <sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: 10px; background: #2C2C2E">
+<sc-if value="{{tooSoonShown}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; align-items: center; gap: 12px">
+<svg width="56" height="59" sc-camel-view-box="0 0 664 700" role="img" aria-label="Kapa takes it slow" style="flex-shrink: 0"><use href="#k-wait"></use></svg>
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<div style="font-size: 13px; font-weight: 600; color: #30D158">✓ Correct, but no dot</div>
+<div style="display: flex; gap: 6px; font-size: 13px; line-height: 1.3; color: #D1D1D6"><svg width="12" height="12" sc-camel-view-box="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M3 1.5h6M3 10.5h6M3.5 1.5c0 2.5 5 2.5 5 4.5s-5 2-5 4.5M8.5 1.5c0 2.5-5 2.5-5 4.5s5 2 5 4.5"></path></svg><span>Too fast. Take a break — next word in <b style="font-weight: 600; color: #F5F5F7">{{dueText}}</b>.</span></div>
+<div style="font-size: 13px; color: #A1A1A6; font-style: italic">{{w.example}}</div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{plainFeedback}}" hint-placeholder-val="{{ true }}">
 <div style="font-size: 13px; font-weight: 600; color: {{fbColor}}">{{fbText}}</div>
 <div style="font-size: 13px; color: #D1D1D6; font-style: italic">{{w.example}}</div>
+</sc-if>
 </div>
 </sc-if>
 
@@ -64,13 +135,13 @@ button{font-family:inherit}
 <span style="{{d.style}}"></span>
 </sc-for>
 </div>
-<span>{{streakLabel}}</span>
+<span style="display: flex; align-items: center; gap: 5px; color: {{labelColor}}"><sc-if value="{{practice}}" hint-placeholder-val="{{ false }}"><svg width="12" height="12" sc-camel-view-box="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 0"><path d="M3 1.5h6M3 10.5h6M3.5 1.5c0 2.5 5 2.5 5 4.5s-5 2-5 4.5M8.5 1.5c0 2.5-5 2.5-5 4.5s5 2 5 4.5"></path></svg></sc-if>{{streakLabel}}</span>
 </div>
 <sc-if value="{{answered}}" hint-placeholder-val="{{ false }}">
-<button sc-camel-on-click="{{next}}" style="height: 32px; padding: 0 14px; border-radius: 8px; border: 0; background: #0A84FF; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Дальше ↵</button>
+<button sc-camel-on-click="{{next}}" style="height: 32px; padding: 0 14px; border-radius: 8px; border: 0; background: #0A84FF; color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer">Next ↵</button>
 </sc-if>
 <sc-if value="{{notAnswered}}" hint-placeholder-val="{{ true }}">
-<button sc-camel-on-click="{{dunno}}" style="height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid #3A3A3C; background: transparent; color: #D1D1D6; font-size: 13px; cursor: pointer">Не знаю</button>
+<button sc-camel-on-click="{{dunno}}" style="height: 32px; padding: 0 12px; border-radius: 8px; border: 1px solid #3A3A3C; background: transparent; color: #D1D1D6; font-size: 13px; cursor: pointer">Don't know</button>
 </sc-if>
 </div>
 </div>
@@ -80,9 +151,10 @@ button{font-family:inherit}
 class Component extends DCLogic {
   words() {
     return [
-      { word: 'although', dir: 'EN → RU', ipa: '/ɔːlˈðəʊ/', pos: 'союз', rank: 'Топ‑1000 · №312', kind: 'new', kindLabel: 'Новое', opts: ['хотя', 'поэтому', 'кроме того', 'вдруг'], correct: 0, streak: 2, example: 'Although it was late, we kept working.' },
-      { word: 'достаточно', dir: 'RU → EN', ipa: '', pos: 'наречие · выберите английское слово', rank: 'Топ‑1000 · №188', kind: 'review', kindLabel: 'Повторение', opts: ['too', 'enough', 'barely', 'almost'], correct: 1, streak: 4, example: 'Is there enough coffee for everyone?' },
-      { word: 'suggest', dir: 'EN → RU', ipa: '/səˈdʒest/', pos: 'глагол', rank: 'Мои слова', kind: 'mine', kindLabel: 'Моё слово', opts: ['требовать', 'отказывать', 'предлагать', 'объяснять'], correct: 2, streak: 0, example: 'I suggest we start again tomorrow.' }
+      { word: 'although', dir: 'EN → RU', ipa: '/ɔːlˈðəʊ/', pos: 'conjunction', rank: 'Top‑1000 · #312', kind: 'new', kindLabel: 'New', opts: ['хотя', 'поэтому', 'кроме того', 'вдруг'], correct: 0, streak: 2, example: 'Although it was late, we kept working.' },
+      { word: 'достаточно', dir: 'RU → EN', ipa: '', pos: 'adverb · choose the English word', rank: 'Top‑1000 · #188', kind: 'review', kindLabel: 'Review', opts: ['too', 'enough', 'barely', 'almost'], correct: 1, streak: 4, example: 'Is there enough coffee for everyone?' },
+      { word: 'require', dir: 'EN → RU', ipa: '/rɪˈkwaɪə/', pos: 'verb', rank: 'Top‑1000 · #441', kind: 'new', kindLabel: 'New', opts: ['требовать', 'предлагать', 'отказывать', 'объяснять'], correct: 0, streak: 2, example: 'This job requires a lot of patience.', tooSoon: true, nextDueMin: 25 },
+      { word: 'suggest', dir: 'EN → RU', ipa: '/səˈdʒest/', pos: 'verb', rank: 'My words', kind: 'mine', kindLabel: 'My word', opts: ['требовать', 'отказывать', 'предлагать', 'объяснять'], correct: 2, streak: 0, example: 'I suggest we start again tomorrow.' }
     ];
   }
   renderVals() {
@@ -104,17 +176,24 @@ class Component extends DCLogic {
       }
       return { text: t, key: String(k + 1), style: st, pick: () => { if (!answered) this.setState({ picked: k }); } };
     });
-    const streak = answered ? (right ? Math.min(w.streak + 1, 4) : 0) : w.streak;
-    const dots = [0, 1, 2, 3].map((k) => ({ style: 'width:8px;height:8px;border-radius:4px;background:' + (k < streak ? accent : '#3A3A3C') }));
+    // q8 / q9: no word is due, so a correct answer adds no dot. Wrong and "Don't know" still reset to 0.
+    const practice = !!w.tooSoon && !answered;
+    const tooSoonShown = !!w.tooSoon && right;
+    const streak = answered ? (right ? (w.tooSoon ? w.streak : Math.min(w.streak + 1, 4)) : 0) : w.streak;
+    const dots = [0, 1, 2, 3].map((k) => ({ style: 'width:8px;height:8px;border-radius:4px;background:' + (k < streak ? accent : '#3A3A3C') + (practice ? ';opacity:0.45' : '') }));
+    const due = w.nextDueMin || 0;
+    const dueText = due >= 60 ? Math.floor(due / 60) + ' h ' + (due % 60) + ' min' : due + ' min';
     const badge = { new: ['rgba(10,132,255,0.18)', '#64D2FF'], review: ['rgba(94,92,230,0.22)', '#B7B5FF'], mine: ['rgba(255,159,10,0.18)', '#FFC56B'] }[w.kind];
     let fbText = '';
-    if (answered) fbText = right ? (streak >= 4 ? '✓ Верно — слово выучено!' : '✓ Верно') : (picked === -1 ? 'Ответ: ' + w.word + ' — ' + w.opts[w.correct] : '✗ ' + w.word + ' — ' + w.opts[w.correct]);
+    if (answered) fbText = right ? (streak >= 4 ? '✓ Correct — word learned!' : '✓ Correct') : (picked === -1 ? 'Answer: ' + w.word + ' — ' + w.opts[w.correct] : '✗ ' + w.word + ' — ' + w.opts[w.correct]);
     return {
       w, opts, dots, answered, notAnswered: !answered,
       sub: w.ipa ? w.ipa + ' · ' + w.pos : w.pos,
       badgeBg: badge[0], badgeFg: badge[1],
       fbText, fbColor: right ? '#30D158' : '#FFB340',
-      streakLabel: 'Освоение ' + streak + '/4',
+      streakLabel: practice ? 'Practice: no new dot' : 'Mastery ' + streak + '/4' + (tooSoonShown ? ' · unchanged' : ''),
+      labelColor: practice ? '#B7B5FF' : '#A1A1A6',
+      tooSoonShown, plainFeedback: !tooSoonShown, dueText, practice,
       dunno: () => this.setState({ picked: -1 }),
       next: () => this.setState({ i: i + 1, picked: null })
     };

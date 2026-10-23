@@ -12,8 +12,8 @@ struct PickedWord {
 /// Chooses which word the next card shows (spec "Picker priority"):
 /// due reviews within the review share, due learning words, my words not yet
 /// started, then new words by rank while there is room among active words.
-/// When none of these exist, an over-the-cap review or the learning word due
-/// soonest keeps practice going.
+/// When none of these exist, an over-the-cap review or the learning word
+/// answered longest ago keeps practice going.
 struct WordPicker {
     let quizEntries: [DictionaryEntry]
     let settings: LearningSettings
@@ -72,7 +72,9 @@ struct WordPicker {
         if let review = reviews.first {
             return picked(review, as: .review)
         }
-        return learning.first.map { picked($0, as: .new) }
+        // An answer this early adds no dot and leaves the due date as it is, so
+        // "due soonest" would bring the same word again and again.
+        return learning.min(by: Self.answeredFirst).map { picked($0, as: .new) }
     }
 
     /// Spreads reviews evenly: with a 20% share at least four other cards
@@ -85,6 +87,12 @@ struct WordPicker {
     private static func dueFirst(_ lhs: (DictionaryEntry, WordProgress), _ rhs: (DictionaryEntry, WordProgress)) -> Bool {
         let left = lhs.1.dueAt ?? .distantPast
         let right = rhs.1.dueAt ?? .distantPast
+        return left == right ? lhs.0.rank < rhs.0.rank : left < right
+    }
+
+    private static func answeredFirst(_ lhs: (DictionaryEntry, WordProgress), _ rhs: (DictionaryEntry, WordProgress)) -> Bool {
+        let left = lhs.1.lastAnsweredAt ?? .distantPast
+        let right = rhs.1.lastAnsweredAt ?? .distantPast
         return left == right ? lhs.0.rank < rhs.0.rank : left < right
     }
 }

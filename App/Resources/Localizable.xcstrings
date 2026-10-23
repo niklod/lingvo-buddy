@@ -2,7 +2,10 @@
   "sourceLanguage": "en",
   "strings": {
     "%@ / %@ learned": {},
+    "%@ · unchanged": {},
     "%lld answers": {},
+    "%lld h": {},
+    "%lld h %lld min": {},
     "%lld min": {},
     "%lld s": {},
     "1 answer": {},
@@ -26,6 +29,7 @@
     "Open Dictionary…": {},
     "Pause for 1 hour": {},
     "Paused until %@": {},
+    "Practice: no new dot": {},
     "Quiet hours until %@": {},
     "Quit": {},
     "Restarting…": {},
@@ -41,6 +45,7 @@
     "The download is damaged. Try again later.": {},
     "There are no words to practice right now.": {},
     "Today: %@ · %lld correct": {},
+    "Too fast. Take a break — next word in %@.": {},
     "Top‑%@": {},
     "Top‑%@ · #%@": {},
     "Until tomorrow": {},
@@ -64,7 +69,8 @@
     "pronoun": {},
     "verb": {},
     "✓ Correct": {},
-    "✓ Correct — word learned!": {}
+    "✓ Correct — word learned!": {},
+    "✓ Correct, but no dot": {}
   },
   "version": "1.0"
 }

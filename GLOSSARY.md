@@ -103,6 +103,12 @@ _Avoid_: dot (alone; see waiting dot)
 **Counted correct answer**:
 A correct answer given at least one hour after the previous counted one. Only these add a mastery dot.
 
+**Too soon**:
+A correct answer to a learning word less than one hour after its previous counted one. It adds no dot. The card says "✓ Correct, but no dot" and suggests a break until the next word is due. Code: `AnswerResult.isTooSoon`, `nextDueAfterTooSoon`.
+
+**Practice card**:
+A card of a learning word that is not due, picked when no word is due and no new word may start. The cards rotate: the learning word answered longest ago comes first. A correct answer is too soon; a wrong one counts as usual. Code: `Card.isPractice`.
+
 **Queued**:
 The state of a card word of the open tier that has no answer yet. The Dictionary window lists these words as the queue.
 

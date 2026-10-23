@@ -155,9 +155,15 @@ struct QuizCardFooter: View {
         HStack(spacing: 8) {
             HStack(spacing: 8) {
                 MasteryDots(filled: state.mastery)
-                Text(verbatim: state.masteryLabel)
-                    .font(.system(size: Theme.FontSize.caption))
-                    .foregroundStyle(Theme.Palette.textSecondary)
+                    .opacity(state.isPracticeShown ? 0.45 : 1)
+                HStack(spacing: 5) {
+                    if state.isPracticeShown {
+                        Image(systemName: "hourglass")
+                    }
+                    Text(verbatim: state.masteryLabel)
+                }
+                .font(.system(size: Theme.FontSize.caption))
+                .foregroundStyle(state.isPracticeShown ? Theme.Palette.chipReviewText : Theme.Palette.textSecondary)
             }
             Spacer(minLength: 0)
             if state.isAnswered {

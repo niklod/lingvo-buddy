@@ -9,9 +9,12 @@ enum KapaMood: Equatable {
     case happy
     case learned
     case oops
+    /// A correct answer too soon to add a dot: no blame, just "slow down".
+    case wait
 
     init(_ result: AnswerResult) {
         switch result.outcome {
+        case .correct where result.isTooSoon: self = .wait
         case .correct: self = result.isLearned ? .learned : .happy
         case .wrong, .dontKnow: self = .oops
         }
@@ -41,6 +44,7 @@ struct KapaMoodView: View {
             case .happy: KapaDrawing.happy(context)
             case .learned: KapaDrawing.learned(context)
             case .oops: KapaDrawing.oops(context)
+            case .wait: KapaDrawing.wait(context)
             }
         }
         .frame(width: (height * Self.viewBox.width / Self.viewBox.height).rounded(), height: height)
@@ -157,6 +161,34 @@ private enum KapaDrawing {
         context.fill(drop, with: .color(Palette.sweat))
     }
 
+    /// Calm eyes under relaxed lids, a small smile and an hourglass on the card.
+    static func wait(_ context: GraphicsContext) {
+        context.stroke(quad((366, 552), (398, 566), (430, 552)), with: .color(Palette.eye), style: line(17))
+        context.stroke(quad((594, 552), (626, 566), (658, 552)), with: .color(Palette.eye), style: line(17))
+        var lids = Path()
+        lids.move(to: CGPoint(x: 372, y: 528))
+        lids.addLine(to: CGPoint(x: 426, y: 532))
+        lids.move(to: CGPoint(x: 598, y: 532))
+        lids.addLine(to: CGPoint(x: 652, y: 528))
+        context.stroke(lids, with: .color(Palette.earInner), style: line(10))
+        blush(context, radius: 32, opacity: 0.25)
+        context.stroke(quad((490, 714), (512, 726), (534, 714)), with: .color(Palette.nose), style: line(11))
+        card(context, fill: .white, degrees: -6, content: hourglass)
+    }
+
+    private static func hourglass(_ context: GraphicsContext) {
+        var caps = Path()
+        caps.move(to: CGPoint(x: 478, y: 266))
+        caps.addLine(to: CGPoint(x: 546, y: 266))
+        caps.move(to: CGPoint(x: 478, y: 374))
+        caps.addLine(to: CGPoint(x: 546, y: 374))
+        context.stroke(caps, with: .color(Theme.Palette.accent), style: line(12))
+        let glass = polygon([(486, 268), (538, 268), (512, 320), (538, 372), (486, 372), (512, 320)])
+        context.stroke(glass, with: .color(Theme.Palette.accent), style: line(11))
+        context.fill(polygon([(494, 364), (530, 364), (512, 338)]), with: .color(Palette.sand))
+        context.fill(polygon([(500, 288), (524, 288), (512, 306)]), with: .color(Palette.sand.opacity(0.6)))
+    }
+
     /// Eyes closed in a smile, blushing cheeks and an open mouth: the happy and learned face.
     private static func smilingFace(_ context: GraphicsContext) {
         context.stroke(quad((366, 562), (398, 524), (430, 562)), with: .color(Palette.eye), style: line(17))
@@ -207,6 +239,13 @@ private enum KapaDrawing {
 
     private static func ellipse(_ x: CGFloat, _ y: CGFloat, _ radiusX: CGFloat, _ radiusY: CGFloat) -> Path {
         Path(ellipseIn: CGRect(x: x - radiusX, y: y - radiusY, width: radiusX * 2, height: radiusY * 2))
+    }
+
+    private static func polygon(_ points: [(CGFloat, CGFloat)]) -> Path {
+        var path = Path()
+        path.addLines(points.map { CGPoint(x: $0.0, y: $0.1) })
+        path.closeSubpath()
+        return path
     }
 
     private static func quad(_ start: (CGFloat, CGFloat), _ control: (CGFloat, CGFloat), _ end: (CGFloat, CGFloat)) -> Path {

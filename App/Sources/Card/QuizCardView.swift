@@ -100,6 +100,16 @@ struct QuizCardView: View {
             Text(verbatim: text)
                 .font(.system(size: Theme.FontSize.body, weight: .semibold))
                 .foregroundStyle(state.feedbackIsPositive ? Theme.Palette.success : Theme.Palette.wrongText)
+            if let hint = state.breakHint {
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Image(systemName: "hourglass")
+                        .font(.system(size: Theme.FontSize.caption))
+                    Text(hint)
+                        .font(.system(size: Theme.FontSize.body))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .foregroundStyle(Theme.Palette.textBody)
+            }
             if let example = state.card.example {
                 Text(verbatim: example)
                     .font(.system(size: Theme.FontSize.body).italic())
