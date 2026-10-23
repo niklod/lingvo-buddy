@@ -1,6 +1,6 @@
 # macOS traps
 
-LingvoBuddy is a sandboxed, ad-hoc signed `LSUIElement` app on macOS 15+, and the dev Macs run macOS 27. Each trap below cost a ticket some time. The file named after it holds the working pattern: reuse it.
+LingvoBuddy is a sandboxed `LSUIElement` app on macOS 15+, ad-hoc signed except for CI Releases (`release-signing.md`), and the dev Macs run macOS 27. Each trap below cost a ticket some time. The file named after it holds the working pattern: reuse it.
 
 ## Windows and focus
 

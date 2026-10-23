@@ -10,7 +10,9 @@ Each Release has `LingvoBuddy-<version>.dmg` (Apple silicon, macOS 15+).
 2. Open the dmg and drag `LingvoBuddy` onto the `Applications` alias. Confirm the replacement of the old version.
 3. Eject the disk image and start LingvoBuddy from `/Applications`.
 
-The app is not notarized. macOS blocks the first launch of each version that you download in a browser: open System Settings → Privacy & Security and click "Open Anyway". After an update, macOS can ask for the Focus permission again.
+The app is not notarized. macOS blocks the first launch of each version that you download in a browser: open System Settings → Privacy & Security and click "Open Anyway".
+
+Releases are signed with the LingvoBuddy release certificate, so macOS keeps the Focus permission and launch at login from one version to the next. Version 0.3.0 and older are ad-hoc signed: the first move from one of them to a signed version asks for the Focus permission one last time.
 
 `gh` does not mark the download as quarantined, so this install from the terminal skips the "Open Anyway" step:
 
@@ -26,7 +28,7 @@ open /Applications/LingvoBuddy.app
 
 ## Release
 
-Push a tag: `git tag v0.3.0 && git push origin v0.3.0`. The Release workflow runs `make check`, builds the dmg with that version and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the dmg as a workflow artifact and publishes nothing. `make dmg VERSION=0.3.0` builds the same dmg locally into `build/` and checks the mounted image.
+Push a tag: `git tag v0.3.0 && git push origin v0.3.0`. The Release workflow runs `make check` and builds the app with that version. A separate job signs it with the release certificate (secrets `RELEASE_CERT_P12_BASE64` and `RELEASE_CERT_PASSWORD`), builds the dmg and publishes the Release with notes from the changes since the previous tag. A manual run of the workflow builds the signed dmg as a workflow artifact and publishes nothing. `make dmg VERSION=0.3.0` builds an ad-hoc signed dmg locally into `build/` and checks the mounted image. `docs/agents/release-signing.md` tells how to make the certificate and test the signing locally.
 
 ## Build
 
