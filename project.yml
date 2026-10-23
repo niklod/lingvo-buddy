@@ -59,7 +59,7 @@ targets:
         # Build settings, so a local update test can build against its own feed and throwaway key
         # (docs/agents/release-signing.md, "Test an update locally"). Releases use these values.
         SPARKLE_FEED_URL: https://github.com/niklod/lingvo-buddy/releases/latest/download/appcast.xml
-        SPARKLE_PUBLIC_ED_KEY: c6UWqJics6t+Dz4AdSJ39GC9RiuCbtRCEV/HyxvwbWU=
+        SPARKLE_PUBLIC_ED_KEY: ONj6aCiVjpEyhZBTp0u/nRJQBJvINLxedZk4NdD6hUw=
     info:
       path: App/Info.plist
       properties:
