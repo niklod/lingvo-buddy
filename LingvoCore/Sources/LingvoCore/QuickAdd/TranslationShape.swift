@@ -31,6 +31,6 @@ public enum TranslationShape {
         guard let index = variant.firstIndex(where: \.isLetter), variant[index].isUppercase else { return variant }
         let rest = variant[variant.index(after: index)...]
         guard !rest.contains(where: \.isUppercase) else { return variant }
-        return variant[..<index] + variant[index].lowercased() + rest
+        return String(variant[..<index]) + variant[index].lowercased() + String(rest)
     }
 }
