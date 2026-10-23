@@ -1,7 +1,7 @@
 name: Release
 
 # A tag push `vX.Y.Z` publishes a Release with the signed disk image and its appcast. A manual run
-# only uploads both as a workflow artifact, to test the pipeline without a Release.
+# only builds the unsigned app and uploads it as a workflow artifact: it never signs.
 on:
   push:
     tags: ['v*']
@@ -18,11 +18,55 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    runs-on: macos-15
-    timeout-minutes: 45
+  # Runs no third-party code. A tag must point at a commit of main and name a version newer
+  # than every published Release: a tag on a side branch or an old version never gets signed.
+  version:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     outputs:
       version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Version
+        id: version
+        env:
+          EVENT: ${{ github.event_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$EVENT" != push ]; then
+            echo "version=0.0.0-dev.$GITHUB_RUN_NUMBER" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          version="${GITHUB_REF_NAME#v}"
+          # The version goes into CFBundleShortVersionString and the appcast. The app's updater
+          # starts only for this shape: plain numbers with no leading zero.
+          if ! [[ "$version" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::Tag $GITHUB_REF_NAME is not vX.Y.Z"
+            exit 1
+          fi
+          # "behind" or "identical": the tag commit is in the history of main.
+          status=$(gh api "repos/$GITHUB_REPOSITORY/compare/main...$GITHUB_SHA" --jq .status)
+          if [ "$status" != behind ] && [ "$status" != identical ]; then
+            echo "::error::Tag $GITHUB_REF_NAME points at a commit that is not on main ($status)"
+            exit 1
+          fi
+          newest=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --limit 1000 \
+            --json tagName --jq '.[].tagName' | sed -n 's/^v\([0-9]*\.[0-9]*\.[0-9]*\)$/\1/p' \
+            | sort -V | tail -n 1)
+          if [ -n "$newest" ]; then
+            highest=$(printf '%s\n' "$newest" "$version" | sort -V | tail -n 1)
+            if [ "$version" = "$newest" ] || [ "$highest" != "$version" ]; then
+              echo "::error::Version $version is not newer than the published $newest"
+              exit 1
+            fi
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: version
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      VERSION: ${{ needs.version.outputs.version }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
@@ -35,46 +79,36 @@ jobs:
         with:
           path: LingvoCore/.build
           key: spm-${{ runner.os }}-${{ hashFiles('LingvoCore/Package.resolved') }}
-      - name: Version
-        id: version
-        env:
-          EVENT: ${{ github.event_name }}
-        run: |
-          if [ "$EVENT" = push ]; then
-            version="${GITHUB_REF_NAME#v}"
-            # Fail before the long build: the version goes into CFBundleShortVersionString.
-            if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "::error::Tag $GITHUB_REF_NAME is not vX.Y.Z"
-              exit 1
-            fi
-          else
-            version="0.0.0-dev.$GITHUB_RUN_NUMBER"
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          path: build/SourcePackages
+          key: app-spm-${{ runner.os }}-${{ hashFiles('App/Package.resolved') }}
       - run: brew install xcodegen swiftlint ruff
       - run: make check
       - run: make release-app VERSION="$VERSION" BUILD_NUMBER="$GITHUB_RUN_NUMBER"
-        env:
-          VERSION: ${{ steps.version.outputs.version }}
       # An artifact loses the executable bit and the symlinks of a bundle: a tar keeps them.
       - run: tar -C build/DerivedData/Build/Products/Release -cf build/LingvoBuddy-app.tar LingvoBuddy.app
       - name: Upload the unsigned app
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: LingvoBuddy-app-${{ steps.version.outputs.version }}
+          name: LingvoBuddy-app-${{ needs.version.outputs.version }}
           path: build/LingvoBuddy-app.tar
           if-no-files-found: error
           retention-days: 1
 
-  # The only job with the certificate and the EdDSA key. Besides actions/download-artifact it runs only the
-  # repository's scripts and macOS tools. The upload step runs after the keychain is deleted,
-  # and no secret reaches its environment.
+  # The only job with the certificate and the EdDSA key, which are secrets of the `release`
+  # Environment (v* tags only). Besides the repository's scripts and macOS tools it runs only
+  # actions/download-artifact and, after the keychain and the key file are deleted,
+  # actions/upload-artifact with no secret in its environment.
   sign:
-    needs: build
+    needs: [version, build]
+    if: startsWith(github.ref, 'refs/tags/v')
+    environment: release
     runs-on: macos-15
     timeout-minutes: 15
     env:
-      VERSION: ${{ needs.build.outputs.version }}
+      VERSION: ${{ needs.version.outputs.version }}
+      DMG: build/LingvoBuddy-${{ needs.version.outputs.version }}.dmg
     steps:
       # The runner context is not available in the job's env.
       - run: echo "KEYCHAIN=$RUNNER_TEMP/release.keychain-db" >> "$GITHUB_ENV"
@@ -93,7 +127,7 @@ jobs:
           git checkout -q FETCH_HEAD
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          name: LingvoBuddy-app-${{ needs.build.outputs.version }}
+          name: LingvoBuddy-app-${{ needs.version.outputs.version }}
           path: build
       - run: tar -C build -xf build/LingvoBuddy-app.tar
       - name: Import the certificate
@@ -105,21 +139,27 @@ jobs:
       # even with --keychain. The runner is thrown away, so the changed list does not matter.
       - name: Add the keychain to the search list
         run: |
-          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          keychains=("$KEYCHAIN")
+          while IFS= read -r line; do
+            line=${line#*\"}
+            keychains+=("${line%\"}")
+          done < <(security list-keychains -d user)
+          security list-keychains -d user -s "${keychains[@]}"
           security find-identity -p codesigning "$KEYCHAIN"
       - name: Sign the app and build the disk image
-        run: >-
-          tools/release/sign-release.sh build/LingvoBuddy.app "LingvoBuddy Release"
-          "$VERSION" "build/LingvoBuddy-$VERSION.dmg"
+        run: tools/release/sign-release.sh build/LingvoBuddy.app "LingvoBuddy Release" "$VERSION" "$DMG"
       - name: Delete the keychain
         if: always()
         run: |
           if [ -e "$KEYCHAIN" ]; then
             security delete-keychain "$KEYCHAIN"
           fi
-      # macOS LibreSSL cannot sign Ed25519 with -rawin. Runs before the key exists.
+      # macOS LibreSSL cannot sign Ed25519 with -rawin. Runs before the key exists, so brew never
+      # runs with the key in its environment.
       - name: Find OpenSSL 3
-        run: brew list openssl@3 > /dev/null 2>&1 || brew install openssl@3
+        run: |
+          brew list openssl@3 > /dev/null 2>&1 || brew install openssl@3
+          echo "OPENSSL=$(brew --prefix openssl@3)/bin/openssl" >> "$GITHUB_ENV"
       # Only OpenSSL 3 and the repository's script touch the EdDSA key, which lives in this
       # step's environment and in one file that the next step deletes.
       - name: Sign the disk image and write the appcast
@@ -127,28 +167,32 @@ jobs:
           SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: |
           if [ -z "$SPARKLE_ED_PRIVATE_KEY" ]; then
-            echo "::error::Set the SPARKLE_ED_PRIVATE_KEY secret"
+            echo "::error::Set the SPARKLE_ED_PRIVATE_KEY secret of the release Environment"
             exit 1
           fi
+          MINIMUM_SYSTEM_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :LSMinimumSystemVersion' \
+            build/LingvoBuddy.app/Contents/Info.plist)
+          export MINIMUM_SYSTEM_VERSION
           umask 077
           printf '%s\n' "$SPARKLE_ED_PRIVATE_KEY" > "$RUNNER_TEMP/sparkle-ed.pem"
-          tools/release/sign-appcast.sh "$RUNNER_TEMP/sparkle-ed.pem" \
-            "build/LingvoBuddy-$VERSION.dmg" "$VERSION" "$GITHUB_RUN_NUMBER" build/appcast.xml
+          tools/release/sign-appcast.sh "$RUNNER_TEMP/sparkle-ed.pem" "$DMG" "$VERSION" \
+            "$GITHUB_RUN_NUMBER" build/appcast.xml
       - name: Delete the EdDSA key
         if: always()
         run: rm -f "$RUNNER_TEMP/sparkle-ed.pem"
       - name: Upload the disk image and the appcast
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: LingvoBuddy-${{ needs.build.outputs.version }}
+          name: LingvoBuddy-${{ needs.version.outputs.version }}
           path: |
-            build/LingvoBuddy-${{ needs.build.outputs.version }}.dmg
+            ${{ env.DMG }}
             build/appcast.xml
           if-no-files-found: error
+          retention-days: 1
 
   publish:
-    needs: [build, sign]
-    if: github.event_name == 'push'
+    needs: [version, sign]
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -156,11 +200,11 @@ jobs:
     steps:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
-          name: LingvoBuddy-${{ needs.build.outputs.version }}
+          name: LingvoBuddy-${{ needs.version.outputs.version }}
       - name: Publish the Release
         env:
           GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ needs.build.outputs.version }}
+          VERSION: ${{ needs.version.outputs.version }}
         run: >-
           gh release create "$GITHUB_REF_NAME" "LingvoBuddy-$VERSION.dmg" appcast.xml
           --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
