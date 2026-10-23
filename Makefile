@@ -121,10 +121,9 @@ release-app:
 	$(MAKE) app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
 		MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)"
 
-# The ad-hoc Release app, wrapped into a disk image to drag into /Applications.
 dmg: release-app
 	tools/release/build-dmg.sh $(RELEASE_APP) $(VERSION) $(DMG)
 
 clean:
-	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist App/LingvoBuddy.entitlements
+	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist
 	swift package --package-path $(CORE_DIR) clean

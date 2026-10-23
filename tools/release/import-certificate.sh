@@ -6,6 +6,11 @@
 #   import-certificate.sh <new.keychain-db>
 set -euo pipefail
 
+fail() {
+	echo "import-certificate: $*" >&2
+	exit 1
+}
+
 if [ $# -ne 1 ]; then
 	echo "usage: $0 <new.keychain-db>" >&2
 	exit 2
@@ -13,23 +18,20 @@ fi
 keychain=$1
 
 if [ -z "${RELEASE_CERT_P12_BASE64:-}" ] || [ -z "${RELEASE_CERT_PASSWORD:-}" ]; then
-	echo "import-certificate: set RELEASE_CERT_P12_BASE64 and RELEASE_CERT_PASSWORD" >&2
-	exit 1
+	fail "set RELEASE_CERT_P12_BASE64 and RELEASE_CERT_PASSWORD"
 fi
-if [ -e "$keychain" ]; then
-	echo "import-certificate: $keychain exists; delete it first" >&2
-	exit 1
-fi
+[ ! -e "$keychain" ] || fail "$keychain exists; delete it first"
 
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 p12="$work/release.p12"
 if ! printf '%s' "$RELEASE_CERT_P12_BASE64" | base64 --decode > "$p12" || [ ! -s "$p12" ]; then
-	echo "import-certificate: RELEASE_CERT_P12_BASE64 is not valid base64" >&2
-	exit 1
+	fail "RELEASE_CERT_P12_BASE64 is not valid base64"
 fi
 
-# Nobody types this password: it only unlocks the keychain for the partition list below.
+# `security` takes the passwords only as arguments. They show in the process list, which is
+# acceptable on a single-tenant CI runner that is thrown away after the job.
+# Nobody types the keychain password: it only unlocks the keychain for the partition list below.
 keychain_password=$(/usr/bin/openssl rand -base64 24)
 security create-keychain -p "$keychain_password" "$keychain"
 # Lock after an hour, not after the default 5 minutes of no use: a slow sign step must not stall.
