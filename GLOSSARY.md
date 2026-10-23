@@ -184,6 +184,13 @@ A quiet rule other than a pause (quiet hours, Focus, full screen) while it keeps
 The Kapa status item (the capybara of the app icon). A click reopens a waiting card, or else opens the tray.
 _Avoid_: tray icon
 
+**Update mark**:
+The small arrow on the menu-bar icon while a newer version is available or its install failed.
+_Avoid_: badge, dot (alone; see waiting dot)
+
+**Update button**:
+The tiny button in the tray header that downloads the newer version and restarts the app. Code: `UpdateButtonView`, `UpdateState`, `UpdateCenter`.
+
 **Tray**:
 The panel under the menu-bar icon with the streak, progress, today's stats, pause, interval, the add-word field and the app menu items. Code: `TrayMenu*`, `TrayPanel`.
 _Avoid_: popover, dropdown

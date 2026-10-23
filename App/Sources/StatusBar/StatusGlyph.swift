@@ -1,7 +1,40 @@
 import AppKit
 
+/// The marks the menu-bar icon can show. Both can show together.
+struct StatusMarks: Hashable {
+    var waiting = false
+    var updateMark = false
+
+    static let all: [StatusMarks] = [
+        StatusMarks(),
+        StatusMarks(waiting: true),
+        StatusMarks(updateMark: true),
+        StatusMarks(waiting: true, updateMark: true),
+    ]
+}
+
+/// One glyph image per combination of marks, built once: `arm()` asks for the dot on every
+/// timer event, all day long.
+@MainActor
+struct StatusGlyphImages {
+    private let plain = StatusGlyph.image(StatusMarks())
+    private let waiting = StatusGlyph.image(StatusMarks(waiting: true))
+    private let update = StatusGlyph.image(StatusMarks(updateMark: true))
+    private let waitingAndUpdate = StatusGlyph.image(StatusMarks(waiting: true, updateMark: true))
+
+    func image(_ marks: StatusMarks) -> NSImage {
+        switch (marks.waiting, marks.updateMark) {
+        case (false, false): plain
+        case (true, false): waiting
+        case (false, true): update
+        case (true, true): waitingAndUpdate
+        }
+    }
+}
+
 /// The menu-bar glyph: Kapa's head with the word card on top (the app icon's capybara as a
-/// line drawing), with a dot when a card waits.
+/// line drawing). A dot in the top-right corner means a card waits; an up-arrow in the
+/// bottom-right corner means an update needs attention. Both can show together.
 enum StatusGlyph {
     private static let size = NSSize(width: 23, height: 18)
     /// Kapa is drawn on a 44-unit grid (the "Menu-bar glyph" of the design file), scaled to this side.
@@ -12,21 +45,39 @@ enum StatusGlyph {
     private static let dotDiameter: CGFloat = 6
     /// The clear ring around the dot keeps it apart from Kapa's ear and card.
     private static let dotRing: CGFloat = 1.2
+    /// Kapa's outline ends near 15.8 pt; the arrow's left edge (about 16.6 pt) keeps clear of it.
+    private static let arrowX: CGFloat = 19.6
+    private static let arrowHalfWidth: CGFloat = 2.2
+    private static let arrowTipY: CGFloat = 10.8
+    private static let arrowBaseY: CGFloat = 16.8
+    private static let arrowLine: CGFloat = 1.5
 
     @MainActor
-    static func image(waiting: Bool = false) -> NSImage {
+    static func image(_ marks: StatusMarks) -> NSImage {
         // Flipped, so the drawing uses the design file's top-down coordinates.
         let image = NSImage(size: size, flipped: true) { _ in
             drawKapa()
-            if waiting {
+            if marks.waiting {
                 drawDot()
+            }
+            if marks.updateMark {
+                drawUpdateArrow()
             }
             return true
         }
         // A template image lets macOS tint the glyph for light, dark and inactive menu bars.
         image.isTemplate = true
-        image.accessibilityDescription = waiting ? "LingvoBuddy, a card is waiting" : "LingvoBuddy"
+        image.accessibilityDescription = accessibilityDescription(marks)
         return image
+    }
+
+    private static func accessibilityDescription(_ marks: StatusMarks) -> String {
+        switch (marks.waiting, marks.updateMark) {
+        case (false, false): "LingvoBuddy"
+        case (true, false): "LingvoBuddy, a card is waiting"
+        case (false, true): "LingvoBuddy, an update needs attention"
+        case (true, true): "LingvoBuddy, a card is waiting and an update needs attention"
+        }
     }
 
     private static func drawKapa() {
@@ -82,5 +133,16 @@ enum StatusGlyph {
         NSGraphicsContext.current?.compositingOperation = .sourceOver
         NSColor.black.setFill()
         NSBezierPath(ovalIn: dot).fill()
+    }
+
+    private static func drawUpdateArrow() {
+        NSColor.black.set()
+        let path = NSBezierPath()
+        path.move(to: NSPoint(x: arrowX, y: arrowBaseY))
+        path.line(to: NSPoint(x: arrowX, y: arrowTipY))
+        path.move(to: NSPoint(x: arrowX - arrowHalfWidth, y: arrowTipY + arrowHalfWidth))
+        path.line(to: NSPoint(x: arrowX, y: arrowTipY))
+        path.line(to: NSPoint(x: arrowX + arrowHalfWidth, y: arrowTipY + arrowHalfWidth))
+        stroke(path, width: arrowLine)
     }
 }

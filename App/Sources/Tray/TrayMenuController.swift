@@ -23,13 +23,18 @@ final class TrayMenuController {
     private let commands: TrayCommands
     private let errors: ErrorPresenter
     private let clock: any TutorClock
+    private let update: UpdateCenter
     private let logger = Logger.app(category: "tray")
     private var panel: TrayPanel?
     private var outsideClickMonitor: Any?
     private var appSwitchObserver: NSObjectProtocol?
     private weak var anchor: NSStatusBarButton?
 
-    init(tutor: Tutor, commands: TrayCommands, errors: ErrorPresenter, clock: any TutorClock = SystemClock()) {
+    init(
+        tutor: Tutor, commands: TrayCommands, errors: ErrorPresenter, update: UpdateCenter,
+        clock: any TutorClock = SystemClock()
+    ) {
+        self.update = update
         self.tutor = tutor
         self.commands = commands
         self.errors = errors
@@ -57,7 +62,7 @@ final class TrayMenuController {
         }
         let panel = TrayPanel()
         let quickAdd = commands.quickAdd
-        panel.setContent(TrayMenuView(state: state, actions: actions, highlighted: nil) { [weak self] in
+        panel.setContent(TrayMenuView(state: state, update: update, actions: actions, highlighted: nil) { [weak self] in
             TrayAddWordField { text in self?.run { quickAdd(text) } }
         })
         panel.onKey = { [weak self] command in self?.handle(command) ?? false }

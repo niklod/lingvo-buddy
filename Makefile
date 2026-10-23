@@ -29,9 +29,10 @@ ARGS ?=
 VERSION      ?= 0.0.0-dev
 BUILD_NUMBER ?= 1
 DMG          := $(BUILD_DIR)/LingvoBuddy-$(VERSION).dmg
+RELEASE_APP  := $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app
 
 .PHONY: test test-core test-dictionary check lint lint-swift lint-python build-core-strict app-strict \
-	hooks dictionary import-wiktionary project packages app run snapshots check-panels dmg clean
+	hooks dictionary import-wiktionary project packages app run snapshots check-panels release-app dmg clean
 
 test: test-core test-dictionary
 
@@ -113,13 +114,16 @@ snapshots: app
 		| while read -r file; do cp "$$file" $(BUILD_DIR)/snapshots/; done
 	@ls $(BUILD_DIR)/snapshots
 
-# Release build for Apple silicon only, wrapped into a disk image to drag into /Applications.
-# Xcode adds get-task-allow (a debugger may attach) to every build that is not an archive.
-dmg:
+# Release build for Apple silicon only, ad-hoc signed. The release workflow signs it with the
+# release certificate (tools/release/sign-release.sh). Xcode adds get-task-allow (a debugger
+# may attach) to every build that is not an archive.
+release-app:
 	$(MAKE) app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO \
 		MARKETING_VERSION=$(VERSION) CURRENT_PROJECT_VERSION=$(BUILD_NUMBER)"
-	tools/release/build-dmg.sh $(DERIVED_DIR)/Build/Products/Release/LingvoBuddy.app $(VERSION) $(DMG)
+
+dmg: release-app
+	tools/release/build-dmg.sh $(RELEASE_APP) $(VERSION) $(DMG)
 
 clean:
-	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist App/LingvoBuddy.entitlements
+	rm -rf $(BUILD_DIR) LingvoBuddy.xcodeproj $(DICT_OUT) $(EXTENDED_OUT) App/Info.plist
 	swift package --package-path $(CORE_DIR) clean

@@ -11,6 +11,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var coordinator: CardCoordinator?
     private var settingsWindow: SettingsWindowController?
     private var tray: TrayMenuController?
+    let updates = UpdateCenter()
+    /// Nil in Debug and dev builds, and when Sparkle did not start.
+    private var updater: SparkleUpdater?
     private var quickAdd: QuickAddController?
     private var dictionaryWindow: DictionaryWindowController?
     private var csvTransfer: CSVTransferController?
@@ -44,6 +47,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func start(with options: LaunchOptions) throws {
         let services = try AppEnvironment.makeServices(options: options)
+        #if DEBUG
+        if let forced = options.forcedUpdateState { updates.force(forced.state) }
+        #endif
         let tutor = services.tutor
         let settings = SettingsModel(store: tutor, errors: errors)
         let focus = SystemFocusStatus()
@@ -54,7 +60,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let tray = TrayMenuController(
             tutor: tutor,
             commands: trayCommands(for: coordinator, quickAdd: quickAdd),
-            errors: errors
+            errors: errors,
+            update: updates
         )
         makeStatusItem(coordinator: coordinator, tray: tray)
         registerHotKeys(coordinator: coordinator, tray: tray, quickAdd: quickAdd)
@@ -66,6 +73,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.presentOnboarding(tutor: tutor, settings: settings, focus: focus, launchAtLogin: launchAtLogin)
         }
         coordinator.start()
+        updater = SparkleUpdater.startIfRelease(center: updates)
         try scheduleLaunchViews(options: options, tutor: tutor, focus: focus)
     }
 
@@ -120,7 +128,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// The tray and a card hang in the same place under the icon, so one gives way to the other.
     private func makeStatusItem(coordinator: CardCoordinator, tray: TrayMenuController) {
-        let statusItem = StatusItemController(actions: StatusItemActions(
+        let statusItem = StatusItemController(update: updates, actions: StatusItemActions(
             primaryClick: { [weak coordinator, weak tray] in
                 guard coordinator?.reopenWaitingCard() == true else { return false }
                 tray?.close()

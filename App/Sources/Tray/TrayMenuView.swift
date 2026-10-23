@@ -18,9 +18,9 @@ enum TrayRow: Hashable {
 /// slot, menu rows, today's numbers and Quit.
 struct TrayMenuView<AddWordField: View>: View {
     static var width: CGFloat { 320 }
-    private static var kapaHeight: CGFloat { 30 }
 
     let state: TrayMenuState
+    let update: UpdateCenter
     var actions = TrayMenuActions()
     /// Snapshots show the design's highlighted first row; the app starts with none.
     @State var highlighted: TrayRow?
@@ -53,16 +53,7 @@ struct TrayMenuView<AddWordField: View>: View {
     }
 
     private var header: some View {
-        HStack(spacing: 8) {
-            KapaMoodView(mood: state.kapaMood, height: Self.kapaHeight)
-            Text(verbatim: "LingvoBuddy")
-                .font(.system(size: Theme.FontSize.title, weight: .bold))
-                .foregroundStyle(Theme.Palette.textPrimary)
-            Spacer(minLength: 8)
-            Text(verbatim: state.streakLabel)
-                .font(.system(size: Theme.FontSize.caption))
-                .foregroundStyle(Theme.Palette.textSecondary)
-        }
+        TrayHeader(kapaMood: state.kapaMood, streakLabel: state.streakLabel, update: update)
     }
 
     private var rows: some View {
@@ -135,5 +126,45 @@ struct TrayMenuView<AddWordField: View>: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+    }
+}
+
+/// Kapa, the title, the update button and the streak. The only part of the tray that reads the
+/// update state, so a download percent redraws the header, not the whole tray.
+private struct TrayHeader: View {
+    private static let kapaHeight: CGFloat = 30
+
+    let kapaMood: KapaMood
+    let streakLabel: String
+    let update: UpdateCenter
+
+    var body: some View {
+        let state = update.state
+        let button = state.button
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                KapaMoodView(mood: kapaMood, height: Self.kapaHeight)
+                Text(verbatim: "LingvoBuddy")
+                    .font(.system(size: Theme.FontSize.title, weight: .bold))
+                    .foregroundStyle(Theme.Palette.textPrimary)
+                    .lineLimit(1)
+                    .fixedSize()
+                Spacer(minLength: 4)
+                if let button {
+                    UpdateButtonView(button: button, action: update.clickInstall)
+                }
+                // "Restarting…" leaves no room for the streak, and the app quits in seconds.
+                if button?.label != .restarting {
+                    Text(verbatim: streakLabel)
+                        .font(.system(size: Theme.FontSize.caption))
+                        .foregroundStyle(Theme.Palette.textSecondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                }
+            }
+            if let reason = state.failureReason {
+                UpdateFailureLine(reason: reason)
+            }
+        }
     }
 }
