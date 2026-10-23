@@ -6,8 +6,8 @@ public enum TranslationChoice: Equatable, Sendable {
     case dictionary(Int)
     /// The "+ custom variant" text.
     case custom
-    /// The machine translation bubble: the card's translation, or the English word for Russian input.
-    case machine
+    /// Index into the machine translation bubbles: the card's translation, or the English word for Russian input.
+    case machine(Int)
 
     /// The first dictionary translation is preselected for each new word; a word without one needs the custom text.
     public static func preselected(translations: [String]) -> TranslationChoice {
@@ -16,12 +16,12 @@ public enum TranslationChoice: Equatable, Sendable {
 
     /// When a suggestion arrives: text the learner typed while waiting wins over it.
     public func afterSuggestion(typed: String) -> TranslationChoice {
-        self == .custom && typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .machine : self
+        self == .custom && typed.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .machine(0) : self
     }
 
-    /// A suggestion for the previous word must not stay selected as if it were for the new one.
+    /// A machine bubble picked for the previous word must not stay selected as if it were for the new one.
     public var droppingMachine: TranslationChoice {
-        self == .machine ? .custom : self
+        if case .machine = self { .custom } else { self }
     }
 }
 

@@ -68,6 +68,9 @@ enum QuickAddSnapshots {
             russianState("quick_add_russian", text: "сомнение"),
             russianExtendedState("quick_add_russian_extended", text: "улепётывать"),
             machineState("quick_add_machine_en", text: "serendipity", answer: .translated("счастливая случайность")),
+            machineState("quick_add_machine_en_variants", text: "skedaddle", answer: .translated("Сматываться, смотаться")),
+            machineState("quick_add_machine_en_variants_second", text: "skedaddle", answer: .translated("Сматываться, смотаться"), choosesBubble: 1),
+            machineState("quick_add_machine_ru_variants", text: "болтун", answer: .translated("Chatterbox, blabbermouth")),
             machineState("quick_add_machine_en_custom", text: "serendipity", answer: .translated("счастливая случайность"), choosesCustom: true),
             machineState("quick_add_machine_ru", text: "медленно", answer: .translated("slowly")),
             machineState("quick_add_machine_missing_pack", text: "serendipity", answer: .languagePackMissing),
@@ -77,14 +80,16 @@ enum QuickAddSnapshots {
 
     /// A word the dictionary lacks, with the translator's answer already in.
     private static func machineState(
-        _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false
+        _ name: String, text: String, answer: MachineTranslation, choosesCustom: Bool = false,
+        choosesBubble: Int? = nil
     ) -> SnapshotState {
         panelState(name) {
             let model = QuickAddModel(text: text, translator: FakeMachineTranslator(answer: answer)) { query in
-                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query == "медленно")
+                QuickAddPreview(headword: query, lookup: nil, standing: .notAdded, isRussianInput: query.contains(where: { "а"..."я" ~= $0 }))
             }
             await model.machineTranslationSettled()
             if choosesCustom { model.choose(.custom) }
+            if let choosesBubble { model.choose(.machine(choosesBubble)) }
             return model
         }
     }

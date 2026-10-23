@@ -76,7 +76,47 @@ struct MachineFallbackTests {
         let second = try #require(first.requesting(Self.skedaddle, canAsk: true))
 
         #expect(second.receiving(.translated("убираться"), for: Self.scram) == nil)
-        #expect(second.receiving(.translated("удирать"), for: Self.skedaddle)?.suggestion == .suggested("удирать"))
+        #expect(second.receiving(.translated("удирать"), for: Self.skedaddle)?.suggestion == .suggested(["удирать"]))
+    }
+
+    @Test("a machine result with several variants becomes one lower-case bubble per variant")
+    func resultSplitsIntoVariants() throws {
+        let asked = try #require(MachineFallback().requesting(Self.skedaddle, canAsk: true))
+
+        let answered = try #require(asked.receiving(.translated("Сматываться, смотаться"), for: Self.skedaddle))
+
+        #expect(answered.suggestion == .suggested(["сматываться", "смотаться"]))
+        #expect(answered.bubbles == ["сматываться", "смотаться"])
+    }
+
+    @Test("repeated and empty variants make no bubble; a result with no variant counts as a failure")
+    func repeatedAndEmptyVariants() throws {
+        let asked = try #require(MachineFallback().requesting(Self.skedaddle, canAsk: true))
+
+        let repeated = try #require(asked.receiving(.translated("удирать; Удирать, , удирать/бежать"), for: Self.skedaddle))
+        let blank = try #require(asked.receiving(.translated(" , ; "), for: Self.skedaddle))
+
+        #expect(repeated.bubbles == ["удирать", "бежать"])
+        #expect(blank.suggestion == .failed)
+        #expect(blank.bubbles.isEmpty)
+    }
+
+    @Test("a single-variant result and an abbreviation stay one bubble each")
+    func singleVariant() throws {
+        let asked = try #require(MachineFallback().requesting(Self.skedaddle, canAsk: true))
+
+        #expect(asked.receiving(.translated("Болтушка"), for: Self.skedaddle)?.bubbles == ["болтушка"])
+        #expect(asked.receiving(.translated("США"), for: Self.skedaddle)?.bubbles == ["США"])
+    }
+
+    @Test("Russian input gets the English variants as separate bubbles")
+    func englishVariants() throws {
+        let request = MachineTranslationRequest(text: "болтун", direction: .russianToEnglish)
+        let asked = try #require(MachineFallback().requesting(request, canAsk: true))
+
+        let answered = try #require(asked.receiving(.translated("chatterbox, blabbermouth"), for: request))
+
+        #expect(answered.bubbles == ["chatterbox", "blabbermouth"])
     }
 
     @Test("the same request keeps its answer; a new one waits, or shows nothing without a translator")
@@ -138,9 +178,21 @@ struct TranslationChoiceTests {
 
     @Test("a suggestion is preselected only when the learner has typed nothing and picked nothing")
     func suggestionPreselection() {
-        #expect(TranslationChoice.custom.afterSuggestion(typed: "  ") == .machine)
+        #expect(TranslationChoice.custom.afterSuggestion(typed: "  ") == .machine(0))
         #expect(TranslationChoice.custom.afterSuggestion(typed: "удирать") == .custom)
         #expect(TranslationChoice.dictionary(1).afterSuggestion(typed: "") == .dictionary(1))
+    }
+
+    @Test("a machine bubble stays selected while its word stays; for a new word it falls back to the custom text")
+    func machineChoiceFollowsWord() {
+        #expect(TranslationChoice.machine(1).droppingMachine == .custom)
+        #expect(TranslationChoice.dictionary(1).droppingMachine == .dictionary(1))
+        #expect(TranslationChoice.custom.droppingMachine == .custom)
+    }
+
+    @Test("a picked machine bubble survives a suggestion; a suggestion never moves the choice to a later bubble")
+    func pickedMachineBubbleSurvives() {
+        #expect(TranslationChoice.machine(1).afterSuggestion(typed: "") == .machine(1))
     }
 
     @Test("choices survive a trailing space or another case of the same word, not a new word")

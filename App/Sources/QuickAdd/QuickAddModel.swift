@@ -116,21 +116,22 @@ final class QuickAddModel {
 
     var machine: MachineSuggestion { fallback.suggestion }
 
-    /// The machine result as a bubble; `nil` until it arrives.
-    var machineBubble: String? { fallback.bubble }
+    /// The machine result, one bubble per variant; empty until it arrives.
+    var machineBubbles: [String] { fallback.bubbles }
 
     var chosenTranslation: String {
         if let preview, preview.isRussianInput { return preview.russianText ?? preview.headword }
         return switch choice {
         case .dictionary(let index) where translations.indices.contains(index): translations[index]
-        case .machine: machineBubble ?? customTranslation
-        case .dictionary, .custom: customTranslation
+        case .machine(let index) where machineBubbles.indices.contains(index): machineBubbles[index]
+        case .dictionary, .machine, .custom: customTranslation
         }
     }
 
     /// The English word for Russian text the dictionary does not know.
     private var chosenEnglishWord: String {
-        choice == .machine ? machineBubble ?? "" : Self.trimmed(englishWord)
+        if case .machine(let index) = choice, machineBubbles.indices.contains(index) { return machineBubbles[index] }
+        return choice.isMachine ? "" : Self.trimmed(englishWord)
     }
 
     /// Cyrillic in the English word field, shown at once and not only after Add.
@@ -281,7 +282,7 @@ final class QuickAddModel {
         guard let next = fallback.receiving(result, for: request) else { return }
         pendingTranslation = nil
         fallback = next
-        guard next.bubble != nil else { return }
+        guard !next.bubbles.isEmpty else { return }
         choice = choice.afterSuggestion(typed: request.direction == .englishToRussian ? customTranslation : englishWord)
         syncDetails(delayed: true)
     }
@@ -300,6 +301,12 @@ final class QuickAddModel {
 
     private static func standingMessage(for candidate: QuickAddCandidate?) -> QuickAddMessage? {
         candidate.flatMap { $0.canAdd ? nil : .standing($0.standing) }
+    }
+}
+
+private extension TranslationChoice {
+    var isMachine: Bool {
+        if case .machine = self { true } else { false }
     }
 }
 
