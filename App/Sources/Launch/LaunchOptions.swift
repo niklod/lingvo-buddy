@@ -28,6 +28,8 @@ struct LaunchOptions: Equatable {
     var quietHours: QuietHoursOverride?
     /// `--skip-onboarding`: do not show first-run onboarding in this run (QA on fresh databases).
     var skipOnboarding = false
+    /// `--update-state available|downloading|restarting|failed`: shows that update state with a fake version.
+    var forcedUpdateState: ForcedUpdateState?
 
     static func parse(_ arguments: [String]) throws -> LaunchOptions {
         #if DEBUG
@@ -64,6 +66,12 @@ struct LaunchOptions: Equatable {
             case "--quiet-hours":
                 let text = try value(for: argument, from: &remaining)
                 options.quietHours = try QuietHoursOverride.parse(text, flag: argument)
+            case "--update-state":
+                let name = try value(for: argument, from: &remaining)
+                guard let forced = ForcedUpdateState(rawValue: name) else {
+                    throw LaunchOptionsError.invalidValue(argument, name)
+                }
+                options.forcedUpdateState = forced
             default:
                 // Xcode and LaunchServices add their own arguments (-NSDocumentRevisionsDebugMode, -psn_…).
                 continue
@@ -93,6 +101,26 @@ enum OpenableView: String, CaseIterable {
     /// Shows onboarding again, even when it is already done.
     case onboarding
     case dictionary
+}
+
+/// The value of `--update-state`.
+enum ForcedUpdateState: String, CaseIterable {
+    case available
+    case downloading
+    case restarting
+    case failed
+
+    /// A version no Release has, so a forced state never looks like a real update.
+    static let fakeVersion = "9.9.9"
+
+    var state: UpdateState {
+        switch self {
+        case .available: .available(Self.fakeVersion)
+        case .downloading: .downloading(version: Self.fakeVersion, fraction: 0.42)
+        case .restarting: .restarting(version: Self.fakeVersion)
+        case .failed: .failed(version: Self.fakeVersion, reason: .noConnection)
+        }
+    }
 }
 
 /// The value of `--quiet-hours`.
