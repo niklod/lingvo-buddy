@@ -4,6 +4,9 @@ import SwiftUI
 /// The "Edit translation" sheet of a Dictionary row. It is a sheet and not an alert: an alert
 /// cannot show a hint under its field or disable its Save button.
 struct TranslationEditSheet: View {
+    private static let padding: CGFloat = 20
+    private static let width: CGFloat = 340
+
     let row: WordRow
     let onSave: (String) -> Void
     @State private var text: String
@@ -15,10 +18,8 @@ struct TranslationEditSheet: View {
         _text = State(initialValue: row.translation)
     }
 
-    /// Recomputed on every keystroke, so the hint and Save follow the field at once.
-    private var problem: LingvoCoreError? { TranslationEditInput.problem(in: text) }
-
     var body: some View {
+        let problem = TranslationEditInput.problem(in: text)
         VStack(alignment: .leading, spacing: 12) {
             Text("Edit translation")
                 .font(.system(size: Theme.FontSize.body, weight: .semibold))
@@ -44,7 +45,7 @@ struct TranslationEditSheet: View {
                 .disabled(problem != nil)
             }
         }
-        .padding(20)
-        .frame(width: 340)
+        .padding(Self.padding)
+        .frame(width: Self.width)
     }
 }
