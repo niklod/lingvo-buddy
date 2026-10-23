@@ -129,10 +129,10 @@ A Release build ignores `--user-db` and opens the learner's database, and a Debu
 
 1. Make a throwaway certificate (above, with a short `-days`), import it with `import-certificate.sh`, and make a throwaway Ed25519 key.
 2. Build 1.0.0 and 1.0.1 with `make app CONFIG=Release XCODE_SETTINGS="ARCHS=arm64 CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO MARKETING_VERSION=1.0.1 CURRENT_PROJECT_VERSION=102 PRODUCT_BUNDLE_IDENTIFIER=com.niklod.LingvoBuddy.sparkletest SPARKLE_FEED_URL=http://127.0.0.1:8759/appcast.xml SPARKLE_PUBLIC_ED_KEY=<throwaway public key>"` (101 for 1.0.0). Copy each app out of DerivedData and sign it with `KEYCHAIN=… sign-release.sh`.
-3. Write the appcast with `sign-appcast.sh` and the throwaway key, and point its enclosure URL at the local server. Serve the folder on 127.0.0.1 (ATS allows plain HTTP to an IP address). Limit the server rate (about 700 KB/s) to see the progress.
+3. Write the appcast with `sign-appcast.sh` (with `OPENSSL`, `GITHUB_REPOSITORY` and `MINIMUM_SYSTEM_VERSION`, as in "Test the appcast locally") and the throwaway key, and point its enclosure URL at the local server. Serve the folder on 127.0.0.1 (ATS allows plain HTTP to an IP address). Limit the server rate (about 700 KB/s) to see the progress.
 4. Copy 1.0.0 to a folder you own and `open` it. The update button shows within seconds; a click must relaunch the app on build 102.
 
-A dmg with one changed byte gives "The download is damaged". A stopped server gives "no connection" (`NSURLErrorCannotConnectToHost`). Delete the test apps afterwards with `lsregister -u`, or the Services menu shows their item. macOS protects the test container (`~/Library/Containers/com.niklod.LingvoBuddy.sparkletest`) from the shell: delete it in Finder.
+A click runs a new check, so a feed that moved to 1.0.2 (build 103) while the button shows 1.0.1 installs 1.0.2. A dmg with one changed byte gives "The download is damaged". A stopped server gives "no connection" (`NSURLErrorCannotConnectToHost`). Delete the test apps afterwards with `lsregister -u`, or the Services menu shows their item. macOS protects the test container (`~/Library/Containers/com.niklod.LingvoBuddy.sparkletest`) from the shell: delete it in Finder.
 
 ## Sparkle traps
 
