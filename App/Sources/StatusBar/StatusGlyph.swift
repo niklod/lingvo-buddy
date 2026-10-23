@@ -1,5 +1,37 @@
 import AppKit
 
+/// The marks the menu-bar icon can show. Both can show together.
+struct StatusMarks: Hashable {
+    var waiting = false
+    var updateMark = false
+
+    static let all: [StatusMarks] = [
+        StatusMarks(),
+        StatusMarks(waiting: true),
+        StatusMarks(updateMark: true),
+        StatusMarks(waiting: true, updateMark: true),
+    ]
+}
+
+/// One glyph image per combination of marks, built once: `arm()` asks for the dot on every
+/// timer event, all day long.
+@MainActor
+struct StatusGlyphImages {
+    private let plain = StatusGlyph.image(StatusMarks())
+    private let waiting = StatusGlyph.image(StatusMarks(waiting: true))
+    private let update = StatusGlyph.image(StatusMarks(updateMark: true))
+    private let waitingAndUpdate = StatusGlyph.image(StatusMarks(waiting: true, updateMark: true))
+
+    func image(_ marks: StatusMarks) -> NSImage {
+        switch (marks.waiting, marks.updateMark) {
+        case (false, false): plain
+        case (true, false): waiting
+        case (false, true): update
+        case (true, true): waitingAndUpdate
+        }
+    }
+}
+
 /// The menu-bar glyph: Kapa's head with the word card on top (the app icon's capybara as a
 /// line drawing). A dot in the top-right corner means a card waits; an up-arrow in the
 /// bottom-right corner means an update needs attention. Both can show together.
@@ -21,26 +53,26 @@ enum StatusGlyph {
     private static let arrowLine: CGFloat = 1.5
 
     @MainActor
-    static func image(waiting: Bool = false, updateMark: Bool = false) -> NSImage {
+    static func image(_ marks: StatusMarks) -> NSImage {
         // Flipped, so the drawing uses the design file's top-down coordinates.
         let image = NSImage(size: size, flipped: true) { _ in
             drawKapa()
-            if waiting {
+            if marks.waiting {
                 drawDot()
             }
-            if updateMark {
+            if marks.updateMark {
                 drawUpdateArrow()
             }
             return true
         }
         // A template image lets macOS tint the glyph for light, dark and inactive menu bars.
         image.isTemplate = true
-        image.accessibilityDescription = accessibilityDescription(waiting: waiting, updateMark: updateMark)
+        image.accessibilityDescription = accessibilityDescription(marks)
         return image
     }
 
-    private static func accessibilityDescription(waiting: Bool, updateMark: Bool) -> String {
-        switch (waiting, updateMark) {
+    private static func accessibilityDescription(_ marks: StatusMarks) -> String {
+        switch (marks.waiting, marks.updateMark) {
         case (false, false): "LingvoBuddy"
         case (true, false): "LingvoBuddy, a card is waiting"
         case (false, true): "LingvoBuddy, an update needs attention"

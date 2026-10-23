@@ -1,9 +1,9 @@
 import LingvoCore
 import Observation
 
-/// The one place the app holds the current update state. The tray header reads it; the menu-bar
-/// icon (#57) observes `state`; the Sparkle user driver (#59) feeds it with `send` and installs
-/// on `onInstallRequested`.
+/// The one place the app holds the current update state. The tray header and the menu-bar icon
+/// observe `state`; the Sparkle user driver feeds it with `send` and installs on
+/// `onInstallRequested`.
 @MainActor
 @Observable
 final class UpdateCenter {
@@ -17,7 +17,9 @@ final class UpdateCenter {
     }
 
     func send(_ event: UpdateEvent) {
-        state = state.applying(event)
+        let next = state.applying(event)
+        // Sparkle reports every chunk; an equal write would still redraw every observer.
+        if next != state { state = next }
     }
 
     /// The learner clicked the update button. A click the state does not accept does nothing.
@@ -27,8 +29,10 @@ final class UpdateCenter {
         if state != before { onInstallRequested() }
     }
 
+    #if DEBUG
     /// QA only (`--update-state`): jumps to a state that no event sequence reaches without Sparkle.
     func force(_ state: UpdateState) {
         self.state = state
     }
+    #endif
 }

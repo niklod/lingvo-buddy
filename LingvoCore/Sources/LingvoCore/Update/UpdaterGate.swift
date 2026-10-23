@@ -5,8 +5,13 @@ public enum UpdaterGate {
 
     public static func allows(shortVersion: String) -> Bool {
         let parts = shortVersion.split(separator: ".", omittingEmptySubsequences: false)
-        return parts.count == releaseVersionParts
-            && parts.allSatisfy { !$0.isEmpty && $0.allSatisfy(\.isASCIIDigit) }
+        return parts.count == releaseVersionParts && parts.allSatisfy(isReleaseNumber)
+    }
+
+    // The release workflow accepts the same shape for a tag: plain ASCII digits, no leading zero.
+    private static func isReleaseNumber(_ part: Substring) -> Bool {
+        guard let first = part.first, part.allSatisfy(\.isASCIIDigit) else { return false }
+        return part.count == 1 || first != "0"
     }
 }
 

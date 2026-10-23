@@ -24,8 +24,9 @@ struct UpdateButtonView: View {
             .contentShape(Capsule())
             .fixedSize()
         }
-        .buttonStyle(.plain)
-        .allowsHitTesting(button.acceptsClicks)
+        .buttonStyle(PillButtonStyle())
+        // `disabled`, not `allowsHitTesting`: VoiceOver must not press a running download either.
+        .disabled(!button.acceptsClicks)
         .help(button.acceptsClicks ? tooltip : "")
         .accessibilityLabel(tooltip)
     }
@@ -36,7 +37,7 @@ struct UpdateButtonView: View {
 
     private var text: String {
         switch button.label {
-        case .version(let version): version
+        case .version: button.version
         case .percent(let percent): "\(percent)%"
         case .restarting: String(localized: "Restarting…")
         case .retry: String(localized: "Retry")
@@ -45,9 +46,9 @@ struct UpdateButtonView: View {
 
     @ViewBuilder private var icon: some View {
         switch button.label {
-        case .version: UpdateGlyph(shape: .download)
-        case .retry: UpdateGlyph(shape: .retry)
-        case .restarting: UpdateGlyph(shape: .restarting)
+        case .version: UpdateGlyph(kind: .download)
+        case .retry: UpdateGlyph(kind: .retry)
+        case .restarting: UpdateGlyph(kind: .restarting)
         case .percent(let percent): UpdateProgressRing(fraction: Double(percent) / 100)
         }
     }
@@ -72,7 +73,13 @@ struct UpdateButtonView: View {
     }
 }
 
-/// The failure line under the header row.
+/// Draws the label as it is, so a disabled pill keeps the board's colours.
+private struct PillButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+    }
+}
+
 struct UpdateFailureLine: View {
     let reason: UpdateFailureReason
 
@@ -93,11 +100,11 @@ struct UpdateFailureLine: View {
 
 /// The 12 × 12 icons of the board, drawn in the board's 12-point box.
 private struct UpdateGlyph: View {
-    enum Shape { case download, retry, restarting }
+    enum Kind { case download, retry, restarting }
 
     private static let stroke = StrokeStyle(lineWidth: 1.6, lineCap: .round, lineJoin: .round)
 
-    let shape: Shape
+    let kind: Kind
 
     var body: some View {
         Canvas { context, size in
@@ -112,7 +119,7 @@ private struct UpdateGlyph: View {
 
     private var path: Path {
         var path = Path()
-        switch shape {
+        switch kind {
         case .download:
             path.move(to: CGPoint(x: 6, y: 1.5))
             path.addLine(to: CGPoint(x: 6, y: 7.5))

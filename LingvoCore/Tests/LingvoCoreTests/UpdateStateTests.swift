@@ -6,12 +6,12 @@ import Testing
 struct UpdateStateTests {
     @Test("a check that finds a version shows the update")
     func idleToAvailable() {
-        #expect(UpdateState.idle.applying(.foundVersion("0.3.0")) == .available("0.3.0"))
+        #expect(UpdateState.idle.applying(.foundVersion("0.3.0")) == .available(version: "0.3.0"))
     }
 
     @Test("a click starts the download at zero")
     func availableToDownloading() {
-        let next = UpdateState.available("0.3.0").applying(.installClicked)
+        let next = UpdateState.available(version: "0.3.0").applying(.installClicked)
         #expect(next == .downloading(version: "0.3.0", fraction: 0))
     }
 
@@ -23,10 +23,18 @@ struct UpdateStateTests {
         #expect(state.applying(.progress(-1)) == .downloading(version: "0.3.0", fraction: 0))
     }
 
+    @Test("a progress that is not a number counts as zero, and infinity as done")
+    func progressNotANumber() {
+        let state = UpdateState.downloading(version: "0.3.0", fraction: 0.5)
+        #expect(state.applying(.progress(.nan)) == .downloading(version: "0.3.0", fraction: 0))
+        #expect(state.applying(.progress(.infinity)) == .downloading(version: "0.3.0", fraction: 1))
+        #expect(state.applying(.progress(-.infinity)) == .downloading(version: "0.3.0", fraction: 0))
+    }
+
     @Test("progress outside a download changes nothing")
     func progressElsewhere() {
         #expect(UpdateState.idle.applying(.progress(0.5)) == .idle)
-        #expect(UpdateState.available("0.3.0").applying(.progress(0.5)) == .available("0.3.0"))
+        #expect(UpdateState.available(version: "0.3.0").applying(.progress(0.5)) == .available(version: "0.3.0"))
     }
 
     @Test("a verified download restarts the app")
@@ -38,7 +46,7 @@ struct UpdateStateTests {
     @Test("an error fails the update from any state that knows a version")
     func anyStateToFailed() {
         let reason = UpdateFailureReason.noConnection
-        #expect(UpdateState.available("0.3.0").applying(.failed(reason)) == .failed(version: "0.3.0", reason: reason))
+        #expect(UpdateState.available(version: "0.3.0").applying(.failed(reason)) == .failed(version: "0.3.0", reason: reason))
         #expect(
             UpdateState.downloading(version: "0.3.0", fraction: 0.4).applying(.failed(reason))
                 == .failed(version: "0.3.0", reason: reason)
@@ -47,6 +55,23 @@ struct UpdateStateTests {
             UpdateState.restarting(version: "0.3.0").applying(.failed(.other))
                 == .failed(version: "0.3.0", reason: .other)
         )
+    }
+
+    @Test("a new failure replaces the reason of the last one")
+    func failedAgain() {
+        let failed = UpdateState.failed(version: "0.3.0", reason: .noConnection)
+        #expect(failed.applying(.failed(.verificationFailed)) == .failed(version: "0.3.0", reason: .verificationFailed))
+    }
+
+    @Test(
+        "a verified download outside a download changes nothing",
+        arguments: [
+            UpdateState.idle, .available(version: "0.3.0"), .restarting(version: "0.3.0"),
+            .failed(version: "0.3.0", reason: .other),
+        ]
+    )
+    func verifiedElsewhere(state: UpdateState) {
+        #expect(state.applying(.downloadVerified) == state)
     }
 
     @Test("an error with no update known leaves the state idle")
@@ -71,13 +96,18 @@ struct UpdateStateTests {
     @Test("a check that finds nothing clears a failure and an offer")
     func foundNothing() {
         #expect(UpdateState.failed(version: "0.3.0", reason: .other).applying(.foundNothing) == .idle)
-        #expect(UpdateState.available("0.3.0").applying(.foundNothing) == .idle)
+        #expect(UpdateState.available(version: "0.3.0").applying(.foundNothing) == .idle)
     }
 
-    @Test("a found version never interrupts a download or a restart")
-    func checksDuringInstall() {
+    // Retry runs a new check: the download that follows installs what that check found.
+    @Test("a version found during a download names the version that downloads")
+    func foundDuringDownload() {
         let downloading = UpdateState.downloading(version: "0.3.0", fraction: 0.4)
-        #expect(downloading.applying(.foundVersion("0.4.0")) == downloading)
+        #expect(downloading.applying(.foundVersion("0.4.0")) == .downloading(version: "0.4.0", fraction: 0.4))
+    }
+
+    @Test("a check never interrupts a restart")
+    func checksDuringRestart() {
         let restarting = UpdateState.restarting(version: "0.3.0")
         #expect(restarting.applying(.foundNothing) == restarting)
         #expect(restarting.applying(.foundVersion("0.4.0")) == restarting)
@@ -91,58 +121,53 @@ struct UpdateStateTests {
 
     @Test("a newer check result replaces the offered version, and a failure keeps waiting")
     func foundVersionAgain() {
-        #expect(UpdateState.available("0.3.0").applying(.foundVersion("0.4.0")) == .available("0.4.0"))
+        #expect(UpdateState.available(version: "0.3.0").applying(.foundVersion("0.4.0")) == .available(version: "0.4.0"))
         #expect(
             UpdateState.failed(version: "0.3.0", reason: .other).applying(.foundVersion("0.3.0"))
-                == .available("0.3.0")
+                == .available(version: "0.3.0")
         )
     }
 }
 
 @Suite("Update state: values for the UI")
 struct UpdateStateDerivedTests {
-    @Test("the button shows in every state but idle")
-    func buttonVisibility() {
+    @Test("idle shows no button")
+    func idleButton() {
         #expect(UpdateState.idle.button == nil)
-        #expect(UpdateState.available("0.3.0").button != nil)
-        #expect(UpdateState.downloading(version: "0.3.0", fraction: 0.4).button != nil)
-        #expect(UpdateState.restarting(version: "0.3.0").button != nil)
-        #expect(UpdateState.failed(version: "0.3.0", reason: .other).button != nil)
     }
 
-    @Test("only available and failed accept clicks")
+    @Test(
+        "each state shows its label and names the version the click installs",
+        arguments: [
+            (UpdateState.available(version: "0.3.0"), UpdateButton(label: .version, version: "0.3.0")),
+            (.downloading(version: "0.3.0", fraction: 0.42), UpdateButton(label: .percent(42), version: "0.3.0")),
+            (.downloading(version: "0.3.0", fraction: 0.996), UpdateButton(label: .percent(100), version: "0.3.0")),
+            (.restarting(version: "0.3.0"), UpdateButton(label: .restarting, version: "0.3.0")),
+            (.failed(version: "0.3.0", reason: .other), UpdateButton(label: .retry, version: "0.3.0")),
+        ]
+    )
+    func button(state: UpdateState, expected: UpdateButton) {
+        #expect(state.button == expected)
+    }
+
+    @Test("only the version and Retry accept clicks")
     func clickability() {
-        #expect(UpdateState.available("0.3.0").button?.acceptsClicks == true)
-        #expect(UpdateState.failed(version: "0.3.0", reason: .other).button?.acceptsClicks == true)
-        #expect(UpdateState.downloading(version: "0.3.0", fraction: 0.4).button?.acceptsClicks == false)
-        #expect(UpdateState.restarting(version: "0.3.0").button?.acceptsClicks == false)
-    }
-
-    @Test("labels: version, percent, restarting, retry")
-    func labels() {
-        #expect(UpdateState.available("0.3.0").button?.label == .version("0.3.0"))
-        #expect(UpdateState.downloading(version: "0.3.0", fraction: 0.42).button?.label == .percent(42))
-        #expect(UpdateState.downloading(version: "0.3.0", fraction: 0.996).button?.label == .percent(100))
-        #expect(UpdateState.restarting(version: "0.3.0").button?.label == .restarting)
-        #expect(UpdateState.failed(version: "0.3.0", reason: .other).button?.label == .retry)
-    }
-
-    @Test("the tooltip version names the update the click installs")
-    func tooltipVersion() {
-        #expect(UpdateState.available("0.3.0").button?.version == "0.3.0")
-        #expect(UpdateState.failed(version: "0.3.0", reason: .other).button?.version == "0.3.0")
+        #expect(UpdateButton(label: .version, version: "0.3.0").acceptsClicks)
+        #expect(UpdateButton(label: .retry, version: "0.3.0").acceptsClicks)
+        #expect(!UpdateButton(label: .percent(42), version: "0.3.0").acceptsClicks)
+        #expect(!UpdateButton(label: .restarting, version: "0.3.0").acceptsClicks)
     }
 
     @Test("only failed has a failure line")
     func failureLine() {
         #expect(UpdateState.failed(version: "0.3.0", reason: .noConnection).failureReason == .noConnection)
-        #expect(UpdateState.available("0.3.0").failureReason == nil)
+        #expect(UpdateState.available(version: "0.3.0").failureReason == nil)
         #expect(UpdateState.idle.failureReason == nil)
     }
 
     @Test("the update mark shows in available and failed only")
     func updateMark() {
-        #expect(UpdateState.available("0.3.0").showsUpdateMark)
+        #expect(UpdateState.available(version: "0.3.0").showsUpdateMark)
         #expect(UpdateState.failed(version: "0.3.0", reason: .other).showsUpdateMark)
         #expect(!UpdateState.idle.showsUpdateMark)
         #expect(!UpdateState.downloading(version: "0.3.0", fraction: 0.4).showsUpdateMark)
@@ -192,6 +217,41 @@ struct UpdateFailureReasonTests {
         #expect(UpdateFailureReason(error: outer) == .noConnection)
     }
 
+    @Test("a Swift URLError counts as its NSError")
+    func swiftURLError() {
+        #expect(UpdateFailureReason(error: URLError(.notConnectedToInternet)) == .noConnection)
+    }
+
+    @Test("the cause may be any of several underlying errors")
+    func secondOfMany() {
+        let errors = [
+            NSError(domain: "SomethingElse", code: 1),
+            NSError(domain: NSURLErrorDomain, code: NSURLErrorTimedOut),
+        ]
+        let outer = NSError(domain: "SUSparkleErrorDomain", code: 4005, userInfo: [NSMultipleUnderlyingErrorsKey: errors])
+        #expect(UpdateFailureReason(error: outer) == .noConnection)
+    }
+
+    // Offline, Sparkle can also fail to verify what it could not fetch: the network is the cause.
+    @Test("an offline cause beats a signature cause")
+    func offlineBeatsSignature() {
+        let errors = [
+            NSError(domain: "SUSparkleErrorDomain", code: 3002),
+            NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet),
+        ]
+        let outer = NSError(domain: "SUSparkleErrorDomain", code: 4005, userInfo: [NSMultipleUnderlyingErrorsKey: errors])
+        #expect(UpdateFailureReason(error: outer) == .noConnection)
+    }
+
+    @Test("the search stops 6 levels deep", arguments: [(6, UpdateFailureReason.noConnection), (7, .other)])
+    func depthLimit(levels: Int, expected: UpdateFailureReason) {
+        var error = NSError(domain: NSURLErrorDomain, code: NSURLErrorNotConnectedToInternet)
+        for _ in 0..<levels {
+            error = NSError(domain: "SUSparkleErrorDomain", code: 4005, userInfo: [NSUnderlyingErrorKey: error])
+        }
+        #expect(UpdateFailureReason(error: error) == expected)
+    }
+
     // The shape Sparkle 2.10 reports for a dmg whose EdDSA signature does not match.
     @Test("a signature error deep inside an installation error means verification failed")
     func nestedVerification() {
@@ -214,9 +274,18 @@ struct UpdaterGateTests {
 
     @Test(
         "dev builds and malformed versions never start it",
-        arguments: ["0.0.0-dev.12", "0.0.0-dev", "0.1", "1.2.3.4", "v1.2.3", "1.2.x", "1..3", " 1.2.3", ""]
+        arguments: [
+            "0.0.0-dev.12", "0.0.0-dev", "0.1", "1.2.3.4", "v1.2.3", "1.2.x", "1..3", " 1.2.3", "",
+            "1.2.3 ", "1.2.3-beta", "1.2.", "١.٢.٣",
+        ]
     )
     func notRelease(version: String) {
+        #expect(!UpdaterGate.allows(shortVersion: version))
+    }
+
+    // CI tags are vX.Y.Z with plain numbers; "01.2.3" is no tag that CI makes.
+    @Test("a part with a leading zero never starts it", arguments: ["01.2.3", "1.02.3", "1.2.03", "00.1.0"])
+    func leadingZero(version: String) {
         #expect(!UpdaterGate.allows(shortVersion: version))
     }
 }

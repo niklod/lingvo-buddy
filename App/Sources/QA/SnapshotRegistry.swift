@@ -74,17 +74,13 @@ enum StatusIconSnapshots {
     private static let menuBar = Theme.Palette.menuBar
 
     static var states: [SnapshotState] {
-        [
-            state("menubar_icon", waiting: false, updateMark: false),
-            state("menubar_icon_waiting", waiting: true, updateMark: false),
-            state("menubar_icon_update", waiting: false, updateMark: true),
-            state("menubar_icon_waiting_update", waiting: true, updateMark: true),
-        ]
+        StatusMarks.all.map(state)
     }
 
-    private static func state(_ name: String, waiting: Bool, updateMark: Bool) -> SnapshotState {
-        SnapshotState(name: name) {
-            let image = StatusGlyph.image(waiting: waiting, updateMark: updateMark)
+    private static func state(_ marks: StatusMarks) -> SnapshotState {
+        let name = "menubar_icon" + (marks.waiting ? "_waiting" : "") + (marks.updateMark ? "_update" : "")
+        return SnapshotState(name: name) {
+            let image = StatusGlyph.image(marks)
             return AnyView(
                 Image(nsImage: image)
                     .renderingMode(.template)
