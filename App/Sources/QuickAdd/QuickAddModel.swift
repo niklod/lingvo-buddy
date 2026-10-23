@@ -26,25 +26,6 @@ final class QuickAddModel {
     private(set) var customTranslations = CustomVariants()
     /// The bubbles and the field of "English word for the card" for Russian text the dictionary does not know.
     private(set) var customEnglishWords = CustomVariants()
-
-    var customTranslation: String {
-        get { typedText ?? customTranslations.field }
-        set {
-            (customTranslations, choice) = customTranslations.typing(newValue, choice: choice)
-            showTypedTextForOneTurn(newValue, field: customTranslations.field)
-        }
-    }
-
-    /// The card's English word for Russian text the dictionary does not know.
-    var englishWord: String {
-        get { typedText ?? customEnglishWords.field }
-        set {
-            (customEnglishWords, choice) = customEnglishWords.typing(newValue, choice: choice)
-            showTypedTextForOneTurn(newValue, field: customEnglishWords.field)
-            syncDetails(delayed: true)
-        }
-    }
-
     /// SwiftUI redraws a text field only when its binding returns a new value. A separator empties the
     /// field, but "" is also what the binding returned before the keystroke, so the field would keep
     /// "смыться,". The binding returns the typed text until the next main-actor turn, then the field.
@@ -136,11 +117,6 @@ final class QuickAddModel {
     /// Russian text with no candidates: the field shows until the learner picks the machine bubble.
     var showsEnglishWordField: Bool { needsEnglishWord && choice.isCustom }
 
-    /// The variants the learner finished with a separator, in the section that is on screen.
-    var customBubbles: [String] {
-        needsEnglishWord ? customEnglishWords.bubbles : customTranslations.bubbles
-    }
-
     var machine: MachineSuggestion { fallback.suggestion }
 
     /// The machine result, one bubble per variant; empty until it arrives.
@@ -175,16 +151,6 @@ final class QuickAddModel {
     func choose(_ choice: TranslationChoice) {
         self.choice = choice
         if message.isError { message = nil }
-        syncDetails(delayed: false)
-    }
-
-    /// The × of a custom bubble.
-    func removeCustomBubble(at index: Int) {
-        if needsEnglishWord {
-            (customEnglishWords, choice) = customEnglishWords.removing(at: index, choice: choice)
-        } else {
-            (customTranslations, choice) = customTranslations.removing(at: index, choice: choice)
-        }
         syncDetails(delayed: false)
     }
 
@@ -293,15 +259,6 @@ final class QuickAddModel {
         syncDetails(delayed: false)
     }
 
-    private func showTypedTextForOneTurn(_ typed: String, field: String) {
-        guard typed != field else {
-            typedText = nil
-            return
-        }
-        typedText = typed
-        Task { @MainActor [weak self] in self?.typedText = nil }
-    }
-
     private func syncDetails(delayed: Bool) {
         chain.want(chainedWord, delayed: delayed)
     }
@@ -349,6 +306,51 @@ final class QuickAddModel {
 
     private static func standingMessage(for candidate: QuickAddCandidate?) -> QuickAddMessage? {
         candidate.flatMap { $0.canAdd ? nil : .standing($0.standing) }
+    }
+}
+
+/// The custom fields and their bubbles; the variant rules live in `CustomVariants`.
+extension QuickAddModel {
+    var customTranslation: String {
+        get { typedText ?? customTranslations.field }
+        set {
+            (customTranslations, choice) = customTranslations.typing(newValue, choice: choice)
+            showTypedTextForOneTurn(newValue, field: customTranslations.field)
+        }
+    }
+
+    /// The card's English word for Russian text the dictionary does not know.
+    var englishWord: String {
+        get { typedText ?? customEnglishWords.field }
+        set {
+            (customEnglishWords, choice) = customEnglishWords.typing(newValue, choice: choice)
+            showTypedTextForOneTurn(newValue, field: customEnglishWords.field)
+            syncDetails(delayed: true)
+        }
+    }
+
+    /// The variants the learner finished with a separator, in the section that is on screen.
+    var customBubbles: [String] {
+        needsEnglishWord ? customEnglishWords.bubbles : customTranslations.bubbles
+    }
+
+    /// The × of a custom bubble.
+    func removeCustomBubble(at index: Int) {
+        if needsEnglishWord {
+            (customEnglishWords, choice) = customEnglishWords.removing(at: index, choice: choice)
+        } else {
+            (customTranslations, choice) = customTranslations.removing(at: index, choice: choice)
+        }
+        syncDetails(delayed: false)
+    }
+
+    private func showTypedTextForOneTurn(_ typed: String, field: String) {
+        guard typed != field else {
+            typedText = nil
+            return
+        }
+        typedText = typed
+        Task { @MainActor [weak self] in self?.typedText = nil }
     }
 }
 
