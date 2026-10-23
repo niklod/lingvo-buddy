@@ -1,15 +1,15 @@
 name: Release
 
-# A tag push `vX.Y.Z` publishes a Release with the signed disk image. A manual run only uploads
-# the signed disk image as a workflow artifact, to test the pipeline without a Release.
+# A tag push `vX.Y.Z` publishes a Release with the signed disk image and its appcast. A manual run
+# only uploads both as a workflow artifact, to test the pipeline without a Release.
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
 
 # Read-only by default: the build job runs third-party actions and must not hold a write token
-# or a secret. Only the sign job holds the certificate, and only the publish job, which runs no
-# third-party code, can write the Release.
+# or a secret. Only the sign job holds the certificate and the EdDSA key, and only the publish
+# job, which runs no third-party code, can write the Release.
 permissions:
   contents: read
 
@@ -66,7 +66,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-  # The only job with the certificate. Besides actions/download-artifact it runs only the
+  # The only job with the certificate and the EdDSA key. Besides actions/download-artifact it runs only the
   # repository's scripts and macOS tools. The upload step runs after the keychain is deleted,
   # and no secret reaches its environment.
   sign:
@@ -111,11 +111,33 @@ jobs:
           if [ -e "$KEYCHAIN" ]; then
             security delete-keychain "$KEYCHAIN"
           fi
-      - name: Upload the disk image
+      # macOS LibreSSL cannot sign Ed25519 with -rawin. Runs before the key exists.
+      - name: Find OpenSSL 3
+        run: brew list openssl@3 > /dev/null 2>&1 || brew install openssl@3
+      # Only OpenSSL 3 and the repository's script touch the EdDSA key, which lives in this
+      # step's environment and in one file that the next step deletes.
+      - name: Sign the disk image and write the appcast
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_ED_PRIVATE_KEY" ]; then
+            echo "::error::Set the SPARKLE_ED_PRIVATE_KEY secret"
+            exit 1
+          fi
+          umask 077
+          printf '%s\n' "$SPARKLE_ED_PRIVATE_KEY" > "$RUNNER_TEMP/sparkle-ed.pem"
+          tools/release/sign-appcast.sh "$RUNNER_TEMP/sparkle-ed.pem" \
+            "build/LingvoBuddy-$VERSION.dmg" "$VERSION" "$GITHUB_RUN_NUMBER" build/appcast.xml
+      - name: Delete the EdDSA key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sparkle-ed.pem"
+      - name: Upload the disk image and the appcast
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: LingvoBuddy-${{ needs.build.outputs.version }}
-          path: build/LingvoBuddy-${{ needs.build.outputs.version }}.dmg
+          path: |
+            build/LingvoBuddy-${{ needs.build.outputs.version }}.dmg
+            build/appcast.xml
           if-no-files-found: error
 
   publish:
@@ -134,5 +156,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.build.outputs.version }}
         run: >-
-          gh release create "$GITHUB_REF_NAME" "LingvoBuddy-$VERSION.dmg"
+          gh release create "$GITHUB_REF_NAME" "LingvoBuddy-$VERSION.dmg" appcast.xml
           --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes
