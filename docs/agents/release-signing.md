@@ -10,12 +10,15 @@ The designated requirement is `identifier "com.niklod.LingvoBuddy" and certifica
 
 - `build` runs the third-party actions, `make check` and `make release-app`, and uploads the ad-hoc app as a tar (an artifact loses the executable bit and symlinks). It holds no secret.
 - `sign` holds the certificate. It fetches the repository with plain `git` (no `actions/checkout`), downloads the app, runs `tools/release/import-certificate.sh` (a new keychain in `$RUNNER_TEMP`), then `tools/release/sign-release.sh` (signs inside out, checks the signature, builds the dmg with `build-dmg.sh`). An `if: always()` step deletes the keychain. Only then `actions/upload-artifact` uploads the dmg; no secret is in its environment.
-- `publish` uploads the dmg to the Release, for tag pushes only.
+- `publish` uploads the dmg and `appcast.xml` to the Release, for tag pushes only.
+
+After `sign-release.sh`, the `sign` job writes the EdDSA key to a file in `$RUNNER_TEMP` (umask 077) and runs `tools/release/sign-appcast.sh`. It signs the dmg with OpenSSL 3 (Homebrew `openssl@3`; macOS LibreSSL cannot sign Ed25519 with `-rawin`), verifies the signature with the public half of the same key, and writes `appcast.xml`. An `if: always()` step deletes the key file. No Sparkle binary runs in CI. The appcast has one item: `sparkle:version` = run number (`CFBundleVersion`), `sparkle:shortVersionString` = `X.Y.Z`, `sparkle:minimumSystemVersion` 15.0, the enclosure URL `https://github.com/niklod/lingvo-buddy/releases/download/vX.Y.Z/LingvoBuddy-X.Y.Z.dmg`, `length` and `sparkle:edSignature`. The app reads it at `https://github.com/niklod/lingvo-buddy/releases/latest/download/appcast.xml`.
 
 ## Secrets
 
 - `RELEASE_CERT_P12_BASE64`: base64 of a .p12 with the certificate and its private key.
 - `RELEASE_CERT_PASSWORD`: the .p12 password.
+- `SPARKLE_ED_PRIVATE_KEY`: the PEM text of an Ed25519 private key (see "Make the EdDSA key").
 
 Back both up outside GitHub (password manager). A lost or new certificate changes the designated requirement: every learner then grants the Focus permission again, and Sparkle can refuse the update.
 
@@ -85,3 +88,37 @@ security delete-keychain "$dir/test.keychain-db"
 - **`grep -q` after `codesign` under `pipefail`** fails the pipeline when grep stops early. Read the output into a variable first.
 - **Resource bundles stay unsigned.** `GRDB_GRDB.bundle` and `KeyboardShortcuts_KeyboardShortcuts.bundle` hold no code; Xcode seals them as app resources, and the script does the same.
 - **Nested code is signed inside out.** The script signs every code bundle (`.app`, `.xpc`, `.appex`, `.framework`, `.plugin`, `.bundle` with `Contents/MacOS`) and every bare Mach-O file under `Contents`, deepest first, with the same certificate, hardened runtime and preserved entitlements. Sparkle's framework, XPC services, `Autoupdate` and `Updater.app` need nothing more.
+
+## Make the EdDSA key (once)
+
+The app's `SUPublicEDKey` is the base64 of the raw 32-byte public key. The secret is the PEM text of the private key. Run in `bash` or `zsh`, in a new folder outside the repository, with Homebrew OpenSSL 3 (`brew install openssl@3`):
+
+```sh
+dir=$(mktemp -d) && cd "$dir" && umask 077
+ossl="$(brew --prefix openssl@3)/bin/openssl"
+"$ossl" genpkey -algorithm ed25519 -out sparkle-ed.pem
+"$ossl" pkey -in sparkle-ed.pem -pubout -outform DER | tail -c 32 | base64
+```
+
+The last command prints `SUPublicEDKey`. Give it to the app ticket. The maintainer stores `sparkle-ed.pem` in a password manager and confirms it. Only after the maintainer's explicit OK:
+
+```sh
+gh secret set SPARKLE_ED_PRIVATE_KEY --repo niklod/lingvo-buddy < sparkle-ed.pem
+rm -rf "$dir"
+```
+
+A lost key means no installed app can verify a new update: every learner must install by hand once.
+
+## Test the appcast locally
+
+```sh
+OPENSSL="$(brew --prefix openssl@3)/bin/openssl" tools/release/sign-appcast.sh \
+  "$dir/sparkle-ed.pem" LingvoBuddy-1.2.3.dmg 1.2.3 77 "$dir/appcast.xml" && xmllint --noout "$dir/appcast.xml"
+```
+
+To check the signature with Sparkle's `sign_update`, use a throwaway key, never the real one. `sign_update -f` reads the base64 of the 32-byte seed (`openssl pkey -in k.pem -outform DER | tail -c 32 | base64`). `sign_update -f <seed file> --verify <dmg> <signature>` must exit 0. Ed25519 is deterministic: `sign_update -f <seed file> <dmg>` prints the same signature as the script.
+
+## EdDSA traps
+
+- **Sign the raw bytes.** Sparkle verifies `edSignature` over the bytes of the dmg, base64 of the 64-byte signature. The script uses `pkeyutl -sign -rawin`; without `-rawin` OpenSSL 3 refuses Ed25519.
+- **The version is part of the URL.** The enclosure URL uses the tag `vX.Y.Z` and the dmg name `LingvoBuddy-X.Y.Z.dmg`. A manual run (`0.0.0-dev.N`) gets a URL that no Release serves: its appcast is for tests only.
